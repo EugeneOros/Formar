@@ -1,0 +1,1 @@
+enum AppTab {people, teams, tournament, settings}

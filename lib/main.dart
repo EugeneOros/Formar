@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_it/models/app_tab.dart';
 import 'package:form_it/screens/authenticate/login/login_screen.dart';
 import 'package:form_it/screens/authenticate/signup/signup_screeen.dart';
 import 'package:form_it/screens/home/home.dart';
@@ -6,9 +8,9 @@ import 'package:form_it/services/auth.dart';
 import 'package:form_it/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import './people_manager.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'blocs/tab/tab_bloc.dart';
 import 'models/user.dart';
 
 // import 'pages/PeoplePage.dart';
@@ -33,7 +35,16 @@ class FormItApp extends StatelessWidget {
           routes: <String, WidgetBuilder>{
             "/login": (BuildContext context) => new LoginScreen(),
             "/signUp": (BuildContext context) => new SignUpScreen(),
-            "/home": (BuildContext context) => new Home(),
+            "/home": (BuildContext context) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider<TabBloc>(
+                    create: (context) => TabBloc(AppTab.people),
+                  ),
+                ],
+                child: HomeScreen(),
+              );
+            },
           },
         ));
   }
