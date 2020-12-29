@@ -8,8 +8,11 @@ import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/
 import 'package:form_it/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'logic/blocs/tab/tab_bloc.dart';
+import 'logic/localizations/constants.dart';
 import 'logic/models/user.dart';
 
 // import 'pages/PeoplePage.dart';
@@ -27,10 +30,14 @@ class FormItApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
+
         value: AuthService().user,
         child: MaterialApp(
+          localizationsDelegates: LOCALIZATION_DELEGATES,
+          supportedLocales: SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
           debugShowCheckedModeBanner: false,
           home: Wrapper(),
+
           routes: <String, WidgetBuilder>{
             "/login": (BuildContext context) => new LoginScreen(),
             "/signUp": (BuildContext context) => new SignUpScreen(),

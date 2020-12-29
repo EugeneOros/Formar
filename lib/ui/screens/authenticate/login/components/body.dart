@@ -8,6 +8,7 @@ import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/rounded_password_field.dart';
 import 'background.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -43,7 +44,7 @@ class _BodyState extends State<Body> {
                       height: size.height * 0.2,
                     ),
                     Text(
-                      'LOGIN',
+                      AppLocalizations.of(context).login.toUpperCase(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: PrimaryColor),
                     ),
@@ -52,19 +53,20 @@ class _BodyState extends State<Body> {
                     ),
                     Text(
                       error,
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
                     ),
                     SizedBox(height: 12.0),
                     RoundedInputField(
-                      hintText: "Email",
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                      hintText: AppLocalizations.of(context).email,
+                      validator: (val) => val.isEmpty ? AppLocalizations.of(context).errorEmail : null,
                       onChanged: (val) {
                         setState(() => email = val);
                       },
                     ),
                     RoundedPasswordField(
                       validator: (val) => val.length < 6
-                          ? 'Password need to have more then 5 chars'
+                          ? AppLocalizations.of(context).errorPassword
                           : null,
                       onChanged: (val) {
                         setState(() => password = val);
@@ -74,7 +76,7 @@ class _BodyState extends State<Body> {
                       height: size.height * 0.03,
                     ),
                     RoundedButton(
-                        text: "Login",
+                        text: AppLocalizations.of(context).login,
                         color: PrimaryAssentColor,
                         onPressed: () async {
                           print(email);
@@ -86,8 +88,7 @@ class _BodyState extends State<Body> {
                                 .signInWithEmailAndPassword(email, password);
                             if (result == null) {
                               setState(() {
-                                error =
-                                    'could not sign in with this credentials';
+                                error = AppLocalizations.of(context).errorLogin;
                                 isLoading = false;
                               });
                             }

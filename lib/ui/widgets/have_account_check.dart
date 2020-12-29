@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HaveAccountCheck extends StatelessWidget {
@@ -15,13 +16,13 @@ class HaveAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          login ? "Don't have an Account ? " : "Already have an Account ? ",
+          login ? AppLocalizations.of(context).dontHaveAccount : AppLocalizations.of(context).alreadyHaveAccount,
           style: TextStyle(color: PrimaryColor),
         ),
         GestureDetector(
           onTap: onTap,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? AppLocalizations.of(context).signUp : AppLocalizations.of(context).signIn,
             style: TextStyle(color: PrimaryColor, fontWeight: FontWeight.bold),
           ),
         )

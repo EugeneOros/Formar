@@ -8,6 +8,7 @@ import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/rounded_password_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _BodyState extends State<Body> {
                       height: size.height * 0.2,
                     ),
                     Text(
-                      "SIGN UP",
+                      AppLocalizations.of(context).signUp.toUpperCase(),
                       style: TextStyle(
                         color: PrimaryColor,
                         fontWeight: FontWeight.bold,
@@ -50,19 +51,22 @@ class _BodyState extends State<Body> {
                     ),
                     Text(
                       error,
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
                     ),
                     SizedBox(height: 12.0),
                     RoundedInputField(
-                      hintText: "Email",
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                      hintText: AppLocalizations.of(context).email,
+                      validator: (val) => val.isEmpty
+                          ? AppLocalizations.of(context).errorEmail
+                          : null,
                       onChanged: (val) {
                         setState(() => email = val);
                       },
                     ),
                     RoundedPasswordField(
                       validator: (val) => val.length < 6
-                          ? 'Password need to have more then 5 chars'
+                          ? AppLocalizations.of(context).errorPassword
                           : null,
                       onChanged: (val) {
                         setState(() => password = val);
@@ -72,7 +76,7 @@ class _BodyState extends State<Body> {
                       height: size.height * 0.03,
                     ),
                     RoundedButton(
-                      text: "Sign Up",
+                      text: AppLocalizations.of(context).signUp,
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           setState(() => isLoading = true);
@@ -80,10 +84,10 @@ class _BodyState extends State<Body> {
                               .signUpWithEmailAndPassword(email, password);
                           if (result == null) {
                             setState(() {
-                              error = 'pleas apply valid email';
+                              error = AppLocalizations.of(context).errorSignUp;
                               isLoading = false;
                             });
-                          }else{
+                          } else {
                             Navigator.pop(context);
                           }
                         }

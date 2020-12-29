@@ -1,0 +1,37 @@
+{
+  "homePageTitle": "Form It",
+  "@homePageTitle": {
+    "description": "Name of this app"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "Programmers greeting!"
+  },
+  "people": "People",
+  "@people": {
+    "description": "People label for Bottom navigation bar"
+  },
+  "teams": "Teams",
+  "@teams": {
+    "description": "Teams label for Bottom navigation bar"
+  },
+  "tournament": "Tournament",
+  "@tournament": {
+    "description": "Tournament label for Bottom navigation bar"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings label for Bottom navigation bar"
+  },
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "alreadyHaveAccount": "Already have an Account ? ",
+  "dontHaveAccount": "Don't have an Account ? ",
+  "errorSignUp": "Please apply valid email",
+  "errorLogin": "Could not sign in with this credentials",
+  "errorPassword": "Password need to have more then 5 chars",
+  "errorEmail": "Please enter an email"
+}
