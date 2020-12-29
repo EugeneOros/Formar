@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_it/models/app_tab.dart';
-import 'package:form_it/screens/authenticate/login/login_screen.dart';
-import 'package:form_it/screens/authenticate/signup/signup_screeen.dart';
-import 'package:form_it/screens/home/home.dart';
-import 'package:form_it/services/auth.dart';
+import 'package:form_it/logic/models/app_tab.dart';
+import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
+import 'package:form_it/ui/screens/authenticate/signup/signup_screeen.dart';
+import 'package:form_it/ui/screens/home/home.dart';
+import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/auth.dart';
 import 'package:form_it/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/svg.dart';
 
-import 'blocs/tab/tab_bloc.dart';
-import 'models/user.dart';
+import 'logic/blocs/tab/tab_bloc.dart';
+import 'logic/models/user.dart';
 
 // import 'pages/PeoplePage.dart';
 // import 'pages/TeamsPage.dart';

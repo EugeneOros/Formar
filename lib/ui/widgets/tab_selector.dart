@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:form_it/models/app_tab.dart';
+import 'package:form_it/logic/models/app_tab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_it/ui/shared/colors.dart';
 
 class TabSelector extends StatelessWidget {
   final AppTab activeTab;
@@ -50,28 +51,30 @@ class TabSelector extends StatelessWidget {
     }
   }
 
-  Text _getTabLabel(AppTab tab) {
+  String _getTabLabel(AppTab tab) {
     switch (tab) {
       case AppTab.people:
-        return Text("People");
+        return "People";
         break;
       case AppTab.teams:
-        return Text("Teams");
+        return "Teams";
         break;
       case AppTab.tournament:
-        return Text("Tournament");
+        return "Tournament";
         break;
       case AppTab.settings:
-        return Text("Settings");
+        return "Settings";
         break;
       default:
-        return Text("Label");
+        return "Label";
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      selectedItemColor: PrimaryAssentColor,
+      unselectedItemColor: PrimaryColor,
       type: BottomNavigationBarType.fixed,
       currentIndex: AppTab.values.indexOf(activeTab),
       onTap: (index) => onTabSelected(AppTab.values[index]),
@@ -88,7 +91,7 @@ class TabSelector extends StatelessWidget {
                   height: 30,
                   child: _getPassiveTabIcon(tab),
                 ),
-          title: _getTabLabel(tab),
+          label: _getTabLabel(tab),
         );
       }).toList(),
     );

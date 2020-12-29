@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:form_it/screens/authenticate/signup/signup_screeen.dart';
-import 'package:form_it/services/auth.dart';
-import 'package:form_it/shared/colors.dart';
-import 'package:form_it/shared/have_account_check.dart';
-import 'package:form_it/shared/loading.dart';
-import 'package:form_it/shared/rounded_button.dart';
-import 'package:form_it/shared/rounded_input_field.dart';
-import 'package:form_it/shared/rounded_password_field.dart';
+import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/auth.dart';
+import 'package:form_it/ui/shared/colors.dart';
+import 'package:form_it/ui/widgets/have_account_check.dart';
+import 'package:form_it/ui/widgets/loading.dart';
+import 'package:form_it/ui/widgets/rounded_button.dart';
+import 'package:form_it/ui/widgets/rounded_input_field.dart';
+import 'package:form_it/ui/widgets/rounded_password_field.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {

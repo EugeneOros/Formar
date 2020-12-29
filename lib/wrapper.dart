@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_it/models/user.dart';
-import 'package:form_it/screens/authenticate/authenticate.dart';
-import 'package:form_it/screens/authenticate/login/login_screen.dart';
-import 'package:form_it/screens/home/home.dart';
+import 'package:form_it/logic/models/user.dart';
+import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
+import 'package:form_it/ui/screens/home/home.dart';
 import 'package:provider/provider.dart';
 
-import 'blocs/tab/tab_bloc.dart';
-import 'models/app_tab.dart';
+import 'logic/blocs/tab/tab_bloc.dart';
+import 'logic/models/app_tab.dart';
 
 class Wrapper extends StatelessWidget {
   @override

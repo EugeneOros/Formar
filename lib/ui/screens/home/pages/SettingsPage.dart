@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_it/services/auth.dart';
+import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/auth.dart';
 
 class SettingsPage extends StatelessWidget{
   final AuthService _authService = AuthService();

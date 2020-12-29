@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/colors.dart';
 
-import 'colors.dart';
 
 class HaveAccountCheck extends StatelessWidget {
   final bool login;
