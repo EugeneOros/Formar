@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_it/logic/services/auth.dart';
 import 'package:form_it/ui/screens/authenticate/signup/components/background.dart';
-import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/auth.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/have_account_check.dart';
 import 'package:form_it/ui/widgets/loading.dart';

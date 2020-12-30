@@ -6,4 +6,5 @@ const LOCALIZATION_DELEGATES = [
   AppLocalizations.delegate,
   GlobalMaterialLocalizations.delegate,
   GlobalWidgetsLocalizations.delegate,
+  GlobalCupertinoLocalizations.delegate
 ];

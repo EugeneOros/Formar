@@ -18,7 +18,7 @@ class Wrapper extends StatelessWidget {
       return LoginScreen();
     }else{
       return BlocProvider<TabBloc>(
-        create: (context) => TabBloc(AppTab.people),
+        create: (context) => TabBloc(),
         child: HomeScreen(),
       );
     }
