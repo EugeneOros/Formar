@@ -34,17 +34,24 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (event is RegisterEventEmailChanged) {
       yield state.update(isEmailValid: Validators.isValidEmail(event.email));
     } else if (event is RegisterEventPasswordChanged) {
-      yield state.update(
-          isPasswordValid: Validators.isValidPassword(event.password));
-    } else if (event is RegisterEventSubmitted) {
-      yield RegisterState.loading();
-      try {
-        await _userRepository.signUpWithEmailAndPassword(
-            event.email, event.password);
-        yield RegisterState.success();
-      } catch (_) {
-        yield RegisterState.failure();
-      }
+      yield state.update(isPasswordValid: Validators.isValidPassword(event.password));
+    } else if (event is RegisterEventPressed) {
+      yield* _mapSignUpWithCredentialsPressedToState(
+        email: event.email,
+        password: event.password,
+      );
+    }
+  }
+  Stream<RegisterState> _mapSignUpWithCredentialsPressedToState({
+    String email,
+    String password,
+  }) async* {
+    yield RegisterState.loading();
+    try {
+      await _userRepository.signUpWithEmailAndPassword(email, password);
+      yield RegisterState.success();
+    } catch (_) {
+      yield RegisterState.failure();
     }
   }
 }
@@ -62,6 +69,6 @@ class Validators {
   }
 
   static isValidPassword(String password) {
-    return password.length > 6;// return _passwordRegExp.hasMatch(password);
+    return password.length >= 6;// return _passwordRegExp.hasMatch(password);
   }
 }

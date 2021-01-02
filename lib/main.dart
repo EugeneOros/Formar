@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:form_it/logic/blocs/login/login_bloc.dart';
+import 'package:form_it/logic/blocs/register/register_bloc.dart';
 import 'package:form_it/ui/screens/add_screen.dart';
 import 'package:form_it/logic/services/user_repository.dart';
 import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
@@ -30,41 +31,33 @@ class _FormItAppState extends State<FormItApp> {
 
   @override
   Widget build(BuildContext context) {
-    final _authService = UserRepository();
     return MultiBlocProvider(
         providers: _getBlocProviders(context),
         child: MaterialApp(
           localizationsDelegates: LOCALIZATION_DELEGATES,
           supportedLocales:
-          SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
+              SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
           debugShowCheckedModeBanner: false,
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (BuildContext context, AuthenticationState state) {
-                if (state is AuthenticationStateInitialized) {
-                  return Scaffold(
-                    body: Center(child: Text('Splash Screen')),
-                  );
-                } else if (state is AuthenticationStateAuthenticated) {
-                  return HomeScreen(name: state.user.email);
-                } else {
-                  return BlocProvider<LoginBloc>(
-                    create: (context) => LoginBloc(userRepository: _userRepository),
-                    child: LoginScreen(userRepository: _userRepository ),
-                  );
-                }
-              }),
-          routes: <String, WidgetBuilder>{
-            "/login": (BuildContext context) => new LoginScreen(),
-            "/signUp": (BuildContext context) => new SignUpScreen(),
-            "/home": (BuildContext context) {
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider<TabBloc>(
-                    create: (context) => TabBloc(),
-                  ),
-                ],
-                child: HomeScreen(),
+            if (state is AuthenticationStateInitialized) {
+              return Scaffold(
+                body: Center(child: Text('Splash Screen')),
               );
+            } else if (state is AuthenticationStateAuthenticated) {
+              return HomeScreen(name: state.user.email ?? "");
+            } else {
+              return BlocProvider<LoginBloc>(
+                create: (context) => LoginBloc(userRepository: _userRepository),
+                child: LoginScreen(),
+              );
+            }
+          }),
+          routes: <String, WidgetBuilder>{
+            "/signUp": (BuildContext context) {
+              return BlocProvider<RegisterBloc>(
+                  create: (context) => RegisterBloc(userRepository: _userRepository),
+                  child: SignUpScreen());
             },
             "/add": (BuildContext context) => new AddScreen(),
           },
