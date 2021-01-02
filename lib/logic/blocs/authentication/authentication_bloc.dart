@@ -28,6 +28,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
+      yield AuthenticationStateInitialized();
       final isSignedIn = await _userReposetory.isSignedIn();
       if (isSignedIn) {
         final name = await _userReposetory.getUser();

@@ -10,6 +10,7 @@ import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
 import 'package:form_it/ui/screens/authenticate/signup/signup_screeen.dart';
 import 'package:form_it/ui/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:form_it/ui/screens/splash_screen.dart';
 
 import 'logic/blocs/authentication/authentication_event.dart';
 import 'logic/blocs/tab/tab_bloc.dart';
@@ -39,24 +40,24 @@ class _FormItAppState extends State<FormItApp> {
               SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
           debugShowCheckedModeBanner: false,
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (BuildContext context, AuthenticationState state) {
-            if (state is AuthenticationStateInitialized) {
-              return Scaffold(
-                body: Center(child: Text('Splash Screen')),
-              );
-            } else if (state is AuthenticationStateAuthenticated) {
-              return HomeScreen(name: state.user.email ?? "");
-            } else {
-              return BlocProvider<LoginBloc>(
-                create: (context) => LoginBloc(userRepository: _userRepository),
-                child: LoginScreen(),
-              );
-            }
-          }),
+            builder: (BuildContext context, AuthenticationState state) {
+              if (state is AuthenticationStateUnauthenticated) {
+                return BlocProvider<LoginBloc>(
+                  create: (context) =>
+                      LoginBloc(userRepository: _userRepository),
+                  child: LoginScreen(),
+                );
+              } else if (state is AuthenticationStateAuthenticated) {
+                return HomeScreen(name: state.user.email ?? "");
+              }
+              return SplashScreen();
+            },
+          ),
           routes: <String, WidgetBuilder>{
             "/signUp": (BuildContext context) {
               return BlocProvider<RegisterBloc>(
-                  create: (context) => RegisterBloc(userRepository: _userRepository),
+                  create: (context) =>
+                      RegisterBloc(userRepository: _userRepository),
                   child: SignUpScreen());
             },
             "/add": (BuildContext context) => new AddScreen(),
