@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:form_it/logic/services/auth.dart';
+import 'package:form_it/logic/services/user_repository.dart';
 import 'package:meta/meta.dart';
 
 import 'settings_event.dart';
 import 'settings_state.dart';
 
 class LoginBloc extends Bloc<SettingsEvent, SettingsState> {
-  final AuthService _authService;
+  final UserRepository _authService;
 
-  LoginBloc({@required AuthService authService})
-      : assert(AuthService != null),
+  LoginBloc({@required UserRepository authService})
+      : assert(UserRepository != null),
         _authService = authService,
         super(LogOutInitialState());
 

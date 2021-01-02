@@ -7,22 +7,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class RoundedPasswordField extends StatelessWidget {
-  final ValueChanged<String> onChanged;
   final ValueChanged<String> validator;
+  final TextEditingController controller;
 
   const RoundedPasswordField({
     Key key,
-    this.onChanged,
-    this.validator,
+    this.validator, this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
+        controller: controller,
         cursorColor: PrimaryColor,
         obscureText: true,
-        onChanged: onChanged,
         validator: validator,
         decoration: InputDecoration(
           filled: true,

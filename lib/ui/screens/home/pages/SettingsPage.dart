@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/logic/services/auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_it/logic/blocs/authentication/bloc.dart';
 
 class SettingsPage extends StatelessWidget{
-  final AuthService _authService = AuthService();
+  // final AuthService _authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,7 +11,8 @@ class SettingsPage extends StatelessWidget{
       child: RaisedButton(
         child: Text('Sign Out'),
         onPressed: () async {
-          dynamic result = await _authService.signOut();
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+          // dynamic result = await _authService.signOut();
         },
       ),
     );

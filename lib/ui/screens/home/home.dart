@@ -11,7 +11,9 @@ import 'pages/TournamentPage.dart';
 import 'pages/SettingsPage.dart';
 
 class HomeScreen extends StatelessWidget {
+  final String name;
 
+  HomeScreen({Key key, @required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,16 @@ class HomeScreen extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: () { Navigator.of(context).pushNamed("/add");},
+              onTap: () {
+                Navigator.of(context).pushNamed("/add");
+              },
               child: Icon(Icons.add),
-            ))
+            )),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Center(child: Text('Welcome $name!')),
+            ])
       ],
       [
         Padding(
@@ -57,25 +66,23 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               child: Icon(Icons.home),
-            ))
+            )),
       ]
     ];
     final tabBloc = BlocProvider.of<TabBloc>(context);
-    return  BlocBuilder<TabBloc, AppTab>(
-        builder: (context, activeTab){
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: PrimaryColor,
-              title: Text("Form It"),
-              actions: _actionsSet[AppTab.values.indexOf(activeTab)],
-            ),
-            body: _pageOptions[AppTab.values.indexOf(activeTab)],
-            bottomNavigationBar: TabSelector(
-              activeTab: activeTab,
-              onTabSelected: (tab) => tabBloc.add(UpdateTab(tab)),
-            ),
-          );
-        }
-    );
+    return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: PrimaryColor,
+          title: Text("Form It"),
+          actions: _actionsSet[AppTab.values.indexOf(activeTab)],
+        ),
+        body: _pageOptions[AppTab.values.indexOf(activeTab)],
+        bottomNavigationBar: TabSelector(
+          activeTab: activeTab,
+          onTabSelected: (tab) => tabBloc.add(UpdateTab(tab)),
+        ),
+      );
+    });
   }
 }

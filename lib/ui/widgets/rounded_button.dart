@@ -3,7 +3,7 @@ import 'package:form_it/ui/shared/colors.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final Color color, textColor;
 
   const RoundedButton({

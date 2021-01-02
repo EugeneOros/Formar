@@ -3,23 +3,28 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
-abstract class AuthenticationState extends Equatable{
-  const AuthenticationState();
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
+@immutable
+abstract class AuthenticationState extends Equatable {
+  const AuthenticationState();
   @override
   List<Object> get props => [];
 }
 
-class AuthInitialState extends AuthenticationState {}
+class AuthenticationStateInitialized extends AuthenticationState {}
 
-class AuthenticatedState extends AuthenticationState {
+class AuthenticationStateAuthenticated extends AuthenticationState {
   final User user;
 
-  const AuthenticatedState({@required this.user});
+  const AuthenticationStateAuthenticated(this.user);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [user];
 
+  @override
+  String toString() => "email: ${user.email}";
 }
 
-class UnauthenticatedState extends AuthenticationState {}
+class AuthenticationStateUnauthenticated extends AuthenticationState {}
