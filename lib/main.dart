@@ -5,7 +5,6 @@ import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:form_it/logic/blocs/login/login_bloc.dart';
 import 'package:form_it/logic/blocs/register/register_bloc.dart';
 import 'package:form_it/ui/screens/add_screen.dart';
-import 'package:form_it/logic/services/user_repository.dart';
 import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
 import 'package:form_it/ui/screens/authenticate/signup/signup_screeen.dart';
 import 'package:form_it/ui/screens/home/home.dart';
@@ -15,6 +14,9 @@ import 'package:form_it/ui/screens/splash_screen.dart';
 import 'logic/blocs/authentication/authentication_event.dart';
 import 'logic/blocs/tab/tab_bloc.dart';
 import 'logic/localizations/constants.dart';
+
+// import 'package:form_it/logic/services/user_repository.dart';
+import 'package:user_repository/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

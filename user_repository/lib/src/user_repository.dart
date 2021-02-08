@@ -13,7 +13,7 @@ class UserRepository {
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
@@ -51,29 +51,4 @@ class UserRepository {
   Future<User> getUser() async {
     return await _firebaseAuth.currentUser;
   }
-
-  ///not in use
-
 }
-
-// Stream<User> get user {
-//   return _firebaseAuth.authStateChanges().map(
-//       _userFromFirebaseUser); // .map((FA.User user) => _userFromFirebaseUser(user));
-// }
-//
-//
-// Future signInAnon() async {
-//   try {
-//     // await Firebase.initializeApp();
-//     UserCredential result = await _firebaseAuth.signInAnonymously();
-//     User user = result.user;
-//     return _userFromFirebaseUser(user);
-//   } catch (e) {
-//     print(e.toString());
-//     return null;
-//   }
-// }
-//
-// User _userFromFirebaseUser(FA.User user) {
-//   return user != null ? User(uid: user.uid) : null;
-// }
