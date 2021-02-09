@@ -5,7 +5,7 @@ import 'package:people_repository/people_repository.dart';
 import 'entities/entities.dart';
 
 class FirebasePeopleRepository implements PeopleRepository {
-  final todoCollection = Firestore.instance.collection('todos');
+  final todoCollection = FirebaseFirestore.instance.collection('todos');
 
   @override
   Future<void> addNewPerson(Person todo) {

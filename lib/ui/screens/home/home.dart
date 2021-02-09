@@ -5,10 +5,10 @@ import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 
-import 'pages/PeoplePage.dart';
-import 'pages/TeamsPage.dart';
-import 'pages/TournamentPage.dart';
-import 'pages/SettingsPage.dart';
+import 'pages/people_page.dart';
+import 'pages/teams_page.dart';
+import 'pages/tournament_page.dart';
+import 'pages/settings_page.dart';
 
 class HomeScreen extends StatelessWidget {
   final String name;

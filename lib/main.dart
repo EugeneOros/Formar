@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
+import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/login/login_bloc.dart';
 import 'package:form_it/logic/blocs/register/register_bloc.dart';
-import 'package:form_it/ui/screens/add_screen.dart';
+import 'package:form_it/ui/screens/add_edit_screen.dart';
 import 'package:form_it/ui/screens/authenticate/login/login_screen.dart';
 import 'package:form_it/ui/screens/authenticate/signup/signup_screeen.dart';
 import 'package:form_it/ui/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:form_it/ui/screens/splash_screen.dart';
+import 'package:people_repository/people_repository.dart';
 
 import 'logic/blocs/authentication/authentication_event.dart';
+import 'logic/blocs/people/bloc.dart';
 import 'logic/blocs/tab/tab_bloc.dart';
 import 'logic/localizations/constants.dart';
 
@@ -61,7 +64,16 @@ class _FormItAppState extends State<FormItApp> {
                       RegisterBloc(userRepository: _userRepository),
                   child: SignUpScreen());
             },
-            "/add": (BuildContext context) => new AddScreen(),
+            "/add": (BuildContext context) {
+              return AddEditScreen(
+                onSave: (task, note) {
+                  BlocProvider.of<PeopleBloc>(context).add(
+                    AddPerson(Person(task, note: note)),
+                  );
+                },
+                isEditing: false,
+              );
+            },
           },
         ));
   }
@@ -71,11 +83,25 @@ class _FormItAppState extends State<FormItApp> {
       BlocProvider<TabBloc>(
         create: (context) => TabBloc(),
       ),
-      BlocProvider<AuthenticationBloc>(create: (BuildContext context) {
-        final authBloc = AuthenticationBloc(authService: _userRepository);
-        authBloc.add(AppStarted());
-        return authBloc;
-      }),
+      BlocProvider<PeopleBloc>(
+        create: (context) {
+          return PeopleBloc(
+            peopleRepository: FirebasePeopleRepository(),
+          )..add(LoadPeople());
+        },
+      ),
+      BlocProvider<AuthenticationBloc>(
+        create: (BuildContext context) {
+          final authBloc = AuthenticationBloc(authService: _userRepository);
+          authBloc.add(AppStarted());
+          return authBloc;
+        },
+      ),
+      BlocProvider<FilteredPeopleBloc>(
+        create: (context) => FilteredPeopleBloc(
+          peopleBloc: BlocProvider.of<PeopleBloc>(context),
+        ),
+      ),
     ];
   }
 }
