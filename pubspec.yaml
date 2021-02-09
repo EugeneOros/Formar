@@ -18,6 +18,9 @@ dependencies:
   user_repository:
     path: user_repository
 
+  people_repository:
+    path: people_repository
+
   firebase_core: ^0.5.3
   firebase_analytics: ^6.3.0
   firebase_auth: ^0.18.4+1

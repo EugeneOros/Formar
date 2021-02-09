@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-// import 'package:form_it/logic/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
