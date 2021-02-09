@@ -23,7 +23,7 @@ class TabSelector extends StatelessWidget {
         return SvgPicture.asset("assets/team_fill.svg");
         break;
       case AppTab.tournament:
-        return SvgPicture.asset("assets/cup_fill.svg");
+        return SvgPicture.asset("assets/tournament_fill.svg");
         break;
       case AppTab.settings:
         return SvgPicture.asset("assets/settings_fill.svg");
@@ -42,7 +42,7 @@ class TabSelector extends StatelessWidget {
         return SvgPicture.asset("assets/team_empty.svg");
         break;
       case AppTab.tournament:
-        return SvgPicture.asset("assets/cup_empty.svg");
+        return SvgPicture.asset("assets/tournament_empty.svg");
         break;
       case AppTab.settings:
         return SvgPicture.asset("assets/settings_empty.svg");
@@ -61,28 +61,42 @@ class TabSelector extends StatelessWidget {
       AppLocalizations.of(context).settings,
     ];
 
-    return BottomNavigationBar(
-      selectedItemColor: PrimaryAssentColor,
-      unselectedItemColor: PrimaryColor,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: AppTab.values.indexOf(activeTab),
-      onTap: (index) => onTabSelected(AppTab.values[index]),
-      items: AppTab.values.map((tab) {
-        return BottomNavigationBarItem(
-          icon: tab == activeTab
-              ? Container(
-                  width: 30,
-                  height: 30,
-                  child: _getActiveTabIcon(tab),
-                )
-              : Container(
-                  width: 30,
-                  height: 30,
-                  child: _getPassiveTabIcon(tab),
-                ),
-          label: pageLabels[AppTab.values.indexOf(tab)],
-        );
-      }).toList(),
+    return Container(
+      padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
+      decoration: BoxDecoration(
+        color: SecondaryBlueColor,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(0), topRight: Radius.circular(0)),
+      ),
+      child: BottomNavigationBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        selectedItemColor: BottomNavigationBarItemColor,
+        unselectedItemColor: BottomNavigationBarItemColor,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: AppTab.values.indexOf(activeTab),
+        onTap: (index) => onTabSelected(AppTab.values[index]),
+        selectedLabelStyle:
+            TextStyle(fontSize: 12.0, ),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 12.0,),
+        items: AppTab.values.map((tab) {
+          return BottomNavigationBarItem(
+            icon: tab == activeTab
+                ? Container(
+                    width: 27,
+                    height: 27,
+                    child: _getActiveTabIcon(tab),
+                  )
+                : Container(
+                    width: 27,
+                    height: 27,
+                    child: _getPassiveTabIcon(tab),
+                  ),
+            label: pageLabels[AppTab.values.indexOf(tab)],
+          );
+        }).toList(),
+      ),
     );
   }
 }

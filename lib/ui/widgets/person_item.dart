@@ -21,30 +21,39 @@ class PersonItem extends StatelessWidget {
     return Dismissible(
       key: Key('__todo_item_${todo.id}'),
       onDismissed: onDismissed,
-      child: ListTile(
-        onTap: onTap,
-        leading: Checkbox(
-          value: todo.complete,
-          onChanged: onCheckboxChanged,
-        ),
-        title: Hero(
-          tag: '${todo.id}__heroTag',
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              todo.task,
-              style: Theme.of(context).textTheme.headline6,
+      child: Card(
+        child: ListTile(
+          onTap: onTap,
+          leading: Checkbox(
+            value: todo.complete,
+            onChanged: onCheckboxChanged,
+          ),
+          title: Hero(
+            tag: '${todo.id}__heroTag',
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Text(
+                todo.task,
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
           ),
+          subtitle: todo.note.isNotEmpty
+              ? Text(
+                  todo.note,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.subtitle1,
+                )
+              : null,
         ),
-        subtitle: todo.note.isNotEmpty
-            ? Text(
-          todo.note,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.subtitle1,
-        )
-            : null,
+      ),
+      direction: DismissDirection.endToStart, //DismissDirection.startToEnd
+      background: Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20.0),
+        color: Colors.redAccent,
+        child: Icon(Icons.delete, color: Colors.white),
       ),
     );
   }

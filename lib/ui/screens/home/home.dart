@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {},
-              child: Icon(Icons.search),
+              child: Icon(Icons.search, color: AppBarItemColor),
             )),
         Padding(
             padding: EdgeInsets.only(right: 20.0),
@@ -38,34 +38,34 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushNamed("/add");
               },
-              child: Icon(Icons.add),
+              child: Icon(Icons.add, color: AppBarItemColor),
             )),
-        Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Center(child: Text('Welcome $name!')),
-            ])
+        // Column(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: <Widget>[
+        //       Center(child: Text('Welcome $name!',  style: TextStyle(color: AppBarItemColor))),
+        //     ])
       ],
       [
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {},
-              child: Icon(Icons.add),
+              child: Icon(Icons.add, color: AppBarItemColor),
             ))
       ],
       [
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              child: Icon(Icons.edit),
+              child: Icon(Icons.edit, color: AppBarItemColor),
             ))
       ],
       [
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              child: Icon(Icons.home),
+              child: Icon(Icons.home, color: AppBarItemColor),
             )),
       ]
     ];
@@ -73,8 +73,8 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: PrimaryColor,
-          title: Text("Form It"),
+          backgroundColor: SecondaryAssentColor,
+          title: Text("Form It", style: TextStyle(color: AppBarItemColor)),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],
         ),
         body: _pageOptions[AppTab.values.indexOf(activeTab)],
