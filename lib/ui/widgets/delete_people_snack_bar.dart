@@ -10,7 +10,7 @@ class DeletePersonSnackBar extends SnackBar {
   }) : super(
           key: key,
           content: Text(
-            'Deleted ${todo.task}',
+            'Deleted ${todo.nickname}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

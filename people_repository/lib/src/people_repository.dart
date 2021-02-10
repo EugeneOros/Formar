@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:people_repository/people_repository.dart';
 
+import 'models/models.dart';
+
 abstract class PeopleRepository {
   Future<void> addNewPerson(Person todo);
 

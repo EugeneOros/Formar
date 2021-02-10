@@ -71,9 +71,9 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
       if (filter == VisibilityFilter.all) {
         return true;
       } else if (filter == VisibilityFilter.active) {
-        return !todo.complete;
+        return !todo.available;
       } else {
-        return todo.complete;
+        return todo.available;
       }
     }).toList();
   }

@@ -12,7 +12,7 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.maybeOf(context).size;
     return Container(
       height: size.height,
       width: size.width,

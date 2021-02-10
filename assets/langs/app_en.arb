@@ -24,14 +24,47 @@
     "description": "Settings label for Bottom navigation bar"
   },
   "signIn": "Sign In",
+  "@signIn": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "login": "Login",
+  "@login": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "email": "Email",
+  "@email": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "password": "Password",
+  "@password": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "alreadyHaveAccount": "Already have an Account ? ",
+  "@alreadyHaveAccount": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "dontHaveAccount": "Don't have an Account ? ",
+  "@dontHaveAccount": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "errorSignUp": "Please apply valid email",
+  "@errorSignUp": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "errorLogin": "Could not sign in with this credentials",
+  "@errorLogin": {
+    "description": "Settings label for Bottom navigation bar"
+  },
   "errorPassword": "Password need to have more then 5 chars",
-  "errorEmail": "Please enter an email"
+  "@errorPassword": {
+    "description": "Settings label for Bottom navigation bar"
+  },
+  "errorEmail": "Please enter an email",
+  "@errorEmail": {
+    "description": "Settings label for Bottom navigation bar"
+  }
 }

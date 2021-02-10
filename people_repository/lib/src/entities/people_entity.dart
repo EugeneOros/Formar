@@ -1,54 +1,66 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:people_repository/src/models/level.dart';
 
 class PeopleEntity extends Equatable {
-  final bool complete;
+  final bool available;
   final String id;
   final String note;
-  final String task;
+  final String nickname;
+  final Level level;
 
-  PeopleEntity(this.task, this.id, this.note, this.complete);
+  PeopleEntity(this.nickname, this.id, this.note, this.level, this.available);
 
   Map<String, Object> toJson() {
     return {
-      'complete': complete,
-      'task': task,
+      'available': available,
+      'nickname': nickname,
       'note': note,
+      'level' : level,
       'id': id,
     };
   }
 
   @override
   String toString() {
-    return 'TodoEntity { complete: $complete, task: $task, note: $note, id: $id }';
+    return 'TodoEntity { available: $available, nickname: $nickname, note: $note, level: $level, id: $id }';
   }
 
   static PeopleEntity fromJson(Map<String, Object> json) {
     return PeopleEntity(
-      json['task'] as String,
+      json['nickname'] as String,
       json['id'] as String,
       json['note'] as String,
-      json['complete'] as bool,
+      json['level'] as Level,
+      json['available'] as bool,
     );
   }
 
   static PeopleEntity fromSnapshot(DocumentSnapshot snap) {
+    Level level;
+    for(Level l in Level.values){
+      if(snap['level'] == l.toString()){
+        level = l;
+      }
+    }
     return PeopleEntity(
-      snap['task'],
+      snap['nickname'],
       snap.id,
       snap['note'],
-      snap['complete'],
+      level,
+      snap['available'],
     );
   }
 
   Map<String, Object> toDocument() {
     return {
-      'complete': complete,
-      'task': task,
+      'available': available,
+      'nickname': nickname,
       'note': note,
+      'level': level.toString(),
     };
   }
 
   @override
-  List<Object> get props => [complete, id, note, task];
+  List<Object> get props => [available, id, note, level, nickname];
 }

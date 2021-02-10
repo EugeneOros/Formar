@@ -17,7 +17,7 @@ class TabSelector extends StatelessWidget {
   SvgPicture _getActiveTabIcon(AppTab tab) {
     switch (tab) {
       case AppTab.people:
-        return SvgPicture.asset("assets/list_fill.svg");
+        return SvgPicture.asset("assets/people_fill.svg");
         break;
       case AppTab.teams:
         return SvgPicture.asset("assets/team_fill.svg");
@@ -36,7 +36,7 @@ class TabSelector extends StatelessWidget {
   SvgPicture _getPassiveTabIcon(AppTab tab) {
     switch (tab) {
       case AppTab.people:
-        return SvgPicture.asset("assets/list_empty.svg");
+        return SvgPicture.asset("assets/people_empty.svg");
         break;
       case AppTab.teams:
         return SvgPicture.asset("assets/team_empty.svg");

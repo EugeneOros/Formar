@@ -1,69 +1,111 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
 
+import 'delete_people_snack_bar.dart';
+
 class PersonItem extends StatelessWidget {
-  final DismissDirectionCallback onDismissed;
-  final GestureTapCallback onTap;
-  final ValueChanged<bool> onCheckboxChanged;
-  final Person todo;
+  final Function onDelete;
+  final GestureTapCallback onEdit;
+  final ValueChanged<bool> onSwitchChanged;
+  final Person person;
+  final SlidableController slidableController;
 
   PersonItem({
     Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.onCheckboxChanged,
-    @required this.todo,
+    @required this.onDelete,
+    @required this.onEdit,
+    @required this.onSwitchChanged,
+    @required this.person,
+    @required this.slidableController,
   }) : super(key: key);
+
+  Color getLevelColor(Level level) {
+    switch (level) {
+      case Level.beginner:
+        return BeginnerColor;
+      case Level.intermediate:
+        return IntermediateColor;
+      case Level.proficient:
+        return ProficientColor;
+      case Level.advanced:
+        return AdvancedColor;
+      case Level.expert:
+        return ExpertColor;
+      default:
+        return Colors.black;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Dismissible(
-          key: Key('__todo_item_${todo.id}'),
-          onDismissed: onDismissed,
+        Slidable(
+          controller: slidableController,
+          key: Key(person.id),
           child: Container(
             margin: EdgeInsets.only(right: 20.0, left: 20.0),
             decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(color: SecondaryColor, width: 1.5)),
+              border:
+                  Border(bottom: BorderSide(color: SecondaryColor, width: 1.5)),
             ),
-            child: ListTile(
-              onTap: onTap,
-              leading: Checkbox(
-                value: todo.complete,
-                onChanged: onCheckboxChanged,
-              ),
-              title: Hero(
-                tag: '${todo.id}__heroTag',
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Text(
-                    todo.task,
-                    style: Theme.of(context).textTheme.headline6,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(person.nickname,
+                          style: Theme.of(context).textTheme.headline6),
+                      Text(
+                        person.level.toString().split('.').last,
+                        style: TextStyle(
+                            fontFamily: 'Navicons',
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                            color: getLevelColor(person.level)),
+                      ),
+                    ],
                   ),
-                ),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    padding: EdgeInsets.only(right: 0, left: 0),
+                    child: Switch(
+                      activeColor: Colors.black,
+                      value: person.available,
+                      onChanged: onSwitchChanged,
+                    ),
+                  )
+                ],
               ),
-              subtitle: todo.note.isNotEmpty
-                  ? Text(
-                      todo.note,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    )
-                  : null,
             ),
           ),
-          direction: DismissDirection.endToStart,
-          //DismissDirection.startToEnd
-          background: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(right: 20.0),
-            color: Colors.black,
-            child: Icon(Icons.delete, color: Colors.white),
+          actionPane: SlidableDrawerActionPane(),
+          dismissal: SlidableDismissal(
+            child: SlidableDrawerDismissal(),
+            onDismissed: (actionType) {
+              onDelete();
+            },
           ),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: "Edit",
+              color: SecondaryColor,
+              icon: Icons.edit,
+              onTap: onEdit,
+            ),
+            IconSlideAction(
+              caption: "Delete",
+              color: Colors.black,
+              icon: Icons.delete,
+              onTap: () => onDelete(),
+            ),
+          ],
         ),
       ],
     );

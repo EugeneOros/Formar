@@ -47,7 +47,7 @@ class _LoginState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.maybeOf(context).size;
     return Scaffold(
       body: BlocListener(
         cubit: _loginBloc,

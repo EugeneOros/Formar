@@ -20,6 +20,8 @@ import 'logic/localizations/constants.dart';
 
 import 'package:user_repository/user_repository.dart';
 
+import 'package:device_preview/device_preview.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -39,6 +41,8 @@ class _FormItAppState extends State<FormItApp> {
     return MultiBlocProvider(
         providers: _getBlocProviders(context),
         child: MaterialApp(
+          // locale: DevicePreview.locale(context), // Add the locale here
+          // builder: DevicePreview.appBuilder, // Add the builder here
           localizationsDelegates: LOCALIZATION_DELEGATES,
           supportedLocales:
               SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
@@ -66,12 +70,22 @@ class _FormItAppState extends State<FormItApp> {
             },
             "/add": (BuildContext context) {
               return AddEditScreen(
-                onSave: (task, note) {
+                onSave: (nickname, level) {
                   BlocProvider.of<PeopleBloc>(context).add(
-                    AddPerson(Person(task, note: note)),
+                    AddPerson(Person(nickname, level , note: "none")),
                   );
                 },
                 isEditing: false,
+              );
+            },
+            "/edit": (BuildContext context) {
+              return AddEditScreen(
+                onSave: (nickname, level) {
+                  BlocProvider.of<PeopleBloc>(context).add(
+                    UpdatePerson(Person(nickname, level , note: "none")),
+                  );
+                },
+                isEditing: true,
               );
             },
           },
