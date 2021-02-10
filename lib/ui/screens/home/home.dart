@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {},
-              child: Icon(Icons.add, color: AppBarItemColor),
+              child: Icon(Icons.settings_backup_restore_rounded, color: AppBarItemColor),
             ))
       ],
       [
@@ -73,6 +73,7 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
         appBar: AppBar(
+          shadowColor: Colors.transparent,
           backgroundColor: SecondaryAssentColor,
           title: Text("Form It", style: TextStyle(color: AppBarItemColor)),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],

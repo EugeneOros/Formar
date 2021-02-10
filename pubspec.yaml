@@ -18,6 +18,8 @@ dependencies:
 
   device_preview: ^0.6.2-beta
 
+  carousel_slider: ^3.0.0
+
   user_repository:
     path: user_repository
 
