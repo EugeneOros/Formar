@@ -6,13 +6,11 @@ import 'level.dart';
 class Person {
   final bool available;
   final String id;
-  final String note;
   final String nickname;
   final Level level;
 
   Person(this.nickname, this.level, {this.available = false, String note = '', String id})
-      : this.note = note ?? '',
-        this.id = id;
+      : this.id = id;
 
   Person copyWith({bool complete, String id, String note, Level level, String task}) {
     return Person(
@@ -20,13 +18,12 @@ class Person {
       level ?? this.level,
       available: complete ?? this.available,
       id: id ?? this.id,
-      note: note ?? this.note,
     );
   }
 
   @override
   int get hashCode =>
-      available.hashCode ^ nickname.hashCode ^ note.hashCode ^ id.hashCode ^ level.hashCode;
+      available.hashCode ^ nickname.hashCode ^ id.hashCode ^ level.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -36,16 +33,15 @@ class Person {
               available == other.available &&
               nickname == other.nickname &&
               level == other.level &&
-              note == other.note &&
               id == other.id;
 
   @override
   String toString() {
-    return 'Todo { complete: $available, task: $nickname, note: $note, level: $level, id: $id }';
+    return 'Todo { complete: $available, task: $nickname, level: $level, id: $id }';
   }
 
   PeopleEntity toEntity() {
-    return PeopleEntity(nickname, id, note, level, available);
+    return PeopleEntity(nickname, id, level, available);
   }
 
   static Person fromEntity(PeopleEntity entity) {
@@ -53,7 +49,6 @@ class Person {
       entity.nickname,
       entity.level,
       available: entity.available ?? false,
-      note: entity.note,
       id: entity.id,
     );
   }
