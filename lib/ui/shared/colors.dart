@@ -7,10 +7,14 @@ const ErrorColor =  Color(0xfff44336);
 const LightColor =  Color(0xfff6f5f6);
 const DarkColor = Color(0xff2b2b2b);
 const SecondaryColor =  Color(0xffCCB9D8);
-const SecondaryAssentColor =  Color(0xffFFCBE6);
-const SecondaryBlueColor = Color(0xffd1dbf1);
+const SecondaryAssentColor = Color(0xffd1dbf1);// Color(0xffCCB9D8); //Color(0xffFFCBE6);
+const SecondaryBlueColor = Color(0xffd1dbf1);//Color(0xffd1dbf1);
 const AppBarItemColor =  Color(0xff000000);
 const BottomNavigationBarItemColor =  Color(0xff000000);
+
+const AppAccentColor =  Colors.black;
+const AppPrimaryColor =  Color(0xffFFCBE6);
+
 
 const BeginnerColor =  Color(0xff49b0dc);
 const IntermediateColor = Color(0xff7dbc4f);

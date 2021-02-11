@@ -14,13 +14,15 @@ class TeamsPage extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             // Colors are easy thanks to Flutter's Colors class.
+
             SecondaryAssentColor,
+            SecondaryColor,
             SecondaryBlueColor,
           ],
         )),
         child: CarouselSlider(
           options: CarouselOptions(
-            height: 500,
+            height: 400,
             aspectRatio: 16 / 9,
             viewportFraction: 0.8,
             initialPage: 0,
