@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
+import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:meta/meta.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:people_repository/people_repository.dart';
@@ -7,11 +9,24 @@ import 'package:people_repository/people_repository.dart';
 class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   final PeopleRepository _peopleRepository;
   StreamSubscription _peopleSubscription;
+  StreamSubscription _authenticationSubscription;
+  final AuthenticationBloc _authenticationBloc;
 
-  PeopleBloc({@required PeopleRepository peopleRepository})
+  // StreamSubscription _peopleSubscription;
+
+  PeopleBloc(
+      {@required PeopleRepository peopleRepository, @required AuthenticationBloc authenticationBloc})
       : assert(peopleRepository != null),
+        _authenticationBloc = authenticationBloc,
         _peopleRepository = peopleRepository,
-        super(PeopleLoading());
+        super(PeopleLoading()) {
+    _authenticationSubscription = authenticationBloc.listen((state) {
+      if (state is AuthenticationStateAuthenticated) {
+        add(LoadPeople());
+      }
+    });
+  }
+
 
   @override
   Stream<PeopleState> mapEventToState(PeopleEvent event) async* {
@@ -82,6 +97,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   @override
   Future<void> close() {
     _peopleSubscription?.cancel();
+    _authenticationSubscription?.cancel();
     return super.close();
   }
 }

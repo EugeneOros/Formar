@@ -21,7 +21,6 @@ import 'logic/localizations/constants.dart';
 
 import 'package:user_repository/user_repository.dart';
 
-import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +64,7 @@ class _FormItAppState extends State<FormItApp> {
           // builder: DevicePreview.appBuilder, // Add the builder here
           localizationsDelegates: LOCALIZATION_DELEGATES,
           supportedLocales:
-              SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
+          SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
           debugShowCheckedModeBanner: false,
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (BuildContext context, AuthenticationState state) {
@@ -76,7 +75,20 @@ class _FormItAppState extends State<FormItApp> {
                   child: LoginScreen(),
                 );
               } else if (state is AuthenticationStateAuthenticated) {
-                return HomeScreen(name: state.user.email ?? "");
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider<TabBloc>(
+                      create: (context) => TabBloc(),
+                    ),
+                    BlocProvider<FilteredPeopleBloc>(
+                      create: (context) =>
+                          FilteredPeopleBloc(
+                            peopleBloc: BlocProvider.of<PeopleBloc>(context),
+                          ),
+                    ),
+                  ],
+                  child: HomeScreen(name: state.user.email ?? ""),
+                );
               }
               return SplashScreen();
             },
@@ -88,6 +100,7 @@ class _FormItAppState extends State<FormItApp> {
                       RegisterBloc(userRepository: _userRepository),
                   child: SignUpScreen());
             },
+
             "/add": (BuildContext context) {
               return AddEditScreen(
                 onSave: (nickname, level) {
@@ -114,16 +127,10 @@ class _FormItAppState extends State<FormItApp> {
 
   _getBlocProviders(BuildContext context) {
     return [
-      BlocProvider<TabBloc>(
-        create: (context) => TabBloc(),
-      ),
-      BlocProvider<PeopleBloc>(
-        create: (context) {
-          return PeopleBloc(
-            peopleRepository: FirebasePeopleRepository(),
-          )..add(LoadPeople());
-        },
-      ),
+      // BlocProvider<TabBloc>(
+      //   create: (context) => TabBloc(),
+      // ),
+
       BlocProvider<AuthenticationBloc>(
         create: (BuildContext context) {
           final authBloc = AuthenticationBloc(authService: _userRepository);
@@ -131,11 +138,21 @@ class _FormItAppState extends State<FormItApp> {
           return authBloc;
         },
       ),
-      BlocProvider<FilteredPeopleBloc>(
-        create: (context) => FilteredPeopleBloc(
-          peopleBloc: BlocProvider.of<PeopleBloc>(context),
-        ),
+      BlocProvider<PeopleBloc>(
+        create: (context) {
+          return PeopleBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+            peopleRepository: FirebasePeopleRepository(),
+          )
+            ..add(LoadPeople());
+        },
       ),
+      // BlocProvider<FilteredPeopleBloc>(
+      //   create: (context) =>
+      //       FilteredPeopleBloc(
+      //         peopleBloc: BlocProvider.of<PeopleBloc>(context),
+      //       ),
+      // ),
     ];
   }
 }

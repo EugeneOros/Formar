@@ -61,13 +61,30 @@ class PersonItem extends StatelessWidget {
                     children: [
                       Text(person.nickname,
                           style: Theme.of(context).textTheme.headline6),
-                      Text(
-                        person.level.toString().split('.').last,
-                        style: TextStyle(
-                            fontFamily: 'Navicons',
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500,
-                            color: getLevelColor(person.level)),
+                      Row(
+                        children: [
+                          Container(
+
+                            margin: EdgeInsets.only(right: 5.0, left: 1.0, bottom: 2.0 ),
+                            alignment: Alignment.topCenter,
+
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: getLevelColor(person.level),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Text(
+                            person.level.toString().split('.').last,
+                            style: TextStyle(
+                              fontFamily: 'Navicons',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black, //getLevelColor(person.level),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
