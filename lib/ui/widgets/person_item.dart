@@ -41,6 +41,7 @@ class PersonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.maybeOf(context).size;
     return Column(
       children: [
         Slidable(
@@ -59,15 +60,16 @@ class PersonItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(person.nickname,
-                          style: Theme.of(context).textTheme.headline6),
+                      Container(
+                        child: Text(person.nickname,
+                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, ), overflow: TextOverflow.ellipsis,),
+                        width: size.width - 120,
+                      ),
                       Row(
                         children: [
                           Container(
-
                             margin: EdgeInsets.only(right: 5.0, left: 1.0, bottom: 2.0 ),
                             alignment: Alignment.topCenter,
-
                             width: 10,
                             height: 10,
                             decoration: BoxDecoration(
@@ -91,7 +93,7 @@ class PersonItem extends StatelessWidget {
                   Spacer(),
                   Container(
                     alignment: Alignment.bottomRight,
-                    padding: EdgeInsets.only(right: 0, left: 0),
+                    padding: EdgeInsets.zero,
                     child: Switch(
                       activeColor: Colors.black,
                       value: person.available,

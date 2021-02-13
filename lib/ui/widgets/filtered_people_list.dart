@@ -8,6 +8,7 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/ui/screens/add_edit_screen.dart';
+import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/person_item.dart';
 
 import 'delete_people_snack_bar.dart';
@@ -34,8 +35,8 @@ class FilteredPeopleList extends StatelessWidget {
                   (index == 0 || people[index].nickname[0].toUpperCase() != people[index - 1].nickname[0].toUpperCase()) ?
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(person.nickname[0].toUpperCase()),
+                    padding: EdgeInsets.only(left: 10, top: 5),
+                    child: Text(person.nickname[0].toUpperCase(), style: TextStyle(color: SecondaryColor),),
                   ) : Container() ,
                   PersonItem(
                     person: person,
