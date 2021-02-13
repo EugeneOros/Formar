@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
@@ -36,10 +38,21 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
+                BlocProvider.of<PeopleBloc>(context).add(
+                  TurnOffPeople(),
+                );
+              },
+              child: Icon(Icons.toggle_off_outlined, color: AppBarItemColor),
+            )),
+        Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
                 Navigator.of(context).pushNamed("/add");
               },
               child: Icon(Icons.add, color: AppBarItemColor),
             )),
+
         // Column(
         //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         //     children: <Widget>[
@@ -51,7 +64,8 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {},
-              child: Icon(Icons.settings_backup_restore_rounded, color: AppBarItemColor),
+              child: Icon(Icons.settings_backup_restore_rounded,
+                  color: AppBarItemColor),
             ))
       ],
       [
@@ -75,7 +89,11 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           shadowColor: Colors.transparent,
           backgroundColor: SecondaryAssentColor,
-          title: Text("Form It", style: TextStyle(color: AppBarItemColor)),
+          title: SvgPicture.asset(
+            'assets/logo_rounded_black.svg',
+            height: 35,
+          ),
+          //Text("Form It", style: TextStyle(color: AppBarItemColor)),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],
         ),
         body: _pageOptions[AppTab.values.indexOf(activeTab)],

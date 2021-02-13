@@ -10,6 +10,8 @@ abstract class PeopleEvent extends Equatable {
 
 class LoadPeople extends PeopleEvent {}
 
+class TurnOffPeople extends PeopleEvent {}
+
 class AddPerson extends PeopleEvent {
   final Person person;
 
@@ -33,6 +35,8 @@ class UpdatePerson extends PeopleEvent {
   @override
   String toString() => 'UpdateTodo { updatedTodo: $updatedPerson }';
 }
+
+
 
 class DeletePerson extends PeopleEvent {
   final Person people;

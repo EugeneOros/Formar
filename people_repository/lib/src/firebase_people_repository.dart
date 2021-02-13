@@ -57,6 +57,4 @@ class FirebasePeopleRepository implements PeopleRepository {
         .doc(update.id)
         .update(update.toEntity().toDocument());
   }
-
-
 }
