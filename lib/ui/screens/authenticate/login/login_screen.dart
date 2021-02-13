@@ -64,7 +64,21 @@ class _LoginState extends State<LoginScreen> {
           builder: (context, loginState) {
             return loginState.isSubmitting
                 ? Loading()
-                : Background(
+                : Container(
+                    alignment: Alignment.center,
+                    height: size.height,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          // Colors are easy thanks to Flutter's Colors class.
+
+                          SecondaryBlueColor,
+                          SecondaryPinkColor,
+                        ],
+                      ),
+                    ),
                     child: Form(
                       key: _formKey,
                       child: SingleChildScrollView(
@@ -110,7 +124,6 @@ class _LoginState extends State<LoginScreen> {
                             SizedBox(height: size.height * 0.03),
                             RoundedButton(
                               text: AppLocalizations.of(context).login,
-                              color: PrimaryAssentColor,
                               onPressed: _onLoginEmailAndPassword,
                             ),
                             SizedBox(height: size.height * 0.03),

@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:people_repository/people_repository.dart';
@@ -35,9 +36,11 @@ class FirebasePeopleRepository implements PeopleRepository {
     User user = _auth.currentUser;
     CollectionReference peopleCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("peoples");
     return peopleCollection.snapshots().map((snapshot) {
-      return snapshot.docs
+       List<Person> people = snapshot.docs
           .map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc)))
           .toList();
+       people.sort((a, b) => a.nickname[0].compareTo(b.nickname[0]));
+       return people;
     });
   }
 

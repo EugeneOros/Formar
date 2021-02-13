@@ -49,24 +49,40 @@ class _SignUpState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context).size;
     return Scaffold(
-      body: BlocListener(
-        cubit: _signUpBloc,
-        listener: (BuildContext context, RegisterState state) {
-          if (state.isFailure) {
-            print("register failure");
-          } else if (state.isSubmitting) {
-            print("register submitting");
-            Loading();
-          } else if (state.isSuccess) {
-            BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-            Navigator.pop(context);
-          }
-        },
+      body: Container(
+        alignment: Alignment.center,
+        height: size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              // Colors are easy thanks to Flutter's Colors class.
+
+              SecondaryBlueColor,
+              SecondaryPinkColor,
+            ],
+          ),
+        ),
         child: BlocBuilder<RegisterBloc, RegisterState>(
           builder: (context, registerState) {
             return registerState.isSubmitting
                 ? Loading()
-                : Background(
+                : Container(
+                    alignment: Alignment.center,
+                    height: size.height,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          // Colors are easy thanks to Flutter's Colors class.
+
+                          SecondaryBlueColor,
+                          SecondaryPinkColor,
+                        ],
+                      ),
+                    ),
                     child: Form(
                       key: _formKey,
                       child: SingleChildScrollView(
@@ -74,7 +90,7 @@ class _SignUpState extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              'assets/login.svg',
+                              'assets/signup.svg',
                               height: size.height * 0.2,
                             ),
                             Text(
@@ -109,7 +125,6 @@ class _SignUpState extends State<SignUpScreen> {
                             SizedBox(height: size.height * 0.03),
                             RoundedButton(
                               text: AppLocalizations.of(context).signUp,
-                              color: PrimaryAssentColor,
                               onPressed: _onLoginEmailAndPassword,
                             ),
                             SizedBox(height: size.height * 0.03),

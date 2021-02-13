@@ -21,6 +21,8 @@ class Person {
     );
   }
 
+
+
   @override
   int get hashCode =>
       available.hashCode ^ nickname.hashCode ^ id.hashCode ^ level.hashCode;

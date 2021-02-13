@@ -20,15 +20,15 @@ class RoundedPasswordField extends StatelessWidget {
     return TextFieldContainer(
       child: TextFormField(
         controller: controller,
-        cursorColor: PrimaryColor,
+        cursorColor: Colors.black,
         obscureText: true,
         validator: validator,
         decoration: InputDecoration(
           filled: true,
-          fillColor: SecondaryColor,
+          fillColor: TextFieldFillColor,
           hintText: AppLocalizations.of(context).password,
-          prefixIcon: Icon(Icons.lock_rounded, color: PrimaryColor),
-          suffixIcon: Icon(Icons.visibility, color: PrimaryColor),
+          prefixIcon: Icon(Icons.lock_rounded, color: Colors.black),
+          suffixIcon: Icon(Icons.visibility, color: Colors.black),
           border: borderRoundedTransparent,
           focusedBorder: borderRoundedTransparent,
           enabledBorder: borderRoundedTransparent,

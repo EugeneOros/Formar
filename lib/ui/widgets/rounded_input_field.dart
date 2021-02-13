@@ -22,13 +22,13 @@ class RoundedInputField extends StatelessWidget {
     return TextFieldContainer(
       child: TextFormField(
         controller: controller,
-        cursorColor: PrimaryColor,
+        cursorColor: Colors.black,
         validator: validator,
         decoration: InputDecoration(
           filled: true,
-          fillColor: SecondaryColor,
+          fillColor: TextFieldFillColor,
           hintText: hintText,
-          prefixIcon: Icon(icon, color: PrimaryColor),
+          prefixIcon: Icon(icon, color: Colors.black),
           border: borderRoundedTransparent,
           focusedBorder: borderRoundedTransparent,
           enabledBorder: borderRoundedTransparent,
