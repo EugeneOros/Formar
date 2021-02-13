@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -28,58 +29,68 @@ class FilteredPeopleList extends StatelessWidget {
             itemCount: people.length,
             itemBuilder: (context, index) {
               final person = people[index];
-              return PersonItem(
-                person: person,
-                slidableController: slidableController,
-                onDelete: () {
-                  BlocProvider.of<PeopleBloc>(context)
-                      .add(DeletePerson(person));
-                  Scaffold.of(context).showSnackBar(
-                    DeletePersonSnackBar(
-                      todo: person,
-                      onUndo: () => BlocProvider.of<PeopleBloc>(context)
-                          .add(AddPerson(person)),
-                    ),
-                  );
-                },
-                onEdit: () async {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return AddEditScreen(
-                          onSave: (nickname, level) {
-                            BlocProvider.of<PeopleBloc>(context).add(
-                              UpdatePerson(
-                                person.copyWith(task: nickname, level: level),
-                              ),
+              return Column(
+                children: [
+                  (index == 0 || people[index].nickname[0].toUpperCase() != people[index - 1].nickname[0].toUpperCase()) ?
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(person.nickname[0].toUpperCase()),
+                  ) : Container() ,
+                  PersonItem(
+                    person: person,
+                    slidableController: slidableController,
+                    onDelete: () {
+                      BlocProvider.of<PeopleBloc>(context)
+                          .add(DeletePerson(person));
+                      Scaffold.of(context).showSnackBar(
+                        DeletePersonSnackBar(
+                          todo: person,
+                          onUndo: () => BlocProvider.of<PeopleBloc>(context)
+                              .add(AddPerson(person)),
+                        ),
+                      );
+                    },
+                    onEdit: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AddEditScreen(
+                              onSave: (nickname, level) {
+                                BlocProvider.of<PeopleBloc>(context).add(
+                                  UpdatePerson(
+                                    person.copyWith(task: nickname, level: level),
+                                  ),
+                                );
+                              },
+                              isEditing: true,
+                              person: person,
                             );
                           },
-                          isEditing: true,
-                          person: person,
-                        );
-                      },
-                    ),
-                  );
-                  // final removedTodo = await Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (_) {
-                  //     return DetailsScreen(id: todo.id);
-                  //   }),
-                  // );
-                  // if (removedTodo != null) {
-                  //   Scaffold.of(context).showSnackBar(
-                  //     DeletePersonSnackBar(
-                  //       todo: todo,
-                  //       onUndo: () => BlocProvider.of<PeopleBloc>(context)
-                  //           .add(AddPerson(todo)),
-                  //     ),
-                  //   );
-                  // }
-                },
-                onSwitchChanged: (_) {
-                  BlocProvider.of<PeopleBloc>(context).add(
-                    UpdatePerson(person.copyWith(complete: !person.available)),
-                  );
-                },
+                        ),
+                      );
+                      // final removedTodo = await Navigator.of(context).push(
+                      //   MaterialPageRoute(builder: (_) {
+                      //     return DetailsScreen(id: todo.id);
+                      //   }),
+                      // );
+                      // if (removedTodo != null) {
+                      //   Scaffold.of(context).showSnackBar(
+                      //     DeletePersonSnackBar(
+                      //       todo: todo,
+                      //       onUndo: () => BlocProvider.of<PeopleBloc>(context)
+                      //           .add(AddPerson(todo)),
+                      //     ),
+                      //   );
+                      // }
+                    },
+                    onSwitchChanged: (_) {
+                      BlocProvider.of<PeopleBloc>(context).add(
+                        UpdatePerson(person.copyWith(complete: !person.available)),
+                      );
+                    },
+                  ),
+                ],
               );
             },
           );
@@ -90,3 +101,10 @@ class FilteredPeopleList extends StatelessWidget {
     );
   }
 }
+
+// Row(
+// children: [
+// (index == 0 || people[index] != people[index - 1]) ?
+// Container(
+//   child: Text(person.nickname[0].toUpperCase()),
+// ) ,
