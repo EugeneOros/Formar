@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
+import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
@@ -48,13 +49,15 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
       [
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.settings_backup_restore_rounded,
-                  color: AppBarItemColor),
-            ))
+        IconButton(
+          icon: Icon(Icons.settings_backup_restore_rounded,
+              color: AppBarItemColor),
+          onPressed: () {
+            BlocProvider.of<TeamsBloc>(context).add(
+              FormTeams(),
+            );
+          },
+        )
       ],
       [
         Padding(

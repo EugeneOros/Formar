@@ -11,7 +11,7 @@ import 'models/team.dart';
 
 class FirebaseTeamRepository implements TeamRepository {
   final PeopleRepository peopleRepository;
-  FirebaseTeamRepository({@required  PeopleRepository this.peopleRepository});
+  FirebaseTeamRepository({@required  this.peopleRepository});
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // FirebaseUser user = await _auth.currentUser();
   // final CollectionReference peopleCollection = FirebaseFirestore.instance.collection('todos');
@@ -38,8 +38,8 @@ class FirebaseTeamRepository implements TeamRepository {
   @override
   Stream<List<Team>> teams() {
     User user = _auth.currentUser;
-    CollectionReference peopleCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
-    return peopleCollection.snapshots().map((snapshot) {
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
+    return teamsCollection.snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => Team.fromEntity(TeamEntity.fromSnapshot(doc)))
           .toList();
@@ -56,9 +56,17 @@ class FirebaseTeamRepository implements TeamRepository {
   // }
 
   @override
-  Future<void> formTeams(Person todo) {
+  Future<void> formTeams() {
+    User user = _auth.currentUser;
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
     List<Person> people = peopleRepository.currentPeopleList();
     people.sort((a, b) => a.level.index.compareTo(b.level.index));
+    List<Team> teams = [];
+
+
+    for(Team team in teams){
+      teamsCollection.add(team.toEntity().toDocument());
+    }
 
       // List<Person> list = peopleRepository.people();
 

@@ -17,6 +17,7 @@ import 'package:people_repository/people_repository.dart';
 import 'logic/blocs/authentication/authentication_event.dart';
 import 'logic/blocs/people/bloc.dart';
 import 'logic/blocs/tab/tab_bloc.dart';
+import 'logic/blocs/teams/bloc.dart';
 import 'logic/localizations/constants.dart';
 
 import 'package:user_repository/user_repository.dart';
@@ -35,6 +36,7 @@ class FormItApp extends StatefulWidget {
 
 class _FormItAppState extends State<FormItApp> {
   final UserRepository _userRepository = UserRepository();
+  final PeopleRepository _peopleRepository = FirebasePeopleRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class _FormItAppState extends State<FormItApp> {
               return AddEditScreen(
                 onSave: (nickname, level) {
                   BlocProvider.of<PeopleBloc>(context).add(
-                    AddPerson(Person(nickname, level, note: "none")),
+                    AddPerson(Person(nickname, level)),
                   );
                 },
                 isEditing: false,
@@ -115,7 +117,7 @@ class _FormItAppState extends State<FormItApp> {
               return AddEditScreen(
                 onSave: (nickname, level) {
                   BlocProvider.of<PeopleBloc>(context).add(
-                    UpdatePerson(Person(nickname, level, note: "none")),
+                    UpdatePerson(Person(nickname, level)),
                   );
                 },
                 isEditing: true,
@@ -142,9 +144,17 @@ class _FormItAppState extends State<FormItApp> {
         create: (context) {
           return PeopleBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-            peopleRepository: FirebasePeopleRepository(),
+            peopleRepository: _peopleRepository,
           )
             ..add(LoadPeople());
+        },
+      ),
+      BlocProvider<TeamsBloc>(
+        create: (context) {
+          return TeamsBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+            teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
+          )..add(LoadTeams());
         },
       ),
       // BlocProvider<FilteredPeopleBloc>(
