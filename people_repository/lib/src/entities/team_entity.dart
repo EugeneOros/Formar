@@ -34,10 +34,14 @@ class TeamEntity extends Equatable {
   }
 
   static TeamEntity fromSnapshot(DocumentSnapshot snap) {
+    // snap.
+    // Map<String, dynamic> map = Map<String, dynamic>();
+    // map['membersNames'] = snap['membersNames'];
     return TeamEntity(
       snap['name'],
       snap['capacity'],
-      snap['membersNames'],
+      (snap['membersNames'] as List)?.map((item) => item as String)?.toList(),
+      // snap['membersNames'],
       snap.id,
     );
   }

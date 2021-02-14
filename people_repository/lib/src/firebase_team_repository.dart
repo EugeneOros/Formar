@@ -56,15 +56,19 @@ class FirebaseTeamRepository implements TeamRepository {
   // }
 
   @override
-  Future<void> formTeams() {
+  Future<void> formTeams() async {
     User user = _auth.currentUser;
+    int num_member = 6;
     CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
-    List<Person> people = peopleRepository.currentPeopleList();
+    List<Person> people = await peopleRepository.currentPeopleList();
     people.sort((a, b) => a.level.index.compareTo(b.level.index));
     List<Team> teams = [];
-
+    for (int i = 0; i <= people.length/num_member; i++){
+      teams.add(Team("Team" + i.toString(), num_member, membersNames: []));
+    }
 
     for(Team team in teams){
+      team.membersNames.add("jo");
       teamsCollection.add(team.toEntity().toDocument());
     }
 
