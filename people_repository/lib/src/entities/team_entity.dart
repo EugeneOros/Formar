@@ -41,7 +41,6 @@ class TeamEntity extends Equatable {
       snap['name'],
       snap['capacity'],
       (snap['membersNames'] as List)?.map((item) => item as String)?.toList(),
-      // snap['membersNames'],
       snap.id,
     );
   }

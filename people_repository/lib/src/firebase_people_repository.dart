@@ -53,17 +53,9 @@ class FirebasePeopleRepository implements PeopleRepository {
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
     List<Person> people;
-    // peopleCollection.snapshots().map((snapshot) {
-    //    people = snapshot.docs
-    //       .map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc)))
-    //       .toList();
-    //    // print(people);
-    //   // people.sort((a, b) => a.level.index.compareTo(b.level.index));
-    // });
-
     QuerySnapshot querySnapshot = await peopleCollection.getDocuments();
     people = querySnapshot.documents.map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc))).toList();
-    print(people);
+    // print(people);
     return people;
   }
 

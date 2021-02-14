@@ -1,42 +1,37 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/ui/shared/colors.dart';
+import 'package:form_it/ui/widgets/loading.dart';
 
 class TeamsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context).size;
-    return Container(
-        height: size.height,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            // Colors are easy thanks to Flutter's Colors class.
+    return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
+      if (state is TeamsLoading) {
+        return Loading();
+      } else if (state is TeamsLoaded) {
+        final teams = state.teams;
+        return Container(
+            height: size.height,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                // Colors are easy thanks to Flutter's Colors class.
 
-            SecondaryAssentColor,
-            SecondaryColor,
-            SecondaryBlueColor,
-          ],
-        )),
-        child: CarouselSlider(
-          options: CarouselOptions(
-            height: 400,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: false,
-            reverse: false,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-          ),
-          items: [1, 2, 3, 4, 5].map((i) {
-            return Builder(
-              builder: (BuildContext context) {
+                SecondaryAssentColor,
+                SecondaryColor,
+                SecondaryBlueColor,
+              ],
+            )),
+            child: CarouselSlider.builder(
+              itemCount: teams.length,
+              itemBuilder: (context, index, i) {
+                final team = teams[index];
                 return Container(
                     padding: EdgeInsets.all(30.0),
                     width: MediaQuery.of(context).size.width,
@@ -52,13 +47,67 @@ class TeamsPage extends StatelessWidget {
                         ],
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         color: Colors.white),
-                    child: Text(
-                      'Team $i',
-                      style: TextStyle(fontSize: 16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          team.name,
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        Container(
+                          height: 200,
+                          child: ListView.builder(
+                            itemCount: team.membersNames.length,
+                            itemBuilder: (context, index) {
+                              final memberName = team.membersNames[index];
+                              return Text(memberName);
+                            },
+                          ),
+                        ),
+                      ],
                     ));
               },
-            );
-          }).toList(),
-        ));
+              options: CarouselOptions(
+                height: 400,
+                aspectRatio: 16 / 9,
+                viewportFraction: 0.8,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                reverse: false,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
+              // items: [1, 2, 3, 4, 5].map((i) {
+              //   return Builder(
+              //     builder: (BuildContext context) {
+              //       return Container(
+              //           padding: EdgeInsets.all(30.0),
+              //           width: MediaQuery.of(context).size.width,
+              //           margin: EdgeInsets.symmetric(horizontal: 5.0),
+              //           decoration: BoxDecoration(
+              //               boxShadow: [
+              //                 BoxShadow(
+              //                   color: Colors.grey.withOpacity(0.3),
+              //                   spreadRadius: 5,
+              //                   blurRadius: 7,
+              //                   offset: Offset(5, 5), // changes position of shadow
+              //                 )
+              //               ],
+              //               borderRadius: BorderRadius.all(Radius.circular(15)),
+              //               color: Colors.white),
+              //           child: Text(
+              //             'Team $i',
+              //             style: TextStyle(fontSize: 16.0),
+              //           ));
+              //     },
+              //   );
+              // }).toList(),
+            ));
+      } else {
+        return Container();
+      }
+    });
   }
 }

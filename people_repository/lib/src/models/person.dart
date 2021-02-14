@@ -95,7 +95,6 @@ class Person {
     if (b.length < a.length) min = b.length;
     for (int i = 0; i < min; ++i) {
       if (!lettersRusUk.contains(a[i]) || !lettersRusUk.contains(b[i])) {
-        print(a + " " + b);
         if (a.compareTo(b) == 0) continue;
         return a.compareTo(b);
       }
