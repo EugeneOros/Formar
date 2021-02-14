@@ -19,11 +19,11 @@ class FirebasePeopleRepository implements PeopleRepository {
   }
 
   @override
-  Future<void> addNewPerson(Person todo) async {
+  Future<void> addNewPerson(Person person) async {
     User user = _auth.currentUser;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
-    return peopleCollection.add(todo.toEntity().toDocument());
+    return peopleCollection.add(person.toEntity().toDocument());
   }
 
   @override
@@ -48,13 +48,28 @@ class FirebasePeopleRepository implements PeopleRepository {
     });
   }
 
+  List<Person> currentPeopleList() {
+    User user = _auth.currentUser;
+    CollectionReference peopleCollection = FirebaseFirestore.instance
+        .collection("users").doc(user.uid).collection("peoples");
+    List<Person> people;
+    peopleCollection.snapshots().map((snapshot) {
+       people = snapshot.docs
+          .map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc)))
+          .toList();
+      // people.sort((a, b) => a.level.index.compareTo(b.level.index));
+    });
+    return people;
+  }
+
+
   @override
-  Future<void> updatePerson(Person update) {
+  Future<void> updatePerson(Person person) {
     User user = _auth.currentUser;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
     return peopleCollection
-        .doc(update.id)
-        .update(update.toEntity().toDocument());
+        .doc(person.id)
+        .update(person.toEntity().toDocument());
   }
 }

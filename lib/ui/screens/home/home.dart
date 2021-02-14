@@ -28,36 +28,24 @@ class HomeScreen extends StatelessWidget {
 
     final List<List<Widget>> _actionsSet = [
       [
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.search, color: AppBarItemColor),
-            )),
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                BlocProvider.of<PeopleBloc>(context).add(
-                  TurnOffPeople(),
-                );
-              },
-              child: Icon(Icons.toggle_off_outlined, color: AppBarItemColor),
-            )),
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed("/add");
-              },
-              child: Icon(Icons.add, color: AppBarItemColor),
-            )),
-
-        // Column(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: <Widget>[
-        //       Center(child: Text('Welcome $name!',  style: TextStyle(color: AppBarItemColor))),
-        //     ])
+        IconButton(
+          icon: Icon(Icons.search, color: AppBarItemColor),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: Icon(Icons.toggle_off_outlined, color: AppBarItemColor),
+          onPressed: () {
+            BlocProvider.of<PeopleBloc>(context).add(
+              TurnOffPeople(),
+            );
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.add, color: AppBarItemColor),
+          onPressed: () {
+            Navigator.of(context).pushNamed("/add");
+          },
+        ),
       ],
       [
         Padding(
@@ -87,11 +75,12 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 70,
           shadowColor: Colors.transparent,
           backgroundColor: SecondaryAssentColor,
           title: SvgPicture.asset(
             'assets/logo_rounded_black.svg',
-            height: 35,
+            height: 45,
           ),
           //Text("Form It", style: TextStyle(color: AppBarItemColor)),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],

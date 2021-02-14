@@ -41,23 +41,20 @@ class Person {
     "щ",
     "ь",
     "ю",
-    "я",
+    "я"
   ];
 
-
-  Person(this.nickname, this.level, {this.available = false, String note = '', String id})
+  Person(this.nickname, this.level, {this.available = false, String id})
       : this.id = id;
 
-  Person copyWith({bool complete, String id, String note, Level level, String task}) {
+  Person copyWith({bool available, String id, Level level, String nickname}) {
     return Person(
-      task ?? this.nickname,
+      nickname ?? this.nickname,
       level ?? this.level,
-      available: complete ?? this.available,
+      available: available ?? this.available,
       id: id ?? this.id,
     );
   }
-
-
 
   @override
   int get hashCode =>
@@ -66,16 +63,16 @@ class Person {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Person &&
-              runtimeType == other.runtimeType &&
-              available == other.available &&
-              nickname == other.nickname &&
-              level == other.level &&
-              id == other.id;
+      other is Person &&
+          runtimeType == other.runtimeType &&
+          available == other.available &&
+          nickname == other.nickname &&
+          level == other.level &&
+          id == other.id;
 
   @override
   String toString() {
-    return 'Todo { complete: $available, task: $nickname, level: $level, id: $id }';
+    return 'Person { available: $available, nickname: $nickname, level: $level, id: $id }';
   }
 
   PeopleEntity toEntity() {
@@ -97,15 +94,15 @@ class Person {
     int min = a.length;
     if (b.length < a.length) min = b.length;
     for (int i = 0; i < min; ++i) {
-      if(!lettersRusUk.contains(a[i]) || !lettersRusUk.contains(b[i])){
+      if (!lettersRusUk.contains(a[i]) || !lettersRusUk.contains(b[i])) {
         print(a + " " + b);
-        if(a.compareTo(b) == 0)
-          continue;
+        if (a.compareTo(b) == 0) continue;
         return a.compareTo(b);
       }
       if (lettersRusUk.indexOf(a[i]) > lettersRusUk.indexOf(b[i]))
         return 1;
-      else if (lettersRusUk.indexOf(a[i]) < lettersRusUk.indexOf(b[i])) return -1;
+      else if (lettersRusUk.indexOf(a[i]) < lettersRusUk.indexOf(b[i]))
+        return -1;
     }
     if (a.length < b.length)
       return -1;

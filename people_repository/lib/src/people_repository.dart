@@ -12,5 +12,7 @@ abstract class PeopleRepository {
 
   Stream<List<Person>> people();
 
+  List<Person> currentPeopleList();
+
   Future<void> updatePerson(Person person);
 }

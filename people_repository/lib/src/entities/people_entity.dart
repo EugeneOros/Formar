@@ -21,7 +21,7 @@ class PeopleEntity extends Equatable {
 
   @override
   String toString() {
-    return 'TodoEntity { available: $available, nickname: $nickname level: $level, id: $id }';
+    return 'PersonEntity { available: $available, nickname: $nickname, level: $level, id: $id }';
   }
 
   static PeopleEntity fromJson(Map<String, Object> json) {

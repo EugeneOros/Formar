@@ -57,6 +57,10 @@ class FirebaseTeamRepository implements TeamRepository {
 
   @override
   Future<void> formTeams(Person todo) {
+    List<Person> people = peopleRepository.currentPeopleList();
+    people.sort((a, b) => a.level.index.compareTo(b.level.index));
+
+      // List<Person> list = peopleRepository.people();
 
   }
 }

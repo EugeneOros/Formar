@@ -62,7 +62,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
       final List<Person> availablePeople =
       currentState.people.where((person) => person.available).toList();
       availablePeople.forEach((person) {
-        _peopleRepository.updatePerson(person.copyWith(complete: !person.available));
+        _peopleRepository.updatePerson(person.copyWith(available: !person.available));
       });
     }
   }
@@ -84,7 +84,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
     if (currentState is PeopleLoaded) {
       final allComplete = currentState.people.every((todo) => todo.available);
       final List<Person> updatedPeople = currentState.people
-          .map((todo) => todo.copyWith(complete: !allComplete))
+          .map((todo) => todo.copyWith(available: !allComplete))
           .toList();
       updatedPeople.forEach((updatedTodo) {
         _peopleRepository.updatePerson(updatedTodo);

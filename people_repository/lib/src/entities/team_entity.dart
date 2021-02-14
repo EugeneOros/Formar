@@ -3,59 +3,53 @@ import 'package:equatable/equatable.dart';
 import 'package:people_repository/people_repository.dart';
 
 class TeamEntity extends Equatable {
-  final bool available;
   final String id;
-  final String nickname;
-  final Level level;
+  final String name;
+  final List<String> membersNames;
+  final int capacity;
 
-  TeamEntity(this.nickname, this.id,  this.level, this.available);
+  TeamEntity(this.name, this.capacity, this.membersNames, this.id);
 
   Map<String, Object> toJson() {
     return {
-      'available': available,
-      'nickname': nickname,
-      'level' : level,
+      'name': name,
+      'capacity': capacity,
+      'membersNames' : membersNames,
       'id': id,
     };
   }
 
   @override
   String toString() {
-    return 'TodoEntity { available: $available, nickname: $nickname level: $level, id: $id }';
+    return 'TeamEntity { name: $name, capacity: $capacity, membersNames: $membersNames, id: $id }';
   }
 
   static TeamEntity fromJson(Map<String, Object> json) {
     return TeamEntity(
-      json['nickname'] as String,
+      json['name'] as String,
+      json['capacity'] as int,
+      json['membersNames'] as List<String>,
       json['id'] as String,
-      json['level'] as Level,
-      json['available'] as bool,
     );
   }
 
   static TeamEntity fromSnapshot(DocumentSnapshot snap) {
-    Level level;
-    for(Level l in Level.values){
-      if(snap['level'] == l.toString()){
-        level = l;
-      }
-    }
     return TeamEntity(
-      snap['nickname'],
+      snap['name'],
+      snap['capacity'],
+      snap['membersNames'],
       snap.id,
-      level,
-      snap['available'],
     );
   }
 
   Map<String, Object> toDocument() {
     return {
-      'available': available,
-      'nickname': nickname,
-      'level': level.toString(),
+      'name': name,
+      'capacity': capacity,
+      'membersNames': membersNames,
     };
   }
 
   @override
-  List<Object> get props => [available, id, level, nickname];
+  List<Object> get props => [name, capacity, membersNames, id];
 }

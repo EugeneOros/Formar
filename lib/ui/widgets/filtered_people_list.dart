@@ -60,7 +60,7 @@ class FilteredPeopleList extends StatelessWidget {
                               onSave: (nickname, level) {
                                 BlocProvider.of<PeopleBloc>(context).add(
                                   UpdatePerson(
-                                    person.copyWith(task: nickname, level: level),
+                                    person.copyWith(nickname: nickname, level: level),
                                   ),
                                 );
                               },
@@ -87,7 +87,7 @@ class FilteredPeopleList extends StatelessWidget {
                     },
                     onSwitchChanged: (_) {
                       BlocProvider.of<PeopleBloc>(context).add(
-                        UpdatePerson(person.copyWith(complete: !person.available)),
+                        UpdatePerson(person.copyWith(available: !person.available)),
                       );
                     },
                   ),
