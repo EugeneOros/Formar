@@ -54,12 +54,16 @@ class TeamsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16.0),
                         ),
                         Container(
-                          height: 200,
+                          padding: EdgeInsets.only(top: 20),
+                          height: 3/10 * size.height,
                           child: ListView.builder(
                             itemCount: team.membersNames.length,
                             itemBuilder: (context, index) {
                               final memberName = team.membersNames[index];
-                              return Text(memberName);
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 5.0),
+                                child: Text(memberName, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300, ), overflow: TextOverflow.ellipsis,),
+                              );
                             },
                           ),
                         ),
@@ -67,9 +71,9 @@ class TeamsPage extends StatelessWidget {
                     ));
               },
               options: CarouselOptions(
-                height: 400,
+                height: 6/10 * size.height,
                 aspectRatio: 16 / 9,
-                viewportFraction: 0.8,
+                viewportFraction: 0.7,
                 initialPage: 0,
                 enableInfiniteScroll: false,
                 reverse: false,
@@ -79,31 +83,7 @@ class TeamsPage extends StatelessWidget {
                 enlargeCenterPage: true,
                 scrollDirection: Axis.horizontal,
               ),
-              // items: [1, 2, 3, 4, 5].map((i) {
-              //   return Builder(
-              //     builder: (BuildContext context) {
-              //       return Container(
-              //           padding: EdgeInsets.all(30.0),
-              //           width: MediaQuery.of(context).size.width,
-              //           margin: EdgeInsets.symmetric(horizontal: 5.0),
-              //           decoration: BoxDecoration(
-              //               boxShadow: [
-              //                 BoxShadow(
-              //                   color: Colors.grey.withOpacity(0.3),
-              //                   spreadRadius: 5,
-              //                   blurRadius: 7,
-              //                   offset: Offset(5, 5), // changes position of shadow
-              //                 )
-              //               ],
-              //               borderRadius: BorderRadius.all(Radius.circular(15)),
-              //               color: Colors.white),
-              //           child: Text(
-              //             'Team $i',
-              //             style: TextStyle(fontSize: 16.0),
-              //           ));
-              //     },
-              //   );
-              // }).toList(),
+
             ));
       } else {
         return Container();

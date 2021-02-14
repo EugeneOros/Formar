@@ -44,7 +44,7 @@ class Person {
     "я"
   ];
 
-  Person(this.nickname, this.level, {this.available = false, String id})
+  Person(this.nickname, this.level, {this.available = true, String id})
       : this.id = id;
 
   Person copyWith({bool available, String id, Level level, String nickname}) {

@@ -46,16 +46,17 @@ class FirebaseTeamRepository implements TeamRepository {
         .collection("users")
         .doc(user.uid)
         .collection("teams");
-    
+
     return teamsCollection.snapshots().map((snapshot) {
       List<Team> teams;
       teams = snapshot.docs
           .map((doc) => Team.fromEntity(TeamEntity.fromSnapshot(doc)))
           .toList();
       teams.sort((a, b) => a.name.compareTo(b.name));
-      return teams.reversed;
+      // print(teams);
+
+      return teams;
     });
-    
   }
 
   // @override
@@ -71,7 +72,10 @@ class FirebaseTeamRepository implements TeamRepository {
   Future<void> formTeams() async {
     User user = _auth.currentUser;
     int numMember = 6;
-    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
+    CollectionReference teamsCollection = FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .collection("teams");
     teamsCollection.get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
         ds.reference.delete();
@@ -79,13 +83,21 @@ class FirebaseTeamRepository implements TeamRepository {
     });
     List<Person> people = await peopleRepository.currentPeopleList();
     people.sort((a, b) => a.level.index.compareTo(b.level.index));
+    people = people.where((element) => element.available).toList();
     List<Team> teams = [];
-    for (int i = 0; i <= people.length / numMember; i++) {
-      teams.add(Team("Team" + i.toString(), numMember, membersNames: []));
+    int numTeams = (people.length / numMember).round();
+    // print(numTeams.toString());
+    for (int i = 0; i < numTeams; i++) {
+      teams.add(Team("Team" + (i + 1).toString(), numMember, membersNames: []));
+    }
+    int countTeam = 0;
+    for (Person person in people) {
+      if (countTeam >= numTeams) countTeam = 0;
+      teams[countTeam].membersNames.add(person.nickname);
+      countTeam++;
     }
 
     for (Team team in teams) {
-      team.membersNames.add("jo");
       teamsCollection.add(team.toEntity().toDocument());
     }
 

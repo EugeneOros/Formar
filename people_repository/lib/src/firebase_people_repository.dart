@@ -44,6 +44,8 @@ class FirebasePeopleRepository implements PeopleRepository {
           .map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc)))
           .toList();
       people.sort((a, b) => a.compareTo(a.nickname.toUpperCase(), b.nickname.toUpperCase()));
+      print(people);
+
       return people;
     });
   }
