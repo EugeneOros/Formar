@@ -64,7 +64,7 @@ class TabSelector extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
       decoration: BoxDecoration(
-        color: SecondaryBlueColor,
+        color:  AppTab.values.indexOf(activeTab) == 1 ? SecondaryPinkColor : SecondaryBlueColor,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(0), topRight: Radius.circular(0)),
       ),

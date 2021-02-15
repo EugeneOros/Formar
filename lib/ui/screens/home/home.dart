@@ -60,18 +60,18 @@ class HomeScreen extends StatelessWidget {
         )
       ],
       [
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              child: Icon(Icons.edit, color: AppBarItemColor),
-            ))
+        // Padding(
+        //     padding: EdgeInsets.only(right: 20.0),
+        //     child: GestureDetector(
+        //       child: Icon(Icons.edit, color: AppBarItemColor),
+        //     ))
       ],
       [
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              child: Icon(Icons.home, color: AppBarItemColor),
-            )),
+        // Padding(
+        //     padding: EdgeInsets.only(right: 20.0),
+        //     child: GestureDetector(
+        //       child: Icon(Icons.home, color: AppBarItemColor),
+        //     )),
       ]
     ];
     final tabBloc = BlocProvider.of<TabBloc>(context);

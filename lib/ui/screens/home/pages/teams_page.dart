@@ -24,8 +24,7 @@ class TeamsPage extends StatelessWidget {
                 // Colors are easy thanks to Flutter's Colors class.
 
                 SecondaryAssentColor,
-                SecondaryColor,
-                SecondaryBlueColor,
+                SecondaryPinkColor,
               ],
             )),
             child: CarouselSlider.builder(

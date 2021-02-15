@@ -61,14 +61,21 @@ class PersonItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        child: Text(person.nickname,
-                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, ), overflow: TextOverflow.ellipsis,),
+                        child: Text(
+                          person.nickname,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         width: size.width - 120,
                       ),
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 5.0, left: 1.0, bottom: 2.0 ),
+                            margin: EdgeInsets.only(
+                                right: 5.0, left: 1.0, bottom: 2.0),
                             alignment: Alignment.topCenter,
                             width: 10,
                             height: 10,
@@ -80,10 +87,11 @@ class PersonItem extends StatelessWidget {
                           Text(
                             person.level.toString().split('.').last,
                             style: TextStyle(
-                              fontFamily: 'Navicons',
+                              // fontFamily: 'Navicons',
                               fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black, //getLevelColor(person.level),
+                              fontWeight: FontWeight.w300,
+                              color:
+                                  Colors.black, //getLevelColor(person.level),
                             ),
                           ),
                         ],
