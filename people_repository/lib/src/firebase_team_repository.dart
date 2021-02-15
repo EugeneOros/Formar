@@ -17,28 +17,6 @@ class FirebaseTeamRepository implements TeamRepository {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // FirebaseUser user = await _auth.currentUser();
-  // final CollectionReference peopleCollection = FirebaseFirestore.instance.collection('todos');
-
-  // Future<CollectionReference> getPeopleCollection() async {
-  //   User user = _auth.currentUser;
-  //   return FirebaseFirestore.instance.collection(user.uid.toString());
-  // }
-
-  // @override
-  // Future<void> addNewPerson(Person todo) async {
-  //   User user = _auth.currentUser;
-  //   CollectionReference peopleCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("peoples");
-  //   return peopleCollection.add(todo.toEntity().toDocument());
-  // }
-
-  // @override
-  // Future<void> deletePerson(Person todo) async {
-  //   User user = _auth.currentUser;
-  //   CollectionReference peopleCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("peoples");
-  //   return peopleCollection.doc(todo.id).delete();
-  // }
-
   @override
   Stream<List<Team>> teams() {
     User user = _auth.currentUser;
@@ -59,48 +37,77 @@ class FirebaseTeamRepository implements TeamRepository {
     });
   }
 
-  // @override
-  // Future<void> updatePerson(Person update) {
-  //   User user = _auth.currentUser;
-  //   CollectionReference peopleCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("peoples");
-  //   return peopleCollection
-  //       .doc(update.id)
-  //       .update(update.toEntity().toDocument());
-  // }
-
   @override
   Future<void> formTeams() async {
     User user = _auth.currentUser;
     int numMember = 6;
-    CollectionReference teamsCollection = FirebaseFirestore.instance
-        .collection("users")
-        .doc(user.uid)
-        .collection("teams");
+    bool fairSort = false;
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
     teamsCollection.get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
         ds.reference.delete();
       }
     });
-    List<Person> people = await peopleRepository.currentPeopleList();
-    people.sort((a, b) => a.level.index.compareTo(b.level.index));
-    people = people.where((element) => element.available).toList();
-    List<Team> teams = [];
-    int numTeams = (people.length / numMember).round();
-    // print(numTeams.toString());
-    for (int i = 0; i < numTeams; i++) {
-      teams.add(Team("Team" + (i + 1).toString(), numMember, membersNames: []));
+    List<Person> peopleOld = await peopleRepository.currentPeopleList();
+    peopleOld = peopleOld.where((element) => element.available).toList();
+    peopleOld.sort((a, b) => a.level.index.compareTo(b.level.index));
+    peopleOld = peopleOld.reversed.toList();
+    List<Person> people = [];
+    for( Level level in Level.values){
+      // print(level);
+      people.addAll(peopleOld.where((element) => element.level == level).toList()..shuffle());
     }
-    int countTeam = 0;
+    people = people.reversed.toList();
+
+    List<Team> teams = [];
+    int numTeams;
+    if(fairSort)
+      numTeams = (people.length / numMember).ceil();
+    else
+      numTeams = (people.length / numMember).floor();
+    print(numTeams.toString());
+    for (int i = 0; i < numTeams; i++) {
+      teams.add(Team("Team " + (i + 1).toString(), 0, membersNames: []));
+    }
+
+    int indexTeam = 0;
+    print(people);
     for (Person person in people) {
-      if (countTeam >= numTeams) countTeam = 0;
-      teams[countTeam].membersNames.add(person.nickname);
-      countTeam++;
+      if (indexTeam >= numTeams) {
+        indexTeam = 0;
+        teams.sort((a, b) => a.getPower().compareTo(b.getPower()));
+        // print(teams);
+      }
+      int countFull = 0;
+      while(teams[indexTeam].membersNames.length >= numMember){
+        indexTeam++;
+        countFull++;
+        if (indexTeam >= numTeams) {
+          indexTeam = 0;
+        }
+        if(countFull >= numTeams) {
+          break;
+        }
+      }
+      if(countFull >= numTeams) {
+        break;
+      }
+      teams[indexTeam].membersNames.add(person.nickname);
+      teams[indexTeam].increasePower(person.level.index + 1);
+      indexTeam++;
+    }
+    if(fairSort == false &&  people.length % numMember != 0){
+      List<String> membersNames = [];
+      int power = 0;
+      for(int i = people.length - people.length % numMember; i < people.length; i++){
+        membersNames.add(people[i].nickname);
+        power += people[i].level.index;
+      }
+      teams.add(Team("Replacement", power, membersNames: membersNames));
     }
 
     for (Team team in teams) {
       teamsCollection.add(team.toEntity().toDocument());
     }
-
-    // List<Person> list = peopleRepository.people();
   }
 }
