@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
+import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 
 import 'pages/people_page.dart';
@@ -49,15 +51,82 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
       [
-        IconButton(
-          icon: Icon(Icons.settings_backup_restore_rounded,
-              color: AppBarItemColor),
-          onPressed: () {
-            BlocProvider.of<TeamsBloc>(context).add(
-              FormTeams(),
+        BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+          if (state is PeopleLoaded) {
+            final double avarageTeamMember = state.people.length /(state.people.length / 6).ceil();
+            return IconButton(
+              icon: Icon(Icons.settings_backup_restore_rounded,
+                  color: AppBarItemColor),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Chose format"),
+                      content: Row(children: [
+                        RoundedButton(
+                          text: avarageTeamMember.floor().toString() +
+                              "-" +
+                              avarageTeamMember.ceil().toString(),
+                          onPressed: () {},
+                          sizeRatio: 0.3,
+                        ),
+                      ]),
+                    );
+                  },
+                );
+              },
             );
-          },
-        )
+          }
+          return Padding();
+        }),
+        // IconButton(
+        //   icon: Icon(Icons.settings_backup_restore_rounded,
+        //       color: AppBarItemColor),
+        //   onPressed: () {
+        //     BlocListener<PeopleBloc, PeopleState>(
+        //       listener: (context, state) {
+        //         // if (state is PeopleLoaded) {
+        //         showDialog(
+        //           context: context,
+        //           builder: (BuildContext context) {
+        //             return AlertDialog(
+        //               title: Text("Chose format"),
+        //               content: Row(children: [
+        //                 RoundedButton(
+        //                     text: "3-4", onPressed: () {}, sizeRatio: 0.3),
+        //               ]),
+        //             );
+        //           },
+        //         );
+        //       },
+        //     );
+        //     // showDialog(
+        //     //     context: context,
+        //     //     builder: (BuildContext context) {
+        //     //       return AlertDialog(
+        //     //         title: Text("Chose format"),
+        //     //         content: Row(
+        //     //           children: [
+        //     //             RoundedButton(
+        //     //               text: "3-4",
+        //     //               onPressed: () {},
+        //     //               sizeRatio: 0.3,
+        //     //             ),
+        //     //           ],
+        //     //         ),
+        //     //         actions: <Widget>[
+        //     //           FlatButton(
+        //     //             child: Text('Cancel'),
+        //     //             onPressed: () {
+        //     //               Navigator.of(context).pop();
+        //     //             },
+        //     //           )
+        //     //         ],
+        //     //       );
+        //     //     });
+        //   },
+        // ),
       ],
       [
         // Padding(
