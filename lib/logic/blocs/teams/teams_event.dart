@@ -10,7 +10,15 @@ abstract class TeamsEvent extends Equatable {
 
 class LoadTeams extends TeamsEvent {}
 
-class FormTeams extends TeamsEvent {}
+class FormTeams extends TeamsEvent {
+  final bool isBalanced;
+
+  const FormTeams(this.isBalanced);
+
+  @override
+  List<Object> get props => [isBalanced];
+
+}
 
 class TeamsUpdated extends TeamsEvent {
   final List<Team> teams;

@@ -12,5 +12,5 @@ abstract class TeamRepository {
 
   // Future<void> updatePerson(Person todo);
 
-  Future<void> formTeams();
+  Future<void> formTeams( bool isBalanced);
 }

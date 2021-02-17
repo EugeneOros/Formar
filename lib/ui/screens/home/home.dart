@@ -9,6 +9,7 @@ import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
+import 'package:people_repository/people_repository.dart';
 
 import 'pages/people_page.dart';
 import 'pages/teams_page.dart';
@@ -28,6 +29,33 @@ class HomeScreen extends StatelessWidget {
       TournamentPage(),
       SettingsPage()
     ];
+
+    String _getTeamCountString(
+        List<Person> people, int memberCount, bool isBalanced) {
+      int availablePeopleCount =
+          people.where((element) => element.available).length;
+      double averageTeamCount = (availablePeopleCount / memberCount);
+      double averageMemberCount =
+          availablePeopleCount / averageTeamCount.ceil();
+      if (isBalanced) {
+        if (availablePeopleCount % averageTeamCount.ceil() == 0)
+          return averageTeamCount.ceil().toString() +
+              " teams of " +
+              averageMemberCount.round().toString() +
+              " people";
+        return averageTeamCount.ceil().toString() +
+            " teams of " +
+            averageMemberCount.floor().toString() +
+            "-" +
+            averageMemberCount.ceil().toString() +
+            " people";
+      } else {
+        return averageTeamCount.floor().toString() +
+            " teams of " +
+            memberCount.toString() +
+            " people + Replacement";
+      }
+    }
 
     final List<List<Widget>> _actionsSet = [
       [
@@ -53,25 +81,59 @@ class HomeScreen extends StatelessWidget {
       [
         BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
           if (state is PeopleLoaded) {
-            final double avarageTeamMember = state.people.length /(state.people.length / 6).ceil();
+            // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
             return IconButton(
               icon: Icon(Icons.settings_backup_restore_rounded,
                   color: AppBarItemColor),
               onPressed: () {
+                if (state.people.where((element) => element.available).length /
+                        6 <
+                    2) {
+                  BlocProvider.of<TeamsBloc>(context).add(FormTeams(true));
+                  return;
+                }
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Chose format"),
-                      content: Row(children: [
-                        RoundedButton(
-                          text: avarageTeamMember.floor().toString() +
-                              "-" +
-                              avarageTeamMember.ceil().toString(),
-                          onPressed: () {},
-                          sizeRatio: 0.3,
+                      title: Text("Chose option", style: TextStyle(fontSize: 23, ),textAlign: TextAlign.center,),
+                      content: Container(
+                        height: 170,
+                        child: Column(children: [
+                          RoundedButton(
+                            text: _getTeamCountString(state.people, 6, true),
+                            onPressed: () {
+                              BlocProvider.of<TeamsBloc>(context)
+                                  .add(FormTeams(true));
+                              Navigator.of(context).pop();
+                            },
+                            sizeRatio: null,
+                            textColor: Colors.black,
+                            color: SecondaryColor,
+                            marginVertical: 10.0,
+                          ),
+                          RoundedButton(
+                            text: _getTeamCountString(state.people, 6, false),
+                            onPressed: () {
+                              BlocProvider.of<TeamsBloc>(context)
+                                  .add(FormTeams(false));
+                              Navigator.of(context).pop();
+                            },
+                            sizeRatio: null,
+                            textColor: Colors.black,
+                            color: SecondaryColor,
+                            marginVertical: 10.0,
+                          ),
+                        ]),
+                      ),
+                      actions: [
+                        FlatButton(
+                          child: Text("Cancel", style: TextStyle(color: Colors.black),),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                      ]),
+                      ],
                     );
                   },
                 );
@@ -80,69 +142,11 @@ class HomeScreen extends StatelessWidget {
           }
           return Padding();
         }),
-        // IconButton(
-        //   icon: Icon(Icons.settings_backup_restore_rounded,
-        //       color: AppBarItemColor),
-        //   onPressed: () {
-        //     BlocListener<PeopleBloc, PeopleState>(
-        //       listener: (context, state) {
-        //         // if (state is PeopleLoaded) {
-        //         showDialog(
-        //           context: context,
-        //           builder: (BuildContext context) {
-        //             return AlertDialog(
-        //               title: Text("Chose format"),
-        //               content: Row(children: [
-        //                 RoundedButton(
-        //                     text: "3-4", onPressed: () {}, sizeRatio: 0.3),
-        //               ]),
-        //             );
-        //           },
-        //         );
-        //       },
-        //     );
-        //     // showDialog(
-        //     //     context: context,
-        //     //     builder: (BuildContext context) {
-        //     //       return AlertDialog(
-        //     //         title: Text("Chose format"),
-        //     //         content: Row(
-        //     //           children: [
-        //     //             RoundedButton(
-        //     //               text: "3-4",
-        //     //               onPressed: () {},
-        //     //               sizeRatio: 0.3,
-        //     //             ),
-        //     //           ],
-        //     //         ),
-        //     //         actions: <Widget>[
-        //     //           FlatButton(
-        //     //             child: Text('Cancel'),
-        //     //             onPressed: () {
-        //     //               Navigator.of(context).pop();
-        //     //             },
-        //     //           )
-        //     //         ],
-        //     //       );
-        //     //     });
-        //   },
-        // ),
       ],
-      [
-        // Padding(
-        //     padding: EdgeInsets.only(right: 20.0),
-        //     child: GestureDetector(
-        //       child: Icon(Icons.edit, color: AppBarItemColor),
-        //     ))
-      ],
-      [
-        // Padding(
-        //     padding: EdgeInsets.only(right: 20.0),
-        //     child: GestureDetector(
-        //       child: Icon(Icons.home, color: AppBarItemColor),
-        //     )),
-      ]
+      [],
+      []
     ];
+
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(

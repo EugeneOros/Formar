@@ -36,7 +36,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
     }  else if (event is TeamsUpdated) {
       yield* _mapTeamsUpdateToState(event);
     }else if (event is FormTeams) {
-      yield* _mapFormTeamsToState();
+      yield* _mapFormTeamsToState(event);
     }
   }
 
@@ -51,8 +51,8 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
     yield TeamsLoaded(event.teams);
   }
 
-  Stream<TeamsState> _mapFormTeamsToState() async* {
-    _teamsRepository.formTeams();
+  Stream<TeamsState> _mapFormTeamsToState(FormTeams event) async* {
+    _teamsRepository.formTeams(event.isBalanced);
   }
 
   @override

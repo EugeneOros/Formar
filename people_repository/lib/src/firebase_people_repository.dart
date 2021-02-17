@@ -55,8 +55,6 @@ class FirebasePeopleRepository implements PeopleRepository {
     List<Person> people;
     QuerySnapshot querySnapshot = await peopleCollection.getDocuments();
     people = querySnapshot.documents.map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc))).toList();
-    print(people);
-    print(user.email);
     return people;
   }
 
