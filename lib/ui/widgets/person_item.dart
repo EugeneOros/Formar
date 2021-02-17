@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import 'delete_people_snack_bar.dart';
 
@@ -38,10 +40,29 @@ class PersonItem extends StatelessWidget {
         return Colors.black;
     }
   }
+  String getLevelName(Level level, BuildContext context) {
+    switch (level) {
+      case Level.beginner:
+        return AppLocalizations.of(context).beginner;
+      case Level.intermediate:
+        return AppLocalizations.of(context).intermediate;
+      case Level.proficient:
+        return AppLocalizations.of(context).proficient;
+      case Level.advanced:
+        return AppLocalizations.of(context).advanced;
+      case Level.expert:
+        return AppLocalizations.of(context).expert;
+      default:
+        return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context).size;
+    Size size = MediaQuery
+        .maybeOf(context)
+        .size;
+
     return Column(
       children: [
         Slidable(
@@ -51,7 +72,7 @@ class PersonItem extends StatelessWidget {
             margin: EdgeInsets.only(right: 20.0, left: 20.0),
             decoration: BoxDecoration(
               border:
-                  Border(bottom: BorderSide(color: SecondaryColor, width: 1.5)),
+              Border(bottom: BorderSide(color: SecondaryColor, width: 1.5)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -84,14 +105,16 @@ class PersonItem extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          Text(
-                            person.level.toString().split('.').last,
+                          Text(getLevelName(person.level, context),
+                            // person.level
+                            //     .toString()
+                            //     .split('.')
+                            //     .last,
                             style: TextStyle(
-                              // fontFamily: 'Navicons',
                               fontSize: 15.0,
                               fontWeight: FontWeight.w300,
                               color:
-                                  Colors.black, //getLevelColor(person.level),
+                              Colors.black, //getLevelColor(person.level),
                             ),
                           ),
                         ],
@@ -121,13 +144,13 @@ class PersonItem extends StatelessWidget {
           ),
           secondaryActions: <Widget>[
             IconSlideAction(
-              caption: "Edit",
+              caption: AppLocalizations.of(context).edit,
               color: SecondaryColor,
               icon: Icons.edit,
               onTap: onEdit,
             ),
             IconSlideAction(
-              caption: "Delete",
+              caption: AppLocalizations.of(context).delete,
               color: Colors.black,
               icon: Icons.delete,
               onTap: () => onDelete(),

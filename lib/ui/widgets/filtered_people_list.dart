@@ -70,20 +70,6 @@ class FilteredPeopleList extends StatelessWidget {
                           },
                         ),
                       );
-                      // final removedTodo = await Navigator.of(context).push(
-                      //   MaterialPageRoute(builder: (_) {
-                      //     return DetailsScreen(id: todo.id);
-                      //   }),
-                      // );
-                      // if (removedTodo != null) {
-                      //   Scaffold.of(context).showSnackBar(
-                      //     DeletePersonSnackBar(
-                      //       todo: todo,
-                      //       onUndo: () => BlocProvider.of<PeopleBloc>(context)
-                      //           .add(AddPerson(todo)),
-                      //     ),
-                      //   );
-                      // }
                     },
                     onSwitchChanged: (_) {
                       BlocProvider.of<PeopleBloc>(context).add(

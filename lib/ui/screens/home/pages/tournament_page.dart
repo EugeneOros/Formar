@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TournamentPage extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class TournamentPage extends StatelessWidget {
           ),
         ),
         child: Text(
-          "Not Available",
+          AppLocalizations.of(context).notAvailable,
           style: TextStyle(
               color: PrimaryColor,
               fontWeight: FontWeight.w800,

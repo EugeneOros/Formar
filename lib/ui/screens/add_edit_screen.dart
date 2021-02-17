@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:people_repository/people_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef OnSaveCallback = Function(String nickname, Level level);
 
@@ -74,11 +75,12 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
-                  isEditing ? "Edit Person" : "Add person",
+                  isEditing ? AppLocalizations.of(context).editPerson : AppLocalizations.of(context).addPerson,
                   style: TextStyle(
-                      fontFamily: 'Navicons',
                       fontSize: 30.0,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               TextFormField(
@@ -86,7 +88,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 initialValue: isEditing ? widget.person.nickname : '',
                 autofocus: !isEditing,
                 decoration: InputDecoration(
-                  hintText: 'Enter person nickname',
+                  hintText: AppLocalizations.of(context).enterNickname,
                   filled: true,
                   fillColor: Colors.white,
                   prefixIcon: Icon(Icons.person, color: PrimaryColor),
@@ -95,7 +97,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   enabledBorder: borderRoundedTransparent,
                 ),
                 validator: (val) {
-                  return val.trim().isEmpty ? 'Please enter some text' : null;
+                  return val.trim().isEmpty ? AppLocalizations.of(context).enterSomeText : null;
                 },
                 onSaved: (value) => _task = value,
               ),
@@ -107,33 +109,33 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     value: Level.beginner,
                     groupValue: widget._groutValue,
                     activeColor: BeginnerColor,
-                    title: Text("Beginner"),
+                    title: Text(AppLocalizations.of(context).beginner),
                   ),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.intermediate,
                       groupValue: widget._groutValue,
                       activeColor: IntermediateColor,
-                      title: Text("Intermediate", style: TextStyle(fontFamily: 'Navicons'),)),
+                      title: Text(AppLocalizations.of(context).intermediate)),
                   RadioListTile(
                     onChanged: (Level e) => onRadioChanged(e),
                     value: Level.proficient,
                     groupValue: widget._groutValue,
                     activeColor: ProficientColor,
-                    title: Text("Proficient"),
+                    title: Text(AppLocalizations.of(context).proficient),
                   ),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.advanced,
                       groupValue: widget._groutValue,
                       activeColor: AdvancedColor,
-                      title: Text("Advanced", style: TextStyle(fontFamily: 'Navicons'),)),
+                      title: Text(AppLocalizations.of(context).advanced)),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.expert,
                       groupValue: widget._groutValue,
                       activeColor: ExpertColor,
-                      title: Text("Expert", style: TextStyle(fontFamily: 'Navicons'),)),
+                      title: Text(AppLocalizations.of(context).expert)),
                 ],
               )
               // TextFormField(

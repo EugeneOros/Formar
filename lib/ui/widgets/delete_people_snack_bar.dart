@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeletePersonSnackBar extends SnackBar {
   DeletePersonSnackBar({
@@ -10,7 +11,7 @@ class DeletePersonSnackBar extends SnackBar {
   }) : super(
           key: key,
           content: Text(
-            'Deleted ${todo.nickname}',
+            'Deleted ${todo.nickname}', //AppLocalizations.of().deleted +
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -22,4 +23,5 @@ class DeletePersonSnackBar extends SnackBar {
             onPressed: onUndo,
           ),
         );
+
 }

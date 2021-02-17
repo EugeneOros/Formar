@@ -65,6 +65,82 @@
   },
   "errorEmail": "Please enter an email",
   "@errorEmail": {
-    "description": "Settings label for Bottom navigation bar"
+    "description": "error Email"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": ""
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": ""
+  },
+  "deleted": "deleted",
+  "@deleted": {
+    "description": ""
+  },
+  "undo": "undo",
+  "@undo": {
+    "description": ""
+  },
+  "addPerson": "Add Person",
+  "@addPerson": {
+    "description": ""
+  },
+  "enterNickname": "Enter person nickname",
+  "@enterNickname": {
+    "description": ""
+  },
+  "enterSomeText": "Please enter some text",
+  "@enterSomeText": {
+    "description": ""
+  },
+  "editPerson": "Edit Person",
+  "@editPerson": {
+    "description": ""
+  },
+  "beginner": "beginner",
+  "@beginner": {
+    "description": ""
+  },
+  "intermediate": "intermediate",
+  "@intermediate": {
+    "description": ""
+  },
+  "proficient": "proficient",
+  "@proficient": {
+    "description": ""
+  },
+  "advanced": "advanced",
+  "@advanced": {
+    "description": ""
+  },
+  "expert": "expert",
+  "@expert": {
+    "description": ""
+  },
+  "choseOption": "Chose option",
+  "@choseOption": {
+    "description": ""
+  },
+  "teamsOf": "teams of",
+  "@teamsOf": {
+    "description": ""
+  },
+  "replacement": "Replacement",
+  "@replacement": {
+    "description": ""
+  },
+  "peopleTeam": "people",
+  "@peopleTeam": {
+    "description": ""
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": ""
+  },
+  "notAvailable": "Not Available",
+  "@notAvailable": {
+    "description": ""
   }
 }

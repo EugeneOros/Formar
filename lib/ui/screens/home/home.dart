@@ -10,6 +10,8 @@ import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:people_repository/people_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import 'pages/people_page.dart';
 import 'pages/teams_page.dart';
@@ -40,20 +42,20 @@ class HomeScreen extends StatelessWidget {
       if (isBalanced) {
         if (availablePeopleCount % averageTeamCount.ceil() == 0)
           return averageTeamCount.ceil().toString() +
-              " teams of " +
+              " " + AppLocalizations.of(context).teamsOf + " " +
               averageMemberCount.round().toString() +
-              " people";
+              " " + AppLocalizations.of(context).peopleTeam;
         return averageTeamCount.ceil().toString() +
-            " teams of " +
+            " " + AppLocalizations.of(context).teamsOf + " " +
             averageMemberCount.floor().toString() +
             "-" +
             averageMemberCount.ceil().toString() +
-            " people";
+            " " + AppLocalizations.of(context).peopleTeam;
       } else {
         return averageTeamCount.floor().toString() +
-            " teams of " +
+            " " + AppLocalizations.of(context).teamsOf + " " +
             memberCount.toString() +
-            " people + Replacement";
+            " " + AppLocalizations.of(context).peopleTeam + " + " + AppLocalizations.of(context).replacement;
       }
     }
 
@@ -83,7 +85,8 @@ class HomeScreen extends StatelessWidget {
           if (state is PeopleLoaded) {
             // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
             return IconButton(
-              icon: Icon(Icons.settings_backup_restore_rounded,
+              icon: Icon(Icons.replay_rounded//workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
+              ,
                   color: AppBarItemColor),
               onPressed: () {
                 if (state.people.where((element) => element.available).length /
@@ -96,9 +99,9 @@ class HomeScreen extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Chose option", style: TextStyle(fontSize: 23, ),textAlign: TextAlign.center,),
+                      title: Text(AppLocalizations.of(context).choseOption, style: TextStyle(fontSize: 23, ),textAlign: TextAlign.center,),
                       content: Container(
-                        height: 170,
+                        height: 200,
                         child: Column(children: [
                           RoundedButton(
                             text: _getTeamCountString(state.people, 6, true),
@@ -128,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       actions: [
                         FlatButton(
-                          child: Text("Cancel", style: TextStyle(color: Colors.black),),
+                          child: Text(AppLocalizations.of(context).cancel, style: TextStyle(color: Colors.black),),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
