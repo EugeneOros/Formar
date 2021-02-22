@@ -23,5 +23,4 @@ class DeletePersonSnackBar extends SnackBar {
             onPressed: onUndo,
           ),
         );
-
 }

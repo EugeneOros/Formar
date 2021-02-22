@@ -9,7 +9,7 @@ import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/ui/screens/add_edit_screen.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:form_it/ui/widgets/person_item.dart';
+import 'package:form_it/ui/widgets/item_person.dart';
 
 import 'delete_people_snack_bar.dart';
 import 'loading.dart';
