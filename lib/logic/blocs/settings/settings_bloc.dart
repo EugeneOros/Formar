@@ -1,23 +1,58 @@
+import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:user_repository/user_repository.dart';
+import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
+import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:meta/meta.dart';
+import 'package:form_it/logic/blocs/people/bloc.dart';
+import 'package:people_repository/people_repository.dart';
 
-import 'settings_event.dart';
-import 'settings_state.dart';
+import 'bloc.dart';
 
-class LoginBloc extends Bloc<SettingsEvent, SettingsState> {
-  final UserRepository _authService;
+class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
+  final SettingsRepository _settingsRepository;
+  StreamSubscription _settingsSubscription;
+  StreamSubscription _authenticationSubscription;
+  final AuthenticationBloc _authenticationBloc;
 
-  LoginBloc({@required UserRepository authService})
-      : assert(UserRepository != null),
-        _authService = authService,
-        super(LogOutInitialState());
+
+  SettingsBloc(
+      {@required SettingsRepository settingsRepository, @required AuthenticationBloc authenticationBloc})
+      : assert(settingsRepository != null),
+        _authenticationBloc = authenticationBloc,
+        _settingsRepository = settingsRepository,
+        super(SettingsLoading()) {
+    _authenticationSubscription = authenticationBloc.listen((state) {
+      if (state is AuthenticationStateAuthenticated) {
+        add(LoadSettings());
+      }
+    });
+  }
+
 
   @override
   Stream<SettingsState> mapEventToState(SettingsEvent event) async* {
-    if(event is LogOutButtonPressedEvent){
-      await _authService.signOut();
-      yield LogOutSuccessfulState();
+    if (event is LoadSettings) {
+      yield* _mapLoadSettingsToState();
+    }  else if (event is SettingsUpdated) {
+      yield* _mapSettingsUpdateToState(event);
     }
+  }
+
+  Stream<SettingsState> _mapLoadSettingsToState() async* {
+    _settingsSubscription?.cancel();
+    _settingsSubscription = _settingsRepository.settings().listen(
+          (settings) => add(SettingsUpdated(settings)),
+    );
+  }
+
+  Stream<SettingsState> _mapSettingsUpdateToState(SettingsUpdated event) async* {
+    yield SettingsLoaded(event.settings);
+  }
+
+  @override
+  Future<void> close() {
+    _settingsSubscription?.cancel();
+    _authenticationSubscription?.cancel();
+    return super.close();
   }
 }

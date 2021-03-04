@@ -12,7 +12,6 @@ import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:people_repository/people_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 import 'pages/people_page.dart';
 import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
@@ -42,20 +41,31 @@ class HomeScreen extends StatelessWidget {
       if (isBalanced) {
         if (availablePeopleCount % averageTeamCount.ceil() == 0)
           return averageTeamCount.ceil().toString() +
-              " " + AppLocalizations.of(context).teamsOf + " " +
+              " " +
+              AppLocalizations.of(context).teamsOf +
+              " " +
               averageMemberCount.round().toString() +
-              " " + AppLocalizations.of(context).peopleTeam;
+              " " +
+              AppLocalizations.of(context).peopleTeam;
         return averageTeamCount.ceil().toString() +
-            " " + AppLocalizations.of(context).teamsOf + " " +
+            " " +
+            AppLocalizations.of(context).teamsOf +
+            " " +
             averageMemberCount.floor().toString() +
             "-" +
             averageMemberCount.ceil().toString() +
-            " " + AppLocalizations.of(context).peopleTeam;
+            " " +
+            AppLocalizations.of(context).peopleTeam;
       } else {
         return averageTeamCount.floor().toString() +
-            " " + AppLocalizations.of(context).teamsOf + " " +
+            " " +
+            AppLocalizations.of(context).teamsOf +
+            " " +
             memberCount.toString() +
-            " " + AppLocalizations.of(context).peopleTeam + " + " + AppLocalizations.of(context).replacement;
+            " " +
+            AppLocalizations.of(context).peopleTeam +
+            " + " +
+            AppLocalizations.of(context).replacement;
       }
     }
 
@@ -85,13 +95,13 @@ class HomeScreen extends StatelessWidget {
           if (state is PeopleLoaded) {
             // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
             return IconButton(
-              icon: Icon(Icons.replay_rounded//workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
-              ,
+              icon: Icon(
+                  Icons.replay_rounded
+                  //workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
+                  ,
                   color: AppBarItemColor),
               onPressed: () {
-                if (state.people.where((element) => element.available).length /
-                        6 <
-                    2) {
+                if ((state.people.where((element) => element.available).length / 6 < 2) || (state.people.where((element) => element.available).length % 6 == 0)) {
                   BlocProvider.of<TeamsBloc>(context).add(FormTeams(true));
                   return;
                 }
@@ -99,7 +109,13 @@ class HomeScreen extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text(AppLocalizations.of(context).choseOption, style: TextStyle(fontSize: 23, ),textAlign: TextAlign.center,),
+                      title: Text(
+                        AppLocalizations.of(context).choseOption,
+                        style: TextStyle(
+                          fontSize: 23,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       content: Container(
                         height: 200,
                         child: Column(children: [
@@ -131,7 +147,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                       actions: [
                         FlatButton(
-                          child: Text(AppLocalizations.of(context).cancel, style: TextStyle(color: Colors.black),),
+                          child: Text(
+                            AppLocalizations.of(context).cancel,
+                            style: TextStyle(color: Colors.black),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },

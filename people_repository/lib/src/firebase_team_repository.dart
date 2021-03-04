@@ -50,7 +50,7 @@ class FirebaseTeamRepository implements TeamRepository {
     if(people.length < 2)
       return;
 
-    if(!isBalanced && people.length / numMember > 2){
+    if(!isBalanced && people.length / numMember >= 2){
         teams = _createTeams((people.length / numMember).floor());
         teams = _sortPeopleToTeams(people.sublist(0,people.length-(people.length%numMember)), teams);
         if(people.length % numMember != 0 && people.length / numMember > 2){
