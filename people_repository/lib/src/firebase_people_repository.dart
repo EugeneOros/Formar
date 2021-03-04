@@ -7,7 +7,6 @@ import 'entities/entities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebasePeopleRepository implements PeopleRepository {
-  // final FirebaseAuth _auth = ;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // FirebaseUser user = await _auth.currentUser();
