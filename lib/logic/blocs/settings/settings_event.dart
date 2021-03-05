@@ -10,6 +10,19 @@ abstract class SettingsEvent extends Equatable {
 
 class LoadSettings extends SettingsEvent {}
 
+
+class UpdateSettings extends SettingsEvent {
+  final UserSettings updatedSettings;
+
+  const UpdateSettings(this.updatedSettings);
+
+  @override
+  List<Object> get props => [updatedSettings];
+
+  @override
+  String toString() => 'UpdateSettings { updatedSettings: $updatedSettings }';
+}
+
 class SettingsUpdated extends SettingsEvent {
   final UserSettings settings;
 

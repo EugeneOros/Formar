@@ -16,6 +16,7 @@ import 'package:people_repository/people_repository.dart';
 
 import 'logic/blocs/authentication/authentication_event.dart';
 import 'logic/blocs/people/bloc.dart';
+import 'logic/blocs/settings/bloc.dart';
 import 'logic/blocs/tab/tab_bloc.dart';
 import 'logic/blocs/teams/bloc.dart';
 import 'logic/localizations/constants.dart';
@@ -155,6 +156,14 @@ class _FormItAppState extends State<FormItApp> {
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
             teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
           )..add(LoadTeams());
+        },
+      ),
+      BlocProvider<SettingsBloc>(
+        create: (context) {
+          return SettingsBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+            settingsRepository: FirebaseSettingsRepository(),
+          )..add(LoadSettings());
         },
       ),
       // BlocProvider<FilteredPeopleBloc>(

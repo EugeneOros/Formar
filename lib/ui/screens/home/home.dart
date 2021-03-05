@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
+import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
@@ -92,75 +93,88 @@ class HomeScreen extends StatelessWidget {
       ],
       [
         BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+
           if (state is PeopleLoaded) {
+
+            return BlocBuilder<SettingsBloc, SettingsState>(
+                builder: (settingsContext, settingsState) {
+                  if (settingsState is SettingsLoaded) {
+                    var counterTeamMembers = settingsState.settings.counterTeamMembers;
+                    return IconButton(
+                        icon: Icon(
+                            Icons.replay_rounded
+                            //workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
+                            ,
+                            color: AppBarItemColor),
+                        onPressed: () {
+                          if ((state.people.where((element) => element.available).length / counterTeamMembers < 2) ||
+                              (state.people.where((element) => element.available).length % counterTeamMembers == 0)) {
+                            BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers));
+                            return;
+                          }
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  AppLocalizations.of(context).choseOption,
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: Container(
+                                  height: 200,
+                                  child: Column(children: [
+                                    RoundedButton(
+                                      text:
+                                      _getTeamCountString(state.people, counterTeamMembers, true),
+                                      onPressed: () {
+                                        BlocProvider.of<TeamsBloc>(context)
+                                            .add(FormTeams(true, counterTeamMembers));
+                                        Navigator.of(context).pop();
+                                      },
+                                      sizeRatio: null,
+                                      textColor: Colors.black,
+                                      color: SecondaryColor,
+                                      marginVertical: 10.0,
+                                    ),
+                                    RoundedButton(
+                                      text:
+                                      _getTeamCountString(state.people, counterTeamMembers, false),
+                                      onPressed: () {
+                                        BlocProvider.of<TeamsBloc>(context)
+                                            .add(FormTeams(false, counterTeamMembers));
+                                        Navigator.of(context).pop();
+                                      },
+                                      sizeRatio: null,
+                                      textColor: Colors.black,
+                                      color: SecondaryColor,
+                                      marginVertical: 10.0,
+                                    ),
+                                  ]),
+                                ),
+                                actions: [
+                                  FlatButton(
+                                    child: Text(
+                                      AppLocalizations.of(context).cancel,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                    );// return settingsState.settings.counterTeamMembers;
+                  }
+                  return Padding();
+                });
             // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
-            return IconButton(
-              icon: Icon(
-                  Icons.replay_rounded
-                  //workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
-                  ,
-                  color: AppBarItemColor),
-              onPressed: () {
-                if ((state.people.where((element) => element.available).length / 6 < 2) || (state.people.where((element) => element.available).length % 6 == 0)) {
-                  BlocProvider.of<TeamsBloc>(context).add(FormTeams(true));
-                  return;
-                }
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(
-                        AppLocalizations.of(context).choseOption,
-                        style: TextStyle(
-                          fontSize: 23,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      content: Container(
-                        height: 200,
-                        child: Column(children: [
-                          RoundedButton(
-                            text: _getTeamCountString(state.people, 6, true),
-                            onPressed: () {
-                              BlocProvider.of<TeamsBloc>(context)
-                                  .add(FormTeams(true));
-                              Navigator.of(context).pop();
-                            },
-                            sizeRatio: null,
-                            textColor: Colors.black,
-                            color: SecondaryColor,
-                            marginVertical: 10.0,
-                          ),
-                          RoundedButton(
-                            text: _getTeamCountString(state.people, 6, false),
-                            onPressed: () {
-                              BlocProvider.of<TeamsBloc>(context)
-                                  .add(FormTeams(false));
-                              Navigator.of(context).pop();
-                            },
-                            sizeRatio: null,
-                            textColor: Colors.black,
-                            color: SecondaryColor,
-                            marginVertical: 10.0,
-                          ),
-                        ]),
-                      ),
-                      actions: [
-                        FlatButton(
-                          child: Text(
-                            AppLocalizations.of(context).cancel,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            );
+
           }
           return Padding();
         }),

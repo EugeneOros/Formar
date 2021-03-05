@@ -52,7 +52,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   }
 
   Stream<TeamsState> _mapFormTeamsToState(FormTeams event) async* {
-    _teamsRepository.formTeams(event.isBalanced);
+    _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember);
   }
 
   @override

@@ -13,6 +13,9 @@ class FirebaseSettingsRepository implements SettingsRepository {
   @override
   Stream<UserSettings> settings() {
     User user = _auth.currentUser;
+    // if(FirebaseFirestore.instance.collection("users").doc(user.uid) == null){
+    //
+    // }
     DocumentReference settingsDoc =
         FirebaseFirestore.instance.collection("users").doc(user.uid);
     return settingsDoc.snapshots().map((snapshot) {

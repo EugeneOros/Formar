@@ -12,11 +12,12 @@ class LoadTeams extends TeamsEvent {}
 
 class FormTeams extends TeamsEvent {
   final bool isBalanced;
+  final int counterTeamMember;
 
-  const FormTeams(this.isBalanced);
+  const FormTeams(this.isBalanced, this.counterTeamMember);
 
   @override
-  List<Object> get props => [isBalanced];
+  List<Object> get props => [isBalanced, counterTeamMember];
 
 }
 

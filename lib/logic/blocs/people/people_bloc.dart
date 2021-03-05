@@ -76,7 +76,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   }
 
   Stream<PeopleState> _mapDeletePersonToState(DeletePerson event) async* {
-    _peopleRepository.deletePerson(event.people);
+    _peopleRepository.deletePerson(event.person);
   }
 
   Stream<PeopleState> _mapToggleAllToState() async* {

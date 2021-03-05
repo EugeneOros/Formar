@@ -35,9 +35,8 @@ class FirebaseTeamRepository implements TeamRepository {
   }
 
   @override
-  Future<void> formTeams(bool isBalanced) async {
+  Future<void> formTeams(bool isBalanced, int numMembers) async {
     User user = _auth.currentUser;
-    int numMember = 6;
     List<Team> teams;
     CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
     teamsCollection.get().then((snapshot) {
@@ -50,14 +49,14 @@ class FirebaseTeamRepository implements TeamRepository {
     if(people.length < 2)
       return;
 
-    if(!isBalanced && people.length / numMember >= 2){
-        teams = _createTeams((people.length / numMember).floor());
-        teams = _sortPeopleToTeams(people.sublist(0,people.length-(people.length%numMember)), teams);
-        if(people.length % numMember != 0 && people.length / numMember > 2){
-          teams.add(_createTeamReplacement(people.sublist(people.length-(people.length%numMember), people.length)));
+    if(!isBalanced && people.length / numMembers >= 2){
+        teams = _createTeams((people.length / numMembers).floor());
+        teams = _sortPeopleToTeams(people.sublist(0,people.length-(people.length%numMembers)), teams);
+        if(people.length % numMembers != 0 && people.length / numMembers > 2){
+          teams.add(_createTeamReplacement(people.sublist(people.length-(people.length%numMembers), people.length)));
         }
     }else{
-      teams = _createTeams(max((people.length / numMember).ceil(), 2));
+      teams = _createTeams(max((people.length / numMembers).ceil(), 2));
       teams = _sortPeopleToTeams(people, teams);
     }
 

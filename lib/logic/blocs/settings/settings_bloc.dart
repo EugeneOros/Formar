@@ -35,6 +35,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       yield* _mapLoadSettingsToState();
     }  else if (event is SettingsUpdated) {
       yield* _mapSettingsUpdateToState(event);
+    } else if (event is UpdateSettings) {
+      yield* _mapUpdateSettingsToState(event);
     }
   }
 
@@ -47,6 +49,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Stream<SettingsState> _mapSettingsUpdateToState(SettingsUpdated event) async* {
     yield SettingsLoaded(event.settings);
+  }
+
+
+  Stream<SettingsState> _mapUpdateSettingsToState(UpdateSettings event) async* {
+    _settingsRepository.updateSettings(event.updatedSettings);
   }
 
   @override

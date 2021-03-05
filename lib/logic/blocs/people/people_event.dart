@@ -21,7 +21,7 @@ class AddPerson extends PeopleEvent {
   List<Object> get props => [person];
 
   @override
-  String toString() => 'AddTodo { todo: $person }';
+  String toString() => 'AddPerson { person: $person }';
 }
 
 class UpdatePerson extends PeopleEvent {
@@ -33,21 +33,21 @@ class UpdatePerson extends PeopleEvent {
   List<Object> get props => [updatedPerson];
 
   @override
-  String toString() => 'UpdateTodo { updatedTodo: $updatedPerson }';
+  String toString() => 'UpdatePerson { updatedPerson: $updatedPerson }';
 }
 
 
 
 class DeletePerson extends PeopleEvent {
-  final Person people;
+  final Person person;
 
-  const DeletePerson(this.people);
-
-  @override
-  List<Object> get props => [people];
+  const DeletePerson(this.person);
 
   @override
-  String toString() => 'DeleteTodo { todo: $people }';
+  List<Object> get props => [person];
+
+  @override
+  String toString() => 'DeletePerson { person: $person }';
 }
 
 class ClearCompleted extends PeopleEvent {}
