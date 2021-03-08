@@ -10,4 +10,6 @@ abstract class SettingsRepository {
   Stream<UserSettings> settings();
 
   Future<void> updateSettings(UserSettings settings);
+
+  Future<void> createSettings();
 }

@@ -31,7 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ItemSettings(
             icon: Icons.people,
-            text: "Quantity of players in team",
+            text: "Players in team",
             secondaryWidget: state is SettingsLoaded ? NumberPicker.horizontal(
                 haptics: true,
                 selectedTextStyle: TextStyle(fontSize: 17),

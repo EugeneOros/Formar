@@ -42,6 +42,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Stream<SettingsState> _mapLoadSettingsToState() async* {
     _settingsSubscription?.cancel();
+    _settingsRepository.createSettings();
     _settingsSubscription = _settingsRepository.settings().listen(
           (settings) => add(SettingsUpdated(settings)),
     );
