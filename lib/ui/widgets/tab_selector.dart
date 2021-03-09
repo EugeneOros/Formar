@@ -52,6 +52,8 @@ class TabSelector extends StatelessWidget {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     var pageLabels = [
@@ -61,10 +63,17 @@ class TabSelector extends StatelessWidget {
       AppLocalizations.of(context).settings,
     ];
 
+    Color _getBackgroundColor(AppTab activeTab){
+      if(activeTab == AppTab.settings) {
+        return Colors.transparent;
+      } else {
+        return Theme.of(context).primaryColor;
+      }
+    }
     return Container(
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
       decoration: BoxDecoration(
-        color:  AppTab.values.indexOf(activeTab) == 1 ? SecondaryPinkColor : SecondaryBlueColor,
+        color:  _getBackgroundColor(activeTab),
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(0), topRight: Radius.circular(0)),
       ),

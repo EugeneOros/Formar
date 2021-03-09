@@ -34,5 +34,10 @@
   "replacement": "Заміна",
   "peopleTeam": "людей",
   "cancel": "Скасувати",
-  "notAvailable": "Недоступно"
+  "notAvailable": "Недоступно",
+  "signOut": "Вийти",
+  "areYouSureLogOut": "Хочете вийти із застосунку?",
+  "ok": "Так",
+  "playersInTeam": "К-cть гравців в команді",
+  "version": "Версія"
 }

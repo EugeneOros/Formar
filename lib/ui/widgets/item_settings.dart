@@ -14,7 +14,7 @@ class ItemSettings extends StatelessWidget {
     @required this.icon,
     @required this.text,
     @required this.onTap,
-    this.secondaryWidget = null,
+    this.secondaryWidget,
   }) : super(key: key);
 
   @override
@@ -22,15 +22,13 @@ class ItemSettings extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
         child: Row(
           children: [
-            Icon(
-              this.icon,
-            ),
+            Icon(this.icon),
             SizedBox(width: 10),
-            Text(this.text,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0)),
+            Text(this.text, style: Theme.of(context).textTheme.bodyText1, overflow: TextOverflow.ellipsis,),
             Spacer(),
             this.secondaryWidget ?? Container(),
           ],

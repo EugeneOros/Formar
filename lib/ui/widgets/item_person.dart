@@ -5,7 +5,6 @@ import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 import 'delete_people_snack_bar.dart';
 
 class PersonItem extends StatelessWidget {
@@ -40,6 +39,7 @@ class PersonItem extends StatelessWidget {
         return Colors.black;
     }
   }
+
   String getLevelName(Level level, BuildContext context) {
     switch (level) {
       case Level.beginner:
@@ -59,9 +59,7 @@ class PersonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .maybeOf(context)
-        .size;
+    Size size = MediaQuery.maybeOf(context).size;
 
     return Column(
       children: [
@@ -72,10 +70,10 @@ class PersonItem extends StatelessWidget {
             margin: EdgeInsets.only(right: 20.0, left: 20.0),
             decoration: BoxDecoration(
               border:
-              Border(bottom: BorderSide(color: SecondaryColor, width: 1.5)),
+                  Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight , width: 1.5)),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               child: Row(
                 children: [
                   Column(
@@ -84,10 +82,7 @@ class PersonItem extends StatelessWidget {
                       Container(
                         child: Text(
                           person.nickname,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         width: size.width - 120,
@@ -105,17 +100,9 @@ class PersonItem extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          Text(getLevelName(person.level, context),
-                            // person.level
-                            //     .toString()
-                            //     .split('.')
-                            //     .last,
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w300,
-                              color:
-                              Colors.black, //getLevelColor(person.level),
-                            ),
+                          Text(
+                            getLevelName(person.level, context),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -145,7 +132,7 @@ class PersonItem extends StatelessWidget {
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: AppLocalizations.of(context).edit,
-              color: SecondaryColor,
+              color: Theme.of(context).accentColor,
               icon: Icons.edit,
               onTap: onEdit,
             ),

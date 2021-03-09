@@ -12,6 +12,7 @@ import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:people_repository/people_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'pages/people_page.dart';
 import 'pages/teams_page.dart';
@@ -93,9 +94,7 @@ class HomeScreen extends StatelessWidget {
       ],
       [
         BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
-
           if (state is PeopleLoaded) {
-
             return BlocBuilder<SettingsBloc, SettingsState>(
                 builder: (settingsContext, settingsState) {
                   if (settingsState is SettingsLoaded) {
@@ -136,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                                       },
                                       sizeRatio: null,
                                       textColor: Colors.black,
-                                      color: SecondaryColor,
+                                      color: Theme.of(context).accentColor,
                                       marginVertical: 10.0,
                                     ),
                                     RoundedButton(
@@ -149,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                                       },
                                       sizeRatio: null,
                                       textColor: Colors.black,
-                                      color: SecondaryColor,
+                                      color: Theme.of(context).accentColor,
                                       marginVertical: 10.0,
                                     ),
                                   ]),
@@ -171,7 +170,14 @@ class HomeScreen extends StatelessWidget {
                         }
                     );// return settingsState.settings.counterTeamMembers;
                   }
-                  return Padding();
+                  return
+                  Padding(
+                    padding: const EdgeInsets.all(11.0),
+                    child: SpinKitThreeBounce(
+                      color: Colors.black,
+                      size: 15.0,
+                    ),
+                  );
                 });
             // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
 
@@ -188,8 +194,8 @@ class HomeScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
-          shadowColor: Colors.transparent,
-          backgroundColor: SecondaryAssentColor,
+          shadowColor:  Colors.transparent,
+          backgroundColor: activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
           title: SvgPicture.asset(
             'assets/logo_rounded_black.svg',
             height: 45,

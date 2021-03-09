@@ -5,13 +5,15 @@ import 'package:form_it/ui/shared/colors.dart';
 class Loading extends StatelessWidget {
   final Color backgroundColor;
   final Color indicatorColor;
+  final BoxDecoration decoration;
 
-  Loading({Key key, this.backgroundColor = Colors.white, this.indicatorColor = Colors.black} ) : super(key: key);
+  Loading({Key key, this.backgroundColor = Colors.white, this.indicatorColor = Colors.black, this.decoration} ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      decoration: decoration,
+      color: decoration == null ? backgroundColor : null,
       child: Center(
         child: SpinKitSquareCircle(
           color: indicatorColor,

@@ -13,7 +13,19 @@ class TeamsPage extends StatelessWidget {
     Size size = MediaQuery.maybeOf(context).size;
     return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
       if (state is TeamsLoading) {
-        return Loading();
+        return Loading(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(context).accentColor,
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor,
+                ],
+              )),
+          indicatorColor: Colors.white,
+        );
       } else if (state is TeamsLoaded) {
         final teams = state.teams;
         return Container(
@@ -23,10 +35,9 @@ class TeamsPage extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                // Colors are easy thanks to Flutter's Colors class.
-
-                SecondaryAssentColor,
-                SecondaryPinkColor,
+                Theme.of(context).accentColor,
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor,
               ],
             )),
             child: CarouselSlider.builder(
@@ -52,7 +63,7 @@ class TeamsPage extends StatelessWidget {
                       children: [
                         Text(
                           team.name,
-                          style: TextStyle(fontSize: 16.0),
+                          style: Theme.of(context).textTheme.headline2,
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 20),
@@ -63,7 +74,7 @@ class TeamsPage extends StatelessWidget {
                               final memberName = team.membersNames[index];
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 5.0),
-                                child: Text(memberName, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300, ), overflow: TextOverflow.ellipsis,),
+                                child: Text(memberName, style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis,),
                               );
                             },
                           ),

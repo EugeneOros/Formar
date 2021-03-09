@@ -23,7 +23,6 @@ import 'logic/localizations/constants.dart';
 
 import 'package:user_repository/user_repository.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -35,6 +34,25 @@ class FormItApp extends StatefulWidget {
   _FormItAppState createState() => _FormItAppState();
 }
 
+class ScrollBehaviorModified extends ScrollBehavior {
+  const ScrollBehaviorModified();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    switch (getPlatform(context)) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+      case TargetPlatform.android:
+        return const BouncingScrollPhysics();
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        return const ClampingScrollPhysics();
+    }
+    return null;
+  }
+}
+
 class _FormItAppState extends State<FormItApp> {
   final UserRepository _userRepository = UserRepository();
   final PeopleRepository _peopleRepository = FirebasePeopleRepository();
@@ -44,30 +62,34 @@ class _FormItAppState extends State<FormItApp> {
     return MultiBlocProvider(
         providers: _getBlocProviders(context),
         child: MaterialApp(
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Color(0xffd1dbf1),
+            accentColor: Color(0xffffdcf7),
+            primaryColorLight: Color(0xffe2ecf2),
+            textTheme: TextTheme(
+                headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                headline2: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+                bodyText1: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+                bodyText2: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
+                subtitle1: TextStyle(fontSize: 11, color: Colors.grey),
+                button: TextStyle(color: Colors.black)),
+          ),
+
+          builder: (context, child) {
+            return ScrollConfiguration(
+              behavior: ScrollBehaviorModified(),
+              child: child,
+            );
+          },
           title: "Form It",
           color: Colors.white,
-          theme: ThemeData(
-            // Define the default brightness and colors.
-            brightness: Brightness.light,
-            primaryColor: AppPrimaryColor,
-            accentColor: AppAccentColor,
 
-            // Define the default font family.
-            // fontFamily: 'Georgia',
-
-            // Define the default TextTheme. Use this to specify the default
-            // text styling for headlines, titles, bodies of text, and more.
-            // textTheme: TextTheme(
-            //   headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            //   headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-            //   bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-            // ),
-          ),
           // locale: DevicePreview.locale(context), // Add the locale here
           // builder: DevicePreview.appBuilder, // Add the builder here
           localizationsDelegates: LOCALIZATION_DELEGATES,
           supportedLocales:
-          SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
+              SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
           debugShowCheckedModeBanner: false,
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (BuildContext context, AuthenticationState state) {
@@ -84,10 +106,9 @@ class _FormItAppState extends State<FormItApp> {
                       create: (context) => TabBloc(),
                     ),
                     BlocProvider<FilteredPeopleBloc>(
-                      create: (context) =>
-                          FilteredPeopleBloc(
-                            peopleBloc: BlocProvider.of<PeopleBloc>(context),
-                          ),
+                      create: (context) => FilteredPeopleBloc(
+                        peopleBloc: BlocProvider.of<PeopleBloc>(context),
+                      ),
                     ),
                   ],
                   child: HomeScreen(name: state.user.email ?? ""),
@@ -103,7 +124,6 @@ class _FormItAppState extends State<FormItApp> {
                       RegisterBloc(userRepository: _userRepository),
                   child: SignUpScreen());
             },
-
             "/add": (BuildContext context) {
               return AddEditScreen(
                 onSave: (nickname, level) {
@@ -144,17 +164,17 @@ class _FormItAppState extends State<FormItApp> {
       BlocProvider<PeopleBloc>(
         create: (context) {
           return PeopleBloc(
-              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
             peopleRepository: _peopleRepository,
-          )
-            ..add(LoadPeople());
+          )..add(LoadPeople());
         },
       ),
       BlocProvider<TeamsBloc>(
         create: (context) {
           return TeamsBloc(
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-            teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
+            teamsRepository:
+                FirebaseTeamRepository(peopleRepository: _peopleRepository),
           )..add(LoadTeams());
         },
       ),

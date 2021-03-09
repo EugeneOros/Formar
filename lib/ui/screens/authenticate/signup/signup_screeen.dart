@@ -57,10 +57,8 @@ class _SignUpState extends State<SignUpScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              // Colors are easy thanks to Flutter's Colors class.
-
-              SecondaryBlueColor,
-              SecondaryPinkColor,
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
             ],
           ),
         ),
@@ -76,10 +74,9 @@ class _SignUpState extends State<SignUpScreen> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          // Colors are easy thanks to Flutter's Colors class.
-
-                          SecondaryBlueColor,
-                          SecondaryPinkColor,
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).accentColor,
                         ],
                       ),
                     ),
@@ -91,13 +88,12 @@ class _SignUpState extends State<SignUpScreen> {
                           children: <Widget>[
                             SvgPicture.asset(
                               'assets/signup.svg',
-                              height: size.height * 0.2,
+                              height: size.height * 0.17,
                             ),
+                            SizedBox(height: 8),
                             Text(
                               AppLocalizations.of(context).signUp.toUpperCase(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: PrimaryColor),
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: size.height * 0.03),
                             Text(

@@ -36,7 +36,7 @@ class FilteredPeopleList extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(left: 10, top: 5),
-                    child: Text(person.nickname[0].toUpperCase(), style: TextStyle(color: SecondaryColor),),
+                    child: Text(person.nickname[0].toUpperCase(), style: Theme.of(context).textTheme.subtitle1,),
                   ) : Container() ,
                   PersonItem(
                     person: person,
@@ -88,10 +88,3 @@ class FilteredPeopleList extends StatelessWidget {
     );
   }
 }
-
-// Row(
-// children: [
-// (index == 0 || people[index] != people[index - 1]) ?
-// Container(
-//   child: Text(person.nickname[0].toUpperCase()),
-// ) ,

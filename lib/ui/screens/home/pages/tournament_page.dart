@@ -15,18 +15,15 @@ class TournamentPage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              SecondaryAssentColor,
-              SecondaryPinkColor,
-              SecondaryBlueColor,
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+              Theme.of(context).primaryColor,
             ],
           ),
         ),
         child: Text(
           AppLocalizations.of(context).notAvailable,
-          style: TextStyle(
-              color: PrimaryColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 20.0),
+          style: Theme.of(context).textTheme.headline1,
         ));
   }
 }

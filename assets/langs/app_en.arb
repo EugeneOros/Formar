@@ -142,5 +142,25 @@
   "notAvailable": "Not Available",
   "@notAvailable": {
     "description": ""
+  },
+  "signOut": "Sign Out",
+  "@signOut": {
+    "description": ""
+  },
+  "areYouSureLogOut": "Are you sure you want to log out?",
+  "@areYouSureLogOut": {
+    "description": ""
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": ""
+  },
+  "playersInTeam": "Players in team count",
+  "@playersInTeam": {
+    "description": ""
+  },
+  "version": "Version",
+  "@version": {
+    "description": ""
   }
 }

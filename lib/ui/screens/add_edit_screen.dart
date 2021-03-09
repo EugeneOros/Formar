@@ -52,7 +52,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SecondaryBlueColor,
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0.0,
         shadowColor: Colors.transparent,
@@ -73,17 +73,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
             children: [
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: EdgeInsets.only(bottom: 30),
                 child: Text(
                   isEditing ? AppLocalizations.of(context).editPerson : AppLocalizations.of(context).addPerson,
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.center,
                 ),
               ),
               TextFormField(
+                style: Theme.of(context).textTheme.bodyText2,
                 cursorColor: Colors.black,
                 initialValue: isEditing ? widget.person.nickname : '',
                 autofocus: !isEditing,
@@ -109,44 +107,35 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     value: Level.beginner,
                     groupValue: widget._groutValue,
                     activeColor: BeginnerColor,
-                    title: Text(AppLocalizations.of(context).beginner),
+                    title: Text(AppLocalizations.of(context).beginner, style: Theme.of(context).textTheme.bodyText2),
                   ),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.intermediate,
                       groupValue: widget._groutValue,
                       activeColor: IntermediateColor,
-                      title: Text(AppLocalizations.of(context).intermediate)),
+                      title: Text(AppLocalizations.of(context).intermediate, style: Theme.of(context).textTheme.bodyText2)),
                   RadioListTile(
                     onChanged: (Level e) => onRadioChanged(e),
                     value: Level.proficient,
                     groupValue: widget._groutValue,
                     activeColor: ProficientColor,
-                    title: Text(AppLocalizations.of(context).proficient),
+                    title: Text(AppLocalizations.of(context).proficient, style: Theme.of(context).textTheme.bodyText2),
                   ),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.advanced,
                       groupValue: widget._groutValue,
                       activeColor: AdvancedColor,
-                      title: Text(AppLocalizations.of(context).advanced)),
+                      title: Text(AppLocalizations.of(context).advanced, style: Theme.of(context).textTheme.bodyText2)),
                   RadioListTile(
                       onChanged: (Level e) => onRadioChanged(e),
                       value: Level.expert,
                       groupValue: widget._groutValue,
                       activeColor: ExpertColor,
-                      title: Text(AppLocalizations.of(context).expert)),
+                      title: Text(AppLocalizations.of(context).expert, style: Theme.of(context).textTheme.bodyText2)),
                 ],
               )
-              // TextFormField(
-              //   initialValue: isEditing ? widget.person.note : '',
-              //   maxLines: 10,
-              //   style: textTheme.subtitle1,
-              //   decoration: InputDecoration(
-              //     hintText: 'Additional Notes...',
-              //   ),
-              //   onSaved: (value) => _note = value,
-              // )
             ],
           ),
         ),
@@ -154,7 +143,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       floatingActionButton: Container(
         padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
         child: FloatingActionButton(
-          backgroundColor: SecondaryColor,
+          backgroundColor: Theme.of(context).accentColor,
           tooltip: isEditing ? 'Save changes' : 'Add Todo',
           child: Icon(isEditing ? Icons.check : Icons.add, color: Colors.black,),
           onPressed: () {
