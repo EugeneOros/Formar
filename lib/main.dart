@@ -73,7 +73,7 @@ class _FormItAppState extends State<FormItApp> {
                 bodyText1: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
                 bodyText2: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
                 subtitle1: TextStyle(fontSize: 11, color: Colors.grey),
-                button: TextStyle(color: Colors.black)),
+                button: TextStyle(color: Color(0xffdda9c4))),
           ),
 
           builder: (context, child) {

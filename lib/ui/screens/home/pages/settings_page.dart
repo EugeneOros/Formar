@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
+import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/item_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -74,11 +75,8 @@ class _SettingsPageState extends State<SettingsPage> {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(
-                        AppLocalizations.of(context).areYouSureLogOut,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+                    return FunkyOverlay(
+                      title: AppLocalizations.of(context).areYouSureLogOut,
                       actions: [
                         FlatButton(
                           child: Text(

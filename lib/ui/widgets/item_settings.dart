@@ -22,6 +22,7 @@ class ItemSettings extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
         child: Row(

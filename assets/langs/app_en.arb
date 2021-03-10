@@ -7,7 +7,7 @@
   "@helloWorld": {
     "description": "Programmers greeting!"
   },
-  "people": "People",
+  "people": "Players",
   "@people": {
     "description": "People label for Bottom navigation bar"
   },
