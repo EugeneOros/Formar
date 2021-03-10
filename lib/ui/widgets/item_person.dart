@@ -66,59 +66,62 @@ class PersonItem extends StatelessWidget {
         Slidable(
           controller: slidableController,
           key: Key(person.id),
-          child: Container(
-            margin: EdgeInsets.only(right: 20.0, left: 20.0),
-            decoration: BoxDecoration(
-              border:
-                  Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight , width: 1.5)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          person.nickname,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          overflow: TextOverflow.ellipsis,
+          child: GestureDetector(
+            onTap: onEdit,
+            child: Container(
+              margin: EdgeInsets.only(right: 20.0, left: 20.0),
+              decoration: BoxDecoration(
+                border:
+                    Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight , width: 1.5)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text(
+                            person.nickname,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          width: size.width - 120,
                         ),
-                        width: size.width - 120,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: 5.0, left: 1.0, bottom: 2.0),
-                            alignment: Alignment.topCenter,
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: getLevelColor(person.level),
-                              shape: BoxShape.circle,
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: 5.0, left: 1.0, bottom: 2.0),
+                              alignment: Alignment.topCenter,
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: getLevelColor(person.level),
+                                shape: BoxShape.circle,
+                              ),
                             ),
-                          ),
-                          Text(
-                            getLevelName(person.level, context),
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    padding: EdgeInsets.zero,
-                    child: Switch(
-                      activeColor: Colors.black,
-                      value: person.available,
-                      onChanged: onSwitchChanged,
+                            Text(
+                              getLevelName(person.level, context),
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                    Spacer(),
+                    Container(
+                      alignment: Alignment.bottomRight,
+                      padding: EdgeInsets.zero,
+                      child: Switch(
+                        activeColor: Colors.black,
+                        value: person.available,
+                        onChanged: onSwitchChanged,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
