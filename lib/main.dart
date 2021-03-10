@@ -68,12 +68,12 @@ class _FormItAppState extends State<FormItApp> {
             accentColor: Color(0xffffdcf7),
             primaryColorLight: Color(0xffe2ecf2),
             textTheme: TextTheme(
-                headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-                headline2: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
-                bodyText1: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
-                bodyText2: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
-                subtitle1: TextStyle(fontSize: 11, color: Colors.grey),
-                button: TextStyle(color: Color(0xffdda9c4))),
+                headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
+                headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
+                bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+                bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
+                button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4))),
           ),
 
           builder: (context, child) {
