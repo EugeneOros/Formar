@@ -12,20 +12,13 @@ class AddEditScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Person person;
-  Level _groutValue;
 
   AddEditScreen({
     Key key,
     @required this.onSave,
     @required this.isEditing,
     this.person,
-  }) : super(key: key){
-    if(person == null){
-      _groutValue = Level.beginner;
-    }else{
-      _groutValue = person.level;
-    }
-  }
+  }) : super(key: key);
 
   @override
   _AddEditScreenState createState() => _AddEditScreenState();
@@ -34,23 +27,64 @@ class AddEditScreen extends StatefulWidget {
 class _AddEditScreenState extends State<AddEditScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _task;
-  String _note;
+  String _nickname;
+  Level _level;
 
   bool get isEditing => widget.isEditing;
 
   void onRadioChanged(Level level) {
     setState(() {
-      for (Level lev in Level.values) {
-        if (level == lev) {
-          widget._groutValue = lev;
-        }
-      }
+          _level = level;
     });
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.person == null) {
+      _level = Level.beginner;
+    } else {
+      _level = widget.person.level;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    String _getLevelName(Level level) {
+      switch (level) {
+        case Level.beginner:
+          return AppLocalizations.of(context).beginner;
+        case Level.intermediate:
+          return AppLocalizations.of(context).intermediate;
+        case Level.proficient:
+          return AppLocalizations.of(context).proficient;
+        case Level.advanced:
+          return AppLocalizations.of(context).advanced;
+        case Level.expert:
+          return AppLocalizations.of(context).expert;
+        default:
+          return "";
+      }
+    }
+
+    Color _getLevelColor(Level level) {
+      switch (level) {
+        case Level.beginner:
+          return BeginnerColor;
+        case Level.intermediate:
+          return IntermediateColor;
+        case Level.proficient:
+          return ProficientColor;
+        case Level.advanced:
+          return AdvancedColor;
+        case Level.expert:
+          return ExpertColor;
+        default:
+          return Colors.black;
+      }
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -75,7 +109,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(bottom: 30),
                 child: Text(
-                  isEditing ? AppLocalizations.of(context).editPerson : AppLocalizations.of(context).addPerson,
+                  isEditing
+                      ? AppLocalizations.of(context).editPerson
+                      : AppLocalizations.of(context).addPerson,
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.center,
                 ),
@@ -95,46 +131,25 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   enabledBorder: borderRoundedTransparent,
                 ),
                 validator: (val) {
-                  return val.trim().isEmpty ? AppLocalizations.of(context).enterSomeText : null;
+                  return val.trim().isEmpty
+                      ? AppLocalizations.of(context).enterSomeText
+                      : null;
                 },
-                onSaved: (value) => _task = value,
+                onSaved: (value) => _nickname = value,
               ),
-
               Column(
-                children: [
-                  RadioListTile(
-                    onChanged: (Level e) => onRadioChanged(e),
-                    value: Level.beginner,
-                    groupValue: widget._groutValue,
-                    activeColor: BeginnerColor,
-                    title: Text(AppLocalizations.of(context).beginner, style: Theme.of(context).textTheme.bodyText2),
-                  ),
-                  RadioListTile(
-                      onChanged: (Level e) => onRadioChanged(e),
-                      value: Level.intermediate,
-                      groupValue: widget._groutValue,
-                      activeColor: IntermediateColor,
-                      title: Text(AppLocalizations.of(context).intermediate, style: Theme.of(context).textTheme.bodyText2)),
-                  RadioListTile(
-                    onChanged: (Level e) => onRadioChanged(e),
-                    value: Level.proficient,
-                    groupValue: widget._groutValue,
-                    activeColor: ProficientColor,
-                    title: Text(AppLocalizations.of(context).proficient, style: Theme.of(context).textTheme.bodyText2),
-                  ),
-                  RadioListTile(
-                      onChanged: (Level e) => onRadioChanged(e),
-                      value: Level.advanced,
-                      groupValue: widget._groutValue,
-                      activeColor: AdvancedColor,
-                      title: Text(AppLocalizations.of(context).advanced, style: Theme.of(context).textTheme.bodyText2)),
-                  RadioListTile(
-                      onChanged: (Level e) => onRadioChanged(e),
-                      value: Level.expert,
-                      groupValue: widget._groutValue,
-                      activeColor: ExpertColor,
-                      title: Text(AppLocalizations.of(context).expert, style: Theme.of(context).textTheme.bodyText2)),
-                ],
+                children: Level.values
+                    .map(
+                      (level) => RadioListTile(
+                        onChanged: (Level e) => onRadioChanged(e),
+                        value: level,
+                        groupValue: _level,
+                        activeColor: _getLevelColor(level),
+                        title: Text(_getLevelName(level),
+                            style: Theme.of(context).textTheme.bodyText2),
+                      ),
+                    )
+                    .toList(),
               )
             ],
           ),
@@ -144,12 +159,14 @@ class _AddEditScreenState extends State<AddEditScreen> {
         padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).accentColor,
-          tooltip: isEditing ? 'Save changes' : 'Add Todo',
-          child: Icon(isEditing ? Icons.check : Icons.add, color: Colors.black,),
+          child: Icon(
+            isEditing ? Icons.check : Icons.add,
+            color: Colors.black,
+          ),
           onPressed: () {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              widget.onSave(_task, widget._groutValue);
+              widget.onSave(_nickname, _level);
               Navigator.pop(context);
             }
           },

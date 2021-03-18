@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository _userRepository;
+  bool isHiddenPassword = true;
 
   RegisterBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
@@ -40,6 +41,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         email: event.email,
         password: event.password,
       );
+    } else if (event is ShowHidePassword) {
+      isHiddenPassword = !isHiddenPassword;
     }
   }
   Stream<RegisterState> _mapSignUpWithCredentialsPressedToState({

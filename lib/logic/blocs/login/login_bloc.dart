@@ -9,6 +9,7 @@ import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   UserRepository _userRepository;
+  bool isHiddenPassword = true;
 
   LoginBloc({
     @required UserRepository userRepository,
@@ -46,6 +47,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
         password: event.password,
       );
+    }else if (event is ShowHidePassword) {
+      isHiddenPassword = !isHiddenPassword;
     }
   }
 

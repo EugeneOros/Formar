@@ -53,3 +53,5 @@ class LoginEventWithCredentialsPressed extends LoginEvent {
     return 'LoginWithCredentialsPressed { email: $email, password: $password }';
   }
 }
+
+class ShowHidePassword extends LoginEvent {}

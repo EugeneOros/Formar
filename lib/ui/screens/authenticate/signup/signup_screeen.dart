@@ -114,6 +114,10 @@ class _SignUpState extends State<SignUpScreen> {
                             ),
                             RoundedPasswordField(
                               controller: _passwordController,
+                              obscureText: _signUpBloc.isHiddenPassword,
+                              onShowHide: () {
+                                BlocProvider.of<RegisterBloc>(context).add(ShowHidePassword());
+                              },
                               validator: (_) => registerState.isPasswordValid
                                   ? null
                                   : AppLocalizations.of(context).errorPassword,

@@ -37,3 +37,5 @@ class RegisterEventPressed extends RegisterEvent {
     return 'Submitted { email: $email, password: $password }';
   }
 }
+
+class ShowHidePassword extends RegisterEvent {}
