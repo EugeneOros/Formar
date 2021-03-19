@@ -8,17 +8,18 @@ class DeletePersonSnackBar extends SnackBar {
     Key key,
     @required Person player,
     @required VoidCallback onUndo,
+    @required BuildContext context,
   }) : super(
           key: key,
           content: Text(
-            'Deleted ${player.nickname}' , //AppLocalizations.of(BuildContext.inheritFromWidgetOfExactType).deleted +
+            AppLocalizations.of(context).deleted + " " + player.nickname,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           backgroundColor: Colors.black,
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 3),
           action: SnackBarAction(
-            label: 'Undo',
+            label: AppLocalizations.of(context).undo,
             textColor: SecondaryColor,
             onPressed: onUndo,
           ),

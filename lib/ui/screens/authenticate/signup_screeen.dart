@@ -2,46 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'background.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/have_account_check.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/rounded_password_field.dart';
-import 'package:form_it/logic/blocs/authentication/bloc.dart';
-import 'package:form_it/logic/blocs/login/bloc.dart';
+import 'package:form_it/logic/blocs/register/bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginState extends State<LoginScreen> {
+class _SignUpState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  LoginBloc _loginBloc;
+  RegisterBloc _signUpBloc;
 
   final _formKey = GlobalKey<FormState>();
 
   bool get isPopulated =>
       _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
-  bool isLoginButtonEnabled(LoginState loginState) =>
+  bool isLoginButtonEnabled(RegisterState loginState) =>
       isPopulated && !loginState.isSubmitting;
 
   @override
   void initState() {
     super.initState();
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
+    _signUpBloc = BlocProvider.of<RegisterBloc>(context);
     _emailController.addListener(() {
-      _loginBloc.add(LoginEventEmailChanged(email: _emailController.text));
+      _signUpBloc.add(RegisterEventEmailChanged(email: _emailController.text));
     });
     _passwordController.addListener(() {
-      _loginBloc
-          .add(LoginEventPasswordChanged(password: _passwordController.text));
+      _signUpBloc.add(
+          RegisterEventPasswordChanged(password: _passwordController.text));
     });
   }
 
@@ -49,20 +46,22 @@ class _LoginState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context).size;
     return Scaffold(
-      body: BlocListener(
-        cubit: _loginBloc,
-        listener: (BuildContext context, LoginState state) {
-          if (state.isFailure) {
-            print("login failure");
-          } else if (state.isSubmitting) {
-            print("login submitting");
-          } else if (state.isSuccess) {
-            BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-          }
-        },
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, loginState) {
-            return loginState.isSubmitting
+      body: Container(
+        alignment: Alignment.center,
+        height: size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+            ],
+          ),
+        ),
+        child: BlocBuilder<RegisterBloc, RegisterState>(
+          builder: (context, registerState) {
+            return registerState.isSubmitting
                 ? Loading()
                 : Container(
                     alignment: Alignment.center,
@@ -85,52 +84,47 @@ class _LoginState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              'assets/login.svg',
+                              'assets/signup.svg',
                               height: size.height * 0.17,
                             ),
                             SizedBox(height: 8),
                             Text(
-                              AppLocalizations.of(context).login.toUpperCase(),
+                              AppLocalizations.of(context).signUp.toUpperCase(),
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: size.height * 0.03),
                             Text(
-                              loginState.isFailure
-                                  ? AppLocalizations.of(context).errorLogin
+                              registerState.isFailure
+                                  ? AppLocalizations.of(context).errorSignUp
                                   : "",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 14.0,
-                              ),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 14.0),
                             ),
                             SizedBox(height: 12.0),
                             RoundedInputField(
                               controller: _emailController,
                               hintText: AppLocalizations.of(context).email,
-                              validator: (_) => loginState.isEmailValid
+                              validator: (_) => registerState.isEmailValid
                                   ? null
                                   : AppLocalizations.of(context).errorEmail,
                             ),
                             RoundedPasswordField(
                               controller: _passwordController,
-                              obscureText: _loginBloc.isHiddenPassword,
-                              onShowHide: () {
-                                BlocProvider.of<LoginBloc>(context).add(ShowHidePassword());
-                              },
-                              validator: (_) => loginState.isPasswordValid
+                              validator: (_) => registerState.isPasswordValid
                                   ? null
                                   : AppLocalizations.of(context).errorPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
                             RoundedButton(
-                              text: AppLocalizations.of(context).login,
+                              text: AppLocalizations.of(context).signUp,
                               onPressed: _onLoginEmailAndPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
                             HaveAccountCheck(
+                              isLogin: false,
                               onTap: () {
-                                Navigator.of(context).pushNamed("/signUp");
+                                Navigator.pop(context);
                               },
                             )
                           ],
@@ -146,7 +140,7 @@ class _LoginState extends State<LoginScreen> {
 
   void _onLoginEmailAndPassword() {
     if (_formKey.currentState.validate()) {
-      _loginBloc.add(LoginEventWithCredentialsPressed(
+      _signUpBloc.add(RegisterEventPressed(
           email: _emailController.text, password: _passwordController.text));
     }
   }

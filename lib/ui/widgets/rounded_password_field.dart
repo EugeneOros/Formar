@@ -8,15 +8,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class RoundedPasswordField extends StatefulWidget {
   final ValueChanged<String> validator;
   final TextEditingController controller;
-  final bool obscureText;
-  final Function onShowHide;
 
   const RoundedPasswordField(
       {Key key,
       this.validator,
-      this.controller,
-      this.obscureText,
-      this.onShowHide})
+      this.controller})
       : super(key: key);
 
   @override

@@ -24,7 +24,6 @@ class SplashScreen extends StatelessWidget {
                   color: Colors.white,
                   fontSize: size.width * 0.06,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Navicons',
                 ),
               )
             ]),

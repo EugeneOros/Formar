@@ -48,6 +48,7 @@ class FilteredPeopleList extends StatelessWidget {
                           player: person,
                           onUndo: () => BlocProvider.of<PeopleBloc>(context)
                               .add(AddPerson(person)),
+                          context: context,
                         ),
                       );
                     },
