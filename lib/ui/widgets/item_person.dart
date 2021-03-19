@@ -5,7 +5,6 @@ import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'delete_people_snack_bar.dart';
 
 class PersonItem extends StatelessWidget {
   final Function onDelete;
@@ -69,7 +68,7 @@ class PersonItem extends StatelessWidget {
           child: GestureDetector(
             onTap: onEdit,
             child: Container(
-              margin: EdgeInsets.only(right: 20.0, left: 20.0),
+              margin: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
                 border:
                     Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight , width: 1.5)),

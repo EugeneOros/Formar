@@ -6,12 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DeletePersonSnackBar extends SnackBar {
   DeletePersonSnackBar({
     Key key,
-    @required Person todo,
+    @required Person player,
     @required VoidCallback onUndo,
   }) : super(
           key: key,
           content: Text(
-            'Deleted ${todo.nickname}', //AppLocalizations.of().deleted +
+            'Deleted ${player.nickname}' , //AppLocalizations.of(BuildContext.inheritFromWidgetOfExactType).deleted +
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

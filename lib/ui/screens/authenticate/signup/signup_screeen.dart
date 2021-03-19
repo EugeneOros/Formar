@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'background.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/have_account_check.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/rounded_password_field.dart';
-import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/register/bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -129,7 +126,7 @@ class _SignUpState extends State<SignUpScreen> {
                             ),
                             SizedBox(height: size.height * 0.03),
                             HaveAccountCheck(
-                              login: false,
+                              isLogin: false,
                               onTap: () {
                                 Navigator.pop(context);
                               },

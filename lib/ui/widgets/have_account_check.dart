@@ -4,10 +4,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HaveAccountCheck extends StatelessWidget {
-  final bool login;
+  final bool isLogin;
   final Function onTap;
   const HaveAccountCheck({
-    Key key, this.login = true, this.onTap,
+    Key key, this.isLogin = true, this.onTap,
   }) : super(key: key);
 
   @override
@@ -16,13 +16,13 @@ class HaveAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          login ? AppLocalizations.of(context).dontHaveAccount : AppLocalizations.of(context).alreadyHaveAccount,
+          isLogin ? AppLocalizations.of(context).dontHaveAccount : AppLocalizations.of(context).alreadyHaveAccount,
           style: TextStyle(color: PrimaryColor),
         ),
         GestureDetector(
           onTap: onTap,
           child: Text(
-            login ? AppLocalizations.of(context).signUp : AppLocalizations.of(context).signIn,
+            isLogin ? AppLocalizations.of(context).signUp : AppLocalizations.of(context).signIn,
             style: TextStyle(color: PrimaryColor, fontWeight: FontWeight.bold),
           ),
         )

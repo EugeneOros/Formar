@@ -8,7 +8,6 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/ui/screens/add_edit_screen.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/item_person.dart';
 
 import 'delete_people_snack_bar.dart';
@@ -44,9 +43,9 @@ class FilteredPeopleList extends StatelessWidget {
                     onDelete: () {
                       BlocProvider.of<PeopleBloc>(context)
                           .add(DeletePerson(person));
-                      Scaffold.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                         DeletePersonSnackBar(
-                          todo: person,
+                          player: person,
                           onUndo: () => BlocProvider.of<PeopleBloc>(context)
                               .add(AddPerson(person)),
                         ),

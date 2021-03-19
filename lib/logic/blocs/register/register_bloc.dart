@@ -45,6 +45,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       isHiddenPassword = !isHiddenPassword;
     }
   }
+
   Stream<RegisterState> _mapSignUpWithCredentialsPressedToState({
     String email,
     String password,

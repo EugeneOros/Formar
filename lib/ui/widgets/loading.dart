@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:form_it/ui/shared/colors.dart';
 
 class Loading extends StatelessWidget {
   final Color backgroundColor;

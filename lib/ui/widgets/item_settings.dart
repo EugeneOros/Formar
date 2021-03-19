@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_it/logic/blocs/authentication/bloc.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 class ItemSettings extends StatelessWidget {
   final Function onTap;
