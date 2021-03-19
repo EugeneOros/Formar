@@ -13,6 +13,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   StreamSubscription _settingsSubscription;
   StreamSubscription _authenticationSubscription;
   final AuthenticationBloc _authenticationBloc;
+  int currentPlayerCount = 1;
 
 
   SettingsBloc(
@@ -37,6 +38,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       yield* _mapSettingsUpdateToState(event);
     } else if (event is UpdateSettings) {
       yield* _mapUpdateSettingsToState(event);
+    } else if (event is SetCurrentPlayerCount){
+      currentPlayerCount = event.currentPlayerCount;
     }
   }
 

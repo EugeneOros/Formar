@@ -162,5 +162,17 @@
   "version": "Version",
   "@version": {
     "description": ""
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": ""
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": ""
+  },
+  "no": "No",
+  "@no": {
+    "description": ""
   }
 }

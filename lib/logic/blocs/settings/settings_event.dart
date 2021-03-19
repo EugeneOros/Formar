@@ -31,3 +31,9 @@ class SettingsUpdated extends SettingsEvent {
   @override
   List<Object> get props => [settings];
 }
+
+class SetCurrentPlayerCount extends SettingsEvent {
+  final currentPlayerCount;
+
+  const SetCurrentPlayerCount(this.currentPlayerCount);
+}
