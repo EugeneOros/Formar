@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:people_repository/people_repository.dart';
-
 import 'entities/entities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'models/team.dart';
 
 class FirebaseTeamRepository implements TeamRepository {
@@ -31,7 +27,7 @@ class FirebaseTeamRepository implements TeamRepository {
   Future<List<Team>> _teamsFromSnapshot(QuerySnapshot snapshot) async{
     List<Future<Team>> futures = snapshot.docs.map((doc) async {
       TeamEntity teamEntity = TeamEntity.fromSnapshot(doc);
-      return Team.fromEntity(teamEntity.id, teamEntity.name, teamEntity.capacity, await _getPeopleByIds(teamEntity.playersIds!));
+      return Team.fromEntity(teamEntity.id, teamEntity.name, teamEntity.power, await _getPeopleByIds(teamEntity.playersIds!));
     }).toList();
     return await Future.wait(futures);
   }
@@ -48,7 +44,7 @@ class FirebaseTeamRepository implements TeamRepository {
       }
     });
 
-    List<Person> people = _sortShuffleList(await peopleRepository.currentPeopleList());
+    List<Player> people = _sortShuffleList(await peopleRepository.currentPeopleList());
     if(people.length < 2)
       return;
 
@@ -67,27 +63,27 @@ class FirebaseTeamRepository implements TeamRepository {
       teamsCollection.add(team.toEntity().toDocument());
   }
 
-  Future<List<Person>> _getPeopleByIds(List<String> playersIds) async{
-    List<Person> players = [];
+  Future<List<Player>> _getPeopleByIds(List<String> playersIds) async{
+    List<Player> players = [];
     for(String playerId in playersIds){
-      players.add(await peopleRepository.getPerson(playerId) as Person);
+      players.add(await peopleRepository.getPerson(playerId) as Player);
     }
     return players;
   }
 
-  List<Person> _sortShuffleList(List<Person> people){
-    people = people.where((element) => element.available).toList();
+  List<Player> _sortShuffleList(List<Player> people){
+    people = people.where((element) => element.available ?? false).toList();
     people = people.reversed.toList();
-    List<Person> result = [];
+    List<Player> result = [];
     for( Level level in Level.values){
       result.addAll(people.where((element) => element.level == level).toList()..shuffle());
     }
     return result.reversed.toList();
   }
 
-  List<Team> _sortPeopleToTeams(List<Person> people, List<Team> teams){
+  List<Team> _sortPeopleToTeams(List<Player> people, List<Team> teams){
     int indexTeam = 0;
-    for (Person person in people) {
+    for (Player person in people) {
       if (indexTeam >= teams.length) {
         indexTeam = 0;
         teams.sort((a, b) => a.getPower()!.compareTo(b.getPower()!));
@@ -99,18 +95,18 @@ class FirebaseTeamRepository implements TeamRepository {
     return teams;
   }
 
-  Team _createTeamReplacement(List<Person> players){
+  Team _createTeamReplacement(List<Player> players){
     int power = 0;
-    for(Person member in players){
+    for(Player member in players){
       power += member.level!.index;
     }
-    return Team("Replacement", power, players: players);
+    return Team(name: "Replacement", power: power, players: players);
   }
 
   List<Team> _createTeams(int numTeams){
     List<Team> teams = [];
     for (int i = 0; i < numTeams; i++) {
-      teams.add(Team("Team " + (i + 1).toString(), 0, players: []));
+      teams.add(Team(name: "Team " + (i + 1).toString(), power: 0, players: []));
     }
     return teams;
   }

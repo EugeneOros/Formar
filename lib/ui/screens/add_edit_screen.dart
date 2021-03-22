@@ -10,7 +10,7 @@ typedef OnSaveCallback = Function(String? nickname, Level? level);
 class AddEditScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
-  final Person? person;
+  final Player? person;
 
   AddEditScreen({
     Key? key,

@@ -13,7 +13,7 @@ abstract class FilteredPeopleState extends Equatable {
 class FilteredPeopleLoading extends FilteredPeopleState {}
 
 class FilteredPeopleLoaded extends FilteredPeopleState {
-  final List<Person> filteredPeople;
+  final List<Player> filteredPeople;
   final VisibilityFilter activeFilter;
 
   const FilteredPeopleLoaded(

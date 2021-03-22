@@ -59,7 +59,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   Stream<PeopleState> _mapTurnOffPeopleToState() async* {
     final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
-      final List<Person> availablePeople =
+      final List<Player> availablePeople =
       currentState.people.where((person) => person.available).toList();
       availablePeople.forEach((person) {
         _peopleRepository.updatePerson(person.copyWith(available: !person.available));
@@ -83,7 +83,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
     final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
       final allComplete = currentState.people.every((todo) => todo.available);
-      final List<Person> updatedPeople = currentState.people
+      final List<Player> updatedPeople = currentState.people
           .map((todo) => todo.copyWith(available: !allComplete))
           .toList();
       updatedPeople.forEach((updatedTodo) {
@@ -95,7 +95,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   Stream<PeopleState> _mapClearCompletedToState() async* {
     final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
-      final List<Person> completedPeople =
+      final List<Player> completedPeople =
       currentState.people.where((person) => person.available).toList();
       completedPeople.forEach((completedTodo) {
         _peopleRepository.deletePerson(completedTodo);

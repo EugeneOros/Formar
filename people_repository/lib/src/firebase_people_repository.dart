@@ -18,7 +18,7 @@ class FirebasePeopleRepository implements PeopleRepository {
   }
 
   @override
-  Future<DocumentReference> addNewPerson(Person person) async {
+  Future<DocumentReference> addNewPerson(Player person) async {
     User user = _auth.currentUser!;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
@@ -26,7 +26,7 @@ class FirebasePeopleRepository implements PeopleRepository {
   }
 
   @override
-  Future<void> deletePerson(Person todo) async {
+  Future<void> deletePerson(Player todo) async {
     User user = _auth.currentUser!;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
@@ -34,32 +34,32 @@ class FirebasePeopleRepository implements PeopleRepository {
   }
 
   @override
-  Stream<List<Person>> people() {
+  Stream<List<Player>> people() {
     User user = _auth.currentUser!;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
     return peopleCollection.snapshots().map((snapshot) {
-      List<Person> people = snapshot.docs
-          .map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc)))
+      List<Player> people = snapshot.docs
+          .map((doc) => Player.fromEntity(PlayerEntity.fromSnapshot(doc)))
           .toList();
       people.sort((a, b) => a.compareTo(a.nickname!.toUpperCase(), b.nickname!.toUpperCase()));
       return people;
     });
   }
 
-  Future<List<Person>> currentPeopleList() async {
+  Future<List<Player>> currentPeopleList() async {
     User user = _auth.currentUser!;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
-    List<Person> people;
+    List<Player> people;
     QuerySnapshot querySnapshot = await peopleCollection.get();
-    people = querySnapshot.docs.map((doc) => Person.fromEntity(PeopleEntity.fromSnapshot(doc))).toList();
+    people = querySnapshot.docs.map((doc) => Player.fromEntity(PlayerEntity.fromSnapshot(doc))).toList();
     return people;
   }
 
 
   @override
-  Future<void> updatePerson(Person person) {
+  Future<void> updatePerson(Player person) {
     User user = _auth.currentUser!;
     CollectionReference peopleCollection = FirebaseFirestore.instance
         .collection("users").doc(user.uid).collection("peoples");
@@ -69,8 +69,8 @@ class FirebasePeopleRepository implements PeopleRepository {
   }
 
   Future getPerson(String personID) async{
-    List<Person> people = await currentPeopleList();
-    for(Person p in people){
+    List<Player> people = await currentPeopleList();
+    for(Player p in people){
       if(p.id == personID){
         return p;
       }

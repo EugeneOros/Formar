@@ -1,28 +1,17 @@
 import 'package:people_repository/src/entities/entities.dart';
 
 class UserSettings {
-  final int? counterTeamMembers;
   final String? userId;
+  final int? counterTeamMembers;
 
   UserSettings({this.userId, this.counterTeamMembers});
 
   UserSettings copyWith({int? counterTeamMember, String? userId}) {
     return UserSettings(
-      counterTeamMembers: counterTeamMember,
       userId: userId,
+      counterTeamMembers: counterTeamMember,
     );
   }
-
-  @override
-  int get hashCode => counterTeamMembers.hashCode ^ userId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is UserSettings &&
-              runtimeType == other.runtimeType &&
-              userId == other.userId &&
-              counterTeamMembers == other.counterTeamMembers;
 
   static UserSettings fromEntity(UserSettingsEntity entity) {
     return UserSettings(
@@ -32,7 +21,18 @@ class UserSettings {
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserSettings &&
+          runtimeType == other.runtimeType &&
+          userId == other.userId &&
+          counterTeamMembers == other.counterTeamMembers;
+
+  @override
+  int get hashCode => counterTeamMembers.hashCode ^ userId.hashCode;
+
+  @override
   String toString() {
-    return 'Settings { userId: $userId, counterTeamMember: $counterTeamMembers';
+    return 'UserSettings { userId: $userId, counterTeamMember: $counterTeamMembers }';
   }
 }

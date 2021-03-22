@@ -96,7 +96,7 @@ class _FormItAppState extends State<FormItApp> {
           return AddEditScreen(
             onSave: (nickname, level) {
               BlocProvider.of<PeopleBloc>(context)
-                  .add(AddPerson(Person(nickname, level)));
+                  .add(AddPerson(Player(nickname: nickname!, level: level)));
             },
             isEditing: false,
           );
@@ -105,7 +105,7 @@ class _FormItAppState extends State<FormItApp> {
           return AddEditScreen(
             onSave: (nickname, level) {
               BlocProvider.of<PeopleBloc>(context)
-                  .add(UpdatePerson(Person(nickname, level)));
+                  .add(UpdatePerson(Player(nickname: nickname!, level: level)));
             },
             isEditing: true,
           );

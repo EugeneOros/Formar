@@ -29,18 +29,12 @@ class TabSelector extends StatelessWidget {
       switch (tab) {
         case AppTab.people:
           return  SvgPicture.asset(isActive ? "assets/people_fill.svg" : "assets/people_empty.svg");
-          break;
         case AppTab.teams:
           return SvgPicture.asset(isActive ? "assets/team_fill.svg" : "assets/team_empty.svg");
-          break;
         case AppTab.tournament:
           return SvgPicture.asset(isActive ? "assets/tournament_fill.svg" : "assets/tournament_empty.svg");
-          break;
         case AppTab.settings:
           return SvgPicture.asset(isActive ? "assets/settings_fill.svg" : "assets/settings_empty.svg");
-          break;
-        default:
-          return null;
       }
     }
 
@@ -54,8 +48,6 @@ class TabSelector extends StatelessWidget {
           return AppLocalizations.of(context)!.tournament;
         case AppTab.settings:
           return AppLocalizations.of(context)!.settings;
-        default:
-          return "";
       }
     }
 

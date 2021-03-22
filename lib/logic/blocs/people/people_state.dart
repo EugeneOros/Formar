@@ -11,7 +11,7 @@ abstract class PeopleState extends Equatable {
 class PeopleLoading extends PeopleState {}
 
 class PeopleLoaded extends PeopleState {
-  final List<Person> people;
+  final List<Player> people;
 
   const PeopleLoaded([this.people = const []]);
 

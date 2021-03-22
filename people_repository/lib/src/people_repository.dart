@@ -6,15 +6,15 @@ import 'package:people_repository/people_repository.dart';
 import 'models/models.dart';
 
 abstract class PeopleRepository {
-  Future<void> addNewPerson(Person person);
+  Future<void> addNewPerson(Player person);
 
-  Future<void> deletePerson(Person person);
+  Future<void> deletePerson(Player person);
 
-  Stream<List<Person>> people();
+  Stream<List<Player>> people();
 
-  Future<List<Person>> currentPeopleList();
+  Future<List<Player>> currentPeopleList();
 
-  Future<void> updatePerson(Person person);
+  Future<void> updatePerson(Player person);
 
   Future getPerson(String personID);
 }

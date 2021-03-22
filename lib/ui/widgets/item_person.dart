@@ -10,7 +10,7 @@ class PersonItem extends StatelessWidget {
   final Function onDelete;
   final GestureTapCallback onEdit;
   final ValueChanged<bool> onSwitchChanged;
-  final Person person;
+  final Player person;
   final SlidableController slidableController;
 
   PersonItem({
@@ -82,7 +82,7 @@ class PersonItem extends StatelessWidget {
                       children: [
                         Container(
                           child: Text(
-                            person.nickname!,
+                            person.nickname,
                             style: Theme.of(context).textTheme.bodyText1,
                             overflow: TextOverflow.ellipsis,
                           ),

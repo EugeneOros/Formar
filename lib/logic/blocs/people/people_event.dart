@@ -13,7 +13,7 @@ class LoadPeople extends PeopleEvent {}
 class TurnOffPeople extends PeopleEvent {}
 
 class AddPerson extends PeopleEvent {
-  final Person person;
+  final Player person;
 
   const AddPerson(this.person);
 
@@ -25,7 +25,7 @@ class AddPerson extends PeopleEvent {
 }
 
 class UpdatePerson extends PeopleEvent {
-  final Person updatedPerson;
+  final Player updatedPerson;
 
   const UpdatePerson(this.updatedPerson);
 
@@ -39,7 +39,7 @@ class UpdatePerson extends PeopleEvent {
 
 
 class DeletePerson extends PeopleEvent {
-  final Person person;
+  final Player person;
 
   const DeletePerson(this.person);
 
@@ -55,7 +55,7 @@ class ClearCompleted extends PeopleEvent {}
 class ToggleAll extends PeopleEvent {}
 
 class PeopleUpdated extends PeopleEvent {
-  final List<Person> people;
+  final List<Player> people;
 
   const PeopleUpdated(this.people);
 

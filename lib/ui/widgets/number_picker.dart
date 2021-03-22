@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class NumberPickerHorizontal extends StatefulWidget {
-  final Function? handleValueChange;
   final int? initValue;
+  final Function? handleValueChange;
 
   const NumberPickerHorizontal({Key? key, this.handleValueChange, this.initValue}) : super(key: key);
   @override

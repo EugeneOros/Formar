@@ -1,58 +1,56 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:people_repository/people_repository.dart';
 
 class TeamEntity extends Equatable {
   final String? id;
   final String? name;
+  final int? power;
   final List<String>? playersIds;
-  final int? capacity;
 
-  TeamEntity(this.name, this.capacity, this.playersIds, this.id);
+  TeamEntity(this.id, this.name, this.power, this.playersIds);
 
   Map<String, Object?> toJson() {
     return {
-      'name': name,
-      'capacity': capacity,
-      'membersNames' : playersIds,
       'id': id,
+      'name': name,
+      'capacity': power,
+      'membersNames' : playersIds,
     };
   }
 
-  @override
-  String toString() {
-    return 'TeamEntity { name: $name, capacity: $capacity, playersIds: $playersIds, id: $id }';
-  }
 
   static TeamEntity fromJson(Map<String, Object> json) {
     return TeamEntity(
-      json['name'] as String?,
-      json['capacity'] as int?,
-      json['playersIds'] as List<String>?,
       json['id'] as String?,
+      json['name'] as String?,
+      json['power'] as int?,
+      json['playersIds'] as List<String>?,
     );
   }
 
   static TeamEntity fromSnapshot(DocumentSnapshot snap) {
-    // snap.
-    // Map<String, dynamic> map = Map<String, dynamic>();
-    // map['membersNames'] = snap['membersNames'];
     return TeamEntity(
-      snap['name'],
-      snap['capacity'],
-      (snap['playersIds'] as List?)?.map((item) => item as String)?.toList(),
       snap.id,
+      snap['name'],
+      snap['power'],
+      (snap['playersIds'] as List?)?.map((item) => item as String).toList(),
     );
   }
 
   Map<String, Object?> toDocument() {
     return {
       'name': name,
-      'capacity': capacity,
+      'power': power,
       'playersIds': playersIds,
     };
   }
 
   @override
-  List<Object?> get props => [name, capacity, playersIds, id];
+  List<Object?> get props => [id, name, power, playersIds];
+
+  @override
+  String toString() {
+    return 'TeamEntity { id: $id, name: $name, power: $power, playersIds: $playersIds }';
+  }
+
 }

@@ -43,8 +43,10 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   Stream<TeamsState> _mapLoadTeamsToState() async* {
     _teamsSubscription?.cancel();
     _teamsSubscription = _teamsRepository.teams().listen(
-          (teams) => add(TeamsUpdated(teams)),
-    );
+          (teams) {
+            teams.sort((a, b) => a.name!.compareTo(b.name!));
+            return add(TeamsUpdated(teams));
+          });
   }
 
   Stream<TeamsState> _mapTeamsUpdateToState(TeamsUpdated event) async* {

@@ -22,6 +22,7 @@ import 'pages/settings_page.dart';
 
 class HomeScreen extends StatelessWidget {
   final String name;
+
   HomeScreen({Key? key, required this.name}) : super(key: key);
 
   @override
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
     ];
 
     String _getTeamCountString(
-        List<Person> people, int memberCount, bool isBalanced) {
+        List<Player> people, int memberCount, bool isBalanced) {
       int availablePeopleCount =
           people.where((element) => element.available).length;
       double averageTeamCount = (availablePeopleCount / memberCount);
@@ -124,7 +125,12 @@ class HomeScreen extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          double width = textSize(_getTeamCountString(state.people, counterTeamMembers, false), Theme.of(context).textTheme.bodyText2).width + 40;
+                          double width = textSize(
+                                      _getTeamCountString(state.people,
+                                          counterTeamMembers, false),
+                                      Theme.of(context).textTheme.bodyText2)
+                                  .width +
+                              40;
                           return FunkyOverlay(
                             title: AppLocalizations.of(context)!.choseOption,
                             content: SizedBox(
@@ -146,13 +152,13 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  child: FlatButton(
+                                  child: TextButton(
                                     child: Text(
                                       _getTeamCountString(state.people,
-                                          counterTeamMembers, true), style:
+                                          counterTeamMembers, true),
+                                      style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
-                                    textColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       BlocProvider.of<TeamsBloc>(context).add(
                                           FormTeams(true, counterTeamMembers));
@@ -163,11 +169,13 @@ class HomeScreen extends StatelessWidget {
                                 Container(
                                   height: 40,
                                   width: width,
-                                  child: FlatButton(
+                                  child: TextButton(
                                     child: Text(
-                                      _getTeamCountString(state.people, counterTeamMembers, false), style: Theme.of(context).textTheme.bodyText2,
+                                      _getTeamCountString(state.people,
+                                          counterTeamMembers, false),
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
                                     ),
-                                    textColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       BlocProvider.of<TeamsBloc>(context).add(
                                           FormTeams(false, counterTeamMembers));
@@ -175,16 +183,14 @@ class HomeScreen extends StatelessWidget {
                                     },
                                   ),
                                 ),
-
                               ]),
                             ),
                             actions: [
-                              FlatButton(
+                              TextButton(
                                 child: Text(
                                   AppLocalizations.of(context)!.cancel,
                                   style: Theme.of(context).textTheme.button,
                                 ),
-                                textColor: Theme.of(context).primaryColor,
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

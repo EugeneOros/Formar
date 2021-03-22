@@ -22,7 +22,7 @@ class UpdateFilter extends FilteredPeopleEvent {
 
 
 class UpdatePeople extends FilteredPeopleEvent {
-  final List<Person> people;
+  final List<Player> people;
 
   const UpdatePeople(this.people);
 

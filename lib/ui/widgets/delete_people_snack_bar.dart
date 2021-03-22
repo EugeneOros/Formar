@@ -6,7 +6,7 @@ import 'package:form_it/ui/shared/dependency.dart';
 class DeletePersonSnackBar extends SnackBar {
   DeletePersonSnackBar({
     Key? key,
-    required Person player,
+    required Player player,
     required VoidCallback onUndo,
     required BuildContext context,
   }) : super(

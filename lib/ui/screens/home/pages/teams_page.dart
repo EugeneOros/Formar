@@ -69,7 +69,7 @@ class TeamsPage extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: team.players.length,
                             itemBuilder: (context, index) {
-                              final memberName = team.players[index]!.nickname;
+                              final memberName = team.players[index].nickname;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 5.0),
                                 child: Text(memberName!, style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis,),

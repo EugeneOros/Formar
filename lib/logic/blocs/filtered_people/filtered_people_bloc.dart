@@ -65,8 +65,8 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
     );
   }
 
-  List<Person> _mapPeopleToFilteredPeople(
-      List<Person> people, VisibilityFilter filter) {
+  List<Player> _mapPeopleToFilteredPeople(
+      List<Player> people, VisibilityFilter filter) {
     return people.where((todo) {
       if (filter == VisibilityFilter.all) {
         return true;
