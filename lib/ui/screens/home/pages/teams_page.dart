@@ -1,16 +1,14 @@
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/loading.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class TeamsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context).size;
+    Size size = MediaQuery.maybeOf(context)!.size;
     return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
       if (state is TeamsLoading) {
         return Loading(
@@ -62,7 +60,7 @@ class TeamsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          team.name,
+                          team.name!,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         Container(
@@ -71,7 +69,7 @@ class TeamsPage extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: team.membersNames.length,
                             itemBuilder: (context, index) {
-                              final memberName = team.membersNames[index];
+                              final memberName = team.membersNames[index]!;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 5.0),
                                 child: Text(memberName, style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis,),

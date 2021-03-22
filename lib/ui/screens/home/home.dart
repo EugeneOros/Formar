@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
@@ -13,7 +13,6 @@ import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:people_repository/people_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'pages/people_page.dart';
@@ -23,8 +22,7 @@ import 'pages/settings_page.dart';
 
 class HomeScreen extends StatelessWidget {
   final String name;
-
-  HomeScreen({Key key, @required this.name}) : super(key: key);
+  HomeScreen({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +44,30 @@ class HomeScreen extends StatelessWidget {
         if (availablePeopleCount % averageTeamCount.ceil() == 0)
           return averageTeamCount.ceil().toString() +
               " " +
-              AppLocalizations.of(context).teamsOf +
+              AppLocalizations.of(context)!.teamsOf +
               " " +
               averageMemberCount.round().toString() +
               " " +
-              AppLocalizations.of(context).peopleTeam;
+              AppLocalizations.of(context)!.peopleTeam;
         return averageTeamCount.ceil().toString() +
             " " +
-            AppLocalizations.of(context).teamsOf +
+            AppLocalizations.of(context)!.teamsOf +
             " " +
             averageMemberCount.floor().toString() +
             "-" +
             averageMemberCount.ceil().toString() +
             " " +
-            AppLocalizations.of(context).peopleTeam;
+            AppLocalizations.of(context)!.peopleTeam;
       } else {
         return averageTeamCount.floor().toString() +
             " " +
-            AppLocalizations.of(context).teamsOf +
+            AppLocalizations.of(context)!.teamsOf +
             " " +
             memberCount.toString() +
             " " +
-            AppLocalizations.of(context).peopleTeam +
+            AppLocalizations.of(context)!.peopleTeam +
             " + " +
-            AppLocalizations.of(context).replacement;
+            AppLocalizations.of(context)!.replacement;
       }
     }
 
@@ -101,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                 builder: (settingsContext, settingsState) {
               if (settingsState is SettingsLoaded) {
                 var counterTeamMembers =
-                    settingsState.settings.counterTeamMembers;
+                    settingsState.settings!.counterTeamMembers;
                 return IconButton(
                     icon: Icon(
                         Icons.replay_rounded
@@ -112,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                       if ((state.people
                                       .where((element) => element.available)
                                       .length /
-                                  counterTeamMembers <
+                                  counterTeamMembers! <
                               2) ||
                           (state.people
                                       .where((element) => element.available)
@@ -128,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                         builder: (BuildContext context) {
                           double width = textSize(_getTeamCountString(state.people, counterTeamMembers, false), Theme.of(context).textTheme.bodyText2).width + 40;
                           return FunkyOverlay(
-                            title: AppLocalizations.of(context).choseOption,
+                            title: AppLocalizations.of(context)!.choseOption,
                             content: SizedBox(
                               width: width,
                               height: 80,
@@ -139,11 +137,11 @@ class HomeScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     border: Border(
                                       top: BorderSide(
-                                        color: Colors.grey[400],
+                                        color: Colors.grey[400]!,
                                         width: 1,
                                       ),
                                       bottom: BorderSide(
-                                        color: Colors.grey[400],
+                                        color: Colors.grey[400]!,
                                         width: 1,
                                       ),
                                     ),
@@ -183,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                             actions: [
                               FlatButton(
                                 child: Text(
-                                  AppLocalizations.of(context).cancel,
+                                  AppLocalizations.of(context)!.cancel,
                                   style: Theme.of(context).textTheme.button,
                                 ),
                                 textColor: Theme.of(context).primaryColor,
@@ -208,7 +206,7 @@ class HomeScreen extends StatelessWidget {
             // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
 
           }
-          return Padding();
+          return Spacer();
         }),
       ],
       [],
@@ -217,6 +215,7 @@ class HomeScreen extends StatelessWidget {
 
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
+      Size size = MediaQuery.of(context).size;
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,

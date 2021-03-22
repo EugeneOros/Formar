@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/have_account_check.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
@@ -10,8 +9,10 @@ import 'package:form_it/ui/widgets/rounded_password_field.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/login/bloc.dart';
 
+
+
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -20,7 +21,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  LoginBloc _loginBloc;
+  LoginBloc? _loginBloc;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -35,20 +36,20 @@ class _LoginState extends State<LoginScreen> {
     super.initState();
     _loginBloc = BlocProvider.of<LoginBloc>(context);
     _emailController.addListener(() {
-      _loginBloc.add(LoginEventEmailChanged(email: _emailController.text));
+      _loginBloc!.add(LoginEventEmailChanged(email: _emailController.text));
     });
     _passwordController.addListener(() {
-      _loginBloc
+      _loginBloc!
           .add(LoginEventPasswordChanged(password: _passwordController.text));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context).size;
+    Size size = MediaQuery.maybeOf(context)!.size;
     return Scaffold(
       body: BlocListener(
-        cubit: _loginBloc,
+        bloc: _loginBloc,
         listener: (BuildContext context, LoginState state) {
           if (state.isFailure) {
             print("login failure");
@@ -88,13 +89,13 @@ class _LoginState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              AppLocalizations.of(context).login.toUpperCase(),
+                              AppLocalizations.of(context)!.login.toUpperCase(),
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: size.height * 0.03),
                             Text(
                               loginState.isFailure
-                                  ? AppLocalizations.of(context).errorLogin
+                                  ? AppLocalizations.of(context)!.errorLogin
                                   : "",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -105,22 +106,22 @@ class _LoginState extends State<LoginScreen> {
                             SizedBox(height: 12.0),
                             RoundedInputField(
                               controller: _emailController,
-                              hintText: AppLocalizations.of(context).email,
+                              hintText: AppLocalizations.of(context)!.email,
                               validator: (_) => loginState.isEmailValid
                                   ? null
-                                  : AppLocalizations.of(context).errorEmail,
+                                  : AppLocalizations.of(context)!.errorEmail,
                             ),
                             RoundedPasswordField(
                               controller: _passwordController,
                               validator: (_) => loginState.isPasswordValid
                                   ? null
-                                  : AppLocalizations.of(context).errorPassword,
+                                  : AppLocalizations.of(context)!.errorPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
-                            RoundedButton(
-                              text: AppLocalizations.of(context).login,
-                              onPressed: _onLoginEmailAndPassword,
-                            ),
+                            // RoundedButton(
+                            //   text: AppLocalizations.of(context)!.login,
+                            //   onPressed: _onLoginEmailAndPassword,
+                            // ),
                             SizedBox(height: size.height * 0.03),
                             HaveAccountCheck(
                               onTap: () {
@@ -139,8 +140,8 @@ class _LoginState extends State<LoginScreen> {
   }
 
   void _onLoginEmailAndPassword() {
-    if (_formKey.currentState.validate()) {
-      _loginBloc.add(LoginEventWithCredentialsPressed(
+    if (_formKey.currentState!.validate()) {
+      _loginBloc!.add(LoginEventWithCredentialsPressed(
           email: _emailController.text, password: _passwordController.text));
     }
   }

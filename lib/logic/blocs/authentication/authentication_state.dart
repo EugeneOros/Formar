@@ -9,21 +9,21 @@ import 'package:meta/meta.dart';
 abstract class AuthenticationState extends Equatable {
   const AuthenticationState();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class AuthenticationStateInitialized extends AuthenticationState {}
 
 class AuthenticationStateAuthenticated extends AuthenticationState {
-  final User user;
+  final User? user;
 
   const AuthenticationStateAuthenticated(this.user);
 
   @override
-  List<Object> get props => [user];
+  List<Object?> get props => [user];
 
   @override
-  String toString() => "email: ${user.email}";
+  String toString() => "email: ${user!.email}";
 }
 
 class AuthenticationStateUnauthenticated extends AuthenticationState {}

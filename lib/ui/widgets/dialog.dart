@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/constants.dart';
 
 class FunkyOverlay extends StatefulWidget {
-  final SizedBox content;
+  final SizedBox? content;
   final String title;
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   const FunkyOverlay({
-    Key key,
+    Key? key,
     this.content,
-    @required this.title,
+    required this.title,
     this.actions,
   }) : super(key: key);
 
@@ -21,8 +21,8 @@ class FunkyOverlay extends StatefulWidget {
 
 class FunkyOverlayState extends State<FunkyOverlay>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> scaleAnimation;
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
 
 
   @override
@@ -43,7 +43,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
 
   @override
   Widget build(BuildContext context) {
-    double width = max(widget.content != null ? widget.content.width : 0,  (textSize(widget.title, Theme.of(context).textTheme.headline1).width) + 40 );
+    double width = max(widget.content != null ? widget.content!.width! : 0,  (textSize(widget.title, Theme.of(context).textTheme.headline1).width) + 40 );
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: Center(
@@ -74,28 +74,27 @@ class FunkyOverlayState extends State<FunkyOverlay>
                     decoration: BoxDecoration(
                         border: Border(
                       top: BorderSide(
-                        color: Colors.grey[400],
+                        color: Colors.grey[400]!,
                         width: 1,
                       ),
                     )),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      children: widget.actions.map((e) {
+                      children: widget.actions!.map((e) {
                             return Container(
                               height: 35,
-                              width: width / widget.actions.length,
+                              width: width / widget.actions!.length,
                               decoration:BoxDecoration(
-                                      border:  e != widget.actions.last ? Border(
+                                      border:  e != widget.actions!.last ? Border(
                                         right: BorderSide(
-                                          color: Colors.grey[400],
+                                          color: Colors.grey[400]!,
                                           width: 1,
                                         ),
                                       ) : Border(),
                                     ),
                               child: e,
                             );
-                          }).toList() ??
-                          [],
+                          }).toList(),
                     ),
                   )
                 ],

@@ -14,7 +14,7 @@ import 'delete_people_snack_bar.dart';
 import 'loading.dart';
 
 class FilteredPeopleList extends StatelessWidget {
-  FilteredPeopleList({Key key}) : super(key: key);
+  FilteredPeopleList({Key? key}) : super(key: key);
   final SlidableController slidableController = SlidableController();
 
   @override
@@ -31,11 +31,11 @@ class FilteredPeopleList extends StatelessWidget {
               final person = people[index];
               return Column(
                 children: [
-                  (index == 0 || people[index].nickname[0].toUpperCase() != people[index - 1].nickname[0].toUpperCase()) ?
+                  (index == 0 || people[index].nickname![0].toUpperCase() != people[index - 1].nickname![0].toUpperCase()) ?
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(left: 10, top: 5),
-                    child: Text(person.nickname[0].toUpperCase(), style: Theme.of(context).textTheme.subtitle1,),
+                    child: Text(person.nickname![0].toUpperCase(), style: Theme.of(context).textTheme.subtitle1,),
                   ) : Container() ,
                   PersonItem(
                     person: person,

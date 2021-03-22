@@ -4,9 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class Loading extends StatelessWidget {
   final Color backgroundColor;
   final Color indicatorColor;
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
 
-  Loading({Key key, this.backgroundColor = Colors.white, this.indicatorColor = Colors.black, this.decoration} ) : super(key: key);
+  Loading({Key? key, this.backgroundColor = Colors.white, this.indicatorColor = Colors.black, this.decoration} ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

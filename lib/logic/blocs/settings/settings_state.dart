@@ -5,18 +5,18 @@ abstract class SettingsState extends Equatable {
   const SettingsState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SettingsLoading extends SettingsState {}
 
 class SettingsLoaded extends SettingsState {
-  final UserSettings settings;
+  final UserSettings? settings;
 
   const SettingsLoaded([this.settings]);
 
   @override
-  List<Object> get props => [settings];
+  List<Object?> get props => [settings];
 
   @override
   String toString() => 'SettingsLoaded { settings: $settings }';

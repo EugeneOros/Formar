@@ -12,7 +12,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   bool isHiddenPassword = true;
 
   LoginBloc({
-    @required UserRepository userRepository,
+    required UserRepository userRepository,
   })  : assert(userRepository != null),
         _userRepository = userRepository,
         super(LoginState.empty());
@@ -33,7 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    final currentState = state;
+    final LoginState currentState = state;
     if (event is LoginEventEmailChanged) {
       yield currentState.update(
           isEmailValid: Validators.isValidEmail(event.email));
@@ -63,8 +63,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _mapLoginWithCredentialsPressedToState({
-    String email,
-    String password,
+    required String email,
+    required String password,
   }) async* {
     yield LoginState.loading();
     try {

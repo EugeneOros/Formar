@@ -11,9 +11,9 @@ import 'filtered_people_state.dart';
 
 class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState> {
   final PeopleBloc _peopleBloc;
-  StreamSubscription _peopleSubscription;
+  StreamSubscription? _peopleSubscription;
 
-  FilteredPeopleBloc({@required PeopleBloc peopleBloc})
+  FilteredPeopleBloc({required PeopleBloc peopleBloc})
       : assert(peopleBloc != null),
         _peopleBloc = peopleBloc,
         super(peopleBloc.state is PeopleLoaded
@@ -41,7 +41,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
   Stream<FilteredPeopleState> _mapUpdateFilterToState(
     UpdateFilter event,
   ) async* {
-    final currentState = _peopleBloc.state;
+    final PeopleState currentState = _peopleBloc.state;
     if (currentState is PeopleLoaded) {
       yield FilteredPeopleLoaded(
         _mapPeopleToFilteredPeople(currentState.people, event.filter),

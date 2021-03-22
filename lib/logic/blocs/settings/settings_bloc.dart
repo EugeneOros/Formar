@@ -10,14 +10,14 @@ import 'bloc.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settingsRepository;
-  StreamSubscription _settingsSubscription;
-  StreamSubscription _authenticationSubscription;
+  StreamSubscription? _settingsSubscription;
+  StreamSubscription? _authenticationSubscription;
   final AuthenticationBloc _authenticationBloc;
   int currentPlayerCount = 1;
 
 
   SettingsBloc(
-      {@required SettingsRepository settingsRepository, @required AuthenticationBloc authenticationBloc})
+      {required SettingsRepository settingsRepository, required AuthenticationBloc authenticationBloc})
       : assert(settingsRepository != null),
         _authenticationBloc = authenticationBloc,
         _settingsRepository = settingsRepository,

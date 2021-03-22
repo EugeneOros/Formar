@@ -8,14 +8,14 @@ import 'package:people_repository/people_repository.dart';
 
 class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   final PeopleRepository _peopleRepository;
-  StreamSubscription _peopleSubscription;
-  StreamSubscription _authenticationSubscription;
+  StreamSubscription? _peopleSubscription;
+  StreamSubscription? _authenticationSubscription;
   final AuthenticationBloc _authenticationBloc;
 
   // StreamSubscription _peopleSubscription;
 
   PeopleBloc(
-      {@required PeopleRepository peopleRepository, @required AuthenticationBloc authenticationBloc})
+      {required PeopleRepository peopleRepository, required AuthenticationBloc authenticationBloc})
       : assert(peopleRepository != null),
         _authenticationBloc = authenticationBloc,
         _peopleRepository = peopleRepository,
@@ -57,7 +57,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   }
 
   Stream<PeopleState> _mapTurnOffPeopleToState() async* {
-    final currentState = state;
+    final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
       final List<Person> availablePeople =
       currentState.people.where((person) => person.available).toList();
@@ -80,7 +80,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   }
 
   Stream<PeopleState> _mapToggleAllToState() async* {
-    final currentState = state;
+    final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
       final allComplete = currentState.people.every((todo) => todo.available);
       final List<Person> updatedPeople = currentState.people
@@ -93,7 +93,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   }
 
   Stream<PeopleState> _mapClearCompletedToState() async* {
-    final currentState = state;
+    final PeopleState currentState = state;
     if (currentState is PeopleLoaded) {
       final List<Person> completedPeople =
       currentState.people.where((person) => person.available).toList();

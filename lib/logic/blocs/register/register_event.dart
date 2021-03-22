@@ -10,7 +10,7 @@ abstract class RegisterEvent extends Equatable {
 
 class RegisterEventEmailChanged extends RegisterEvent {
   final String email;
-  RegisterEventEmailChanged({@required this.email});
+  RegisterEventEmailChanged({required this.email});
   @override
   List<Object> get props => [email];
   @override
@@ -19,7 +19,7 @@ class RegisterEventEmailChanged extends RegisterEvent {
 
 class RegisterEventPasswordChanged extends RegisterEvent {
   final String password;
-  RegisterEventPasswordChanged({@required this.password});
+  RegisterEventPasswordChanged({required this.password});
   @override
   List<Object> get props => [password];
   @override
@@ -29,7 +29,7 @@ class RegisterEventPasswordChanged extends RegisterEvent {
 class RegisterEventPressed extends RegisterEvent {
   final String email;
   final String password;
-  RegisterEventPressed({@required this.email, @required this.password});
+  RegisterEventPressed({required this.email, required this.password});
   @override
   List<Object> get props => [email, password];
   @override

@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:people_repository/people_repository.dart';
 
 class TeamEntity extends Equatable {
-  final String id;
-  final String name;
-  final List<String> membersNames;
-  final int capacity;
+  final String? id;
+  final String? name;
+  final List<String?>? membersNames;
+  final int? capacity;
 
   TeamEntity(this.name, this.capacity, this.membersNames, this.id);
 
-  Map<String, Object> toJson() {
+  Map<String, Object?> toJson() {
     return {
       'name': name,
       'capacity': capacity,
@@ -26,10 +26,10 @@ class TeamEntity extends Equatable {
 
   static TeamEntity fromJson(Map<String, Object> json) {
     return TeamEntity(
-      json['name'] as String,
-      json['capacity'] as int,
-      json['membersNames'] as List<String>,
-      json['id'] as String,
+      json['name'] as String?,
+      json['capacity'] as int?,
+      json['membersNames'] as List<String>?,
+      json['id'] as String?,
     );
   }
 
@@ -40,12 +40,12 @@ class TeamEntity extends Equatable {
     return TeamEntity(
       snap['name'],
       snap['capacity'],
-      (snap['membersNames'] as List)?.map((item) => item as String)?.toList(),
+      (snap['membersNames'] as List?)?.map((item) => item as String)?.toList(),
       snap.id,
     );
   }
 
-  Map<String, Object> toDocument() {
+  Map<String, Object?> toDocument() {
     return {
       'name': name,
       'capacity': capacity,
@@ -54,5 +54,5 @@ class TeamEntity extends Equatable {
   }
 
   @override
-  List<Object> get props => [name, capacity, membersNames, id];
+  List<Object?> get props => [name, capacity, membersNames, id];
 }

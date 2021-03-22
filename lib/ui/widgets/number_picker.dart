@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class NumberPickerHorizontal extends StatefulWidget {
-  final Function handleValueChange;
-  final int initValue;
+  final Function? handleValueChange;
+  final int? initValue;
 
-  const NumberPickerHorizontal({Key key, this.handleValueChange, this.initValue}) : super(key: key);
+  const NumberPickerHorizontal({Key? key, this.handleValueChange, this.initValue}) : super(key: key);
   @override
   _NumberPickerHorizontalState createState() => _NumberPickerHorizontalState();
 }
 
 class _NumberPickerHorizontalState extends State<NumberPickerHorizontal> {
-  int currentCount;
+  int? currentCount;
 
   @override
   void initState() {
@@ -27,15 +27,17 @@ class _NumberPickerHorizontalState extends State<NumberPickerHorizontal> {
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         alignment: WrapAlignment.center,
-        children: [ NumberPicker.horizontal(
+        children: [ NumberPicker(
+          axis: Axis.horizontal,
+          itemHeight: 30,
+          itemWidth: 45,
           haptics: true,
           selectedTextStyle: Theme.of(context).textTheme.bodyText1,
           textStyle: Theme.of(context).textTheme.bodyText2,
-            initialValue: currentCount,
+            value: currentCount!,
             minValue: 1,
             maxValue: 100,
             step: 1,
-            itemExtent: 45,
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
@@ -50,10 +52,9 @@ class _NumberPickerHorizontalState extends State<NumberPickerHorizontal> {
                 ),
               ),
             ),
-            listViewHeight: 30,
             onChanged: (value) {
               setState(() => currentCount = value);
-              widget.handleValueChange(value);
+              widget.handleValueChange!(value);
             }
         ),]
       ),

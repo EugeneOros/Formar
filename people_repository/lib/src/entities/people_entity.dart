@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:people_repository/src/models/level.dart';
 
 class PeopleEntity extends Equatable {
-  final bool available;
-  final String id;
-  final String nickname;
-  final Level level;
+  final bool? available;
+  final String? id;
+  final String? nickname;
+  final Level? level;
 
   PeopleEntity(this.nickname, this.id,  this.level, this.available);
 
-  Map<String, Object> toJson() {
+  Map<String, Object?> toJson() {
     return {
       'available': available,
       'nickname': nickname,
@@ -26,15 +26,15 @@ class PeopleEntity extends Equatable {
 
   static PeopleEntity fromJson(Map<String, Object> json) {
     return PeopleEntity(
-      json['nickname'] as String,
-      json['id'] as String,
-      json['level'] as Level,
-      json['available'] as bool,
+      json['nickname'] as String?,
+      json['id'] as String?,
+      json['level'] as Level?,
+      json['available'] as bool?,
     );
   }
 
   static PeopleEntity fromSnapshot(DocumentSnapshot snap) {
-    Level level;
+    Level? level;
     for(Level l in Level.values){
       if(snap['level'] == l.toString()){
         level = l;
@@ -48,7 +48,7 @@ class PeopleEntity extends Equatable {
     );
   }
 
-  Map<String, Object> toDocument() {
+  Map<String, Object?> toDocument() {
     return {
       'available': available,
       'nickname': nickname,
@@ -57,5 +57,5 @@ class PeopleEntity extends Equatable {
   }
 
   @override
-  List<Object> get props => [available, id, level, nickname];
+  List<Object?> get props => [available, id, level, nickname];
 }

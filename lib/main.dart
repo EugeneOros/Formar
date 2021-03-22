@@ -81,7 +81,7 @@ class _FormItAppState extends State<FormItApp> {
                   child: LoginScreen(),
                 );
               } else if (state is AuthenticationStateAuthenticated) {
-                return HomeScreen(name: state.user.email ?? "");
+                return HomeScreen(name: state.user!.email ?? "");
               }
               return SplashScreen();
             },
@@ -113,8 +113,53 @@ class _FormItAppState extends State<FormItApp> {
       };
     }
 
-    _getBlocProviders() {
-      return [
+    // _getBlocProviders() {
+    //   return [
+    //     BlocProvider<AuthenticationBloc>(
+    //       create: (BuildContext context) {
+    //         final authBloc = AuthenticationBloc(authService: _userRepository);
+    //         authBloc.add(AppStarted());
+    //         return authBloc;
+    //       },
+    //     ),
+    //     BlocProvider<PeopleBloc>(
+    //       create: (context) {
+    //         return PeopleBloc(
+    //           authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+    //           peopleRepository: _peopleRepository,
+    //         )..add(LoadPeople());
+    //       },
+    //     ),
+    //     BlocProvider<FilteredPeopleBloc>(
+    //       create: (context) => FilteredPeopleBloc(
+    //         peopleBloc: BlocProvider.of<PeopleBloc>(context),
+    //       ),
+    //     ),
+    //     BlocProvider<TeamsBloc>(
+    //       create: (context) {
+    //         return TeamsBloc(
+    //           authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+    //           teamsRepository:
+    //           FirebaseTeamRepository(peopleRepository: _peopleRepository),
+    //         )..add(LoadTeams());
+    //       },
+    //     ),
+    //     BlocProvider<SettingsBloc>(
+    //       create: (context) {
+    //         return SettingsBloc(
+    //           authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+    //           settingsRepository: FirebaseSettingsRepository(),
+    //         )..add(LoadSettings());
+    //       },
+    //     ),
+    //     BlocProvider<TabBloc>(
+    //       create: (context) => TabBloc(),
+    //     ),
+    //   ];
+    // }
+
+    return MultiBlocProvider(
+      providers: [
         BlocProvider<AuthenticationBloc>(
           create: (BuildContext context) {
             final authBloc = AuthenticationBloc(authService: _userRepository);
@@ -155,15 +200,12 @@ class _FormItAppState extends State<FormItApp> {
         BlocProvider<TabBloc>(
           create: (context) => TabBloc(),
         ),
-      ];
-    }
-
-    return MultiBlocProvider(
-      providers: _getBlocProviders(),
+      ],
       child: MaterialApp(
         title: "Form It",
         color: Colors.white,
         localizationsDelegates: LOCALIZATION_DELEGATES,
+        // localeListResolutionCallback: LOCALIZATION_RESOLUTION,
         supportedLocales:
             SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
         debugShowCheckedModeBanner: false,
@@ -171,7 +213,7 @@ class _FormItAppState extends State<FormItApp> {
         builder: (context, child) {
           return ScrollConfiguration(
             behavior: AppScrollBehavior(),
-            child: child,
+            child: child!,
           );
         },
         initialRoute: '/',

@@ -12,7 +12,7 @@ class FirebaseSettingsRepository implements SettingsRepository {
 
   @override
   Stream<UserSettings> settings() {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
     DocumentReference settingsDoc =
         FirebaseFirestore.instance.collection("users").doc(user.uid);
     return settingsDoc.snapshots().map((snapshot) {
@@ -22,7 +22,7 @@ class FirebaseSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> updateSettings(UserSettings userSettings) async {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
     DocumentReference settingsDocument =
         FirebaseFirestore.instance.collection("users").doc(user.uid);
     return settingsDocument
@@ -31,11 +31,11 @@ class FirebaseSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> createSettings() async {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
     DocumentReference settingsDocument =
     FirebaseFirestore.instance.collection("users").doc(user.uid);
     settingsDocument.get().then((snapshot) {
-      if(snapshot.data() == null || !snapshot.data().containsKey("counterTeamMembers")){
+      if(snapshot.data() == null || !snapshot.data()!.containsKey("counterTeamMembers")){
         settingsDocument.set({"counterTeamMembers": 6});
         print("yeyyeyeyyeyeyy");
       }

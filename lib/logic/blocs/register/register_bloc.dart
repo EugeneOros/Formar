@@ -10,7 +10,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository _userRepository;
   bool isHiddenPassword = true;
 
-  RegisterBloc({@required UserRepository userRepository})
+  RegisterBloc({required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(RegisterState.empty());
@@ -47,8 +47,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> _mapSignUpWithCredentialsPressedToState({
-    String email,
-    String password,
+    required String email,
+    required String password,
   }) async* {
     yield RegisterState.loading();
     try {

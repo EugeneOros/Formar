@@ -3,12 +3,12 @@ import 'package:equatable/equatable.dart';
 import 'package:people_repository/people_repository.dart';
 
 class UserSettingsEntity extends Equatable {
-  final String userId;
-  final int counterTeamMembers;
+  final String? userId;
+  final int? counterTeamMembers;
 
   UserSettingsEntity(this.userId, this.counterTeamMembers);
 
-  Map<String, Object> toJson() {
+  Map<String, Object?> toJson() {
     return {
       'counterTeamMembers': counterTeamMembers,
       'userId': userId,
@@ -22,8 +22,8 @@ class UserSettingsEntity extends Equatable {
 
   static UserSettingsEntity fromJson(Map<String, Object> json) {
     return UserSettingsEntity(
-      json['userId'] as String,
-      json['counterTeamMembers'] as int,
+      json['userId'] as String?,
+      json['counterTeamMembers'] as int?,
     );
   }
 
@@ -43,5 +43,5 @@ class UserSettingsEntity extends Equatable {
   // }
 
   @override
-  List<Object> get props => [userId, counterTeamMembers];
+  List<Object?> get props => [userId, counterTeamMembers];
 }

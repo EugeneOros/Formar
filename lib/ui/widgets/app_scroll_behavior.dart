@@ -15,6 +15,5 @@ class AppScrollBehavior extends ScrollBehavior {
       case TargetPlatform.windows:
         return const ClampingScrollPhysics();
     }
-    return null;
   }
 }

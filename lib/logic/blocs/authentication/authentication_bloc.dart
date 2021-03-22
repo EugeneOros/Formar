@@ -9,7 +9,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userReposetory;
 
-  AuthenticationBloc({@required UserRepository authService})
+  AuthenticationBloc({required UserRepository authService})
       : assert(UserRepository != null),
         _userReposetory = authService,
         super(AuthenticationStateInitialized());

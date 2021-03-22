@@ -4,20 +4,20 @@ class ItemSettings extends StatelessWidget {
   final Function onTap;
   final IconData icon;
   final String text;
-  final Widget secondaryWidget;
+  final Widget? secondaryWidget;
 
   ItemSettings({
-    Key key,
-    @required this.icon,
-    @required this.text,
-    @required this.onTap,
+    Key? key,
+    required this.icon,
+    required this.text,
+    required this.onTap,
     this.secondaryWidget,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap as void Function()?,
       child: Container(
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,

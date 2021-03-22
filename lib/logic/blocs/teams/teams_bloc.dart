@@ -10,13 +10,13 @@ import 'bloc.dart';
 
 class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   final TeamRepository _teamsRepository;
-  StreamSubscription _teamsSubscription;
-  StreamSubscription _authenticationSubscription;
+  StreamSubscription? _teamsSubscription;
+  StreamSubscription? _authenticationSubscription;
   final AuthenticationBloc _authenticationBloc;
 
 
   TeamsBloc(
-      {@required TeamRepository teamsRepository, @required AuthenticationBloc authenticationBloc})
+      {required TeamRepository teamsRepository, required AuthenticationBloc authenticationBloc})
       : assert(teamsRepository != null),
         _authenticationBloc = authenticationBloc,
         _teamsRepository = teamsRepository,
@@ -52,7 +52,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   }
 
   Stream<TeamsState> _mapFormTeamsToState(FormTeams event) async* {
-    _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember);
+    _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember!);
   }
 
   @override

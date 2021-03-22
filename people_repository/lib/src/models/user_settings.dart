@@ -1,12 +1,12 @@
 import 'package:people_repository/src/entities/entities.dart';
 
 class UserSettings {
-  final int counterTeamMembers;
-  final String userId;
+  final int? counterTeamMembers;
+  final String? userId;
 
   UserSettings({this.userId, this.counterTeamMembers});
 
-  UserSettings copyWith({int counterTeamMember, String userId}) {
+  UserSettings copyWith({int? counterTeamMember, String? userId}) {
     return UserSettings(
       counterTeamMembers: counterTeamMember,
       userId: userId,

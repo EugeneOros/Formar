@@ -12,13 +12,13 @@ import 'models/team.dart';
 class FirebaseTeamRepository implements TeamRepository {
   final PeopleRepository peopleRepository;
 
-  FirebaseTeamRepository({@required this.peopleRepository});
+  FirebaseTeamRepository({required this.peopleRepository});
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Stream<List<Team>> teams() {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
     CollectionReference teamsCollection = FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
@@ -29,14 +29,14 @@ class FirebaseTeamRepository implements TeamRepository {
       teams = snapshot.docs
           .map((doc) => Team.fromEntity(TeamEntity.fromSnapshot(doc)))
           .toList();
-      teams.sort((a, b) => a.name.compareTo(b.name));
+      teams.sort((a, b) => a.name!.compareTo(b.name!));
       return teams;
     });
   }
 
   @override
   Future<void> formTeams(bool isBalanced, int numMembers) async {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
     List<Team> teams;
     CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
     teamsCollection.get().then((snapshot) {
@@ -79,21 +79,21 @@ class FirebaseTeamRepository implements TeamRepository {
     for (Person person in people) {
       if (indexTeam >= teams.length) {
         indexTeam = 0;
-        teams.sort((a, b) => a.getPower().compareTo(b.getPower()));
+        teams.sort((a, b) => a.getPower()!.compareTo(b.getPower()!));
       }
       teams[indexTeam].membersNames.add(person.nickname);
-      teams[indexTeam].increasePower(person.level.index + 1);
+      teams[indexTeam].increasePower(person.level!.index + 1);
       indexTeam++;
     }
     return teams;
   }
 
   Team _createTeamReplacement(List<Person> members){
-    List<String> membersNames = [];
+    List<String?> membersNames = [];
     int power = 0;
     for(Person member in members){
       membersNames.add(member.nickname);
-      power += member.level.index;
+      power += member.level!.index;
     }
     return Team("Replacement", power, membersNames: membersNames);
   }

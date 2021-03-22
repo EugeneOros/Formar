@@ -3,15 +3,15 @@ import 'package:people_repository/src/models/models.dart';
 import '../entities/entities.dart';
 
 class Team {
-  final String id;
-  final String name;
-  final List<String> membersNames;
-  int _power;
+  final String? id;
+  final String? name;
+  final List<String?> membersNames;
+  int? _power;
 
-  Team(this.name, this._power, {List<String> membersNames, String id})
+  Team(this.name, this._power, {List<String?>? membersNames, String? id})
       : this.id = id, this.membersNames = membersNames == null ? [] : membersNames;
 
-  Team copyWith({String id, String name, int capacity, List<String> membersNames}) {
+  Team copyWith({String? id, String? name, int? capacity, List<String>? membersNames}) {
     return Team(
       name ?? this.name,
       capacity ?? this._power,
@@ -39,12 +39,13 @@ class Team {
     return 'Team { name: $name, capacity: $_power, membersNames: $membersNames, id: $id }';
   }
 
-  int getPower(){
+  int? getPower(){
     return _power;
   }
 
   void increasePower(int powerToAdd){
-    this._power += powerToAdd;
+    if(this._power != null)
+      this._power = this._power! + powerToAdd;
   }
 
 

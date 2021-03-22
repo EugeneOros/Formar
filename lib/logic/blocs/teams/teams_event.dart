@@ -5,19 +5,19 @@ abstract class TeamsEvent extends Equatable {
   const TeamsEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadTeams extends TeamsEvent {}
 
 class FormTeams extends TeamsEvent {
   final bool isBalanced;
-  final int counterTeamMember;
+  final int? counterTeamMember;
 
   const FormTeams(this.isBalanced, this.counterTeamMember);
 
   @override
-  List<Object> get props => [isBalanced, counterTeamMember];
+  List<Object?> get props => [isBalanced, counterTeamMember];
 
 }
 

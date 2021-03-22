@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:people_repository/people_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 
 
 class PersonItem extends StatelessWidget {
@@ -14,15 +14,15 @@ class PersonItem extends StatelessWidget {
   final SlidableController slidableController;
 
   PersonItem({
-    Key key,
-    @required this.onDelete,
-    @required this.onEdit,
-    @required this.onSwitchChanged,
-    @required this.person,
-    @required this.slidableController,
+    Key? key,
+    required this.onDelete,
+    required this.onEdit,
+    required this.onSwitchChanged,
+    required this.person,
+    required this.slidableController,
   }) : super(key: key);
 
-  Color getLevelColor(Level level) {
+  Color getLevelColor(Level? level) {
     switch (level) {
       case Level.beginner:
         return BeginnerColor;
@@ -39,18 +39,18 @@ class PersonItem extends StatelessWidget {
     }
   }
 
-  String getLevelName(Level level, BuildContext context) {
+  String getLevelName(Level? level, BuildContext context) {
     switch (level) {
       case Level.beginner:
-        return AppLocalizations.of(context).beginner;
+        return AppLocalizations.of(context)!.beginner;
       case Level.intermediate:
-        return AppLocalizations.of(context).intermediate;
+        return AppLocalizations.of(context)!.intermediate;
       case Level.proficient:
-        return AppLocalizations.of(context).proficient;
+        return AppLocalizations.of(context)!.proficient;
       case Level.advanced:
-        return AppLocalizations.of(context).advanced;
+        return AppLocalizations.of(context)!.advanced;
       case Level.expert:
-        return AppLocalizations.of(context).expert;
+        return AppLocalizations.of(context)!.expert;
       default:
         return "";
     }
@@ -58,13 +58,13 @@ class PersonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context).size;
+    Size size = MediaQuery.maybeOf(context)!.size;
 
     return Column(
       children: [
         Slidable(
           controller: slidableController,
-          key: Key(person.id),
+          key: Key(person.id!),
           child: GestureDetector(
             onTap: onEdit,
             child: Container(
@@ -82,7 +82,7 @@ class PersonItem extends StatelessWidget {
                       children: [
                         Container(
                           child: Text(
-                            person.nickname,
+                            person.nickname!,
                             style: Theme.of(context).textTheme.bodyText1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -133,13 +133,13 @@ class PersonItem extends StatelessWidget {
           ),
           secondaryActions: <Widget>[
             IconSlideAction(
-              caption: AppLocalizations.of(context).edit,
+              caption: AppLocalizations.of(context)!.edit,
               color: Theme.of(context).accentColor,
               icon: Icons.edit,
               onTap: onEdit,
             ),
             IconSlideAction(
-              caption: AppLocalizations.of(context).delete,
+              caption: AppLocalizations.of(context)!.delete,
               color: Colors.black,
               icon: Icons.delete,
               onTap: () => onDelete(),

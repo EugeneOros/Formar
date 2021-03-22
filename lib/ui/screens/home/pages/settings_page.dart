@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/item_settings.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/number_picker.dart';
 
@@ -14,7 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  int _currentPlayerCountValue = 1;
+  int? _currentPlayerCountValue = 1;
 
   void handleNumChange(int value) {
     _currentPlayerCountValue = value;
@@ -24,18 +23,18 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(builder: (context, state) {
       if (state is SettingsLoaded) {
-        _currentPlayerCountValue = state.settings.counterTeamMembers;
+        _currentPlayerCountValue = state.settings!.counterTeamMembers;
         return ListView(
           children: [
             ItemSettings(
               icon: Icons.people,
-              text: AppLocalizations.of(context).playersInTeam,
+              text: AppLocalizations.of(context)!.playersInTeam,
               onTap: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return FunkyOverlay(
-                        title: AppLocalizations.of(context).playersInTeam,
+                        title: AppLocalizations.of(context)!.playersInTeam,
                         content: SizedBox(
                           height: 70,
                           width: 200,
@@ -47,7 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         actions: [
                           FlatButton(
                             child: Text(
-                              AppLocalizations.of(context).apply,
+                              AppLocalizations.of(context)!.apply,
                               style: Theme.of(context).textTheme.button,
                             ),
                             onPressed: () {
@@ -55,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               if (state is SettingsLoaded) {
                                 print(_currentPlayerCountValue);
                                 BlocProvider.of<SettingsBloc>(context).add(
-                                  UpdateSettings(state.settings.copyWith(
+                                  UpdateSettings(state.settings!.copyWith(
                                       counterTeamMember:
                                           _currentPlayerCountValue)),
                                 );
@@ -64,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           FlatButton(
                             child: Text(
-                              AppLocalizations.of(context).cancel,
+                              AppLocalizations.of(context)!.cancel,
                               style: Theme.of(context).textTheme.button,
                             ),
                             onPressed: () {
@@ -74,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ],
                       );
                     }).then((value) {
-                  _currentPlayerCountValue = state.settings.counterTeamMembers;
+                  _currentPlayerCountValue = state.settings!.counterTeamMembers;
                 });
               },
             ),
@@ -85,17 +84,17 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             ItemSettings(
               icon: Icons.logout,
-              text: AppLocalizations.of(context).signOut,
+              text: AppLocalizations.of(context)!.signOut,
               onTap: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return FunkyOverlay(
-                        title: AppLocalizations.of(context).areYouSureLogOut,
+                        title: AppLocalizations.of(context)!.areYouSureLogOut,
                         actions: [
                           FlatButton(
                             child: Text(
-                              AppLocalizations.of(context).yes,
+                              AppLocalizations.of(context)!.yes,
                               style: Theme.of(context).textTheme.button,
                             ),
                             onPressed: () {
@@ -106,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           FlatButton(
                             child: Text(
-                              AppLocalizations.of(context).no,
+                              AppLocalizations.of(context)!.no,
                               style: Theme.of(context).textTheme.button,
                             ),
                             onPressed: () {
@@ -119,7 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             Text(
-              AppLocalizations.of(context).version + " 1.0",
+              AppLocalizations.of(context)!.version + " 1.0",
               style: Theme.of(context).textTheme.subtitle1,
               textAlign: TextAlign.center,
             ),

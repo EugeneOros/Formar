@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 
 class TabSelector extends StatelessWidget {
   final AppTab activeTab;
   final Function(AppTab) onTabSelected;
 
   const TabSelector({
-    Key key,
-    @required this.activeTab,
-    @required this.onTabSelected,
+    Key? key,
+    required this.activeTab,
+    required this.onTabSelected,
   }) : super(key: key);
 
 
@@ -26,7 +25,7 @@ class TabSelector extends StatelessWidget {
       }
     }
 
-    SvgPicture _getTabIcon(AppTab tab, bool isActive) {
+    SvgPicture? _getTabIcon(AppTab tab, bool isActive) {
       switch (tab) {
         case AppTab.people:
           return  SvgPicture.asset(isActive ? "assets/people_fill.svg" : "assets/people_empty.svg");
@@ -48,13 +47,13 @@ class TabSelector extends StatelessWidget {
     String _getPageLabels(AppTab tab) {
       switch (tab) {
         case AppTab.people:
-          return AppLocalizations.of(context).people;
+          return AppLocalizations.of(context)!.people;
         case AppTab.teams:
-          return AppLocalizations.of(context).teams;
+          return AppLocalizations.of(context)!.teams;
         case AppTab.tournament:
-          return AppLocalizations.of(context).tournament;
+          return AppLocalizations.of(context)!.tournament;
         case AppTab.settings:
-          return AppLocalizations.of(context).settings;
+          return AppLocalizations.of(context)!.settings;
         default:
           return "";
       }

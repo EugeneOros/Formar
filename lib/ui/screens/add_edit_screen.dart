@@ -1,22 +1,21 @@
-import 'package:flutter/cupertino.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:people_repository/people_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-typedef OnSaveCallback = Function(String nickname, Level level);
+
+typedef OnSaveCallback = Function(String? nickname, Level? level);
 
 class AddEditScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
-  final Person person;
+  final Person? person;
 
   AddEditScreen({
-    Key key,
-    @required this.onSave,
-    @required this.isEditing,
+    Key? key,
+    required this.onSave,
+    required this.isEditing,
     this.person,
   }) : super(key: key);
 
@@ -27,12 +26,12 @@ class AddEditScreen extends StatefulWidget {
 class _AddEditScreenState extends State<AddEditScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _nickname;
-  Level _level;
+  String? _nickname;
+  Level? _level;
 
   bool get isEditing => widget.isEditing;
 
-  void onRadioChanged(Level level) {
+  void onRadioChanged(Level? level) {
     setState(() {
           _level = level;
     });
@@ -44,7 +43,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
     if (widget.person == null) {
       _level = Level.beginner;
     } else {
-      _level = widget.person.level;
+      _level = widget.person!.level;
     }
   }
 
@@ -54,15 +53,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
     String _getLevelName(Level level) {
       switch (level) {
         case Level.beginner:
-          return AppLocalizations.of(context).beginner;
+          return AppLocalizations.of(context)!.beginner;
         case Level.intermediate:
-          return AppLocalizations.of(context).intermediate;
+          return AppLocalizations.of(context)!.intermediate;
         case Level.proficient:
-          return AppLocalizations.of(context).proficient;
+          return AppLocalizations.of(context)!.proficient;
         case Level.advanced:
-          return AppLocalizations.of(context).advanced;
+          return AppLocalizations.of(context)!.advanced;
         case Level.expert:
-          return AppLocalizations.of(context).expert;
+          return AppLocalizations.of(context)!.expert;
         default:
           return "";
       }
@@ -110,8 +109,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 padding: EdgeInsets.only(bottom: 30),
                 child: Text(
                   isEditing
-                      ? AppLocalizations.of(context).editPerson
-                      : AppLocalizations.of(context).addPerson,
+                      ? AppLocalizations.of(context)!.editPerson
+                      : AppLocalizations.of(context)!.addPerson,
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.center,
                 ),
@@ -119,10 +118,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
               TextFormField(
                 style: Theme.of(context).textTheme.bodyText2,
                 cursorColor: Colors.black,
-                initialValue: isEditing ? widget.person.nickname : '',
+                initialValue: isEditing ? widget.person!.nickname : '',
                 autofocus: !isEditing,
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context).enterNickname,
+                  hintText: AppLocalizations.of(context)!.enterNickname,
                   filled: true,
                   fillColor: Colors.white,
                   prefixIcon: Icon(Icons.person, color: PrimaryColor),
@@ -131,8 +130,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   enabledBorder: borderRoundedTransparent,
                 ),
                 validator: (val) {
-                  return val.trim().isEmpty
-                      ? AppLocalizations.of(context).enterSomeText
+                  return val!.trim().isEmpty
+                      ? AppLocalizations.of(context)!.enterSomeText
                       : null;
                 },
                 onSaved: (value) => _nickname = value,
@@ -141,7 +140,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 children: Level.values
                     .map(
                       (level) => RadioListTile(
-                        onChanged: (Level e) => onRadioChanged(e),
+                        onChanged: (Level? e) => onRadioChanged(e),
                         value: level,
                         groupValue: _level,
                         activeColor: _getLevelColor(level),
@@ -164,8 +163,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
             color: Colors.black,
           ),
           onPressed: () {
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
               widget.onSave(_nickname, _level);
               Navigator.pop(context);
             }

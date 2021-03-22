@@ -5,9 +5,9 @@ import 'level.dart';
 @immutable
 class Person {
   final bool available;
-  final String id;
-  final String nickname;
-  final Level level;
+  final String? id;
+  final String? nickname;
+  final Level? level;
   var lettersRusUk = [
     "а",
     "б",
@@ -44,10 +44,10 @@ class Person {
     "я"
   ];
 
-  Person(this.nickname, this.level, {this.available = true, String id})
+  Person(this.nickname, this.level, {this.available = true, String? id})
       : this.id = id;
 
-  Person copyWith({bool available, String id, Level level, String nickname}) {
+  Person copyWith({bool? available, String? id, Level? level, String? nickname}) {
     return Person(
       nickname ?? this.nickname,
       level ?? this.level,

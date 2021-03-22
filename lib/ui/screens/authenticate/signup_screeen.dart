@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/have_account_check.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
@@ -9,8 +8,9 @@ import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/rounded_password_field.dart';
 import 'package:form_it/logic/blocs/register/bloc.dart';
 
+
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key key}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -19,7 +19,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  RegisterBloc _signUpBloc;
+  late RegisterBloc _signUpBloc;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,7 +44,7 @@ class _SignUpState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context).size;
+    Size size = MediaQuery.maybeOf(context)!.size;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -89,13 +89,13 @@ class _SignUpState extends State<SignUpScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              AppLocalizations.of(context).signUp.toUpperCase(),
+                              AppLocalizations.of(context)!.signUp.toUpperCase(),
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: size.height * 0.03),
                             Text(
                               registerState.isFailure
-                                  ? AppLocalizations.of(context).errorSignUp
+                                  ? AppLocalizations.of(context)!.errorSignUp
                                   : "",
                               textAlign: TextAlign.center,
                               style:
@@ -104,20 +104,20 @@ class _SignUpState extends State<SignUpScreen> {
                             SizedBox(height: 12.0),
                             RoundedInputField(
                               controller: _emailController,
-                              hintText: AppLocalizations.of(context).email,
+                              hintText: AppLocalizations.of(context)!.email,
                               validator: (_) => registerState.isEmailValid
                                   ? null
-                                  : AppLocalizations.of(context).errorEmail,
+                                  : AppLocalizations.of(context)!.errorEmail,
                             ),
                             RoundedPasswordField(
                               controller: _passwordController,
                               validator: (_) => registerState.isPasswordValid
                                   ? null
-                                  : AppLocalizations.of(context).errorPassword,
+                                  : AppLocalizations.of(context)!.errorPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
                             RoundedButton(
-                              text: AppLocalizations.of(context).signUp,
+                              text: AppLocalizations.of(context)!.signUp,
                               onPressed: _onLoginEmailAndPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
@@ -139,7 +139,7 @@ class _SignUpState extends State<SignUpScreen> {
   }
 
   void _onLoginEmailAndPassword() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       _signUpBloc.add(RegisterEventPressed(
           email: _emailController.text, password: _passwordController.text));
     }

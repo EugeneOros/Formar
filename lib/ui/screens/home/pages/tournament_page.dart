@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:form_it/ui/shared/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 
 class TournamentPage extends StatelessWidget {
   @override
@@ -22,7 +20,7 @@ class TournamentPage extends StatelessWidget {
           ),
         ),
         child: Text(
-          AppLocalizations.of(context).notAvailable,
+          AppLocalizations.of(context)!.notAvailable,
           style: Theme.of(context).textTheme.headline1,
         ));
   }
