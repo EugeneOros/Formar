@@ -67,4 +67,14 @@ class FirebasePeopleRepository implements PeopleRepository {
         .doc(person.id)
         .update(person.toEntity().toDocument());
   }
+
+  Future getPerson(String personID) async{
+    List<Person> people = await currentPeopleList();
+    for(Person p in people){
+      if(p.id == personID){
+        return p;
+      }
+    }
+    return null;
+  }
 }

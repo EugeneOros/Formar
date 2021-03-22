@@ -3,46 +3,12 @@ import '../entities/entities.dart';
 import 'level.dart';
 
 @immutable
-class Person {
+class Person{
   final bool available;
   final String? id;
   final String? nickname;
   final Level? level;
-  var lettersRusUk = [
-    "а",
-    "б",
-    "в",
-    "г",
-    "ґ",
-    "д",
-    "е",
-    "є",
-    "ж",
-    "з",
-    "и",
-    "і",
-    "ї",
-    "й",
-    "к",
-    "л",
-    "м",
-    "н",
-    "о",
-    "п",
-    "р",
-    "с",
-    "т",
-    "у",
-    "ф",
-    "х",
-    "ц",
-    "ч",
-    "ш",
-    "щ",
-    "ь",
-    "ю",
-    "я"
-  ];
+
 
   Person(this.nickname, this.level, {this.available = true, String? id})
       : this.id = id;
@@ -89,6 +55,41 @@ class Person {
   }
 
   int compareTo(String a, String b) {
+    var lettersRusUk = [
+      "а",
+      "б",
+      "в",
+      "г",
+      "ґ",
+      "д",
+      "е",
+      "є",
+      "ж",
+      "з",
+      "и",
+      "і",
+      "ї",
+      "й",
+      "к",
+      "л",
+      "м",
+      "н",
+      "о",
+      "п",
+      "р",
+      "с",
+      "т",
+      "у",
+      "ф",
+      "х",
+      "ц",
+      "ч",
+      "ш",
+      "щ",
+      "ь",
+      "ю",
+      "я"
+    ];
     a = a.toLowerCase();
     b = b.toLowerCase();
     int min = a.length;
@@ -109,4 +110,5 @@ class Person {
 
     return 0;
   }
+
 }

@@ -5,24 +5,25 @@ import '../entities/entities.dart';
 class Team {
   final String? id;
   final String? name;
-  final List<String?> membersNames;
+  // final List<String?> membersNames;
+  final List<Person> players;
   int? _power;
 
-  Team(this.name, this._power, {List<String?>? membersNames, String? id})
-      : this.id = id, this.membersNames = membersNames == null ? [] : membersNames;
+  Team(this.name, this._power, {List<Person>? players, String? id})
+      : this.id = id, this.players = players == null ? [] : players;
 
-  Team copyWith({String? id, String? name, int? capacity, List<String>? membersNames}) {
+  Team copyWith({String? id, String? name, int? capacity, List<Person>? players}) {
     return Team(
       name ?? this.name,
       capacity ?? this._power,
-      membersNames: membersNames ?? this.membersNames,
+      players: players ?? this.players,
       id: id ?? this.id,
     );
   }
 
   @override
   int get hashCode =>
-      name.hashCode ^ _power.hashCode ^ membersNames.hashCode ^ id.hashCode;
+      name.hashCode ^ _power.hashCode ^ players.hashCode ^ id.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -31,12 +32,12 @@ class Team {
               runtimeType == other.runtimeType &&
               name == other.name &&
               _power == other._power &&
-              membersNames == other.membersNames &&
+              players == other.players &&
               id == other.id;
 
   @override
   String toString() {
-    return 'Team { name: $name, capacity: $_power, membersNames: $membersNames, id: $id }';
+    return 'Team { name: $name, capacity: $_power, players: $players, id: $id }';
   }
 
   int? getPower(){
@@ -50,18 +51,25 @@ class Team {
 
 
   TeamEntity toEntity() {
-    return TeamEntity(name, _power, membersNames, id);
+    return TeamEntity(name, _power, getPlayersIds(), id);
   }
 
+  List<String> getPlayersIds(){
+    List<String> playersNames = [];
+    for(Person player in players){
+      playersNames.add(player.id!);
+    }
+    return playersNames;
+  }
   // int getPower(){
   // }
 
-  static Team fromEntity(TeamEntity entity) {
+  static Team fromEntity(String? id, String? name, int? power, List<Person> players) {
     return Team(
-      entity.name,
-      entity.capacity,
-      membersNames: entity.membersNames,
-      id: entity.id,
+      name,
+      power,
+      players: players,
+      id: id,
     );
   }
 }

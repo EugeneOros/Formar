@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +18,24 @@ class FirebaseTeamRepository implements TeamRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Stream<List<Team>> teams() {
+  Stream<List<Team>> teams(){
     User user = _auth.currentUser!;
     CollectionReference teamsCollection = FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
         .collection("teams");
+    return teamsCollection.snapshots().asyncMap(_teamsFromSnapshot);
 
-    return teamsCollection.snapshots().map((snapshot) {
-      List<Team> teams;
-      teams = snapshot.docs
-          .map((doc) => Team.fromEntity(TeamEntity.fromSnapshot(doc)))
-          .toList();
-      teams.sort((a, b) => a.name!.compareTo(b.name!));
-      return teams;
-    });
   }
+
+  Future<List<Team>> _teamsFromSnapshot(QuerySnapshot snapshot) async{
+    List<Future<Team>> futures = snapshot.docs.map((doc) async {
+      TeamEntity teamEntity = TeamEntity.fromSnapshot(doc);
+      return Team.fromEntity(teamEntity.id, teamEntity.name, teamEntity.capacity, await _getPeopleByIds(teamEntity.playersIds!));
+    }).toList();
+    return await Future.wait(futures);
+  }
+
 
   @override
   Future<void> formTeams(bool isBalanced, int numMembers) async {
@@ -64,6 +67,14 @@ class FirebaseTeamRepository implements TeamRepository {
       teamsCollection.add(team.toEntity().toDocument());
   }
 
+  Future<List<Person>> _getPeopleByIds(List<String> playersIds) async{
+    List<Person> players = [];
+    for(String playerId in playersIds){
+      players.add(await peopleRepository.getPerson(playerId) as Person);
+    }
+    return players;
+  }
+
   List<Person> _sortShuffleList(List<Person> people){
     people = people.where((element) => element.available).toList();
     people = people.reversed.toList();
@@ -81,27 +92,25 @@ class FirebaseTeamRepository implements TeamRepository {
         indexTeam = 0;
         teams.sort((a, b) => a.getPower()!.compareTo(b.getPower()!));
       }
-      teams[indexTeam].membersNames.add(person.nickname);
+      teams[indexTeam].players.add(person);
       teams[indexTeam].increasePower(person.level!.index + 1);
       indexTeam++;
     }
     return teams;
   }
 
-  Team _createTeamReplacement(List<Person> members){
-    List<String?> membersNames = [];
+  Team _createTeamReplacement(List<Person> players){
     int power = 0;
-    for(Person member in members){
-      membersNames.add(member.nickname);
+    for(Person member in players){
       power += member.level!.index;
     }
-    return Team("Replacement", power, membersNames: membersNames);
+    return Team("Replacement", power, players: players);
   }
 
   List<Team> _createTeams(int numTeams){
     List<Team> teams = [];
     for (int i = 0; i < numTeams; i++) {
-      teams.add(Team("Team " + (i + 1).toString(), 0, membersNames: []));
+      teams.add(Team("Team " + (i + 1).toString(), 0, players: []));
     }
     return teams;
   }

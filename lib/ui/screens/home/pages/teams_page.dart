@@ -67,12 +67,12 @@ class TeamsPage extends StatelessWidget {
                           padding: EdgeInsets.only(top: 20),
                           height: 3/10 * size.height,
                           child: ListView.builder(
-                            itemCount: team.membersNames.length,
+                            itemCount: team.players.length,
                             itemBuilder: (context, index) {
-                              final memberName = team.membersNames[index]!;
+                              final memberName = team.players[index]!.nickname;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 5.0),
-                                child: Text(memberName, style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis,),
+                                child: Text(memberName!, style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis,),
                               );
                             },
                           ),

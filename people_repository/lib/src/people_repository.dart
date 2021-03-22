@@ -15,4 +15,6 @@ abstract class PeopleRepository {
   Future<List<Person>> currentPeopleList();
 
   Future<void> updatePerson(Person person);
+
+  Future getPerson(String personID);
 }
