@@ -6,7 +6,7 @@ import 'package:form_it/ui/widgets/text_field_container.dart';
 class RoundedInputField extends StatelessWidget {
   final String? hintText;
   final IconData icon;
-  final ValueChanged<String>? validator;
+  final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
 
   const RoundedInputField({
@@ -24,7 +24,7 @@ class RoundedInputField extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyText2,
         controller: controller,
         cursorColor: Colors.black,
-        // validator: validator as String? Function(String?)?,
+        validator: validator,
         decoration: InputDecoration(
           filled: true,
           fillColor: TextFieldFillColor,

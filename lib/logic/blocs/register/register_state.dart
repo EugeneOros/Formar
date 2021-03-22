@@ -20,8 +20,8 @@ class RegisterState {
 
   factory RegisterState.empty() {
     return RegisterState(
-      isEmailValid: true,
-      isPasswordValid: true,
+      isEmailValid: false,
+      isPasswordValid: false,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,

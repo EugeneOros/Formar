@@ -118,10 +118,10 @@ class _LoginState extends State<LoginScreen> {
                                   : AppLocalizations.of(context)!.errorPassword,
                             ),
                             SizedBox(height: size.height * 0.03),
-                            // RoundedButton(
-                            //   text: AppLocalizations.of(context)!.login,
-                            //   onPressed: _onLoginEmailAndPassword,
-                            // ),
+                            RoundedButton(
+                              text: AppLocalizations.of(context)!.login,
+                              onPressed: _onLoginEmailAndPassword,
+                            ),
                             SizedBox(height: size.height * 0.03),
                             HaveAccountCheck(
                               onTap: () {

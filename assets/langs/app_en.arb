@@ -51,11 +51,11 @@
   "@dontHaveAccount": {
     "description": "Settings label for Bottom navigation bar"
   },
-  "errorSignUp": "Please apply valid email",
+  "errorSignUp": "Error. Please check your internet connection and try again.",
   "@errorSignUp": {
     "description": "Settings label for Bottom navigation bar"
   },
-  "errorLogin": "Could not sign in with this credentials",
+  "errorLogin": "Error. No internet connection or provided incorrect login information",
   "@errorLogin": {
     "description": "Settings label for Bottom navigation bar"
   },

@@ -11,8 +11,8 @@ import 'package:form_it/logic/blocs/tab/tab_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 
 import 'package:form_it/ui/screens/add_edit_screen.dart';
-import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/ui/screens/authenticate/login_screen.dart';
-import 'file:///C:/Users/yevhe/AndroidStudioProjects/form_it/lib/ui/screens/authenticate/signup_screeen.dart';
+import 'package:form_it/ui/screens/authenticate/login_screen.dart';
+import 'package:form_it/ui/screens/authenticate/signup_screeen.dart';
 import 'package:form_it/ui/screens/home/home.dart';
 import 'package:form_it/ui/screens/splash_screen.dart';
 
