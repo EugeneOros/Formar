@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_event.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
-import 'package:user_repository/user_repository.dart';
+import 'package:repositories/repositories.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
 

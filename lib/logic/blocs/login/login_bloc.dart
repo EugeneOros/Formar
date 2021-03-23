@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:user_repository/user_repository.dart';
-import 'package:meta/meta.dart';
+import 'package:repositories/repositories.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'login_event.dart';

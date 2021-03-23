@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/parser.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:form_it/ui/widgets/player_indicator.dart';
+import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
-
 
 class PersonItem extends StatelessWidget {
   final Function onDelete;
@@ -56,6 +58,15 @@ class PersonItem extends StatelessWidget {
     }
   }
 
+  SvgPicture _getSexIcon(Sex sex) {
+    switch (sex) {
+      case Sex.man:
+        return SvgPicture.asset("assets/man_empty.svg");
+      case Sex.woman:
+        return SvgPicture.asset("assets/woman_empty.svg");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context)!.size;
@@ -70,8 +81,7 @@ class PersonItem extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                border:
-                    Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight , width: 1.5)),
+                border: Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight, width: 1.5)),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
@@ -90,17 +100,7 @@ class PersonItem extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right: 5.0, left: 1.0, bottom: 2.0),
-                              alignment: Alignment.topCenter,
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: getLevelColor(person.level),
-                                shape: BoxShape.circle,
-                              ),
-                            ),
+                            PlayerIndicator(player: person, size: 15),
                             Text(
                               getLevelName(person.level, context),
                               style: Theme.of(context).textTheme.bodyText2,

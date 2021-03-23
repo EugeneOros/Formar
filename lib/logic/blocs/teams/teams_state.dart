@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 
 abstract class TeamsState extends Equatable {
   const TeamsState();

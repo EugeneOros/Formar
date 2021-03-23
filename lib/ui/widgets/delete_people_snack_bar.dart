@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 
 class DeletePersonSnackBar extends SnackBar {
@@ -12,7 +12,7 @@ class DeletePersonSnackBar extends SnackBar {
   }) : super(
           key: key,
           content: Text(
-            AppLocalizations.of(context)!.deleted + " " + player.nickname!,
+            AppLocalizations.of(context)!.deleted + " " + player.nickname,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

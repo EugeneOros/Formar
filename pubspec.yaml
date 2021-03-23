@@ -23,11 +23,8 @@ dependencies:
 
 #  google_fonts: ^2.0.0
 
-  user_repository:
-    path: user_repository
-
-  people_repository:
-    path: people_repository
+  repositories:
+    path: repositories
 
   cloud_firestore: ^1.0.1
   firebase_analytics: ^7.1.1

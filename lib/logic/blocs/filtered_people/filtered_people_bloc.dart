@@ -3,8 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
-import 'package:meta/meta.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 
 import 'filtered_people_event.dart';
 import 'filtered_people_state.dart';

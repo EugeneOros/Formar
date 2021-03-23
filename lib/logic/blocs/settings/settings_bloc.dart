@@ -4,7 +4,7 @@ import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:meta/meta.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 
 import 'bloc.dart';
 

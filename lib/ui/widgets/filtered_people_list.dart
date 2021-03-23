@@ -57,10 +57,10 @@ class FilteredPeopleList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) {
                             return AddEditScreen(
-                              onSave: (nickname, level) {
+                              onSave: (nickname, level, sex) {
                                 BlocProvider.of<PeopleBloc>(context).add(
                                   UpdatePerson(
-                                    person.copyWith(nickname: nickname, level: level),
+                                    person.copyWith(nickname: nickname, level: level, sex: sex),
                                   ),
                                 );
                               },

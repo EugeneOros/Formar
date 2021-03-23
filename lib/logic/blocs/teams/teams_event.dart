@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 
 abstract class TeamsEvent extends Equatable {
   const TeamsEvent();

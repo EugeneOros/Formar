@@ -19,9 +19,8 @@ import 'package:form_it/ui/screens/splash_screen.dart';
 import 'package:form_it/ui/widgets/app_scroll_behavior.dart';
 import 'package:form_it/logic/localizations/constants.dart';
 
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:user_repository/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,18 +93,18 @@ class _FormItAppState extends State<FormItApp> {
         },
         "/add": (BuildContext context) {
           return AddEditScreen(
-            onSave: (nickname, level) {
+            onSave: (nickname, level, sex) {
               BlocProvider.of<PeopleBloc>(context)
-                  .add(AddPerson(Player(nickname: nickname!, level: level)));
+                  .add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
             isEditing: false,
           );
         },
         "/edit": (BuildContext context) {
           return AddEditScreen(
-            onSave: (nickname, level) {
+            onSave: (nickname, level, sex) {
               BlocProvider.of<PeopleBloc>(context)
-                  .add(UpdatePerson(Player(nickname: nickname!, level: level)));
+                  .add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
             isEditing: true,
           );

@@ -2,9 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
-import 'package:meta/meta.dart';
-import 'package:form_it/logic/blocs/people/bloc.dart';
-import 'package:people_repository/people_repository.dart';
+import 'package:repositories/repositories.dart';
 
 import 'bloc.dart';
 
@@ -44,7 +42,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
     _teamsSubscription?.cancel();
     _teamsSubscription = _teamsRepository.teams().listen(
           (teams) {
-            teams.sort((a, b) => a.name!.compareTo(b.name!));
+            teams.sort((a, b) => a.name.compareTo(b.name));
             return add(TeamsUpdated(teams));
           });
   }
