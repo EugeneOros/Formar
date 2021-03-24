@@ -129,6 +129,7 @@ class TeamsPage extends StatelessWidget {
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Row(children: [
                                     PlayerIndicator(player: player),
+                                    SizedBox(width: 5),
                                     Expanded(
                                       child: Text(
                                         player.nickname,

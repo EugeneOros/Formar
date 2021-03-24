@@ -36,7 +36,7 @@ class FormItApp extends StatefulWidget {
 
 class _FormItAppState extends State<FormItApp> {
   final UserRepository _userRepository = UserRepository();
-  final PeopleRepository _peopleRepository = FirebasePeopleRepository();
+  final PlayersRepository _peopleRepository = FirebasePlayersRepository();
 
   @override
   Widget build(BuildContext context) {

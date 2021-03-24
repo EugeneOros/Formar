@@ -79,48 +79,47 @@ class PersonItem extends StatelessWidget {
           child: GestureDetector(
             onTap: onEdit,
             child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15),
               margin: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight, width: 1.5)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            person.nickname,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          width: size.width - 120,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          person.nickname,
+                          style: Theme.of(context).textTheme.bodyText1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Row(
-                          children: [
-                            PlayerIndicator(player: person, size: 15),
-                            Text(
-                              getLevelName(person.level, context),
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Container(
-                      alignment: Alignment.bottomRight,
-                      padding: EdgeInsets.zero,
-                      child: Switch(
-                        activeColor: Colors.black,
-                        value: person.available,
-                        onChanged: onSwitchChanged,
+                        width: size.width - 120,
                       ),
-                    )
-                  ],
-                ),
+                      Row(
+                        children: [
+                          PlayerIndicator(player: person, size: 15),
+                          SizedBox(width: 5),
+                          Text(
+                            getLevelName(person.level, context),
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    padding: EdgeInsets.zero,
+                    child: Switch(
+                      activeColor: Colors.black,
+                      value: person.available,
+                      onChanged: onSwitchChanged,
+                    ),
+                  )
+                ],
               ),
             ),
           ),

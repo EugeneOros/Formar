@@ -35,6 +35,12 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
       yield* _mapTeamsUpdateToState(event);
     }else if (event is FormTeams) {
       yield* _mapFormTeamsToState(event);
+    }else if (event is AddTeam) {
+      yield* _mapAddTeamToState(event);
+    }else if (event is UpdateTeam) {
+      yield* _mapUpdateTeamToState(event);
+    }else if (event is DeleteTeam) {
+      yield* _mapDeleteTeamToState(event);
     }
   }
 
@@ -53,6 +59,18 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
 
   Stream<TeamsState> _mapFormTeamsToState(FormTeams event) async* {
     _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember!);
+  }
+
+  Stream<TeamsState> _mapAddTeamToState(AddTeam event) async* {
+    _teamsRepository.addTeam(event.team);
+  }
+
+  Stream<TeamsState> _mapUpdateTeamToState(UpdateTeam event) async* {
+    _teamsRepository.updateTeam(event.updatedTeam);
+  }
+
+  Stream<TeamsState> _mapDeleteTeamToState(DeleteTeam event) async* {
+    _teamsRepository.deleteTeam(event.team);
   }
 
   @override

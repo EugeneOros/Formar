@@ -30,46 +30,38 @@ class TeamsUpdated extends TeamsEvent {
   List<Object> get props => [teams];
 }
 
-// class UpdatePerson extends TeamsEvent {
-//   final Person updatedPerson;
-//
-//   const UpdatePerson(this.updatedPerson);
-//
-//   @override
-//   List<Object> get props => [updatedPerson];
-//
-//   @override
-//   String toString() => 'UpdateTodo { updatedTodo: $updatedPerson }';
-// }
-//
-// class ClearCompleted extends TeamsEvent {}
-//
-// class ToggleAll extends TeamsEvent {}
-//
+class AddTeam extends TeamsEvent {
+  final Team team;
 
+  const AddTeam(this.team);
 
+  @override
+  List<Object> get props => [team];
 
-// class AddPerson extends TeamsEvent {
-//   final Person person;
-//
-//   const AddPerson(this.person);
-//
-//   @override
-//   List<Object> get props => [person];
-//
-//   @override
-//   String toString() => 'AddTodo { todo: $person }';
-// }
+  @override
+  String toString() => 'AddTeam { team: $team }';
+}
 
-//
-// class DeletePerson extends TeamsEvent {
-//   final Person people;
-//
-//   const DeletePerson(this.people);
-//
-//   @override
-//   List<Object> get props => [people];
-//
-//   @override
-//   String toString() => 'DeleteTodo { todo: $people }';
-// }
+class UpdateTeam extends TeamsEvent {
+  final Team updatedTeam;
+
+  const UpdateTeam(this.updatedTeam);
+
+  @override
+  List<Object> get props => [updatedTeam];
+
+  @override
+  String toString() => 'UpdateTeam { updatedTeam: $updatedTeam }';
+}
+
+class DeleteTeam extends TeamsEvent {
+  final Team team;
+
+  const DeleteTeam(this.team);
+
+  @override
+  List<Object> get props => [team];
+
+  @override
+  String toString() => 'DeleteTeam { team: $team }';
+}
