@@ -3,6 +3,7 @@ import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
+import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
@@ -26,7 +27,7 @@ class AddEditTeamScreen extends StatefulWidget {
 class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String? _nickname;
+  String? _name;
   List<Player>? _players;
 
   bool get isEditing => widget.isEditing;
@@ -46,7 +47,8 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
   @override
   void initState() {
     super.initState();
-    _players = widget.team == null ? [] : widget.team!.players;
+    _players = widget.team == null ? [] : List.from(widget.team!.players);
+    // _name = widget.team == null ? null : widget.team!.name;
   }
 
   @override
@@ -80,60 +82,65 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
+              TextFormField(
+                style: Theme.of(context).textTheme.bodyText2,
+                cursorColor: Colors.black,
+                initialValue: isEditing ? widget.team!.name : '',
+                autofocus: !isEditing,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.enterNickname,
+                  filled: true,
+                  fillColor: Colors.white,
+                  prefixIcon: Icon(Icons.person, color: PrimaryColor),
+                  border: borderRoundedTransparent,
+                  focusedBorder: borderRoundedTransparent,
+                  enabledBorder: borderRoundedTransparent,
+                ),
+                validator: (val) {
+                  return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
+                },
+                onSaved: (value) => _name = value,
+              ),
+              Container(
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 15, bottom: 100),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: _players!.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            PlayerIndicator(player: _players![index]),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                _players![index].nickname,
+                                style: Theme.of(context).textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            // Spacer(),
+                            IconButton(
+                              padding: new EdgeInsets.all(0.0),
+                              icon: Icon(Icons.close, size: 15,),
+                              onPressed: () {
 
-              // TextFormField(
-              //   style: Theme.of(context).textTheme.bodyText2,
-              //   cursorColor: Colors.black,
-              //   initialValue: isEditing ? widget.person!.nickname : '',
-              //   autofocus: !isEditing,
-              //   decoration: InputDecoration(
-              //     hintText: AppLocalizations.of(context)!.enterNickname,
-              //     filled: true,
-              //     fillColor: Colors.white,
-              //     prefixIcon: Icon(Icons.person, color: PrimaryColor),
-              //     border: borderRoundedTransparent,
-              //     focusedBorder: borderRoundedTransparent,
-              //     enabledBorder: borderRoundedTransparent,
-              //   ),
-              //   validator: (val) {
-              //     return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
-              //   },
-              //   onSaved: (value) => _nickname = value,
-              // ),
-              // Wrap(
-              //   crossAxisAlignment: WrapCrossAlignment.center,
-              //   alignment: WrapAlignment.center,
-              //   children: Sex.values
-              //       .map(
-              //         (sex) => Padding(
-              //       padding: const EdgeInsets.all(15.0),
-              //       child: GestureDetector(
-              //         onTap: () => onSexChanged(sex),
-              //         child: Container(
-              //           height: 40,
-              //           width: 40,
-              //           color: Colors.transparent,
-              //           child: _getSvgPicture(sex),
-              //         ),
-              //       ),
-              //     ),
-              //   )
-              //       .toList(),
-              // ),
-
-              // Column(
-              //   children: Level.values
-              //       .map(
-              //         (level) => RadioListTile(
-              //       onChanged: (Level? l) => onRadioChanged(l),
-              //       value: level,
-              //       groupValue: _level,
-              //       activeColor: _getLevelColor(level),
-              //       title: Text(_getLevelName(level), style: Theme.of(context).textTheme.bodyText2),
-              //     ),
-              //   )
-              //       .toList(),
-              // )
+                                setState(() {
+                                  _players!.removeAt(index);
+                                });
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ))
             ],
           ),
         ),
@@ -149,7 +156,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              widget.onSave(_nickname, _players);
+              widget.onSave(_name, _players);
               Navigator.pop(context);
             }
           },

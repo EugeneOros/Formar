@@ -112,11 +112,11 @@ class _FormItAppState extends State<FormItApp> {
         },
         "/edit_team": (BuildContext context) {
           return AddEditTeamScreen(
-            onSave: (nickname, players) {
-              // BlocProvider.of<PeopleBloc>(context)
-              //     .add(AddTeam(Player(nickname: nickname!, level: level!, sex: sex!)));
+            onSave: (name, players) {
+              BlocProvider.of<TeamsBloc>(context)
+                  .add(UpdateTeam(Team(name: name!, players: players!)));
             },
-            isEditing: false,
+            isEditing: true,
           );
         },
       };
