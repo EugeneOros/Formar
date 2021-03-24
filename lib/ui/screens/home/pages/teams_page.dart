@@ -15,14 +15,20 @@ class TeamsPage extends StatelessWidget {
         return Loading(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).accentColor,
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor,
-            ],
-          )),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme
+                      .of(context)
+                      .accentColor,
+                  Theme
+                      .of(context)
+                      .primaryColor,
+                  Theme
+                      .of(context)
+                      .primaryColor,
+                ],
+              )),
           indicatorColor: Colors.white,
         );
       } else if (state is TeamsLoaded) {
@@ -31,21 +37,29 @@ class TeamsPage extends StatelessWidget {
             height: size.height,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).accentColor,
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor,
-              ],
-            )),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme
+                        .of(context)
+                        .accentColor,
+                    Theme
+                        .of(context)
+                        .primaryColor,
+                    Theme
+                        .of(context)
+                        .primaryColor,
+                  ],
+                )),
             child: CarouselSlider.builder(
               itemCount: teams.length,
               itemBuilder: (context, index, i) {
                 final team = teams[index];
                 return Container(
-                    padding: EdgeInsets.all(30.0),
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
                     decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
@@ -57,44 +71,78 @@ class TeamsPage extends StatelessWidget {
                     ], borderRadius: BorderRadius.all(Radius.circular(15)), color: Colors.white),
                     child: Column(
                       children: [
-                        Text(
-                          team.name,
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                        Wrap(
-                          alignment: WrapAlignment.end,
-                          crossAxisAlignment: WrapCrossAlignment.center,
+                        Stack(
                           children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              child: SvgPicture.asset("assets/power.svg"),
+                            Positioned(
+                                top: 5,
+                                right: 5,
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.pushNamed(context, "/edit_team");
+                                  },
+                                  child: Icon(Icons.edit, color: Colors.black, size: 20,),
+                                )
                             ),
-                            Text(
-                              team.power.toString(),
-                              style: Theme.of(context).textTheme.bodyText2,
+
+                            Positioned(
+                              top: 5,
+                              left: 5,
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 20,
+                                    height: 20,
+                                    child: SvgPicture.asset("assets/power.svg"),
+                                  ),
+                                  Text(
+                                    team.power.toString(),
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 20, bottom: 10),
+                              alignment: Alignment.center,
+                              child: Text(
+                                team.name,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline2,
+                              ),
                             ),
                           ],
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: team.players.length,
-                            itemBuilder: (context, index) {
-                              final player = team.players[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 5.0),
-                                child: Row(children: [
-                                  PlayerIndicator(player: player),
-                                  Expanded(
-                                    child: Text(
-                                      player.nickname,
-                                      style: Theme.of(context).textTheme.bodyText2,
-                                      overflow: TextOverflow.ellipsis,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 10),
+                            child: ListView.builder(
+                              itemCount: team.players.length,
+                              itemBuilder: (context, index) {
+                                final player = team.players[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  child: Row(children: [
+                                    PlayerIndicator(player: player),
+                                    Expanded(
+                                      child: Text(
+                                        player.nickname,
+                                        style: Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                ]),
-                              );
-                            },
+                                  ]),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],

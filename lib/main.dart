@@ -11,6 +11,7 @@ import 'package:form_it/logic/blocs/tab/tab_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 
 import 'package:form_it/ui/screens/add_edit_screen.dart';
+import 'package:form_it/ui/screens/add_edit_team_screen.dart';
 import 'package:form_it/ui/screens/authenticate/login_screen.dart';
 import 'package:form_it/ui/screens/authenticate/signup_screeen.dart';
 import 'package:form_it/ui/screens/home/home.dart';
@@ -107,6 +108,15 @@ class _FormItAppState extends State<FormItApp> {
                   .add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
             isEditing: true,
+          );
+        },
+        "/edit_team": (BuildContext context) {
+          return AddEditTeamScreen(
+            onSave: (nickname, players) {
+              // BlocProvider.of<PeopleBloc>(context)
+              //     .add(AddTeam(Player(nickname: nickname!, level: level!, sex: sex!)));
+            },
+            isEditing: false,
           );
         },
       };
