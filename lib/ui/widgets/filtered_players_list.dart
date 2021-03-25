@@ -8,9 +8,9 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/ui/screens/add_edit_screen.dart';
-import 'package:form_it/ui/widgets/item_person.dart';
+import 'package:form_it/ui/widgets/item_player.dart';
 
-import 'delete_people_snack_bar.dart';
+import 'delete_player_snack_bar.dart';
 import 'loading.dart';
 
 class FilteredPeopleList extends StatelessWidget {
@@ -37,8 +37,8 @@ class FilteredPeopleList extends StatelessWidget {
                     padding: EdgeInsets.only(left: 10, top: 5),
                     child: Text(person.nickname[0].toUpperCase(), style: Theme.of(context).textTheme.subtitle1,),
                   ) : Container() ,
-                  PersonItem(
-                    person: person,
+                  PlayerItem(
+                    player: person,
                     slidableController: slidableController,
                     onDelete: () {
                       BlocProvider.of<PeopleBloc>(context)

@@ -11,6 +11,7 @@ import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
+import 'package:form_it/ui/widgets/search_player.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:repositories/repositories.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -76,7 +77,9 @@ class HomeScreen extends StatelessWidget {
       [
         IconButton(
           icon: Icon(Icons.search, color: AppBarItemColor),
-          onPressed: () {},
+          onPressed: () {
+            showSearch(context: context, delegate: SearchPlayer());
+          },
         ),
         IconButton(
           icon: Icon(Icons.toggle_off_outlined, color: AppBarItemColor),

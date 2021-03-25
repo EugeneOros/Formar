@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
+import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:repositories/repositories.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
@@ -32,18 +33,6 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
 
   bool get isEditing => widget.isEditing;
 
-  // void onRadioChanged(Level? level) {
-  //   setState(() {
-  //     _level = level;
-  //   });
-  // }
-  //
-  // void onSexChanged(Sex? sex) {
-  //   setState(() {
-  //     _sex = sex;
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -66,6 +55,25 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           ),
           onPressed: () => Navigator.pop(context, false),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                widget.onSave(_name, _players);
+                Navigator.pop(context);
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              alignment: Alignment.center,
+              child: Text(
+                isEditing ? "Done" : "Add",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -101,65 +109,79 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                 },
                 onSaved: (value) => _name = value,
               ),
-              Container(
-                  margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 15, bottom: 100),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _players!.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            PlayerIndicator(player: _players![index]),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                _players![index].nickname,
-                                style: Theme.of(context).textTheme.bodyText2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            // Spacer(),
-                            IconButton(
-                              padding: new EdgeInsets.all(0.0),
-                              icon: Icon(Icons.close, size: 15,),
-                              onPressed: () {
-
-                                setState(() {
-                                  _players!.removeAt(index);
-                                });
-                              },
-                            )
-                          ],
-                        );
-                      },
+              _players!.isEmpty ?  Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: RoundedButton(
+                  text: "Додати гравця",
+                  textColor: Colors.black,
+                  color: Theme.of(context).accentColor,
+                  sizeRatio: 0.9,
+                  onPressed: () {},
+                ),
+              ): Stack(
+                children: [ Container(
+                    margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 20, bottom: 40),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      color: Colors.white,
                     ),
-                  ))
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _players!.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              PlayerIndicator(player: _players![index]),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  _players![index].nickname,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              // Spacer(),
+                              IconButton(
+                                padding: new EdgeInsets.all(0.0),
+                                icon: Icon(
+                                  Icons.close,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _players!.removeAt(index);
+                                  });
+                                },
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    bottom: 10,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: FloatingActionButton(
+                        backgroundColor: Theme.of(context).accentColor,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
-        ),
-      ),
-      floatingActionButton: Container(
-        padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
-        child: FloatingActionButton(
-          backgroundColor: Theme.of(context).accentColor,
-          child: Icon(
-            isEditing ? Icons.check : Icons.add,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-              widget.onSave(_name, _players);
-              Navigator.pop(context);
-            }
-          },
         ),
       ),
     );

@@ -8,19 +8,19 @@ import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 
-class PersonItem extends StatelessWidget {
+class PlayerItem extends StatelessWidget {
   final Function onDelete;
   final GestureTapCallback onEdit;
   final ValueChanged<bool> onSwitchChanged;
-  final Player person;
+  final Player player;
   final SlidableController slidableController;
 
-  PersonItem({
+  PlayerItem({
     Key? key,
     required this.onDelete,
     required this.onEdit,
     required this.onSwitchChanged,
-    required this.person,
+    required this.player,
     required this.slidableController,
   }) : super(key: key);
 
@@ -75,7 +75,7 @@ class PersonItem extends StatelessWidget {
       children: [
         Slidable(
           controller: slidableController,
-          key: Key(person.id!),
+          key: Key(player.id!),
           child: GestureDetector(
             onTap: onEdit,
             child: Container(
@@ -91,7 +91,7 @@ class PersonItem extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          person.nickname,
+                          player.nickname,
                           style: Theme.of(context).textTheme.bodyText1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -99,10 +99,10 @@ class PersonItem extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          PlayerIndicator(player: person, size: 15),
+                          PlayerIndicator(player: player, size: 15),
                           SizedBox(width: 5),
                           Text(
-                            getLevelName(person.level, context),
+                            getLevelName(player.level, context),
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -115,7 +115,7 @@ class PersonItem extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     child: Switch(
                       activeColor: Colors.black,
-                      value: person.available,
+                      value: player.available,
                       onChanged: onSwitchChanged,
                     ),
                   )
