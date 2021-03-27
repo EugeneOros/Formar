@@ -134,60 +134,56 @@ class HomeScreen extends StatelessWidget {
                                       Theme.of(context).textTheme.bodyText2)
                                   .width +
                               40;
-                          return FunkyOverlay(
+                          return AppDialog(
                             title: AppLocalizations.of(context)!.choseOption,
-                            content: SizedBox(
-                              width: width,
-                              height: 80,
-                              child: Column(children: [
-                                Container(
-                                  height: 40,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      top: BorderSide(
-                                        color: Colors.grey[400]!,
-                                        width: 1,
-                                      ),
-                                      bottom: BorderSide(
-                                        color: Colors.grey[400]!,
-                                        width: 1,
-                                      ),
+                            content: Column(children: [
+                              Container(
+                                height: 40,
+                                width: width,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: Colors.grey[400]!,
+                                      width: 1,
                                     ),
-                                  ),
-                                  child: TextButton(
-                                    child: Text(
-                                      _getTeamCountString(state.people,
-                                          counterTeamMembers, true),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
+                                    bottom: BorderSide(
+                                      color: Colors.grey[400]!,
+                                      width: 1,
                                     ),
-                                    onPressed: () {
-                                      BlocProvider.of<TeamsBloc>(context).add(
-                                          FormTeams(true, counterTeamMembers));
-                                      Navigator.of(context).pop();
-                                    },
                                   ),
                                 ),
-                                Container(
-                                  height: 40,
-                                  width: width,
-                                  child: TextButton(
-                                    child: Text(
-                                      _getTeamCountString(state.people,
-                                          counterTeamMembers, false),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                    ),
-                                    onPressed: () {
-                                      BlocProvider.of<TeamsBloc>(context).add(
-                                          FormTeams(false, counterTeamMembers));
-                                      Navigator.of(context).pop();
-                                    },
+                                child: TextButton(
+                                  child: Text(
+                                    _getTeamCountString(state.people,
+                                        counterTeamMembers, true),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
                                   ),
+                                  onPressed: () {
+                                    BlocProvider.of<TeamsBloc>(context).add(
+                                        FormTeams(true, counterTeamMembers));
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
-                              ]),
-                            ),
+                              ),
+                              Container(
+                                height: 40,
+                                width: width,
+                                child: TextButton(
+                                  child: Text(
+                                    _getTeamCountString(state.people,
+                                        counterTeamMembers, false),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                  onPressed: () {
+                                    BlocProvider.of<TeamsBloc>(context).add(
+                                        FormTeams(false, counterTeamMembers));
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
+                            ]),
                             actions: [
                               TextButton(
                                 child: Text(

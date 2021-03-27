@@ -33,11 +33,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return FunkyOverlay(
+                      return AppDialog(
                         title: AppLocalizations.of(context)!.playersInTeam,
-                        content: SizedBox(
-                          height: 70,
-                          width: 200,
+                        content: Padding(
+                          padding: const EdgeInsets.only(bottom: 15, right: 10, left: 10),
                           child: NumberPickerHorizontal(
                             handleValueChange: handleNumChange,
                             initValue: _currentPlayerCountValue,
@@ -89,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return FunkyOverlay(
+                      return AppDialog(
                         title: AppLocalizations.of(context)!.areYouSureLogOut,
                         actions: [
                           FlatButton(
