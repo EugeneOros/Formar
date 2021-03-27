@@ -1,8 +1,12 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_it/logic/blocs/people/people_bloc.dart';
+import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
+import 'package:form_it/ui/widgets/add_players.dart';
 import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
@@ -15,12 +19,13 @@ class AddEditTeamScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Team? team;
+  final List<Player> players;
 
   AddEditTeamScreen({
     Key? key,
     required this.onSave,
     required this.isEditing,
-    this.team,
+    this.team, required this.players,
   }) : super(key: key);
 
   @override
@@ -49,7 +54,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
     });
   }
 
-  void _onAddPlayers(List<Player> players){
+  void _onAddPlayers(List<Player> players) {
     setState(() {
       _players = _players;
     });
@@ -61,9 +66,36 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return MyDialog(
-            onValueChange: _onValueChange,
-            initialValue: _selectedId,
+          AddPlayersList _addPlayersList = AddPlayersList(
+            players: widget.players,
+            playersAdded: _players,
+          );
+          return AppDialog(
+            title: 'Вибери гравця',
+            content: _addPlayersList,
+            actions: [
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.ok,
+                  style: Theme.of(context).textTheme.button,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _players = _addPlayersList.getPlayers();
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: Theme.of(context).textTheme.button,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           );
         },
       );

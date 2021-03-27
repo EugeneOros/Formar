@@ -110,15 +110,15 @@ class _FormItAppState extends State<FormItApp> {
             isEditing: true,
           );
         },
-        "/edit_team": (BuildContext context) {
-          return AddEditTeamScreen(
-            onSave: (name, players) {
-              BlocProvider.of<TeamsBloc>(context)
-                  .add(UpdateTeam(Team(name: name!, players: players!)));
-            },
-            isEditing: true,
-          );
-        },
+        // "/edit_team": (BuildContext context) {
+        //   return AddEditTeamScreen(
+        //     onSave: (name, players) {
+        //       BlocProvider.of<TeamsBloc>(context)
+        //           .add(UpdateTeam(Team(name: name!, players: players!)));
+        //     },
+        //     isEditing: true,
+        //   );
+        // },
       };
     }
 
@@ -177,6 +177,7 @@ class _FormItAppState extends State<FormItApp> {
           },
         ),
         BlocProvider<PeopleBloc>(
+          lazy: false,
           create: (context) {
             return PeopleBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),

@@ -1,4 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_it/logic/blocs/people/people_bloc.dart';
+import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/ui/screens/add_edit_team_screen.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
+import 'package:repositories/repositories.dart';
 
 class TeamsPage extends StatelessWidget {
   @override
@@ -49,17 +52,25 @@ class TeamsPage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return AddEditTeamScreen(
-                            onSave: (name, players) {
-                              BlocProvider.of<TeamsBloc>(context).add(
-                                UpdateTeam(
-                                  team.copyWith(name: name, players: players),
-                                ),
+                          return
+                            BlocBuilder<PeopleBloc, PeopleState>( builder: (context, state) {
+                              List<Player> players = [];
+                              if (state is PeopleLoaded) {
+                                players = state.people;
+                              }
+                              return AddEditTeamScreen(
+                                players: players,
+                                onSave: (name, players) {
+                                  BlocProvider.of<TeamsBloc>(context).add(
+                                    UpdateTeam(
+                                      team.copyWith(name: name, players: players),
+                                    ),
+                                  );
+                                },
+                                isEditing: true,
+                                team: team,
                               );
-                            },
-                            isEditing: true,
-                            team: team,
-                          );
+                            });
                         },
                       ),
                     );

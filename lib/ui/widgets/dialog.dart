@@ -68,7 +68,7 @@ class AppDialogState extends State<AppDialog>
                         ),
                       ),
                       widget.content ?? SizedBox.shrink(),
-                      Expanded(
+                      if(widget.actions != null )Expanded(
                         child: Container(
                           // alignment: Alignment.center,
                           decoration: BoxDecoration(
