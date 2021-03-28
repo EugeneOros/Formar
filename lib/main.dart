@@ -40,33 +40,20 @@ class _FormItAppState extends State<FormItApp> {
 
   @override
   Widget build(BuildContext context) {
-
-    _getTheme(){
+    _getTheme() {
       return ThemeData(
         brightness: Brightness.light,
         primaryColor: Color(0xffd1dbf1),
         accentColor: Color(0xffffdcf7),
         primaryColorLight: Color(0xffe2ecf2),
         textTheme: TextTheme(
-            headline1: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
-            headline2: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w500,
-                color: Colors.black),
-            bodyText1: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.black),
+            headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
+            headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
+            bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
             bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
             subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
             subtitle2: TextStyle(fontSize: 12, color: Colors.black),
-            button: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w300,
-                color: Color(0xffdda9c4))),
+            button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4))),
       );
     }
 
@@ -88,15 +75,12 @@ class _FormItAppState extends State<FormItApp> {
           );
         },
         "/signUp": (BuildContext context) {
-          return BlocProvider<RegisterBloc>(
-              create: (context) => RegisterBloc(userRepository: _userRepository),
-              child: SignUpScreen());
+          return BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen());
         },
         "/add": (BuildContext context) {
           return AddEditScreen(
             onSave: (nickname, level, sex) {
-              BlocProvider.of<PeopleBloc>(context)
-                  .add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+              BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
             isEditing: false,
           );
@@ -104,21 +88,30 @@ class _FormItAppState extends State<FormItApp> {
         "/edit": (BuildContext context) {
           return AddEditScreen(
             onSave: (nickname, level, sex) {
-              BlocProvider.of<PeopleBloc>(context)
-                  .add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+              BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
             isEditing: true,
           );
         },
-        // "/edit_team": (BuildContext context) {
-        //   return AddEditTeamScreen(
-        //     onSave: (name, players) {
-        //       BlocProvider.of<TeamsBloc>(context)
-        //           .add(UpdateTeam(Team(name: name!, players: players!)));
-        //     },
-        //     isEditing: true,
-        //   );
-        // },
+        "/add_team": (BuildContext context) {
+          return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+            List<Player> players = [];
+            if (state is PeopleLoaded) {
+              players = state.people;
+            }
+            return AddEditTeamScreen(
+              players: players,
+              onSave: (name, players) {
+                BlocProvider.of<TeamsBloc>(context).add(
+                  AddTeam(
+                    Team(name: name!, players: players),
+                  ),
+                );
+              },
+              isEditing: false,
+            );
+          });
+        },
       };
     }
 
@@ -194,8 +187,7 @@ class _FormItAppState extends State<FormItApp> {
           create: (context) {
             return TeamsBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-              teamsRepository:
-              FirebaseTeamRepository(peopleRepository: _peopleRepository),
+              teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
             )..add(LoadTeams());
           },
         ),
@@ -216,8 +208,7 @@ class _FormItAppState extends State<FormItApp> {
         color: Colors.white,
         localizationsDelegates: LOCALIZATION_DELEGATES,
         // localeListResolutionCallback: LOCALIZATION_RESOLUTION,
-        supportedLocales:
-            SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
+        supportedLocales: SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
         debugShowCheckedModeBanner: false,
         theme: _getTheme(),
         builder: (context, child) {
@@ -230,7 +221,5 @@ class _FormItAppState extends State<FormItApp> {
         routes: _getRoutes(),
       ),
     );
-
-
   }
 }

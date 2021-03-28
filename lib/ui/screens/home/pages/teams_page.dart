@@ -11,9 +11,39 @@ import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
 class TeamsPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context)!.size;
+
+    void onEdit(Team team){
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return
+              BlocBuilder<PeopleBloc, PeopleState>( builder: (context, state) {
+                List<Player> players = [];
+                if (state is PeopleLoaded) {
+                  players = state.people;
+                }
+                return AddEditTeamScreen(
+                  players: players,
+                  onSave: (name, players) {
+                    BlocProvider.of<TeamsBloc>(context).add(
+                      UpdateTeam(
+                        team.copyWith(name: name, players: players),
+                      ),
+                    );
+                  },
+                  isEditing: true,
+                  team: team,
+                );
+              });
+          },
+        ),
+      );
+    }
+
     return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
       if (state is TeamsLoading) {
         return Loading(
@@ -48,33 +78,7 @@ class TeamsPage extends StatelessWidget {
               itemBuilder: (context, index, i) {
                 final team = teams[index];
                 return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return
-                            BlocBuilder<PeopleBloc, PeopleState>( builder: (context, state) {
-                              List<Player> players = [];
-                              if (state is PeopleLoaded) {
-                                players = state.people;
-                              }
-                              return AddEditTeamScreen(
-                                players: players,
-                                onSave: (name, players) {
-                                  BlocProvider.of<TeamsBloc>(context).add(
-                                    UpdateTeam(
-                                      team.copyWith(name: name, players: players),
-                                    ),
-                                  );
-                                },
-                                isEditing: true,
-                                team: team,
-                              );
-                            });
-                        },
-                      ),
-                    );
-                  },
+                  onTap: () => onEdit(team),
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),

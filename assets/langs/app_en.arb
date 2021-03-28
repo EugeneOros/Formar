@@ -174,5 +174,29 @@
   "no": "No",
   "@no": {
     "description": ""
+  },
+  "editTeam": "Edit Team",
+  "@editTeam": {
+    "description": ""
+  },
+  "addTeam": "Add Team",
+  "@addTeam": {
+    "description": ""
+  },
+  "chosePlayers": "Chose Players",
+  "@chosePlayers": {
+    "description": ""
+  },
+  "done": "Done",
+  "@done": {
+    "description": ""
+  },
+  "addPlayers": "Add Players",
+  "@addPlayers": {
+    "description": ""
+  },
+  "add": "Add",
+  "@add": {
+    "description": ""
   }
 }

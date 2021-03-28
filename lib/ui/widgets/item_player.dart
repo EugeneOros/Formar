@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -24,24 +21,7 @@ class PlayerItem extends StatelessWidget {
     required this.slidableController,
   }) : super(key: key);
 
-  Color getLevelColor(Level? level) {
-    switch (level) {
-      case Level.beginner:
-        return BeginnerColor;
-      case Level.intermediate:
-        return IntermediateColor;
-      case Level.proficient:
-        return ProficientColor;
-      case Level.advanced:
-        return AdvancedColor;
-      case Level.expert:
-        return ExpertColor;
-      default:
-        return Colors.black;
-    }
-  }
-
-  String getLevelName(Level? level, BuildContext context) {
+  String getLevelName(Level level, BuildContext context) {
     switch (level) {
       case Level.beginner:
         return AppLocalizations.of(context)!.beginner;
@@ -53,17 +33,6 @@ class PlayerItem extends StatelessWidget {
         return AppLocalizations.of(context)!.advanced;
       case Level.expert:
         return AppLocalizations.of(context)!.expert;
-      default:
-        return "";
-    }
-  }
-
-  SvgPicture _getSexIcon(Sex sex) {
-    switch (sex) {
-      case Sex.man:
-        return SvgPicture.asset("assets/man_empty.svg");
-      case Sex.woman:
-        return SvgPicture.asset("assets/woman_empty.svg");
     }
   }
 
@@ -86,33 +55,30 @@ class PlayerItem extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           player.nickname,
                           style: Theme.of(context).textTheme.bodyText1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        width: size.width - 120,
-                      ),
-                      Row(
-                        children: [
-                          PlayerIndicator(player: player, size: 15),
-                          SizedBox(width: 5),
-                          Text(
-                            getLevelName(player.level, context),
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ],
-                      ),
-                    ],
+                        Row(
+                          children: [
+                            PlayerIndicator(player: player, size: 15),
+                            SizedBox(width: 5),
+                            Text(
+                              getLevelName(player.level, context),
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Spacer(),
                   Container(
-                    alignment: Alignment.bottomRight,
-                    padding: EdgeInsets.zero,
+                    // padding: EdgeInsets.zero,
                     child: Switch(
                       activeColor: Colors.black,
                       value: player.available,
@@ -126,9 +92,7 @@ class PlayerItem extends StatelessWidget {
           actionPane: SlidableDrawerActionPane(),
           dismissal: SlidableDismissal(
             child: SlidableDrawerDismissal(),
-            onDismissed: (actionType) {
-              onDelete();
-            },
+            onDismissed: (_) => onDelete(),
           ),
           secondaryActions: <Widget>[
             IconSlideAction(

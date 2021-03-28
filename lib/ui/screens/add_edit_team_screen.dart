@@ -1,7 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:form_it/logic/blocs/people/people_bloc.dart';
-import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
@@ -10,7 +6,6 @@ import 'package:form_it/ui/widgets/add_players.dart';
 import 'package:form_it/ui/widgets/dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
-import 'package:form_it/ui/widgets/select_players_dialog.dart';
 import 'package:repositories/repositories.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
@@ -37,7 +32,6 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
 
   String? _name;
   List<Player>? _players;
-  String _selectedId = 'One';
 
   bool get isEditing => widget.isEditing;
 
@@ -48,17 +42,17 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
     // _name = widget.team == null ? null : widget.team!.name;
   }
 
-  void _onValueChange(String value) {
-    setState(() {
-      _selectedId = value;
-    });
-  }
-
-  void _onAddPlayers(List<Player> players) {
-    setState(() {
-      _players = _players;
-    });
-  }
+  // void _onValueChange(String value) {
+  //   setState(() {
+  //     _selectedId = value;
+  //   });
+  // }
+  //
+  // void _onAddPlayers(List<Player> players) {
+  //   setState(() {
+  //     _players = _players;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +65,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
             playersAdded: _players,
           );
           return AppDialog(
-            title: 'Вибери гравця',
+            title: AppLocalizations.of(context)!.chosePlayers,
             content: _addPlayersList,
             actions: [
               TextButton(
@@ -99,24 +93,6 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           );
         },
       );
-      // showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return FunkyOverlay(
-      //         title: "Вибрати гравців",
-      //         actions: [
-      //           TextButton(
-      //             child: Text(
-      //               AppLocalizations.of(context)!.cancel,
-      //               style: Theme.of(context).textTheme.button,
-      //             ),
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //             },
-      //           ),
-      //         ],
-      //       );
-      //     });
     }
 
     return Scaffold(
@@ -145,7 +121,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
               child: Text(
-                isEditing ? "Done" : "Add",
+                isEditing ? AppLocalizations.of(context)!.done : AppLocalizations.of(context)!.add,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -162,7 +138,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(bottom: 30),
                 child: Text(
-                  isEditing ? AppLocalizations.of(context)!.editPerson : AppLocalizations.of(context)!.addPerson,
+                  isEditing ? AppLocalizations.of(context)!.editTeam : AppLocalizations.of(context)!.addTeam,
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.center,
                 ),
@@ -190,7 +166,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                   ? Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: RoundedButton(
-                        text: "Додати гравця",
+                        text: AppLocalizations.of(context)!.addPlayers,
                         textColor: Colors.black,
                         color: Theme.of(context).accentColor,
                         sizeRatio: 0.9,

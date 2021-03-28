@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/ui/shared/colors.dart';
 
 
 class HaveAccountCheck extends StatelessWidget {
   final bool isLogin;
-  final Function? onTap;
+  final Function onTap;
   const HaveAccountCheck({
-    Key? key, this.isLogin = true, this.onTap,
+    Key? key, this.isLogin = true, required this.onTap,
   }) : super(key: key);
 
   @override
@@ -20,7 +19,7 @@ class HaveAccountCheck extends StatelessWidget {
           style: TextStyle(color: PrimaryColor),
         ),
         GestureDetector(
-          onTap: onTap as void Function()?,
+          onTap: onTap as void Function(),
           child: Text(
             isLogin ? AppLocalizations.of(context)!.signUp : AppLocalizations.of(context)!.signIn,
             style: TextStyle(color: PrimaryColor, fontWeight: FontWeight.bold),

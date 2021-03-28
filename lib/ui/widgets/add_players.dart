@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
-
 
 class AddPlayersList extends StatefulWidget {
   final List<Player> players;
@@ -9,16 +9,14 @@ class AddPlayersList extends StatefulWidget {
 
   late List<CheckBoxListTileModel> checkBoxListTileModel;
 
-
-  AddPlayersList({Key? key, required this.players, this.playersAdded}) : super(key: key){
+  AddPlayersList({Key? key, required this.players, this.playersAdded}) : super(key: key) {
     checkBoxListTileModel = CheckBoxListTileModel.getFromPlayers(players, playersAdded);
   }
 
-  List<Player> getPlayers(){
+  List<Player> getPlayers() {
     List<Player> players = [];
-    for(CheckBoxListTileModel c in checkBoxListTileModel){
-      if(c.isCheck)
-        players.add(c.player);
+    for (CheckBoxListTileModel c in checkBoxListTileModel) {
+      if (c.isCheck) players.add(c.player);
     }
     return players;
   }
@@ -28,14 +26,6 @@ class AddPlayersList extends StatefulWidget {
 }
 
 class _AddPlayersListState extends State<AddPlayersList> {
-  // late List<CheckBoxListTileModel> checkBoxListTileModel;
-
-  // @override
-  // void initState() {
-  //   // checkBoxListTileModel = CheckBoxListTileModel.getFromPlayers(widget.players, widget.playersAdded);
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,10 +39,26 @@ class _AddPlayersListState extends State<AddPlayersList> {
               itemCount: widget.checkBoxListTileModel.length,
               itemBuilder: (context, index) {
                 return CheckboxListTile(
-                  title: Text(widget.checkBoxListTileModel[index].player.nickname),
+                  // secondary: PlayerIndicator(player: widget.checkBoxListTileModel[index].player,),
+                  title: Row(
+                    children: [
+                      PlayerIndicator(
+                        player: widget.checkBoxListTileModel[index].player,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: Text(
+                          widget.checkBoxListTileModel[index].player.nickname,
+                          style: Theme.of(context).textTheme.bodyText2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                   value: widget.checkBoxListTileModel[index].isCheck,
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged:(val) {
+                  onChanged: (val) {
                     itemChange(val!, index);
                   },
                 );
@@ -63,6 +69,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
       ),
     );
   }
+
   void itemChange(bool val, int index) {
     setState(() {
       widget.checkBoxListTileModel[index].isCheck = val;
@@ -78,9 +85,10 @@ class CheckBoxListTileModel {
 
   static List<CheckBoxListTileModel> getFromPlayers(List<Player> playersAll, List<Player>? playersChecked) {
     List<CheckBoxListTileModel> result = [];
-    for(Player player in playersAll ){
-      playersChecked == null ?  result.add(CheckBoxListTileModel(player: player, isCheck: false)) :
-      result.add(CheckBoxListTileModel(player: player, isCheck: playersChecked.contains(player) ? true : false));
+    for (Player player in playersAll) {
+      playersChecked == null
+          ? result.add(CheckBoxListTileModel(player: player, isCheck: false))
+          : result.add(CheckBoxListTileModel(player: player, isCheck: playersChecked.contains(player) ? true : false));
     }
     return result;
   }

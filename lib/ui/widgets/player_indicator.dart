@@ -38,8 +38,6 @@ class PlayerIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(2),
-        // margin: EdgeInsets.only(
-        //     right: 5.0),
         alignment: Alignment.topCenter,
         width: size,
         height: size,
