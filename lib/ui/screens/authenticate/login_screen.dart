@@ -105,6 +105,7 @@ class _LoginState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 12.0),
                             RoundedInputField(
+                              icon: Icons.person,
                               controller: _emailController,
                               hintText: AppLocalizations.of(context)!.email,
                               validator: (_) => loginState.isEmailValid

@@ -7,7 +7,7 @@
   "@helloWorld": {
     "description": "Programmers greeting!"
   },
-  "people": "Players",
+  "players": "Players",
   "@people": {
     "description": "People label for Bottom navigation bar"
   },
@@ -83,11 +83,11 @@
   "@undo": {
     "description": ""
   },
-  "addPerson": "Add Person",
+  "addPlayer": "Add Player",
   "@addPerson": {
     "description": ""
   },
-  "enterNickname": "Enter person nickname",
+  "enterNickname": "Enter player nickname",
   "@enterNickname": {
     "description": ""
   },
@@ -95,7 +95,7 @@
   "@enterSomeText": {
     "description": ""
   },
-  "editPerson": "Edit Person",
+  "editPlayer": "Edit Player",
   "@editPerson": {
     "description": ""
   },
@@ -131,7 +131,7 @@
   "@replacement": {
     "description": ""
   },
-  "peopleTeam": "people",
+  "playersTeam": "players",
   "@peopleTeam": {
     "description": ""
   },
@@ -197,6 +197,14 @@
   },
   "add": "Add",
   "@add": {
+    "description": ""
+  },
+  "sureDeleteTeams": "Are you sure you want to delete all teams?",
+  "@sureDeleteTeams": {
+    "description": ""
+  },
+  "enterNameTeam": "Enter team name",
+  "@enterNameTeam": {
     "description": ""
   }
 }

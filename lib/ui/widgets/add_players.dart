@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
@@ -26,38 +25,87 @@ class AddPlayersList extends StatefulWidget {
 }
 
 class _AddPlayersListState extends State<AddPlayersList> {
+  TextEditingController editingController = TextEditingController();
+
+  List<CheckBoxListTileModel> items = [];
+
+  void filterSearchResults(String query) {
+    List<CheckBoxListTileModel> dummySearchList = [];
+    dummySearchList.addAll(widget.checkBoxListTileModel);
+    if(query.isNotEmpty) {
+      List<CheckBoxListTileModel> dummyListData = [];
+      dummySearchList.forEach((item) {
+        if(item.player.nickname.toLowerCase().contains(query.toLowerCase())) {
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(widget.checkBoxListTileModel);
+      });
+    }
+
+  }
+
+  @override
+  void initState() {
+    items.addAll(widget.checkBoxListTileModel);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // items.addAll(widget.checkBoxListTileModel);
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {
+                filterSearchResults(value);
+              },
+              controller: editingController,
+              decoration: InputDecoration(
+                  labelText: "Search",
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)))),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               shrinkWrap: false,
-              itemCount: widget.checkBoxListTileModel.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
                 return CheckboxListTile(
-                  // secondary: PlayerIndicator(player: widget.checkBoxListTileModel[index].player,),
                   title: Row(
                     children: [
                       PlayerIndicator(
-                        player: widget.checkBoxListTileModel[index].player,
+                        player: items[index].player,
                       ),
                       SizedBox(
                         width: 5,
                       ),
                       Expanded(
                         child: Text(
-                          widget.checkBoxListTileModel[index].player.nickname,
+                          items[index].player.nickname,
                           style: Theme.of(context).textTheme.bodyText2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
-                  value: widget.checkBoxListTileModel[index].isCheck,
+                  value: items[index].isCheck,
                   onChanged: (val) {
                     itemChange(val!, index);
                   },
@@ -72,7 +120,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
 
   void itemChange(bool val, int index) {
     setState(() {
-      widget.checkBoxListTileModel[index].isCheck = val;
+      items[index].isCheck = val;
     });
   }
 }

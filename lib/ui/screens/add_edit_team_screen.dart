@@ -3,9 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/add_players.dart';
-import 'package:form_it/ui/widgets/dialog.dart';
+import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
+import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
@@ -39,20 +40,8 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
   void initState() {
     super.initState();
     _players = widget.team == null ? [] : List.from(widget.team!.players);
-    // _name = widget.team == null ? null : widget.team!.name;
   }
 
-  // void _onValueChange(String value) {
-  //   setState(() {
-  //     _selectedId = value;
-  //   });
-  // }
-  //
-  // void _onAddPlayers(List<Player> players) {
-  //   setState(() {
-  //     _players = _players;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +56,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           return AppDialog(
             title: AppLocalizations.of(context)!.chosePlayers,
             content: _addPlayersList,
-            actions: [
+            actionsHorizontal: [
               TextButton(
                 child: Text(
                   AppLocalizations.of(context)!.ok,
@@ -99,8 +88,9 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0.0,
+        toolbarHeight: 50,
         shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).accentColor,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_rounded,
@@ -128,63 +118,84 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(bottom: 30),
-                child: Text(
-                  isEditing ? AppLocalizations.of(context)!.editTeam : AppLocalizations.of(context)!.addTeam,
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.center,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).accentColor,
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor,
+            ],
+          ),
+        ),
+        child: ShaderMask(
+          shaderCallback: (Rect rect) {
+            return LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.white, Colors.transparent, Colors.transparent, Colors.white],
+              stops: [0.0, 0.1, 0.9, 1.0], // 10%, 80% transparent, 10%
+            ).createShader(rect);
+          },
+          blendMode: BlendMode.dstOut,
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(bottom: 30, top: 30),
+                  child: Text(
+                    isEditing ? AppLocalizations.of(context)!.editTeam : AppLocalizations.of(context)!.addTeam,
+                    style: Theme.of(context).textTheme.headline1,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
-                cursorColor: Colors.black,
-                initialValue: isEditing ? widget.team!.name : '',
-                autofocus: !isEditing,
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.enterNickname,
-                  filled: true,
-                  fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.person, color: PrimaryColor),
-                  border: borderRoundedTransparent,
-                  focusedBorder: borderRoundedTransparent,
-                  enabledBorder: borderRoundedTransparent,
+                Padding(
+                  padding: const EdgeInsets.symmetric( horizontal: 20.0),
+                  child: RoundedInputField(
+                    icon: Icons.person,
+                    autofocus: !isEditing,
+                    initialValue: isEditing ? widget.team!.name : '',
+                    onSaved: (value) => _name = value,
+                    hintText: AppLocalizations.of(context)!.email,
+                    validator: (val) {
+                      return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
+                    },
+                  ),
                 ),
-                validator: (val) {
-                  return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
-                },
-                onSaved: (value) => _name = value,
-              ),
-              _players!.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: RoundedButton(
-                        text: AppLocalizations.of(context)!.addPlayers,
-                        textColor: Colors.black,
-                        color: Theme.of(context).accentColor,
-                        sizeRatio: 0.9,
-                        onPressed: () {
-                          _onAddPlayer();
-                        },
-                      ),
-                    )
-                  : Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 20, bottom: 40),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                _players!.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        child: RoundedButton(
+                          text: AppLocalizations.of(context)!.addPlayers,
+                          textColor: Colors.black,
+                          color: Theme.of(context).accentColor,
+                          sizeRatio: 0.9,
+                          onPressed: () {
+                            _onAddPlayer();
+                          },
+                        ),
+                      )
+                    : Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20, bottom: 50),
+                            padding: EdgeInsets.all(20.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(2, 2),
+                                )
+                              ],
+                              color: Colors.white,
+                            ),
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -219,26 +230,26 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                               },
                             ),
                           ),
-                        ),
-                        Positioned.fill(
-                          bottom: 10,
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: FloatingActionButton(
-                              backgroundColor: Theme.of(context).accentColor,
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.black,
+                          Positioned.fill(
+                            bottom: 20,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: FloatingActionButton(
+                                backgroundColor: Theme.of(context).accentColor,
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  _onAddPlayer();
+                                },
                               ),
-                              onPressed: () {
-                                _onAddPlayer();
-                              },
                             ),
                           ),
-                        ),
-                      ],
-                    )
-            ],
+                        ],
+                      )
+              ],
+            ),
           ),
         ),
       ),

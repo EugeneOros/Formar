@@ -5,7 +5,7 @@ import 'package:form_it/logic/blocs/tab/tab_event.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
-  TabBloc() : super(AppTab.people);
+  TabBloc() : super(AppTab.players);
 
   @override
   Stream<AppTab> mapEventToState(TabEvent event) async* {

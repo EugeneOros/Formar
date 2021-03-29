@@ -1,21 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
-import 'package:form_it/ui/screens/add_edit_screen.dart';
+import 'package:form_it/ui/screens/add_edit_player_screen.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:form_it/ui/widgets/item_player.dart';
 
-import 'delete_player_snack_bar.dart';
+import 'app_snack_bar.dart';
 import 'loading.dart';
 
 class FilteredPeopleList extends StatelessWidget {
   FilteredPeopleList({Key? key}) : super(key: key);
-  final SlidableController slidableController = SlidableController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +37,16 @@ class FilteredPeopleList extends StatelessWidget {
                   ) : Container() ,
                   PlayerItem(
                     player: person,
-                    slidableController: slidableController,
                     onDelete: () {
                       BlocProvider.of<PeopleBloc>(context)
                           .add(DeletePerson(person));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        DeletePersonSnackBar(
-                          player: person,
-                          onUndo: () => BlocProvider.of<PeopleBloc>(context)
+                        AppSnackBar(
+                          text: AppLocalizations.of(context)!.deleted + " " + person.nickname,
+                          actionName: AppLocalizations.of(context)!.undo,
+                          onAction: () => BlocProvider.of<PeopleBloc>(context)
                               .add(AddPerson(person)),
-                          context: context,
+                          actionColor: Theme.of(context).accentColor,
                         ),
                       );
                     },
@@ -56,7 +54,7 @@ class FilteredPeopleList extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return AddEditScreen(
+                            return AddEditPlayerScreen(
                               onSave: (nickname, level, sex) {
                                 BlocProvider.of<PeopleBloc>(context).add(
                                   UpdatePerson(

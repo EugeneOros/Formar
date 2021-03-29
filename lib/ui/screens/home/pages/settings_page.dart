@@ -2,7 +2,7 @@ import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
-import 'package:form_it/ui/widgets/dialog.dart';
+import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/item_settings.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/number_picker.dart';
@@ -42,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             initValue: _currentPlayerCountValue,
                           ),
                         ),
-                        actions: [
+                        actionsHorizontal: [
                           FlatButton(
                             child: Text(
                               AppLocalizations.of(context)!.apply,
@@ -90,7 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     builder: (BuildContext context) {
                       return AppDialog(
                         title: AppLocalizations.of(context)!.areYouSureLogOut,
-                        actions: [
+                        actionsHorizontal: [
                           FlatButton(
                             child: Text(
                               AppLocalizations.of(context)!.yes,

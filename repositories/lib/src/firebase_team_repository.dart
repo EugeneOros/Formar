@@ -22,27 +22,26 @@ class FirebaseTeamRepository implements TeamRepository {
   Future<void> formTeams(bool isBalanced, int numMembers) async {
     List<Team> teams;
     CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("teams");
-    teamsCollection.get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-      }
-    });
+    (await teamsCollection.get()).docs.length;
 
     List<Player> people = _sortShuffleList(await peopleRepository.currentPlayersList());
     if (people.length < 2) return;
 
     if (!isBalanced && people.length / numMembers >= 2) {
-      teams = _createTeams((people.length / numMembers).floor());
+      teams = _createTeams((people.length / numMembers).floor(), (await teamsCollection.get()).docs.length);
       teams = _sortPeopleToTeams(people.sublist(0, people.length - (people.length % numMembers)), teams);
       if (people.length % numMembers != 0 && people.length / numMembers > 2) {
         teams.add(_createTeamReplacement(people.sublist(people.length - (people.length % numMembers), people.length)));
       }
     } else {
-      teams = _createTeams(max((people.length / numMembers).ceil(), 2));
+      teams = _createTeams(max((people.length / numMembers).ceil(), 2), (await teamsCollection.get()).docs.length);
       teams = _sortPeopleToTeams(people, teams);
     }
 
-    for (Team team in teams) teamsCollection.add(team.toEntity().toDocument());
+    teams.forEach((team) {
+      team.players.sort((p1, p2) => p2.level.index.compareTo(p1.level.index));
+      teamsCollection.add(team.toEntity().toDocument());
+    });
   }
 
   @override
@@ -59,8 +58,18 @@ class FirebaseTeamRepository implements TeamRepository {
 
   @override
   Future<void> deleteTeam(Team team) async {
-    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc( _auth.currentUser!.uid).collection("teams");
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("teams");
     return teamsCollection.doc(team.id).delete();
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("teams");
+    teamsCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
   }
 
   Future<List<Team>> _teamsFromSnapshot(QuerySnapshot snapshot) async {
@@ -130,10 +139,10 @@ class FirebaseTeamRepository implements TeamRepository {
     return Team(name: "Replacement", players: players);
   }
 
-  List<Team> _createTeams(int numTeams) {
+  List<Team> _createTeams(int numTeams, int startWithNumber) {
     List<Team> teams = [];
     for (int i = 0; i < numTeams; i++) {
-      teams.add(Team(name: "Team " + (i + 1).toString(), players: []));
+      teams.add(Team(name: "Team " + (i + startWithNumber + 1).toString(), players: []));
     }
     return teams;
   }

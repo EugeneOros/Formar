@@ -65,3 +65,5 @@ class DeleteTeam extends TeamsEvent {
   @override
   String toString() => 'DeleteTeam { team: $team }';
 }
+
+class DeleteAll extends TeamsEvent {}

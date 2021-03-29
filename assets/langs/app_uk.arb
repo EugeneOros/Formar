@@ -1,7 +1,7 @@
 {
   "homePageTitle": "Form It",
   "helloWorld": "Привіт світ",
-  "people": "Гравці",
+  "players": "Гравці",
   "teams": "Команди",
   "tournament": "Турнір",
   "settings": "Налаштування",
@@ -20,10 +20,10 @@
   "edit": "Редагувати",
   "deleted": "Видалено",
   "undo": "Відмінити",
-  "addPerson": "Додати Гравця",
+  "addPlayer": "Додати Гравця",
   "enterNickname": "Введіть nickname особи",
   "enterSomeText": "Будь ласка введіть текст",
-  "editPerson": "Редагувати дані гравця",
+  "editPlayer": "Редагувати дані гравця",
   "beginner": "Новачок",
   "intermediate": "Середній",
   "proficient": "Досвідчений",
@@ -32,7 +32,7 @@
   "choseOption": "Вибери варіант",
   "teamsOf": "команди по",
   "replacement": "Заміна",
-  "peopleTeam": "людей",
+  "playersTeam": "гравців",
   "cancel": "Скасувати",
   "notAvailable": "Недоступно",
   "signOut": "Вийти",
@@ -48,5 +48,7 @@
   "chosePlayers": "Вибрати гравців",
   "done": "Готово",
   "addPlayers": "Додати гравців",
-  "add": "Додати"
+  "add": "Додати",
+  "sureDeleteTeams": "Ви впевнені, що хочете видалити всі команди?",
+  "enterNameTeam": "Введіть назву команди"
 }

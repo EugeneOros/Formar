@@ -27,8 +27,8 @@ class TabSelector extends StatelessWidget {
 
     SvgPicture? _getTabIcon(AppTab tab, bool isActive) {
       switch (tab) {
-        case AppTab.people:
-          return  SvgPicture.asset(isActive ? "assets/people_fill.svg" : "assets/people_empty.svg");
+        case AppTab.players:
+          return  SvgPicture.asset(isActive ? "assets/players_fill.svg" : "assets/players_empty.svg");
         case AppTab.teams:
           return SvgPicture.asset(isActive ? "assets/team_fill.svg" : "assets/team_empty.svg");
         case AppTab.tournament:
@@ -40,8 +40,8 @@ class TabSelector extends StatelessWidget {
 
     String _getPageLabels(AppTab tab) {
       switch (tab) {
-        case AppTab.people:
-          return AppLocalizations.of(context)!.people;
+        case AppTab.players:
+          return AppLocalizations.of(context)!.players;
         case AppTab.teams:
           return AppLocalizations.of(context)!.teams;
         case AppTab.tournament:

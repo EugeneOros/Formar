@@ -11,34 +11,32 @@ import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
 class TeamsPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context)!.size;
 
-    void onEdit(Team team){
+    void onEdit(Team team) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return
-              BlocBuilder<PeopleBloc, PeopleState>( builder: (context, state) {
-                List<Player> players = [];
-                if (state is PeopleLoaded) {
-                  players = state.people;
-                }
-                return AddEditTeamScreen(
-                  players: players,
-                  onSave: (name, players) {
-                    BlocProvider.of<TeamsBloc>(context).add(
-                      UpdateTeam(
-                        team.copyWith(name: name, players: players),
-                      ),
-                    );
-                  },
-                  isEditing: true,
-                  team: team,
-                );
-              });
+            return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+              List<Player> players = [];
+              if (state is PeopleLoaded) {
+                players = state.people;
+              }
+              return AddEditTeamScreen(
+                players: players,
+                onSave: (name, players) {
+                  BlocProvider.of<TeamsBloc>(context).add(
+                    UpdateTeam(
+                      team.copyWith(name: name, players: players),
+                    ),
+                  );
+                },
+                isEditing: true,
+                team: team,
+              );
+            });
           },
         ),
       );
@@ -124,26 +122,37 @@ class TeamsPage extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 10),
-                              child: ListView.builder(
-                                itemCount: team.players.length,
-                                itemBuilder: (context, index) {
-                                  final player = team.players[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 5.0),
-                                    child: Row(children: [
-                                      PlayerIndicator(player: player),
-                                      SizedBox(width: 5),
-                                      Expanded(
-                                        child: Text(
-                                          player.nickname,
-                                          style: Theme.of(context).textTheme.bodyText2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ]),
-                                  );
+                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 0),
+                              child: ShaderMask(
+                                shaderCallback: (Rect rect) {
+                                  return LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [Colors.white, Colors.transparent, Colors.transparent, Colors.white],
+                                    stops: [0.0, 0.1, 0.9, 1.0], // 10%, 80% transparent, 10%
+                                  ).createShader(rect);
                                 },
+                                blendMode: BlendMode.dstOut,
+                                child: ListView.builder(
+                                  itemCount: team.players.length,
+                                  itemBuilder: (context, index) {
+                                    final player = team.players[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: index == 0 ? 15 : 7),
+                                      child: Row(children: [
+                                        PlayerIndicator(player: player),
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                          child: Text(
+                                            player.nickname,
+                                            style: Theme.of(context).textTheme.bodyText2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ]),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),

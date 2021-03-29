@@ -26,9 +26,13 @@ class ItemSettings extends StatelessWidget {
           children: [
             Icon(this.icon),
             SizedBox(width: 10),
-            Text(this.text, style: Theme.of(context).textTheme.bodyText1, overflow: TextOverflow.ellipsis,),
+            Text(
+              this.text,
+              style: Theme.of(context).textTheme.bodyText1,
+              overflow: TextOverflow.ellipsis,
+            ),
             Spacer(),
-            this.secondaryWidget ?? Container(),
+            if (this.secondaryWidget != null) this.secondaryWidget!,
           ],
         ),
       ),

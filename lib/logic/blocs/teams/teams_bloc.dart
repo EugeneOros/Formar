@@ -41,6 +41,8 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
       yield* _mapUpdateTeamToState(event);
     }else if (event is DeleteTeam) {
       yield* _mapDeleteTeamToState(event);
+    }else if (event is DeleteAll) {
+      yield* _mapDeleteAllToState();
     }
   }
 
@@ -71,6 +73,10 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
 
   Stream<TeamsState> _mapDeleteTeamToState(DeleteTeam event) async* {
     _teamsRepository.deleteTeam(event.team);
+  }
+
+  Stream<TeamsState> _mapDeleteAllToState() async* {
+    _teamsRepository.deleteAll();
   }
 
   @override

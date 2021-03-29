@@ -10,7 +10,7 @@ class PlayerItem extends StatelessWidget {
   final GestureTapCallback onEdit;
   final ValueChanged<bool> onSwitchChanged;
   final Player player;
-  final SlidableController slidableController;
+  final SlidableController? slidableController;
 
   PlayerItem({
     Key? key,
@@ -18,7 +18,7 @@ class PlayerItem extends StatelessWidget {
     required this.onEdit,
     required this.onSwitchChanged,
     required this.player,
-    required this.slidableController,
+    this.slidableController,
   }) : super(key: key);
 
   String getLevelName(Level level, BuildContext context) {
@@ -38,12 +38,12 @@ class PlayerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.maybeOf(context)!.size;
 
     return Column(
       children: [
         Slidable(
           controller: slidableController,
+          actionPane: SlidableDrawerActionPane(),
           key: Key(player.id!),
           child: GestureDetector(
             onTap: onEdit,
@@ -77,19 +77,15 @@ class PlayerItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    // padding: EdgeInsets.zero,
-                    child: Switch(
-                      activeColor: Colors.black,
-                      value: player.available,
-                      onChanged: onSwitchChanged,
-                    ),
+                  Switch(
+                    activeColor: Colors.black,
+                    value: player.available,
+                    onChanged: onSwitchChanged,
                   )
                 ],
               ),
             ),
           ),
-          actionPane: SlidableDrawerActionPane(),
           dismissal: SlidableDismissal(
             child: SlidableDrawerDismissal(),
             onDismissed: (_) => onDelete(),

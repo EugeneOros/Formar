@@ -10,7 +10,7 @@ import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/blocs/tab/tab_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 
-import 'package:form_it/ui/screens/add_edit_screen.dart';
+import 'package:form_it/ui/screens/add_edit_player_screen.dart';
 import 'package:form_it/ui/screens/add_edit_team_screen.dart';
 import 'package:form_it/ui/screens/authenticate/login_screen.dart';
 import 'package:form_it/ui/screens/authenticate/signup_screeen.dart';
@@ -78,7 +78,7 @@ class _FormItAppState extends State<FormItApp> {
           return BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen());
         },
         "/add": (BuildContext context) {
-          return AddEditScreen(
+          return AddEditPlayerScreen(
             onSave: (nickname, level, sex) {
               BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },
@@ -86,7 +86,7 @@ class _FormItAppState extends State<FormItApp> {
           );
         },
         "/edit": (BuildContext context) {
-          return AddEditScreen(
+          return AddEditPlayerScreen(
             onSave: (nickname, level, sex) {
               BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
             },

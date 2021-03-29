@@ -7,8 +7,7 @@ import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/widgets/dialog.dart';
+import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/search_player.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:repositories/repositories.dart';
@@ -41,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               " " +
               averageMemberCount.round().toString() +
               " " +
-              AppLocalizations.of(context)!.peopleTeam;
+              AppLocalizations.of(context)!.playersTeam;
         return averageTeamCount.ceil().toString() +
             " " +
             AppLocalizations.of(context)!.teamsOf +
@@ -50,7 +49,7 @@ class HomeScreen extends StatelessWidget {
             "-" +
             averageMemberCount.ceil().toString() +
             " " +
-            AppLocalizations.of(context)!.peopleTeam;
+            AppLocalizations.of(context)!.playersTeam;
       } else {
         return averageTeamCount.floor().toString() +
             " " +
@@ -58,7 +57,7 @@ class HomeScreen extends StatelessWidget {
             " " +
             memberCount.toString() +
             " " +
-            AppLocalizations.of(context)!.peopleTeam +
+            AppLocalizations.of(context)!.playersTeam +
             " + " +
             AppLocalizations.of(context)!.replacement;
       }
@@ -94,11 +93,7 @@ class HomeScreen extends StatelessWidget {
               if (settingsState is SettingsLoaded) {
                 var counterTeamMembers = settingsState.settings!.counterTeamMembers;
                 return IconButton(
-                    icon: Icon(
-                        Icons.add //group_work_outlined
-                        //workspaces_outline //auto_awesome_mosaic  //alt_route //settings_backup_restore_rounded,
-                        ,
-                        color: AppBarItemColor),
+                    icon: Icon(Icons.add, color: AppBarItemColor),
                     onPressed: () {
                       if ((state.people.where((element) => element.available).length / counterTeamMembers! < 2) ||
                           (state.people.where((element) => element.available).length % counterTeamMembers == 0)) {
@@ -108,77 +103,41 @@ class HomeScreen extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          double width =
-                              textSize(_getTeamCountString(state.people, counterTeamMembers, false), Theme.of(context).textTheme.bodyText2)
-                                      .width +
-                                  40;
                           return AppDialog(
                             title: AppLocalizations.of(context)!.choseOption,
-                            content: Column(children: [
-                              Container(
-                                height: 40,
-                                width: width,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: Colors.grey[400]!,
-                                      width: 1,
-                                    ),
-                                    bottom: BorderSide(
-                                      color: Colors.grey[400]!,
-                                      width: 1,
-                                    ),
-                                  ),
+                            actionsVertical: [
+                              TextButton(
+                                child: Text(
+                                  "Нова команда",
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
-                                child: TextButton(
-                                  child: Text(
-                                    "Нова команда",
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pushNamed("/add_team");
-                                  },
-                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pushNamed("/add_team");
+                                },
                               ),
-                              Container(
-                                height: 40,
-                                width: width,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.grey[400]!,
-                                      width: 1,
-                                    ),
-                                  ),
+                              TextButton(
+                                child: Text(
+                                  _getTeamCountString(state.people, counterTeamMembers, true),
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
-                                child: TextButton(
-                                  child: Text(
-                                    _getTeamCountString(state.people, counterTeamMembers, true),
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers));
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
+                                onPressed: () {
+                                  BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers));
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              Container(
-                                height: 40,
-                                width: width,
-                                child: TextButton(
-                                  child: Text(
-                                    _getTeamCountString(state.people, counterTeamMembers, false),
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers));
-                                    Navigator.of(context).pop();
-                                  },
+                              TextButton(
+                                child: Text(
+                                  _getTeamCountString(state.people, counterTeamMembers, false),
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
+                                onPressed: () {
+                                  BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers));
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                            ]),
-                            actions: [
+                            ],
+                            actionsHorizontal: [
                               TextButton(
                                 child: Text(
                                   AppLocalizations.of(context)!.cancel,
@@ -202,14 +161,44 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             });
-            // final double avarageTeamMember = state.people.where((element) => element.available).length /(state.people.where((element) => element.available).length / 6).ceil();
-
           }
           return Spacer();
         }),
         IconButton(
-          icon: FaIcon(FontAwesomeIcons.trash, size: 17,),//Icon(Icons.clear, color: AppBarItemColor),
+          icon: FaIcon(
+            FontAwesomeIcons.trash,
+            size: 17,
+          ), //Icon(Icons.clear, color: AppBarItemColor),
           onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AppDialog(
+                    title: AppLocalizations.of(context)!.sureDeleteTeams,
+                    actionsHorizontal: [
+                      TextButton(
+                        onPressed: () {
+                          BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.yes,
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.no,
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      )
+                    ],
+                  );
+                });
+            // BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
             // Navigator.of(context).pushNamed("/add_team");
           },
         ),
@@ -220,7 +209,6 @@ class HomeScreen extends StatelessWidget {
 
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
-      Size size = MediaQuery.of(context).size;
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
@@ -230,7 +218,6 @@ class HomeScreen extends StatelessWidget {
             'assets/logo_rounded_black.svg',
             height: 45,
           ),
-          //Text("Form It", style: TextStyle(color: AppBarItemColor)),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],
         ),
         body: _pageOptions[AppTab.values.indexOf(activeTab)],

@@ -14,4 +14,7 @@ abstract class TeamRepository {
   Future<void> addTeam(Team team);
 
   Future<void> deleteTeam(Team team);
+
+  Future<void> deleteAll();
+
 }

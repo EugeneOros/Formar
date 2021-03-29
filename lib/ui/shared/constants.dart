@@ -10,10 +10,22 @@ const textInputDecoration = InputDecoration(
 );
 
 const borderRoundedTransparent = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(90.0)),
+  borderRadius: BorderRadius.all(Radius.circular(30.0)),
   borderSide: BorderSide(
     color: Colors.transparent,
   ),
+);
+
+BoxDecoration roundedShadowDecoration = BoxDecoration(
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.2),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: Offset(2, 2),
+    )
+  ],
+  borderRadius: BorderRadius.all(Radius.circular(30)),
 );
 
 Size textSize(String text, TextStyle? style) {
