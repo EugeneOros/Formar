@@ -52,7 +52,7 @@ class TabSelector extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 5),
       decoration: BoxDecoration(color: _getBackgroundColor(activeTab)),
       child: BottomNavigationBar(
         elevation: 0.0,
@@ -67,8 +67,8 @@ class TabSelector extends StatelessWidget {
         items: AppTab.values.map((tab) {
           return BottomNavigationBarItem(
             icon: Container(
-              width: 27,
-              height: 27,
+              width: 22,
+              height: 22,
               child: _getTabIcon(tab, tab == activeTab)
             ),
             label: _getPageLabels(tab),

@@ -211,12 +211,12 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 70,
+          toolbarHeight: 60,
           shadowColor: Colors.transparent,
           backgroundColor: activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
           title: SvgPicture.asset(
             'assets/logo_rounded_black.svg',
-            height: 45,
+            height: 38,
           ),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],
         ),

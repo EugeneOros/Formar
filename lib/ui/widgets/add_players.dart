@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
+import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
 class AddPlayersList extends StatefulWidget {
@@ -32,10 +34,10 @@ class _AddPlayersListState extends State<AddPlayersList> {
   void filterSearchResults(String query) {
     List<CheckBoxListTileModel> dummySearchList = [];
     dummySearchList.addAll(widget.checkBoxListTileModel);
-    if(query.isNotEmpty) {
+    if (query.isNotEmpty) {
       List<CheckBoxListTileModel> dummyListData = [];
       dummySearchList.forEach((item) {
-        if(item.player.nickname.toLowerCase().contains(query.toLowerCase())) {
+        if (item.player.nickname.toLowerCase().contains(query.toLowerCase())) {
           dummyListData.add(item);
         }
       });
@@ -50,7 +52,6 @@ class _AddPlayersListState extends State<AddPlayersList> {
         items.addAll(widget.checkBoxListTileModel);
       });
     }
-
   }
 
   @override
@@ -61,6 +62,13 @@ class _AddPlayersListState extends State<AddPlayersList> {
 
   @override
   Widget build(BuildContext context) {
+    var borderSearch = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+      borderSide: BorderSide(
+        color: Colors.grey[400]!,
+        width: 1
+      ),
+    );
     // items.addAll(widget.checkBoxListTileModel);
     return Container(
       height: MediaQuery.of(context).size.height / 2,
@@ -75,11 +83,14 @@ class _AddPlayersListState extends State<AddPlayersList> {
               },
               controller: editingController,
               decoration: InputDecoration(
-                  labelText: "Search",
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)))),
+                filled: true,
+                fillColor: Colors.transparent,
+                hintText: "Search",
+                prefixIcon: Icon(Icons.search, color: Colors.grey[400]!),
+                border: borderSearch,
+                focusedBorder: borderSearch,
+                enabledBorder: borderSearch,
+              ),
             ),
           ),
           Expanded(
