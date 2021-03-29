@@ -1,7 +1,5 @@
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:form_it/ui/shared/colors.dart';
-import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/add_players.dart';
 import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';

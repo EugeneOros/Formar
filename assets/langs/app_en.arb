@@ -206,5 +206,9 @@
   "enterNameTeam": "Enter team name",
   "@enterNameTeam": {
     "description": ""
+  },
+  "level": "Level",
+  "@level": {
+    "description": ""
   }
 }

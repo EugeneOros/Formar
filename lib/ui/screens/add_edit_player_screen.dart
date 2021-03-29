@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
-import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
@@ -27,19 +27,20 @@ class AddEditPlayerScreen extends StatefulWidget {
 class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  double value = 2;
   String? _nickname;
-  Level? _level;
-  Sex? _sex;
+  Level _level = Level.beginner;
+  Sex _sex = Sex.man;
 
   bool get isEditing => widget.isEditing;
 
-  void onRadioChanged(Level? level) {
+  void onLevelChanged(Level level) {
     setState(() {
       _level = level;
     });
   }
 
-  void onSexChanged(Sex? sex) {
+  void onSexChanged(Sex sex) {
     setState(() {
       _sex = sex;
     });
@@ -48,10 +49,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.person == null) {
-      _level = Level.beginner;
-      _sex = Sex.man;
-    } else {
+    if (widget.person != null) {
       _level = widget.person!.level;
       _sex = widget.person!.sex;
     }
@@ -174,7 +172,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric( horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: RoundedInputField(
                     icon: Icons.person,
                     autofocus: !isEditing,
@@ -184,6 +182,45 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                     validator: (val) {
                       return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                     },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 40.0, right: 20),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.level,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Expanded(
+                        child:
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: _getLevelColor(_level),
+                            inactiveTrackColor: Colors.black,
+                            valueIndicatorTextStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+                            valueIndicatorShape: RectangularSliderValueIndicatorShape(),
+                            trackHeight: 3.0,
+                            valueIndicatorColor: Colors.black,
+                            thumbColor: Colors.white,
+                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                            inactiveTickMarkColor: Colors.transparent,
+                            activeTickMarkColor: Colors.transparent,
+                            overlayColor: Theme.of(context).accentColor.withAlpha(50),
+                          ),
+                          child: Slider(
+                            label: _getLevelName(_level),
+                            value: _level.index.toDouble(),
+                            onChanged: (double newLevelIndex) {
+                              onLevelChanged(Level.values[newLevelIndex.toInt()]);
+                            },
+                            divisions: 4,
+                            min: 0,
+                            max: 4,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Wrap(
@@ -206,22 +243,6 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                       )
                       .toList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    children: Level.values
-                        .map(
-                          (level) => RadioListTile(
-                            onChanged: (Level? l) => onRadioChanged(l),
-                            value: level,
-                            groupValue: _level,
-                            activeColor: _getLevelColor(level),
-                            title: Text(_getLevelName(level), style: Theme.of(context).textTheme.bodyText2),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                )
               ],
             ),
           ),
