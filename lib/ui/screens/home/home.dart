@@ -34,14 +34,14 @@ class HomeScreen extends StatelessWidget {
       double averageMemberCount = availablePeopleCount / averageTeamCount.ceil();
       if (isBalanced) {
         if (availablePeopleCount % averageTeamCount.ceil() == 0)
-          return averageTeamCount.ceil().toString() +
+          return AppLocalizations.of(context)!.form + " " + averageTeamCount.ceil().toString() +
               " " +
               AppLocalizations.of(context)!.teamsOf +
               " " +
               averageMemberCount.round().toString() +
               " " +
               AppLocalizations.of(context)!.playersTeam;
-        return averageTeamCount.ceil().toString() +
+        return AppLocalizations.of(context)!.form + " " + averageTeamCount.ceil().toString() +
             " " +
             AppLocalizations.of(context)!.teamsOf +
             " " +
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
             " " +
             AppLocalizations.of(context)!.playersTeam;
       } else {
-        return averageTeamCount.floor().toString() +
+        return  AppLocalizations.of(context)!.form + " " +  averageTeamCount.floor().toString() +
             " " +
             AppLocalizations.of(context)!.teamsOf +
             " " +
@@ -108,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                             actionsVertical: [
                               TextButton(
                                 child: Text(
-                                  "Нова команда",
+                                  AppLocalizations.of(context)!.newTeam,
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                                 onPressed: () {

@@ -62,12 +62,9 @@ class _AddPlayersListState extends State<AddPlayersList> {
 
   @override
   Widget build(BuildContext context) {
-    var borderSearch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-      borderSide: BorderSide(
-        color: Colors.grey[400]!,
-        width: 1
-      ),
+    var borderSearch = UnderlineInputBorder(
+      // borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 1),
     );
     // items.addAll(widget.checkBoxListTileModel);
     return Container(
@@ -75,22 +72,23 @@ class _AddPlayersListState extends State<AddPlayersList> {
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              controller: editingController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.transparent,
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search, color: Colors.grey[400]!),
-                border: borderSearch,
-                focusedBorder: borderSearch,
-                enabledBorder: borderSearch,
-              ),
+          TextField(
+            style: Theme.of(context).textTheme.bodyText2,
+            scrollPadding: EdgeInsets.all(0.0),
+            cursorColor: Colors.black,
+            onChanged: (value) {
+              filterSearchResults(value);
+            },
+            controller: editingController,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(top: 15),
+              filled: true,
+              fillColor: Colors.transparent,
+              hintText: "Search",
+              prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
+              border: borderSearch,
+              focusedBorder: borderSearch,
+              enabledBorder: borderSearch,
             ),
           ),
           Expanded(
@@ -99,6 +97,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return CheckboxListTile(
+                  activeColor: Colors.black,
                   title: Row(
                     children: [
                       PlayerIndicator(

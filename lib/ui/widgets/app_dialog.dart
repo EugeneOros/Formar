@@ -70,7 +70,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                             return Container(
                               height: 35,
                               decoration: BoxDecoration(
-                                border: Border(top: BorderSide(color: Colors.grey[400]!, width: 1)),
+                                border: Border(top: BorderSide(color: Theme.of(context).dividerColor, width: 1)),
                               ),
                               child: e,
                             );
@@ -82,7 +82,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                         width: double.infinity,
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border(top: BorderSide(color: Colors.grey[400]!, width: 1)),
+                            border: Border(top: BorderSide(color: Theme.of(context).dividerColor, width: 1)),
                           ),
                           child: Row(
                             children: widget.actionsHorizontal!.map((e) {
@@ -91,7 +91,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                                   height: 35,
                                   decoration: BoxDecoration(
                                     border: e != widget.actionsHorizontal!.last
-                                        ? Border(right: BorderSide(color: Colors.grey[400]!, width: 1))
+                                        ? Border(right: BorderSide(color: Theme.of(context).dividerColor, width: 1))
                                         : Border(),
                                   ),
                                   child: e,

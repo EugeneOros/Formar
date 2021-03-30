@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/shared/colors.dart';
+import 'package:form_it/ui/widgets/fade_end_listview.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
@@ -148,17 +149,8 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
             ],
           ),
         ),
-        child: ShaderMask(
-          shaderCallback: (Rect rect) {
-            return LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.white, Colors.transparent, Colors.transparent, Colors.white],
-              stops: [0.0, 0.1, 0.9, 1.0], // 10%, 80% transparent, 10%
-            ).createShader(rect);
-          },
-          blendMode: BlendMode.dstOut,
-          child: Form(
+        child: Stack(children: [
+          Form(
             key: _formKey,
             child: ListView(
               children: [
@@ -193,8 +185,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                       Expanded(
-                        child:
-                        SliderTheme(
+                        child: SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: _getLevelColor(_level),
                             inactiveTrackColor: Colors.black,
@@ -246,7 +237,18 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
               ],
             ),
           ),
-        ),
+          FadeEndLIstView(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            color: Theme.of(context).accentColor,
+          ),
+          FadeEndLIstView(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            color: Theme.of(context).primaryColor,
+            fromTopToBottom: false,
+          ),
+        ]),
       ),
     );
   }

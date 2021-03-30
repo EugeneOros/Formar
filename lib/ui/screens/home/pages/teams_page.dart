@@ -6,6 +6,8 @@ import 'package:form_it/ui/shared/dependency.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
+import 'package:form_it/ui/widgets/app_snack_bar.dart';
+import 'package:form_it/ui/widgets/fade_end_listview.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
@@ -93,8 +95,8 @@ class TeamsPage extends StatelessWidget {
                           Stack(
                             children: [
                               Positioned(
-                                top: 5,
-                                left: 5,
+                                top: 13,
+                                left: 13,
                                 child: Wrap(
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
@@ -110,8 +112,48 @@ class TeamsPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              // Positioned(
+                              //   top: 0,
+                              //   right: 0,
+                              //   child: GestureDetector(
+                              //     onTap: () {
+                              //       BlocProvider.of<TeamsBloc>(context).add(DeleteTeam(teams[index]));
+                              //     },
+                              //     child: Padding(
+                              //       padding: EdgeInsets.all(10),
+                              //       child: Icon(
+                              //           Icons.close,
+                              //           size: 15,
+                              //           color: Colors.black,
+                              //         ),
+                              //     ),
+                              //   ),
+                              // ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: IconButton(
+                                  onPressed: () {
+                                    BlocProvider.of<TeamsBloc>(context).add(DeleteTeam(team));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      AppSnackBar(
+                                        text: AppLocalizations.of(context)!.deleted + " " + team.name,
+                                        actionName: AppLocalizations.of(context)!.undo,
+                                        onAction: () => BlocProvider.of<TeamsBloc>(context)
+                                            .add(AddTeam(team)),
+                                        actionColor: Theme.of(context).accentColor,
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(
+                                      Icons.close,
+                                      size: 15,
+                                      color: Colors.black,
+                                  ),
+                                ),
+                              ),
                               Container(
-                                padding: EdgeInsets.only(top: 20, bottom: 10),
+                                padding: EdgeInsets.only(top: 30, bottom: 10),
                                 alignment: Alignment.center,
                                 child: Text(
                                   team.name,
@@ -123,36 +165,38 @@ class TeamsPage extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 0),
-                              child: ShaderMask(
-                                shaderCallback: (Rect rect) {
-                                  return LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [Colors.white, Colors.transparent, Colors.transparent, Colors.white],
-                                    stops: [0.0, 0.1, 0.9, 1.0], // 10%, 80% transparent, 10%
-                                  ).createShader(rect);
-                                },
-                                blendMode: BlendMode.dstOut,
-                                child: ListView.builder(
-                                  itemCount: team.players.length,
-                                  itemBuilder: (context, index) {
-                                    final player = team.players[index];
-                                    return Padding(
-                                      padding: EdgeInsets.only(top: index == 0 ? 15 : 7),
-                                      child: Row(children: [
-                                        PlayerIndicator(player: player),
-                                        SizedBox(width: 5),
-                                        Expanded(
-                                          child: Text(
-                                            player.nickname,
-                                            style: Theme.of(context).textTheme.bodyText2,
-                                            overflow: TextOverflow.ellipsis,
+                              child: Stack(
+                                children: [
+                                  ListView.builder(
+                                    itemCount: team.players.length,
+                                    itemBuilder: (context, index) {
+                                      final player = team.players[index];
+                                      return Padding(
+                                        padding: EdgeInsets.only(top: index == 0 ? 15 : 7),
+                                        child: Row(children: [
+                                          PlayerIndicator(player: player),
+                                          SizedBox(width: 5),
+                                          Expanded(
+                                            child: Text(
+                                              player.nickname,
+                                              style: Theme.of(context).textTheme.bodyText2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                      ]),
-                                    );
-                                  },
-                                ),
+                                        ]),
+                                      );
+                                    },
+                                  ),
+                                  FadeEndLIstView(
+                                    height: 15,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                  FadeEndLIstView(
+                                    height: 30,
+                                    width: MediaQuery.of(context).size.width,
+                                    fromTopToBottom: false,
+                                  ),
+                                ],
                               ),
                             ),
                           ),

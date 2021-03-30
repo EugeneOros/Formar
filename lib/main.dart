@@ -46,6 +46,7 @@ class _FormItAppState extends State<FormItApp> {
         primaryColor: Color(0xffd1dbf1),
         accentColor: Color(0xffffdcf7),
         primaryColorLight: Color(0xffe2ecf2),
+        dividerColor: Colors.grey[400],
         textTheme: TextTheme(
             headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
             headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),

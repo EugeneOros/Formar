@@ -207,6 +207,14 @@
   "@enterNameTeam": {
     "description": ""
   },
+  "newTeam": "New Team",
+  "@newTeam": {
+    "description": ""
+  },
+  "form": "Form",
+  "@form": {
+    "description": ""
+  },
   "level": "Level",
   "@level": {
     "description": ""

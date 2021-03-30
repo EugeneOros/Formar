@@ -86,10 +86,10 @@ class PlayerItem extends StatelessWidget {
               ),
             ),
           ),
-          dismissal: SlidableDismissal(
-            child: SlidableDrawerDismissal(),
-            onDismissed: (_) => onDelete(),
-          ),
+          // dismissal: SlidableDismissal(
+          //   child: SlidableDrawerDismissal(),
+          //   onDismissed: (_) => onDelete(),
+          // ),
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: AppLocalizations.of(context)!.edit,

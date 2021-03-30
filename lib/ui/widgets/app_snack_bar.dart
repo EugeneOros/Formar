@@ -18,6 +18,7 @@ class AppSnackBar extends SnackBar {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
+          behavior: SnackBarBehavior.floating,
           backgroundColor: color ?? Colors.black,
           duration: Duration(seconds: 3),
           action: SnackBarAction(
