@@ -222,5 +222,9 @@
   "playerDeletedFromTeams": "This player will be deleted from all teams he is in",
   "@playerDeletedFromTeams": {
     "description": ""
+  },
+  "showTeams": "Show teams",
+  "@showTeams": {
+    "description": ""
   }
 }

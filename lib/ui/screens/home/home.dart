@@ -15,7 +15,7 @@ import 'package:repositories/repositories.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'pages/people_page.dart';
+import 'pages/players_page.dart';
 import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
 import 'pages/settings_page.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _pageOptions = [PeoplePage(), TeamsPage(), TournamentPage(), SettingsPage()];
+    final _pageOptions = [PlayersPage(), TeamsPage(), TournamentPage(), SettingsPage()];
 
     String _getTeamCountString(List<Player> people, int memberCount, bool isBalanced) {
       int availablePeopleCount = people.where((element) => element.available).length;

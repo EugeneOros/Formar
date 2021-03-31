@@ -38,7 +38,6 @@ class PlayerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Slidable(
@@ -91,16 +90,29 @@ class PlayerItem extends StatelessWidget {
           //   onDismissed: (_) => onDelete(),
           // ),
           secondaryActions: <Widget>[
-            IconSlideAction(
-              caption: AppLocalizations.of(context)!.edit,
+            SlideAction(
+              child: Text(
+                AppLocalizations.of(context)!.showTeams,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.caption,
+              ),
               color: Theme.of(context).accentColor,
-              icon: Icons.edit,
-              onTap: onEdit,
+              onTap: () {},
             ),
-            IconSlideAction(
-              caption: AppLocalizations.of(context)!.delete,
+            SlideAction(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.delete, color: Colors.white,),
+                  Text(
+                    AppLocalizations.of(context)!.delete,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
               color: Colors.black,
-              icon: Icons.delete,
               onTap: () => onDelete(),
             ),
           ],

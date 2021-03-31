@@ -48,13 +48,15 @@ class _FormItAppState extends State<FormItApp> {
         primaryColorLight: Color(0xffe2ecf2),
         dividerColor: Colors.grey[400],
         textTheme: TextTheme(
-            headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
-            headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
-            bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
-            bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-            subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
-            subtitle2: TextStyle(fontSize: 11, color: Colors.black),
-            button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4))),
+          headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
+          headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
+          bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+          bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+          subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
+          subtitle2: TextStyle(fontSize: 11, color: Colors.black),
+          button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4)),
+          caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black),
+        ),
       );
     }
 

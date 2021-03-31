@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
@@ -9,18 +9,18 @@ import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/ui/screens/add_edit_player_screen.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/ui/widgets/app_dialog.dart';
+import 'package:form_it/ui/widgets/app_snack_bar.dart';
 import 'package:form_it/ui/widgets/item_player.dart';
+import 'package:form_it/ui/widgets/loading.dart';
 import 'package:repositories/repositories.dart';
 
-import 'app_dialog.dart';
-import 'app_snack_bar.dart';
-import 'loading.dart';
 
-class FilteredPeopleList extends StatelessWidget {
-  FilteredPeopleList({Key? key}) : super(key: key);
 
+class PlayersPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    SlidableController _slidableController = SlidableController();
     void _deleteFormPlayers(Player player) {
       BlocProvider.of<PeopleBloc>(context).add(DeletePerson(player));
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
@@ -100,15 +100,16 @@ class FilteredPeopleList extends StatelessWidget {
                     children: [
                       (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase())
                           ? Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 10, top: 5),
-                              child: Text(
-                                player.nickname[0].toUpperCase(),
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            )
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 10, top: 5),
+                        child: Text(
+                          player.nickname[0].toUpperCase(),
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      )
                           : Container(),
                       PlayerItem(
+                        slidableController: _slidableController,
                         player: player,
                         onDelete: () => _onDelete(player, stateTeam.teams),
                         onEdit: () async {
@@ -148,5 +149,7 @@ class FilteredPeopleList extends StatelessWidget {
         }
       },
     );
+
   }
+
 }
