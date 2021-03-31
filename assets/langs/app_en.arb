@@ -123,7 +123,7 @@
   "@choseOption": {
     "description": ""
   },
-  "teamsOf": "teams of",
+  "teamsOf": "of",
   "@teamsOf": {
     "description": ""
   },
@@ -133,10 +133,6 @@
   },
   "playersTeam": "players",
   "@peopleTeam": {
-    "description": ""
-  },
-  "cancel": "Cancel",
-  "@cancel": {
     "description": ""
   },
   "notAvailable": "Not Available",
@@ -226,5 +222,47 @@
   "showTeams": "Show teams",
   "@showTeams": {
     "description": ""
+  },
+  "nice": "nice",
+  "@nice": {
+    "description": ""
+  },
+  "hello": "Hello {userName}",
+  "@hello": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  },
+  "numberOfDataPoints": "Number of data points: {value}",
+  "@numberOfDataPoints": {
+    "description": "A message with a formatted int parameter",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compactLong"
+      }
+    }
+  },
+  "teamCount": "Form {count,plural, =0{no team} =1{{count} team} other{{count} teams}}",
+  "@teamCount": {
+    "description": "A plural message",
+    "placeholders": {
+      "count": {
+
+      }
+    }
+  },
+  "playersCount": "Form {count,plural, =0{no player} =1{{count} player} other{{count} players}}",
+  "@playersCount": {
+    "description": "A plural message",
+    "placeholders": {
+      "count": {
+
+      }
+    }
   }
 }

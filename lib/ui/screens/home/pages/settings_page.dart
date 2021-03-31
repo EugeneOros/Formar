@@ -6,6 +6,7 @@ import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/item_settings.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:form_it/ui/widgets/number_picker.dart';
+import 'package:form_it/ui/shared/constants.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -53,16 +54,14 @@ class _SettingsPageState extends State<SettingsPage> {
                               if (state is SettingsLoaded) {
                                 print(_currentPlayerCountValue);
                                 BlocProvider.of<SettingsBloc>(context).add(
-                                  UpdateSettings(state.settings!.copyWith(
-                                      counterTeamMember:
-                                          _currentPlayerCountValue)),
+                                  UpdateSettings(state.settings!.copyWith(counterTeamMember: _currentPlayerCountValue)),
                                 );
                               }
                             },
                           ),
                           TextButton(
                             child: Text(
-                              AppLocalizations.of(context)!.cancel,
+                              MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
                               style: Theme.of(context).textTheme.button,
                             ),
                             onPressed: () {
@@ -98,8 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(LoggedOut());
+                              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                             },
                           ),
                           TextButton(

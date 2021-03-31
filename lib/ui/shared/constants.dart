@@ -36,3 +36,9 @@ Size textSize(String text, TextStyle? style) {
     ..layout(minWidth: 0, maxWidth: double.infinity);
   return textPainter.size;
 }
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}

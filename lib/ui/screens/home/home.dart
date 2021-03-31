@@ -20,8 +20,6 @@ import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
 import 'pages/settings_page.dart';
 
-
-
 class HomeScreen extends StatelessWidget {
   final String name;
 
@@ -37,32 +35,51 @@ class HomeScreen extends StatelessWidget {
       double averageMemberCount = availablePeopleCount / averageTeamCount.ceil();
       if (isBalanced) {
         if (availablePeopleCount % averageTeamCount.ceil() == 0)
-          return AppLocalizations.of(context)!.form + " " + averageTeamCount.ceil().toString() +
-              " " +
+          return AppLocalizations.of(context)!.teamCount(averageTeamCount.ceil()) +
               AppLocalizations.of(context)!.teamsOf +
-              " " +
-              averageMemberCount.round().toString() +
-              " " +
-              AppLocalizations.of(context)!.playersTeam;
-        return AppLocalizations.of(context)!.form + " " + averageTeamCount.ceil().toString() +
+              AppLocalizations.of(context)!.playersCount(averageMemberCount.round());
+
+        // AppLocalizations.of(context)!.form +
+        //   " " +
+        //   averageTeamCount.ceil().toString() +
+        //   " " +
+        //   AppLocalizations.of(context)!.teamsOf +
+        //   " " +
+        //   averageMemberCount.round().toString() +
+        //   " " +
+        //   AppLocalizations.of(context)!.playersTeam;
+        return AppLocalizations.of(context)!.form +
+            " " +
+            AppLocalizations.of(context)!.teamCount(averageTeamCount.ceil()) +
             " " +
             AppLocalizations.of(context)!.teamsOf +
             " " +
             averageMemberCount.floor().toString() +
             "-" +
-            averageMemberCount.ceil().toString() +
-            " " +
-            AppLocalizations.of(context)!.playersTeam;
+            AppLocalizations.of(context)!.playersCount(averageMemberCount.ceil());
       } else {
-        return  AppLocalizations.of(context)!.form + " " +  averageTeamCount.floor().toString() +
+        return
+          // AppLocalizations.of(context)!.form +
+          //   " " +
+            AppLocalizations.of(context)!.teamCount(averageTeamCount.floor()) +
             " " +
             AppLocalizations.of(context)!.teamsOf +
             " " +
-            memberCount.toString() +
-            " " +
-            AppLocalizations.of(context)!.playersTeam +
+            AppLocalizations.of(context)!.playersCount(memberCount) +
             " + " +
             AppLocalizations.of(context)!.replacement;
+
+        // AppLocalizations.of(context)!.form +
+        //   " " +
+        //   averageTeamCount.floor().toString() +
+        //   " " +
+        //   AppLocalizations.of(context)!.teamsOf +
+        //   " " +
+        //   memberCount.toString() +
+        //   " " +
+        //   AppLocalizations.of(context)!.playersTeam +
+        //   " + " +
+        //   AppLocalizations.of(context)!.replacement;
       }
     }
 
@@ -131,6 +148,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               TextButton(
                                 child: Text(
+                                  // AppLocalizations.of(context)!.teamCount(3),
                                   _getTeamCountString(state.people, counterTeamMembers, false),
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
@@ -143,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                             actionsHorizontal: [
                               TextButton(
                                 child: Text(
-                                  AppLocalizations.of(context)!.cancel,
+                                  MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
                                   style: Theme.of(context).textTheme.button,
                                 ),
                                 onPressed: () {

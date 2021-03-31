@@ -30,10 +30,9 @@
   "advanced": "Просунутий",
   "expert": "Експерт",
   "choseOption": "Вибери варіант",
-  "teamsOf": "команди по",
+  "teamsOf": "по",
   "replacement": "Заміна",
   "playersTeam": "гравців",
-  "cancel": "Скасувати",
   "notAvailable": "Недоступно",
   "signOut": "Вийти",
   "areYouSureLogOut": "Хочете вийти із застосунку?",
@@ -55,5 +54,44 @@
   "form": "Формувати",
   "level": "Рівень",
   "playerDeletedFromTeams": "Цей гравець буде видалений з усіх команд, в яких він перебуває",
-  "showTeams": "Показати команди"
+  "showTeams": "Показати команди",
+  "hello": "Hello {userName}",
+  "nice": "nice",
+  "@hello": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  },
+  "numberOfDataPoints": "Number of data points: {value}",
+  "@numberOfDataPoints": {
+    "description": "A message with a formatted int parameter",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compactLong"
+      }
+    }
+  },
+  "teamCount": " {count,plural, =0{нулеву команду} =1{{count} команду} =2{{count} команди} few{ {count} команди} many{{count} команд} other{{count} команд} }",
+  "@teamCount": {
+    "description": "A plural message",
+    "placeholders": {
+      "count": {
+
+      }
+    }
+  },
+  "playersCount": " {count,plural, =0{нуль гравців} =1{{count} гравцю} =2{{count} гравця} few{ {count} грвця} many{{count} гравців} other{{count} гравців} }",
+  "@playersCount": {
+    "description": "A plural message",
+    "placeholders": {
+      "count": {
+
+      }
+    }
+  }
 }

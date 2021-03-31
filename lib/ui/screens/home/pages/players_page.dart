@@ -15,9 +15,7 @@ import 'package:form_it/ui/widgets/item_player.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:repositories/repositories.dart';
 
-
-
-class PlayersPage extends StatelessWidget{
+class PlayersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SlidableController _slidableController = SlidableController();
@@ -47,7 +45,7 @@ class PlayersPage extends StatelessWidget{
             context: context,
             builder: (context) {
               return AppDialog(
-                title: 'This player will be deleted from teams hi is in',
+                title: AppLocalizations.of(context)!.playerDeletedFromTeams,
                 actionsHorizontal: [
                   TextButton(
                     onPressed: () {
@@ -65,14 +63,14 @@ class PlayersPage extends StatelessWidget{
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.ok,
+                      MaterialLocalizations.of(context).okButtonLabel,
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      AppLocalizations.of(context)!.cancel,
+                      MaterialLocalizations.of(context).backButtonTooltip,
                       style: Theme.of(context).textTheme.button,
                     ),
                   )
@@ -100,13 +98,13 @@ class PlayersPage extends StatelessWidget{
                     children: [
                       (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase())
                           ? Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 10, top: 5),
-                        child: Text(
-                          player.nickname[0].toUpperCase(),
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                      )
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 10, top: 5),
+                              child: Text(
+                                player.nickname[0].toUpperCase(),
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            )
                           : Container(),
                       PlayerItem(
                         slidableController: _slidableController,
@@ -149,7 +147,5 @@ class PlayersPage extends StatelessWidget{
         }
       },
     );
-
   }
-
 }

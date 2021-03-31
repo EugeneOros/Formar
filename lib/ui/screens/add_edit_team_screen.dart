@@ -7,6 +7,7 @@ import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:form_it/ui/widgets/rounded_button.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
+import 'package:form_it/ui/shared/constants.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
 
@@ -58,7 +59,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
             actionsHorizontal: [
               TextButton(
                 child: Text(
-                  AppLocalizations.of(context)!.ok,
+                  MaterialLocalizations.of(context).okButtonLabel,
                   style: Theme.of(context).textTheme.button,
                 ),
                 onPressed: () {
@@ -70,7 +71,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
               ),
               TextButton(
                 child: Text(
-                  AppLocalizations.of(context)!.cancel,
+                  MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
                   style: Theme.of(context).textTheme.button,
                 ),
                 onPressed: () {
@@ -110,7 +111,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
               child: Text(
-                isEditing ? AppLocalizations.of(context)!.done : AppLocalizations.of(context)!.add,
+                MaterialLocalizations.of(context).saveButtonLabel.toLowerCase().capitalize(),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

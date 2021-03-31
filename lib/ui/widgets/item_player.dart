@@ -104,9 +104,12 @@ class PlayerItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.delete, color: Colors.white,),
+                  Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                   Text(
-                    AppLocalizations.of(context)!.delete,
+                    MaterialLocalizations.of(context).deleteButtonTooltip,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
                   ),

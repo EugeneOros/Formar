@@ -82,7 +82,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
               contentPadding: EdgeInsets.only(top: 15),
               filled: true,
               fillColor: Colors.transparent,
-              hintText: "Search",
+              hintText: MaterialLocalizations.of(context).searchFieldLabel,
               prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
               border: borderSearch,
               focusedBorder: borderSearch,
