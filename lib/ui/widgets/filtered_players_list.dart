@@ -7,8 +7,10 @@ import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/ui/screens/add_edit_player_screen.dart';
+import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:form_it/ui/widgets/item_player.dart';
+import 'package:repositories/repositories.dart';
 
 import 'app_dialog.dart';
 import 'app_snack_bar.dart';
@@ -19,6 +21,69 @@ class FilteredPeopleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _deleteFormPlayers(Player player) {
+      BlocProvider.of<PeopleBloc>(context).add(DeletePerson(player));
+      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+        AppSnackBar(
+          text: AppLocalizations.of(scaffoldKey.currentContext!)!.deleted + " " + player.nickname,
+          actionName: AppLocalizations.of(scaffoldKey.currentContext!)!.undo,
+          onAction: () {
+            BlocProvider.of<PeopleBloc>(scaffoldKey.currentContext!).add(AddPerson(player));
+          },
+          actionColor: Theme.of(scaffoldKey.currentContext!).accentColor,
+        ),
+      );
+    }
+
+    void _onDelete(player, teams) {
+      List<Team> teamsThatContains = [];
+      teams.forEach((team) {
+        team.players.forEach((teamPlayer) {
+          if (teamPlayer.id == player.id) teamsThatContains.add(team);
+        });
+      });
+      if (teamsThatContains.isNotEmpty) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AppDialog(
+                title: 'This player will be deleted from teams hi is in',
+                actionsHorizontal: [
+                  TextButton(
+                    onPressed: () {
+                      Player? toDelete;
+                      teamsThatContains.forEach((team) {
+                        team.players.forEach((teamPlayer) {
+                          if (teamPlayer.id == player.id) {
+                            toDelete = teamPlayer;
+                          }
+                        });
+                        team.players.remove(toDelete);
+                        BlocProvider.of<TeamsBloc>(context).add(UpdateTeam(team));
+                      });
+                      _deleteFormPlayers(player);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.ok,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  )
+                ],
+              );
+            });
+      } else {
+        _deleteFormPlayers(player);
+      }
+    }
+
     return BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
       builder: (context, state) {
         if (state is FilteredPeopleLoading) {
@@ -35,45 +100,17 @@ class FilteredPeopleList extends StatelessWidget {
                     children: [
                       (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase())
                           ? Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 10, top: 5),
-                        child: Text(
-                          player.nickname[0].toUpperCase(),
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .subtitle1,
-                        ),
-                      )
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 10, top: 5),
+                              child: Text(
+                                player.nickname[0].toUpperCase(),
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            )
                           : Container(),
                       PlayerItem(
                         player: player,
-                        onDelete: () {
-                          bool containsPlayer = false;
-                          stateTeam.teams.forEach((team) {
-                            team.players.forEach((teamPlayer) {
-                              if(teamPlayer.id == player.id)
-                                containsPlayer = true;
-                            });
-                          });
-                          if (containsPlayer) {
-                            showDialog(context: context, builder: (context) {
-                              return AppDialog(title: 'Firstly delete this person from team',);
-                            });
-                          } else {
-                            BlocProvider.of<PeopleBloc>(context).add(DeletePerson(player));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              AppSnackBar(
-                                text: AppLocalizations.of(context)!.deleted + " " + player.nickname,
-                                actionName: AppLocalizations.of(context)!.undo,
-                                onAction: () => BlocProvider.of<PeopleBloc>(context).add(AddPerson(player)),
-                                actionColor: Theme
-                                    .of(context)
-                                    .accentColor,
-                              ),
-                            );
-                          }
-                        },
+                        onDelete: () => _onDelete(player, stateTeam.teams),
                         onEdit: () async {
                           Navigator.of(context).push(
                             MaterialPageRoute(

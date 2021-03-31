@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
-import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
 class AddPlayersList extends StatefulWidget {

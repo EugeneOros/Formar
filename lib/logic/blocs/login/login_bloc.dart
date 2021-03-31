@@ -12,8 +12,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc({
     required UserRepository userRepository,
-  })  : assert(userRepository != null),
-        _userRepository = userRepository,
+  })  : _userRepository = userRepository,
         super(LoginState.empty());
 
   @override
@@ -54,7 +53,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
     try {
       await _userRepository.signInWithGoogle();
-      // TODO load people people bloc
       yield LoginState.success();
     } catch (_) {
       yield LoginState.failure();
@@ -76,12 +74,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 }
 
 class Validators {
-  static final RegExp _emailRegExp = RegExp(
-    r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
-  );
-  static final RegExp _passwordRegExp = RegExp(
-    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
-  );
+  // static final RegExp _emailRegExp = RegExp(
+  //   r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
+  // );
+  // static final RegExp _passwordRegExp = RegExp(
+  //   r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+  // );
 
   static isValidEmail(String email) {
     return email.length > 0; //_emailRegExp.hasMatch(email);

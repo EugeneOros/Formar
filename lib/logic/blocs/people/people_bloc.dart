@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
-import 'package:meta/meta.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:repositories/repositories.dart';
 
@@ -10,13 +9,10 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   final PlayersRepository peopleRepository;
   StreamSubscription? _peopleSubscription;
   StreamSubscription? _authenticationSubscription;
-  final AuthenticationBloc _authenticationBloc;
 
   PeopleBloc(
       {required PlayersRepository peopleRepository, required AuthenticationBloc authenticationBloc})
-      : assert(peopleRepository != null),
-        _authenticationBloc = authenticationBloc,
-        peopleRepository = peopleRepository,
+      : peopleRepository = peopleRepository,
         super(PeopleLoading()) {
     _authenticationSubscription = authenticationBloc.listen((state) {
       if (state is AuthenticationStateAuthenticated) {

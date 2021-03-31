@@ -13,8 +13,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
   StreamSubscription? _peopleSubscription;
 
   FilteredPeopleBloc({required PeopleBloc peopleBloc})
-      : assert(peopleBloc != null),
-        _peopleBloc = peopleBloc,
+      : _peopleBloc = peopleBloc,
         super(peopleBloc.state is PeopleLoaded
             ? FilteredPeopleLoaded(
                 (peopleBloc.state as PeopleLoaded).people,

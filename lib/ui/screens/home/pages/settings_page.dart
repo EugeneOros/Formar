@@ -43,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         actionsHorizontal: [
-                          FlatButton(
+                          TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.apply,
                               style: Theme.of(context).textTheme.button,
@@ -60,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               }
                             },
                           ),
-                          FlatButton(
+                          TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.cancel,
                               style: Theme.of(context).textTheme.button,
@@ -91,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       return AppDialog(
                         title: AppLocalizations.of(context)!.areYouSureLogOut,
                         actionsHorizontal: [
-                          FlatButton(
+                          TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.yes,
                               style: Theme.of(context).textTheme.button,
@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   .add(LoggedOut());
                             },
                           ),
-                          FlatButton(
+                          TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.no,
                               style: Theme.of(context).textTheme.button,

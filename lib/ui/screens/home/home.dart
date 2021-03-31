@@ -1,3 +1,4 @@
+import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,6 +19,8 @@ import 'pages/people_page.dart';
 import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
 import 'pages/settings_page.dart';
+
+
 
 class HomeScreen extends StatelessWidget {
   final String name;
@@ -210,6 +213,7 @@ class HomeScreen extends StatelessWidget {
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           toolbarHeight: 60,
           shadowColor: Colors.transparent,

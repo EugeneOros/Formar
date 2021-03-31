@@ -218,5 +218,9 @@
   "level": "Level",
   "@level": {
     "description": ""
+  },
+  "playerDeletedFromTeams": "This player will be deleted from all teams he is in",
+  "@playerDeletedFromTeams": {
+    "description": ""
   }
 }

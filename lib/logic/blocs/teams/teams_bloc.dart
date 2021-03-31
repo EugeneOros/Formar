@@ -10,14 +10,11 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   final TeamRepository _teamsRepository;
   StreamSubscription? _teamsSubscription;
   StreamSubscription? _authenticationSubscription;
-  final AuthenticationBloc _authenticationBloc;
 
 
   TeamsBloc(
       {required TeamRepository teamsRepository, required AuthenticationBloc authenticationBloc})
-      : assert(teamsRepository != null),
-        _authenticationBloc = authenticationBloc,
-        _teamsRepository = teamsRepository,
+      : _teamsRepository = teamsRepository,
         super(TeamsLoading()) {
     _authenticationSubscription = authenticationBloc.listen((state) {
       if (state is AuthenticationStateAuthenticated) {

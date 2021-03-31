@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
-import 'package:meta/meta.dart';
-import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:repositories/repositories.dart';
 
 import 'bloc.dart';
@@ -12,15 +10,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settingsRepository;
   StreamSubscription? _settingsSubscription;
   StreamSubscription? _authenticationSubscription;
-  final AuthenticationBloc _authenticationBloc;
   int currentPlayerCount = 1;
 
 
   SettingsBloc(
       {required SettingsRepository settingsRepository, required AuthenticationBloc authenticationBloc})
-      : assert(settingsRepository != null),
-        _authenticationBloc = authenticationBloc,
-        _settingsRepository = settingsRepository,
+      : _settingsRepository = settingsRepository,
         super(SettingsLoading()) {
     _authenticationSubscription = authenticationBloc.listen((state) {
       if (state is AuthenticationStateAuthenticated) {

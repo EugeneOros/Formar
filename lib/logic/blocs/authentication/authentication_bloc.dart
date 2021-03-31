@@ -3,15 +3,13 @@ import 'package:form_it/logic/blocs/authentication/authentication_event.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:repositories/repositories.dart';
 import 'dart:async';
-import 'package:meta/meta.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userReposetory;
 
   AuthenticationBloc({required UserRepository authService})
-      : assert(UserRepository != null),
-        _userReposetory = authService,
+      : _userReposetory = authService,
         super(AuthenticationStateInitialized());
 
   @override
@@ -29,9 +27,9 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
       yield AuthenticationStateInitialized();
-      final isSignedIn = await _userReposetory.isSignedIn();
+      final isSignedIn = _userReposetory.isSignedIn();
       if (isSignedIn) {
-        final name = await _userReposetory.getUser();
+        final name = _userReposetory.getUser();
         yield AuthenticationStateAuthenticated(name);
       } else {
         yield AuthenticationStateUnauthenticated();
