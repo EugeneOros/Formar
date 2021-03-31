@@ -17,7 +17,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       {required SettingsRepository settingsRepository, required AuthenticationBloc authenticationBloc})
       : _settingsRepository = settingsRepository,
         super(SettingsLoading()) {
-    _authenticationSubscription = authenticationBloc.listen((state) {
+    _authenticationSubscription = authenticationBloc.stream.listen((state) {
       if (state is AuthenticationStateAuthenticated) {
         add(LoadSettings());
       }

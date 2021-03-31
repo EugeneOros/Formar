@@ -14,7 +14,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
       {required PlayersRepository peopleRepository, required AuthenticationBloc authenticationBloc})
       : peopleRepository = peopleRepository,
         super(PeopleLoading()) {
-    _authenticationSubscription = authenticationBloc.listen((state) {
+    _authenticationSubscription = authenticationBloc.stream.listen((state) {
       if (state is AuthenticationStateAuthenticated) {
         add(LoadPeople());
       }

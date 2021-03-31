@@ -8,7 +8,7 @@ import 'package:repositories/repositories.dart';
 import 'filtered_people_event.dart';
 import 'filtered_people_state.dart';
 
-class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState> {
+class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> {
   final PeopleBloc _peopleBloc;
   StreamSubscription? _peopleSubscription;
 
@@ -20,7 +20,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
                 VisibilityFilter.all,
               )
             : FilteredPeopleLoading()) {
-    _peopleSubscription = peopleBloc.listen((state) {
+    _peopleSubscription = _peopleBloc.stream.listen((state) {
       if (state is PeopleLoaded) {
         add(UpdatePeople((peopleBloc.state as PeopleLoaded).people));
       }
@@ -51,9 +51,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
   Stream<FilteredPeopleState> _mapPeopleUpdatedToState(
     UpdatePeople event,
   ) async* {
-    final visibilityFilter = state is FilteredPeopleLoaded
-        ? (state as FilteredPeopleLoaded).activeFilter
-        : VisibilityFilter.all;
+    final visibilityFilter = state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).activeFilter : VisibilityFilter.all;
     yield FilteredPeopleLoaded(
       _mapPeopleToFilteredPeople(
         (_peopleBloc.state as PeopleLoaded).people,
@@ -63,8 +61,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent , FilteredPeopleState>
     );
   }
 
-  List<Player> _mapPeopleToFilteredPeople(
-      List<Player> people, VisibilityFilter filter) {
+  List<Player> _mapPeopleToFilteredPeople(List<Player> people, VisibilityFilter filter) {
     return people.where((todo) {
       if (filter == VisibilityFilter.all) {
         return true;

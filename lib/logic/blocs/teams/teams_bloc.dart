@@ -16,7 +16,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
       {required TeamRepository teamsRepository, required AuthenticationBloc authenticationBloc})
       : _teamsRepository = teamsRepository,
         super(TeamsLoading()) {
-    _authenticationSubscription = authenticationBloc.listen((state) {
+    _authenticationSubscription = authenticationBloc.stream.listen((state) {
       if (state is AuthenticationStateAuthenticated) {
         add(LoadTeams());
       }

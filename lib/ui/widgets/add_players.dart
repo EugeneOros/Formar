@@ -6,7 +6,7 @@ class AddPlayersList extends StatefulWidget {
   final List<Player> players;
   final List<Player>? playersAdded;
 
-  late List<CheckBoxListTileModel> checkBoxListTileModel;
+  late final List<CheckBoxListTileModel> checkBoxListTileModel;
 
   AddPlayersList({Key? key, required this.players, this.playersAdded}) : super(key: key) {
     checkBoxListTileModel = CheckBoxListTileModel.getFromPlayers(players, playersAdded);
