@@ -264,5 +264,14 @@
 
       }
     }
+  },
+  "teamsNames": "Teams Names",
+  "@teamsNames": {
+    "description": ""
+  },
+  "noTeam": "There is no team that contains this player",
+  "@noTeam": {
+    "description": ""
   }
+
 }

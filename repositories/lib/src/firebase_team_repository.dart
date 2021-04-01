@@ -72,6 +72,16 @@ class FirebaseTeamRepository implements TeamRepository {
     });
   }
 
+  @override
+  Future<void> deletePlayerFromTeams(Player player) async {
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("teams");
+    teamsCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
+  }
+
   Future<List<Team>> _teamsFromSnapshot(QuerySnapshot snapshot) async {
     List<Future<Team>> futures = snapshot.docs.map((doc) async {
       TeamEntity teamEntity = TeamEntity.fromSnapshot(doc);
@@ -146,4 +156,5 @@ class FirebaseTeamRepository implements TeamRepository {
     }
     return teams;
   }
+
 }

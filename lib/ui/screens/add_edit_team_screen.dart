@@ -157,11 +157,11 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RoundedInputField(
-                      icon: Icons.person,
+                      icon: Icons.drive_file_rename_outline,
                       autofocus: !isEditing,
                       initialValue: isEditing ? widget.team!.name : '',
                       onSaved: (value) => _name = value,
-                      hintText: AppLocalizations.of(context)!.email,
+                      hintText: AppLocalizations.of(context)!.enterNameTeam,
                       validator: (val) {
                         return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                       },

@@ -34,6 +34,16 @@ class PlayersPage extends StatelessWidget {
       );
     }
 
+    List<Team> _teamsThatContains(Player player, List<Team> teams) {
+      List<Team> teamsThatContains = [];
+      teams.forEach((team) {
+        team.players.forEach((teamPlayer) {
+          if (teamPlayer.id == player.id) teamsThatContains.add(team);
+        });
+      });
+      return teamsThatContains;
+    }
+
     void _onDelete(player, teams) {
       List<Team> teamsThatContains = [];
       teams.forEach((team) {
@@ -95,14 +105,15 @@ class PlayersPage extends StatelessWidget {
                 itemCount: players.length,
                 itemBuilder: (context, index) {
                   final player = players[index];
-                  bool isLastInLetterGroup =
-                      (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
+                  bool isLastInLetterGroup = (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
                   return Column(
                     children: [
                       if (isLastInLetterGroup)
                         LetterDivider(
                           letter: player.nickname[0].toUpperCase(),
-                          secondaryString: index == 0 ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString() : null,
+                          secondaryString: index == 0
+                              ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString()
+                              : null,
                         ),
                       PlayerItem(
                         drawDivider: !isLastInLetterGroup,
@@ -127,6 +138,50 @@ class PlayersPage extends StatelessWidget {
                               },
                             ),
                           );
+                        },
+                        onShowTeams: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                List<Team> teams = _teamsThatContains(player, stateTeam.teams);
+                                return AppDialog(
+                                  title: teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
+                                  content: teams.length >= 1 ? Container(
+                                    decoration: BoxDecoration(
+                                      border: Border(top: borderSideDivider),
+                                    ),
+                                    width: MediaQuery.of(context).size.width / 1.7 ,
+                                    height: MediaQuery.of(context).size.height / 6,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      children: teams.map((e) {
+                                        return Container(
+                                          margin: EdgeInsets.zero,
+                                          padding: EdgeInsets.zero,
+                                          height: 37,
+
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              e.name,
+                                              style: Theme.of(context).textTheme.bodyText2,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ) : Container(),
+                                  actionsVertical: [
+                                    TextButton(
+                                        onPressed: () => Navigator.of(context).pop(),
+                                        child: Text(
+                                          MaterialLocalizations.of(context).okButtonLabel,
+                                          style: Theme.of(context).textTheme.button,
+                                        ))
+                                  ],
+                                );
+                              });
                         },
                         onSwitchChanged: (_) {
                           BlocProvider.of<PeopleBloc>(context).add(

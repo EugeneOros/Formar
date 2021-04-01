@@ -167,11 +167,11 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: RoundedInputField(
-                    icon: Icons.person,
+                    icon: Icons.drive_file_rename_outline,
                     autofocus: !isEditing,
                     initialValue: isEditing ? widget.person!.nickname : '',
                     onSaved: (value) => _nickname = value,
-                    hintText: AppLocalizations.of(context)!.email,
+                    hintText: AppLocalizations.of(context)!.enterNickname,
                     validator: (val) {
                       return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                     },

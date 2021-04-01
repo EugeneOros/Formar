@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/constants.dart';
+import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -10,6 +11,8 @@ class PlayerItem extends StatelessWidget {
   final Function onDelete;
   final GestureTapCallback onEdit;
   final ValueChanged<bool> onSwitchChanged;
+  final GestureTapCallback onShowTeams;
+
   final Player player;
   final SlidableController? slidableController;
   final bool drawDivider;
@@ -18,9 +21,11 @@ class PlayerItem extends StatelessWidget {
     Key? key,
     required this.onDelete,
     required this.onEdit,
+    required this.onShowTeams,
     required this.onSwitchChanged,
     required this.player,
-    this.slidableController, this.drawDivider = false,
+    this.slidableController,
+    this.drawDivider = false,
   }) : super(key: key);
 
   String getLevelName(Level level, BuildContext context) {
@@ -51,9 +56,11 @@ class PlayerItem extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: drawDivider ? BoxDecoration(
-                border: Border(top: borderSideDivider),
-              ) : null,
+              decoration: drawDivider
+                  ? BoxDecoration(
+                      border: Border(top: borderSideDivider),
+                    )
+                  : null,
               child: Row(
                 children: [
                   Expanded(
@@ -99,7 +106,27 @@ class PlayerItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.caption,
               ),
               color: Theme.of(context).accentColor,
-              onTap: () {},
+              onTap: () {
+                onShowTeams();
+                // showDialog(
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return AppDialog(
+                //         title: "Teams names",
+                //         content: ListView.builder(itemCount: ,itemBuilder: (context, index){
+                //           return Text(index);
+                //         }),
+                //         actionsVertical: [
+                //           TextButton(
+                //               onPressed: () => Navigator.of(context).pop(),
+                //               child: Text(
+                //                 MaterialLocalizations.of(context).okButtonLabel,
+                //                 style: Theme.of(context).textTheme.button,
+                //               ))
+                //         ],
+                //       );
+                //     });
+              },
             ),
             SlideAction(
               child: Column(
