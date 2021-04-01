@@ -12,6 +12,7 @@ import 'package:form_it/ui/shared/dependency.dart';
 import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/app_snack_bar.dart';
 import 'package:form_it/ui/widgets/item_player.dart';
+import 'package:form_it/ui/widgets/letter_divider.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:repositories/repositories.dart';
 
@@ -94,19 +95,17 @@ class PlayersPage extends StatelessWidget {
                 itemCount: players.length,
                 itemBuilder: (context, index) {
                   final player = players[index];
+                  bool isLastInLetterGroup =
+                      (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
                   return Column(
                     children: [
-                      (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase())
-                          ? Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 10, top: 5),
-                              child: Text(
-                                player.nickname[0].toUpperCase(),
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            )
-                          : Container(),
+                      if (isLastInLetterGroup)
+                        LetterDivider(
+                          letter: player.nickname[0].toUpperCase(),
+                          secondaryString: index == 0 ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString() : null,
+                        ),
                       PlayerItem(
+                        drawDivider: !isLastInLetterGroup,
                         slidableController: _slidableController,
                         player: player,
                         onDelete: () => _onDelete(player, stateTeam.teams),

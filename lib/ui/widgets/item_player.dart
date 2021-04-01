@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -11,6 +12,7 @@ class PlayerItem extends StatelessWidget {
   final ValueChanged<bool> onSwitchChanged;
   final Player player;
   final SlidableController? slidableController;
+  final bool drawDivider;
 
   PlayerItem({
     Key? key,
@@ -18,7 +20,7 @@ class PlayerItem extends StatelessWidget {
     required this.onEdit,
     required this.onSwitchChanged,
     required this.player,
-    this.slidableController,
+    this.slidableController, this.drawDivider = false,
   }) : super(key: key);
 
   String getLevelName(Level level, BuildContext context) {
@@ -47,11 +49,11 @@ class PlayerItem extends StatelessWidget {
           child: GestureDetector(
             onTap: onEdit,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Theme.of(context).primaryColorLight, width: 1.5)),
-              ),
+              decoration: drawDivider ? BoxDecoration(
+                border: Border(top: borderSideDivider),
+              ) : null,
               child: Row(
                 children: [
                   Expanded(

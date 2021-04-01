@@ -85,7 +85,7 @@
       }
     }
   },
-  "playersCount": " {count,plural, =0{нуль гравців} =1{{count} гравцю} =2{{count} гравця} few{ {count} грвця} many{{count} гравців} other{{count} гравців} }",
+  "playersCount": " {count,plural, =0{нуль гравців} =1{{count} гравцю} =2{{count} гравця} few{{count} грвця} many{{count} гравців} other{{count} гравців} }",
   "@playersCount": {
     "description": "A plural message",
     "placeholders": {

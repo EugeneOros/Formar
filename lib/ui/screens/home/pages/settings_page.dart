@@ -30,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ItemSettings(
               icon: Icons.people,
               text: AppLocalizations.of(context)!.playersInTeam,
+              drawDivider: true,
               onTap: () {
                 showDialog(
                     context: context,
@@ -75,11 +76,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
               },
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              height: 2.0,
-              color: Theme.of(context).primaryColor,
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     border: Border(bottom: borderSideDivider)
+            //   ),
+            //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            // ),
             ItemSettings(
               icon: Icons.logout,
               text: AppLocalizations.of(context)!.signOut,

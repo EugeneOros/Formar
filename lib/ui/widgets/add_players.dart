@@ -61,8 +61,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
   @override
   Widget build(BuildContext context) {
     var borderSearch = UnderlineInputBorder(
-      // borderRadius: BorderRadius.all(Radius.circular(12.0)),
-      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 1),
+      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
     );
     // items.addAll(widget.checkBoxListTileModel);
     return Container(

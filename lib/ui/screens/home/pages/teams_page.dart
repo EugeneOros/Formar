@@ -9,6 +9,7 @@ import 'package:form_it/ui/widgets/app_snack_bar.dart';
 import 'package:form_it/ui/widgets/item_team.dart';
 import 'package:form_it/ui/widgets/loading.dart';
 import 'package:repositories/repositories.dart';
+import 'package:form_it/ui/shared/constants.dart';
 
 class TeamsPage extends StatelessWidget {
   @override
@@ -79,13 +80,13 @@ class TeamsPage extends StatelessWidget {
                   team: team,
                   onDelete: () {
                     BlocProvider.of<TeamsBloc>(context).add(DeleteTeam(team));
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
                       AppSnackBar(
-                        text: AppLocalizations.of(context)!.deleted + " " + team.name,
-                        actionName: AppLocalizations.of(context)!.undo,
-                        onAction: () => BlocProvider.of<TeamsBloc>(context)
+                        text: AppLocalizations.of(scaffoldKey.currentContext!)!.deleted + " " + team.name,
+                        actionName: AppLocalizations.of(scaffoldKey.currentContext!)!.undo,
+                        onAction: () => BlocProvider.of<TeamsBloc>(scaffoldKey.currentContext!)
                             .add(AddTeam(team)),
-                        actionColor: Theme.of(context).accentColor,
+                        actionColor: Theme.of(scaffoldKey.currentContext!).accentColor,
                       ),
                     );
                   },

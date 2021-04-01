@@ -18,6 +18,8 @@ const borderRoundedTransparent = OutlineInputBorder(
   ),
 );
 
+const borderSideDivider = BorderSide(color: Color(0xFFBDBDBD), width: 0.5);
+
 BoxDecoration roundedShadowDecoration = BoxDecoration(
   boxShadow: [
     BoxShadow(

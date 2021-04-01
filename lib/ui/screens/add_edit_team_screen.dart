@@ -1,3 +1,4 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/ui/widgets/add_players.dart';
@@ -82,6 +83,14 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           );
         },
       );
+    }
+
+    int getPower(List<Player> players){
+      int power = 0;
+      for(Player player in _players!){
+        power += player.level.index + 1;
+      }
+      return power;
     }
 
     return Scaffold(
@@ -175,7 +184,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                           children: [
                             Container(
                               margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20, bottom: 60),
-                              padding: EdgeInsets.all(20.0),
+                              // padding: EdgeInsets.all(20.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(15)),
                                 boxShadow: [
@@ -188,39 +197,64 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                                 ],
                                 color: Colors.white,
                               ),
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: _players!.length,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    children: [
-                                      PlayerIndicator(player: _players![index]),
-                                      SizedBox(width: 5),
-                                      Expanded(
-                                        child: Text(
-                                          _players![index].nickname,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    padding: EdgeInsets.only(left: 10, top: 10),
+                                    child: Wrap(
+                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          height: 20,
+                                          child: SvgPicture.asset("assets/power.svg"),
+                                        ),
+                                        Text(
+                                          getPower(_players!).toString(),
                                           style: Theme.of(context).textTheme.bodyText2,
-                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                      ),
-                                      // Spacer(),
-                                      IconButton(
-                                        padding: new EdgeInsets.all(0.0),
-                                        icon: Icon(
-                                          Icons.close,
-                                          size: 15,
-                                          color: Colors.black,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _players!.removeAt(index);
-                                          });
-                                        },
-                                      )
-                                    ],
-                                  );
-                                },
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(27).copyWith(top:0),
+                                    child: ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: _players!.length,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          children: [
+                                            PlayerIndicator(player: _players![index]),
+                                            SizedBox(width: 5),
+                                            Expanded(
+                                              child: Text(
+                                                _players![index].nickname,
+                                                style: Theme.of(context).textTheme.bodyText2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            // Spacer(),
+                                            IconButton(
+                                              padding: new EdgeInsets.all(0.0),
+                                              icon: Icon(
+                                                Icons.close,
+                                                size: 15,
+                                                color: Colors.black,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _players!.removeAt(index);
+                                                });
+                                              },
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Positioned.fill(

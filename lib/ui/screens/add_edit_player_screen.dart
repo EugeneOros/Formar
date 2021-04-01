@@ -96,9 +96,9 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
     SvgPicture _getSvgPicture(Sex sex) {
       switch (sex) {
         case Sex.man:
-          return SvgPicture.asset(sex == _sex ? "assets/man_fill.svg" : "assets/man_empty.svg");
+          return SvgPicture.asset(sex == _sex ? "assets/man_black.svg" : "assets/man_empty.svg");
         case Sex.woman:
-          return SvgPicture.asset(sex == _sex ? "assets/woman_fill.svg" : "assets/woman_empty.svg");
+          return SvgPicture.asset(sex == _sex ? "assets/woman_black.svg" : "assets/woman_empty.svg");
       }
     }
 

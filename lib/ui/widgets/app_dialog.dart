@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 
 class AppDialog extends StatefulWidget {
@@ -65,12 +66,15 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                       SizedBox(
                         width: double.infinity,
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: widget.actionsVertical!.map((e) {
                             return Container(
-                              height: 35,
+                              margin: EdgeInsets.zero,
+                              padding: EdgeInsets.zero,
+                              height: 37,
                               decoration: BoxDecoration(
-                                border: Border(top: BorderSide(color: Theme.of(context).dividerColor, width: 1)),
+                                border: Border(top: borderSideDivider),
                               ),
                               child: e,
                             );
@@ -82,7 +86,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                         width: double.infinity,
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border(top: BorderSide(color: Theme.of(context).dividerColor, width: 1)),
+                            border: Border(top: borderSideDivider),
                           ),
                           child: Row(
                             children: widget.actionsHorizontal!.map((e) {
@@ -91,7 +95,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                                   height: 35,
                                   decoration: BoxDecoration(
                                     border: e != widget.actionsHorizontal!.last
-                                        ? Border(right: BorderSide(color: Theme.of(context).dividerColor, width: 1))
+                                        ? Border(right: borderSideDivider)
                                         : Border(),
                                   ),
                                   child: e,

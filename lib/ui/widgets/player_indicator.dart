@@ -28,16 +28,16 @@ class PlayerIndicator extends StatelessWidget {
   SvgPicture _getSexIcon(Sex sex){
     switch(sex){
       case Sex.man:
-        return SvgPicture.asset("assets/man_empty.svg");
+        return SvgPicture.asset("assets/man_black.svg");
       case Sex.woman:
-        return SvgPicture.asset("assets/woman_empty.svg");
+        return SvgPicture.asset("assets/woman_black.svg");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(2),
+        // padding: EdgeInsets.all(0.5),
         alignment: Alignment.topCenter,
         width: size,
         height: size,
