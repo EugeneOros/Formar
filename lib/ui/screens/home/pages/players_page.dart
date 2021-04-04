@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
+import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/screens/add_edit_player_screen.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -44,7 +47,7 @@ class PlayersPage extends StatelessWidget {
       return teamsThatContains;
     }
 
-    void _onDelete(player, teams) {
+    Future<bool> _onDelete(player, teams) async {
       List<Team> teamsThatContains = [];
       teams.forEach((team) {
         team.players.forEach((teamPlayer) {
@@ -52,7 +55,7 @@ class PlayersPage extends StatelessWidget {
         });
       });
       if (teamsThatContains.isNotEmpty) {
-        showDialog(
+        Future<bool?> result = showDialog<bool>(
             context: context,
             builder: (context) {
               return AppDialog(
@@ -71,7 +74,7 @@ class PlayersPage extends StatelessWidget {
                         BlocProvider.of<TeamsBloc>(context).add(UpdateTeam(team));
                       });
                       _deleteFormPlayers(player);
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                     },
                     child: Text(
                       MaterialLocalizations.of(context).okButtonLabel,
@@ -79,7 +82,7 @@ class PlayersPage extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(false),
                     child: Text(
                       MaterialLocalizations.of(context).backButtonTooltip,
                       style: Theme.of(context).textTheme.button,
@@ -88,10 +91,16 @@ class PlayersPage extends StatelessWidget {
                 ],
               );
             });
+        return await result ?? false;
       } else {
         _deleteFormPlayers(player);
+        return true;
       }
     }
+
+    var borderSearch = UnderlineInputBorder(
+      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+    );
 
     return BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
       builder: (context, state) {
@@ -101,97 +110,129 @@ class PlayersPage extends StatelessWidget {
           final players = state.filteredPeople;
           return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, stateTeam) {
             if (stateTeam is TeamsLoaded) {
-              return ListView.builder(
-                itemCount: players.length,
-                itemBuilder: (context, index) {
-                  final player = players[index];
-                  bool isLastInLetterGroup = (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
-                  return Column(
-                    children: [
-                      if (isLastInLetterGroup)
-                        LetterDivider(
-                          letter: player.nickname[0].toUpperCase(),
-                          secondaryString: index == 0
-                              ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString()
-                              : null,
-                        ),
-                      PlayerItem(
-                        drawDivider: !isLastInLetterGroup,
-                        slidableController: _slidableController,
-                        player: player,
-                        onDelete: () => _onDelete(player, stateTeam.teams),
-                        onEdit: () async {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return AddEditPlayerScreen(
-                                  onSave: (nickname, level, sex) {
-                                    BlocProvider.of<PeopleBloc>(context).add(
-                                      UpdatePerson(
-                                        player.copyWith(nickname: nickname, level: level, sex: sex),
-                                      ),
-                                    );
-                                  },
-                                  isEditing: true,
-                                  person: player,
+              return Column(
+                children: [
+                  // Container(
+                  //   height: 40,
+                  //   child: TextFormField(
+                  //     // style: Theme.of(context).textTheme.bodyText2,
+                  //     // scrollPadding: EdgeInsets.all(0.0),
+                  //     // cursorColor: Colors.black,
+                  //     initialValue: state.searchQuery,
+                  //     onChanged: (value) {
+                  //       BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: value));
+                  //
+                  //       // filterSearchResults(value);
+                  //     },
+                  //     autofocus: state.searchQuery != "",
+                  //     // controller: editingController,
+                  //     decoration: InputDecoration(
+                  //       // contentPadding: EdgeInsets.only(top: 15),
+                  //       filled: true,
+                  //       fillColor: Colors.transparent,
+                  //       hintText: MaterialLocalizations.of(context).searchFieldLabel,
+                  //       prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
+                  //       border: borderSearch,
+                  //       focusedBorder: borderSearch,
+                  //       enabledBorder: borderSearch,
+                  //     ),
+                  //   ),
+                  // ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: players.length,
+                      itemBuilder: (context, index) {
+                        final player = players[index];
+                        bool isLastInLetterGroup = (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
+                        return Column(
+                          children: [
+                            if (isLastInLetterGroup)
+                              LetterDivider(
+                                letter: player.nickname[0].toUpperCase(),
+                                secondaryString: index == 0
+                                    ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString()
+                                    : null,
+                              ),
+                            PlayerItem(
+                              drawDivider: !isLastInLetterGroup,
+                              slidableController: _slidableController,
+                              player: player,
+                              onDelete: () => _onDelete(player, stateTeam.teams),
+                              onEdit: () async {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return AddEditPlayerScreen(
+                                        onSave: (nickname, level, sex) {
+                                          BlocProvider.of<PeopleBloc>(context).add(
+                                            UpdatePerson(
+                                              player.copyWith(nickname: nickname, level: level, sex: sex),
+                                            ),
+                                          );
+                                        },
+                                        isEditing: true,
+                                        person: player,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                              onShowTeams: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      List<Team> teams = _teamsThatContains(player, stateTeam.teams);
+                                      return AppDialog(
+                                        title: teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
+                                        content: teams.length >= 1 ? Container(
+                                          decoration: BoxDecoration(
+                                            border: Border(top: borderSideDivider),
+                                          ),
+                                          width: MediaQuery.of(context).size.width / 1.7 ,
+                                          height: MediaQuery.of(context).size.height / 6,
+                                          child: ListView(
+                                            shrinkWrap: true,
+                                            children: teams.map((e) {
+                                              return Container(
+                                                margin: EdgeInsets.zero,
+                                                padding: EdgeInsets.zero,
+                                                height: 37,
+
+                                                child: Container(
+                                                  padding: EdgeInsets.all(10),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    e.name,
+                                                    style: Theme.of(context).textTheme.bodyText2,
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ) : Container(),
+                                        actionsVertical: [
+                                          TextButton(
+                                              onPressed: () => Navigator.of(context).pop(),
+                                              child: Text(
+                                                MaterialLocalizations.of(context).okButtonLabel,
+                                                style: Theme.of(context).textTheme.button,
+                                              ))
+                                        ],
+                                      );
+                                    });
+                              },
+                              onSwitchChanged: (_) {
+                                BlocProvider.of<PeopleBloc>(context).add(
+                                  UpdatePerson(player.copyWith(available: !player.available)),
                                 );
                               },
                             ),
-                          );
-                        },
-                        onShowTeams: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                List<Team> teams = _teamsThatContains(player, stateTeam.teams);
-                                return AppDialog(
-                                  title: teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
-                                  content: teams.length >= 1 ? Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(top: borderSideDivider),
-                                    ),
-                                    width: MediaQuery.of(context).size.width / 1.7 ,
-                                    height: MediaQuery.of(context).size.height / 6,
-                                    child: ListView(
-                                      shrinkWrap: true,
-                                      children: teams.map((e) {
-                                        return Container(
-                                          margin: EdgeInsets.zero,
-                                          padding: EdgeInsets.zero,
-                                          height: 37,
-
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              e.name,
-                                              style: Theme.of(context).textTheme.bodyText2,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ) : Container(),
-                                  actionsVertical: [
-                                    TextButton(
-                                        onPressed: () => Navigator.of(context).pop(),
-                                        child: Text(
-                                          MaterialLocalizations.of(context).okButtonLabel,
-                                          style: Theme.of(context).textTheme.button,
-                                        ))
-                                  ],
-                                );
-                              });
-                        },
-                        onSwitchChanged: (_) {
-                          BlocProvider.of<PeopleBloc>(context).add(
-                            UpdatePerson(player.copyWith(available: !player.available)),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             }
             return Loading();

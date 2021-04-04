@@ -42,33 +42,40 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> 
     final PeopleState currentState = _peopleBloc.state;
     if (currentState is PeopleLoaded) {
       yield FilteredPeopleLoaded(
-        _mapPeopleToFilteredPeople(currentState.people, event.filter),
+        _mapPeopleToFilteredPeople(currentState.people, event.filter, event.searchQuery),
         event.filter,
+        searchQuery: event.searchQuery,
       );
     }
   }
 
-  Stream<FilteredPeopleState> _mapPeopleUpdatedToState(
-    UpdatePeople event,
-  ) async* {
+  Stream<FilteredPeopleState> _mapPeopleUpdatedToState(UpdatePeople event) async* {
     final visibilityFilter = state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).activeFilter : VisibilityFilter.all;
+    final searchQuery = state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).searchQuery : "";
     yield FilteredPeopleLoaded(
       _mapPeopleToFilteredPeople(
         (_peopleBloc.state as PeopleLoaded).people,
         visibilityFilter,
+        searchQuery,
       ),
       visibilityFilter,
     );
   }
 
-  List<Player> _mapPeopleToFilteredPeople(List<Player> people, VisibilityFilter filter) {
-    return people.where((todo) {
-      if (filter == VisibilityFilter.all) {
+  List<Player> _mapPeopleToFilteredPeople(List<Player> people, VisibilityFilter filter, String searchQuery) {
+    return people.where((player) {
+      if (filter == VisibilityFilter.all && searchQuery == "") {
         return true;
-      } else if (filter == VisibilityFilter.active) {
-        return !todo.available;
-      } else {
-        return todo.available;
+      } else if (filter == VisibilityFilter.all && searchQuery != ""){
+        return player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
+      } else if (filter == VisibilityFilter.active && searchQuery == "") {
+        return !player.available;
+      }else if (filter == VisibilityFilter.active && searchQuery != "") {
+        return !player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
+      } else if (searchQuery != ""){
+        return player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
+      }else{
+        return player.available;
       }
     }).toList();
   }

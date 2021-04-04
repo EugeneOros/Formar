@@ -62,10 +62,11 @@ class ItemTeam extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 30, bottom: 10),
+                    padding: EdgeInsets.only(top: 35, bottom: 0, right: 20, left: 20),
                     alignment: Alignment.center,
                     child: Text(
                       team.name,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2,
                     ),
                   ),

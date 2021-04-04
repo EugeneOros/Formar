@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:flutter/services.dart';
+import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
+import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +14,8 @@ import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/app_dialog.dart';
-import 'package:form_it/ui/widgets/search_player.dart';
+import 'package:form_it/ui/widgets/icon_button_app_bar.dart';
+import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:form_it/ui/widgets/tab_selector.dart';
 import 'package:repositories/repositories.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,10 +26,34 @@ import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
 import 'pages/settings_page.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String name;
 
   HomeScreen({Key? key, required this.name}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late AnimationController _controllerForSwitcher;
+  bool _isFlipped = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllerForSwitcher = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _isFlipped = false;
+    _controllerForSwitcher.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +69,7 @@ class HomeScreen extends StatelessWidget {
           averageMemberCount = availablePeopleCount / averageTeamCount.ceil();
         }
         String rangeString = averageMemberCount.floor().toString() + "-";
-        if (availablePeopleCount % averageTeamCount.ceil() == 0)
-          rangeString = "";
+        if (availablePeopleCount % averageTeamCount.ceil() == 0) rangeString = "";
         return AppLocalizations.of(context)!.form +
             " " +
             AppLocalizations.of(context)!.teamCount(averageTeamCount.ceil()) +
@@ -64,22 +93,28 @@ class HomeScreen extends StatelessWidget {
 
     final List<List<Widget>> _actionsSet = [
       [
-        IconButton(
-          icon: Icon(Icons.search, color: AppBarItemColor),
+        IconButtonAppBar(
+          icon: _isFlipped ? Icons.close : Icons.search,
           onPressed: () {
-            showSearch(context: context, delegate: SearchPlayer());
+            setState(() {
+              _isFlipped = !_isFlipped;
+              if(_isFlipped){
+                _controllerForSwitcher.forward(from: 0.0);
+              }else{
+                BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: ""));
+                _controllerForSwitcher.reverse();
+              }
+            });
           },
         ),
-        IconButton(
-          icon: Icon(Icons.toggle_off_outlined, color: AppBarItemColor),
+        IconButtonAppBar(
+          icon: Icons.toggle_off_outlined,
           onPressed: () {
-            BlocProvider.of<PeopleBloc>(context).add(
-              TurnOffPeople(),
-            );
+            BlocProvider.of<PeopleBloc>(context).add(TurnOffPeople());
           },
         ),
-        IconButton(
-          icon: Icon(Icons.add, color: AppBarItemColor),
+        IconButtonAppBar(
+          icon: Icons.add,
           onPressed: () {
             Navigator.of(context).pushNamed("/add");
           },
@@ -218,6 +253,70 @@ class HomeScreen extends StatelessWidget {
       []
     ];
 
+    final width = Tween<double>(
+      begin: 30.0,
+      end: MediaQuery.of(context).size.width,
+    ).animate(
+      CurvedAnimation(
+        parent: _controllerForSwitcher,
+        curve: Interval(
+          0.5, 1.0,
+          curve: Curves.easeInOutQuart,
+        ),
+      ),
+    );
+
+    Widget _logo() {
+      return Container(
+        decoration: roundedShadowDecoration,
+        child: SvgPicture.asset(
+          'assets/logo_rounded_black.svg',
+          height: 30,
+        ),
+      );
+    }
+
+    // Widget _circle() {
+    //   return AnimatedContainer(
+    //     curve: Curves.easeInOutQuart,
+    //     duration: Duration(seconds: 1),
+    //     width: _isExpandedField ? MediaQuery.of(context).size.width*2/3 : 30,
+    //     child: Container(
+    //       height: 30,
+    //       width: 30,
+    //       child: TextFormField(
+    //           style: Theme.of(context).textTheme.bodyText2,
+    //           cursorColor: Colors.black,
+    //           decoration: InputDecoration(
+    //             filled: true,
+    //             fillColor: TextFieldFillColor,
+    //             border: borderRoundedTransparent,
+    //             focusedBorder: borderRoundedTransparent,
+    //             enabledBorder: borderRoundedTransparent,
+    //           )),
+    //     ),
+    //   );
+    // }
+
+    Widget __transitionBuilder(Widget widget, Animation<double> animation) {
+      final rotateAnim = Tween(begin: pi, end: 0.0).animate(animation);
+      return AnimatedBuilder(
+        animation: _controllerForSwitcher,
+        child: widget,
+        builder: (context, widget) {
+          final isUnder = (ValueKey(_isFlipped) != widget!.key);
+          var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
+          tilt *= isUnder ? -1.0 : 1.0;
+          final value = isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
+          return Transform(
+            transform: (Matrix4.rotationY(value)..setEntry(3, 0, tilt)),
+            child: widget,
+            alignment: Alignment.center,
+          );
+        },
+      );
+    }
+
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
@@ -226,18 +325,55 @@ class HomeScreen extends StatelessWidget {
           toolbarHeight: 60,
           shadowColor: Colors.transparent,
           backgroundColor: activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
-          title: SvgPicture.asset(
-            'assets/logo_rounded_black.svg',
-            height: 38,
-          ),
+          title:
+            AnimatedSwitcher(
+                duration: Duration(milliseconds: 1000),
+                transitionBuilder: __transitionBuilder,
+                layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
+                switchInCurve: Interval(
+                  0.0, 1,
+                  curve: Curves.easeInCirc,
+                ),
+                switchOutCurve: Interval(
+                  0.0, 1,
+                  curve: Curves.easeInBack.flipped,
+                ),
+                child: _isFlipped ?  AnimatedBuilder(
+                    animation: _controllerForSwitcher,
+                    builder: (context, widget) {
+                      return RoundedInputField(
+                        height: 30,
+                        width:  width.value,
+                        initialValue: "",
+                        hintText: MaterialLocalizations.of(context).searchFieldLabel,
+                        autofocus: true,
+                        onChange: (value){
+                          BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: value));
+                        },
+                        // icon: Icons.search,
+                      );
+                    }
+                ) : _logo(),
+              ),
           actions: _actionsSet[AppTab.values.indexOf(activeTab)],
         ),
         body: _pageOptions[AppTab.values.indexOf(activeTab)],
         bottomNavigationBar: TabSelector(
           activeTab: activeTab,
-          onTabSelected: (tab) => tabBloc.add(UpdateTab(tab)),
+          onTabSelected: (tab) {
+            tabBloc.add(UpdateTab(tab));
+            BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: ""));
+            if(_isFlipped){
+              _controllerForSwitcher.reverse();
+              setState(() {
+                _isFlipped = false;
+              });
+            }
+          },
         ),
       );
     });
   }
 }
+
+

@@ -14,14 +14,12 @@ class FilteredPeopleLoading extends FilteredPeopleState {}
 class FilteredPeopleLoaded extends FilteredPeopleState {
   final List<Player> filteredPeople;
   final VisibilityFilter activeFilter;
+  final String searchQuery;
 
-  const FilteredPeopleLoaded(
-    this.filteredPeople,
-    this.activeFilter,
-  );
+  const FilteredPeopleLoaded(this.filteredPeople, this.activeFilter, {this.searchQuery = ""});
 
   @override
-  List<Object> get props => [filteredPeople, activeFilter];
+  List<Object> get props => [filteredPeople, activeFilter, searchQuery];
 
   @override
   String toString() {

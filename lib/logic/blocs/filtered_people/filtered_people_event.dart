@@ -10,14 +10,15 @@ abstract class FilteredPeopleEvent extends Equatable {
 
 class UpdateFilter extends FilteredPeopleEvent {
   final VisibilityFilter filter;
+  final String searchQuery;
 
-  const UpdateFilter(this.filter);
-
-  @override
-  List<Object> get props => [filter];
+  const UpdateFilter({required this.filter, this.searchQuery=""});
 
   @override
-  String toString() => 'UpdateFilter { filter: $filter }';
+  List<Object> get props => [filter, searchQuery];
+
+  @override
+  String toString() => 'UpdateFilter { filter: $filter, $searchQuery }';
 }
 
 

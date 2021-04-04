@@ -167,7 +167,6 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: RoundedInputField(
-                    icon: Icons.drive_file_rename_outline,
                     autofocus: !isEditing,
                     initialValue: isEditing ? widget.person!.nickname : '',
                     onSaved: (value) => _nickname = value,

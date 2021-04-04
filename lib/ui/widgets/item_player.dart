@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -85,19 +85,25 @@ class PlayerItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Switch(
-                    activeColor: Colors.black,
-                    value: player.available,
-                    onChanged: onSwitchChanged,
+                  Transform.scale(
+                    scale: 0.8,
+                    child: CupertinoSwitch(
+                      activeColor: Colors.black,
+                      value: player.available,
+                      onChanged: onSwitchChanged,
+                    ),
                   )
                 ],
               ),
             ),
           ),
-          // dismissal: SlidableDismissal(
-          //   child: SlidableDrawerDismissal(),
-          //   onDismissed: (_) => onDelete(),
-          // ),
+          dismissal: SlidableDismissal(
+            child: SlidableDrawerDismissal(),
+            // onDismissed: (_) => onDelete(),
+            onWillDismiss: (actionType){
+              return onDelete();
+            },
+          ),
           secondaryActions: <Widget>[
             SlideAction(
               child: Text(
