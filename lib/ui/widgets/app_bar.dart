@@ -123,7 +123,7 @@ class _AppTopBarState extends State<AppTopBar> {
                       ),
                       PopupMenuItem<VisibilityFilter>(
                         value: VisibilityFilter.inactive,
-                        child: Text(AppLocalizations.of(context)!.active, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                        child: Text(AppLocalizations.of(context)!.inactive, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
                       ),
                     ],
                   ),
