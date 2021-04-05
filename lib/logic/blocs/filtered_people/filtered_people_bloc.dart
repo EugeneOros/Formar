@@ -11,6 +11,7 @@ import 'filtered_people_state.dart';
 class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> {
   final PeopleBloc _peopleBloc;
   StreamSubscription? _peopleSubscription;
+  VisibilityFilter filter = VisibilityFilter.all;
 
   FilteredPeopleBloc({required PeopleBloc peopleBloc})
       : _peopleBloc = peopleBloc,
@@ -39,12 +40,14 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> 
   Stream<FilteredPeopleState> _mapUpdateFilterToState(
     UpdateFilter event,
   ) async* {
+    final VisibilityFilter visibilityFilter = event.filter ?? (state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).activeFilter : VisibilityFilter.all);
+    final searchQuery = event.searchQuery ?? (state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).searchQuery : "");
     final PeopleState currentState = _peopleBloc.state;
     if (currentState is PeopleLoaded) {
       yield FilteredPeopleLoaded(
-        _mapPeopleToFilteredPeople(currentState.people, event.filter, event.searchQuery),
-        event.filter,
-        searchQuery: event.searchQuery,
+        _mapPeopleToFilteredPeople(currentState.people, visibilityFilter, searchQuery),
+        visibilityFilter,
+        searchQuery: searchQuery,
       );
     }
   }
@@ -63,19 +66,20 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> 
   }
 
   List<Player> _mapPeopleToFilteredPeople(List<Player> people, VisibilityFilter filter, String searchQuery) {
+    this.filter = filter;
     return people.where((player) {
       if (filter == VisibilityFilter.all && searchQuery == "") {
         return true;
       } else if (filter == VisibilityFilter.all && searchQuery != ""){
         return player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
       } else if (filter == VisibilityFilter.active && searchQuery == "") {
-        return !player.available;
-      }else if (filter == VisibilityFilter.active && searchQuery != "") {
-        return !player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
-      } else if (searchQuery != ""){
-        return player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
-      }else{
         return player.available;
+      }else if (filter == VisibilityFilter.active && searchQuery != "") {
+        return player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
+      } else if (searchQuery != ""){
+        return !player.available && player.nickname.toLowerCase().contains(searchQuery.toLowerCase());
+      }else{
+        return !player.available;
       }
     }).toList();
   }

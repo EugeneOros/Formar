@@ -1,3 +1,7 @@
+import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
+import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
+import 'package:form_it/logic/blocs/filtered_people/filtered_people_event.dart';
+import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,14 +18,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'app_logo_search.dart';
 
-class AppTopBar extends StatefulWidget implements PreferredSizeWidget  {
+class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
   final AppTab activeTab;
-  final _AppTopBarState state = _AppTopBarState();
 
   AppTopBar({Key? key, required this.activeTab}) : super(key: key);
 
   @override
-  _AppTopBarState createState() => state;
+  _AppTopBarState createState() => _AppTopBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(70);
@@ -32,7 +35,6 @@ class _AppTopBarState extends State<AppTopBar> {
 
   @override
   Widget build(BuildContext context) {
-
     String _getTeamCountString(List<Player> people, int memberCount, bool isBalanced) {
       int availablePeopleCount = people.where((element) => element.available).length;
       double averageTeamCount = (availablePeopleCount / memberCount);
@@ -65,8 +67,8 @@ class _AppTopBarState extends State<AppTopBar> {
       }
     }
 
-    List<Widget> getActions(AppTab activeTab){
-      switch(activeTab){
+    List<Widget> getActions(AppTab activeTab) {
+      switch (activeTab) {
         case AppTab.players:
           return [
             IconButtonAppBar(
@@ -75,6 +77,57 @@ class _AppTopBarState extends State<AppTopBar> {
                 setState(() {
                   logoSearch.state.flip();
                 });
+              },
+            ),
+            BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
+              builder: (context, state) {
+                VisibilityFilter currentFilter = VisibilityFilter.all;
+                if(state is FilteredPeopleLoaded){
+                  currentFilter = state.activeFilter;
+                }
+                return SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: PopupMenuButton<VisibilityFilter>(
+                    offset: Offset(0, 45 + (46 * VisibilityFilter.values.indexOf(currentFilter).toDouble())),
+                    initialValue: currentFilter,
+                    tooltip: AppLocalizations.of(context)!.filter,
+                    icon: Icon(
+                      Icons.filter_list_rounded,
+                      color: Colors.black,
+                    ),
+                    shape: _ShapedWidgetBorder(padding: 10, borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    padding: EdgeInsets.all(0),
+                    color: Colors.black,
+                    onSelected: (VisibilityFilter filter) {
+                      switch (filter) {
+                        case VisibilityFilter.all:
+                          BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all));
+                          break;
+                        case VisibilityFilter.inactive:
+                          BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.inactive));
+                          break;
+                        case VisibilityFilter.active:
+                          BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.active));
+                          break;
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry<VisibilityFilter>>[
+                      PopupMenuItem<VisibilityFilter>(
+                        value: VisibilityFilter.all,
+                        child: Text(AppLocalizations.of(context)!.all, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                      ),
+                      PopupMenuItem<VisibilityFilter>(
+                        value: VisibilityFilter.active,
+                        child: Text(AppLocalizations.of(context)!.active, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                      ),
+                      PopupMenuItem<VisibilityFilter>(
+                        value: VisibilityFilter.inactive,
+                        child: Text(AppLocalizations.of(context)!.active, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
             IconButtonAppBar(
@@ -92,13 +145,47 @@ class _AppTopBarState extends State<AppTopBar> {
           ];
         case AppTab.teams:
           return [
+            IconButtonAppBar(
+              icon: Icons.delete,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AppDialog(
+                      title: AppLocalizations.of(context)!.sureDeleteTeams,
+                      actionsHorizontal: [
+                        TextButton(
+                          onPressed: () {
+                            BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.yes,
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.no,
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
             BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
               if (state is PeopleLoaded) {
                 return BlocBuilder<SettingsBloc, SettingsState>(builder: (settingsContext, settingsState) {
                   if (settingsState is SettingsLoaded) {
                     int counterTeamMembers = settingsState.settings!.counterTeamMembers!;
-                    return IconButton(
-                        icon: Icon(Icons.add, color: AppBarItemColor),
+                    return IconButtonAppBar(
+                        icon: Icons.add,
                         onPressed: () {
                           if (state.people.where((element) => element.available).length == 1) {
                             Navigator.of(context).pushNamed("/add_team");
@@ -181,44 +268,6 @@ class _AppTopBarState extends State<AppTopBar> {
               }
               return Spacer();
             }),
-            IconButton(
-              icon: FaIcon(
-                FontAwesomeIcons.trash,
-                size: 17,
-              ), //Icon(Icons.clear, color: AppBarItemColor),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AppDialog(
-                        title: AppLocalizations.of(context)!.sureDeleteTeams,
-                        actionsHorizontal: [
-                          TextButton(
-                            onPressed: () {
-                              BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.yes,
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.no,
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                          )
-                        ],
-                      );
-                    });
-                // BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
-                // Navigator.of(context).pushNamed("/add_team");
-              },
-            ),
           ];
         case AppTab.tournament:
           return [];
@@ -228,11 +277,32 @@ class _AppTopBarState extends State<AppTopBar> {
     }
 
     return AppBar(
+      titleSpacing: 0,
+      elevation: 0.0,
       toolbarHeight: 65,
       shadowColor: Colors.transparent,
       backgroundColor: widget.activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
       title: logoSearch..state.closeSearch(widget.activeTab),
       actions: getActions(widget.activeTab),
     );
+  }
+}
+
+class _ShapedWidgetBorder extends RoundedRectangleBorder {
+  _ShapedWidgetBorder({
+    required this.padding,
+    side = BorderSide.none,
+    borderRadius = BorderRadius.zero,
+  }) : super(side: side, borderRadius: borderRadius);
+  final double padding;
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    double triangleOffset = 20;
+    return Path()
+      ..moveTo(rect.width - (triangleOffset - 7), rect.top)
+      ..lineTo(rect.width - (triangleOffset + 0), rect.top - 8.0)
+      ..lineTo(rect.width - (triangleOffset + 7), rect.top)
+      ..addRRect(borderRadius.resolve(textDirection).toRRect(Rect.fromLTWH(rect.left, rect.top, rect.width, rect.height)));
   }
 }

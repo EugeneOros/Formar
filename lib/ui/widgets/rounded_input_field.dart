@@ -38,7 +38,7 @@ class RoundedInputField extends StatelessWidget {
       decoration: roundedShadowDecoration,
       height: height,
       // margin: EdgeInsets.symmetric(vertical: 10),
-      // padding: EdgeInsets.symmetric(vertical: 5),
+      // padding: EdgeInsets.symmetric(horizontal: 5),
       width: width ?? MediaQuery.of(context).size.width * 0.8,
       child: TextFormField(
         inputFormatters: [
@@ -69,7 +69,7 @@ class RoundedInputField extends StatelessWidget {
                 filled: true,
                 fillColor: TextFieldFillColor,
                 hintText: hintText,
-                contentPadding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                contentPadding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                 border: borderRoundedTransparent,
                 focusedBorder: borderRoundedTransparent,
                 enabledBorder: borderRoundedTransparent,

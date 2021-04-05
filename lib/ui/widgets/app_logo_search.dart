@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
-import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 
@@ -37,15 +36,15 @@ class _LogoSearchState extends State<LogoSearch> with TickerProviderStateMixin {
     if (_isFlipped) {
       _controllerForSwitcher.forward(from: 0.0);
     } else {
-      BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: ""));
+      BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(searchQuery: ""));
       _controllerForSwitcher.reverse();
     }
   }
 
   void closeSearch(AppTab activeTab) {
-    if(activeTab != AppTab.players){
+    if (activeTab != AppTab.players) {
       setState(() {
-        BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: ""));
+        BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(searchQuery: ""));
         if (_isFlipped) {
           _controllerForSwitcher.reverse();
           _isFlipped = false;
@@ -68,16 +67,16 @@ class _LogoSearchState extends State<LogoSearch> with TickerProviderStateMixin {
     final Widget _searchField = AnimatedBuilder(
       animation: _controllerForSwitcher,
       builder: (context, widget) {
-        return RoundedInputField(
-          height: 35,
-          width: width.value,
-          initialValue: "",
-          hintText: MaterialLocalizations.of(context).searchFieldLabel,
-          autofocus: true,
-          onChange: (value) {
-            BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: value));
-          },
-        );
+          return RoundedInputField(
+            height: 35,
+            width: width.value,
+            initialValue: "",
+            hintText: MaterialLocalizations.of(context).searchFieldLabel,
+            autofocus: true,
+            onChange: (value) {
+              BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(searchQuery: value));
+            },
+          );
       },
     );
 
@@ -100,13 +99,16 @@ class _LogoSearchState extends State<LogoSearch> with TickerProviderStateMixin {
       );
     }
 
-    return AnimatedSwitcher(
-      duration: Duration(milliseconds: 1000),
-      transitionBuilder: _transitionBuilder,
-      layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
-      switchInCurve: Interval(0.0, 1, curve: Curves.easeInCirc),
-      switchOutCurve: Interval(0.0, 1, curve: Curves.easeInBack.flipped),
-      child: _isFlipped ? _searchField : _logo,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 1000),
+        transitionBuilder: _transitionBuilder,
+        layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
+        switchInCurve: Interval(0.0, 1, curve: Curves.easeInCirc),
+        switchOutCurve: Interval(0.0, 1, curve: Curves.easeInBack.flipped),
+        child: _isFlipped ? _searchField : _logo,
+      ),
     );
   }
 

@@ -81,7 +81,6 @@
     "description": "A plural message",
     "placeholders": {
       "count": {
-
       }
     }
   },
@@ -90,10 +89,13 @@
     "description": "A plural message",
     "placeholders": {
       "count": {
-
       }
     }
   },
   "teamsNames": "Назви команд",
-  "noTeam": "Немає жодної команди, в якій був би цей гравець"
+  "noTeam": "Немає жодної команди, в якій був би цей гравець",
+  "all": "Всі",
+  "active": "Активні",
+  "inactive": "Неактивні",
+  "filter": "Фільтр"
 }

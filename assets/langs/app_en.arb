@@ -272,6 +272,22 @@
   "noTeam": "There is no team that contains this player",
   "@noTeam": {
     "description": ""
+  },
+  "all": "All",
+  "@all": {
+    "description": ""
+  },
+  "active": "Active",
+  "@active": {
+    "description": ""
+  },
+  "inactive": "Inactive",
+  "@inactive": {
+    "description": ""
+  },
+  "filter": "Filter",
+  "@filter": {
+    "description": ""
   }
 
 }

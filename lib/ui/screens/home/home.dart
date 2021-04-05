@@ -11,21 +11,14 @@ import 'pages/teams_page.dart';
 import 'pages/tournament_page.dart';
 import 'pages/settings_page.dart';
 
-class HomeScreen extends StatefulWidget {
-  final String name;
+class HomeScreen extends StatelessWidget {
+  final String email;
 
-  HomeScreen({Key? key, required this.name}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+  HomeScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _pageOptions = [PlayersPage(), TeamsPage(), TournamentPage(), SettingsPage()];
-    final tabBloc = BlocProvider.of<TabBloc>(context);
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
         key: scaffoldKey,
@@ -34,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: TabSelector(
           activeTab: activeTab,
           onTabSelected: (tab) {
-            tabBloc.add(UpdateTab(tab));
+            BlocProvider.of<TabBloc>(context).add(UpdateTab(tab));
           },
         ),
       );

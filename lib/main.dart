@@ -71,7 +71,7 @@ class _FormItAppState extends State<FormItApp> {
                   child: LoginScreen(),
                 );
               } else if (state is AuthenticationStateAuthenticated) {
-                return HomeScreen(name: state.user!.email ?? "");
+                return HomeScreen(email: state.user!.email ?? "");
               }
               return SplashScreen();
             },
