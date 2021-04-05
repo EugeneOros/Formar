@@ -8,7 +8,6 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
-import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/screens/add_edit_player_screen.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/shared/dependency.dart';
@@ -98,10 +97,6 @@ class PlayersPage extends StatelessWidget {
       }
     }
 
-    var borderSearch = UnderlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
-    );
-
     return BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
       builder: (context, state) {
         if (state is FilteredPeopleLoading) {
@@ -112,38 +107,13 @@ class PlayersPage extends StatelessWidget {
             if (stateTeam is TeamsLoaded) {
               return Column(
                 children: [
-                  // Container(
-                  //   height: 40,
-                  //   child: TextFormField(
-                  //     // style: Theme.of(context).textTheme.bodyText2,
-                  //     // scrollPadding: EdgeInsets.all(0.0),
-                  //     // cursorColor: Colors.black,
-                  //     initialValue: state.searchQuery,
-                  //     onChanged: (value) {
-                  //       BlocProvider.of<FilteredPeopleBloc>(context).add(UpdateFilter(filter: VisibilityFilter.all, searchQuery: value));
-                  //
-                  //       // filterSearchResults(value);
-                  //     },
-                  //     autofocus: state.searchQuery != "",
-                  //     // controller: editingController,
-                  //     decoration: InputDecoration(
-                  //       // contentPadding: EdgeInsets.only(top: 15),
-                  //       filled: true,
-                  //       fillColor: Colors.transparent,
-                  //       hintText: MaterialLocalizations.of(context).searchFieldLabel,
-                  //       prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
-                  //       border: borderSearch,
-                  //       focusedBorder: borderSearch,
-                  //       enabledBorder: borderSearch,
-                  //     ),
-                  //   ),
-                  // ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: players.length,
                       itemBuilder: (context, index) {
                         final player = players[index];
-                        bool isLastInLetterGroup = (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
+                        bool isLastInLetterGroup =
+                            (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
                         return Column(
                           children: [
                             if (isLastInLetterGroup)
@@ -184,32 +154,33 @@ class PlayersPage extends StatelessWidget {
                                       List<Team> teams = _teamsThatContains(player, stateTeam.teams);
                                       return AppDialog(
                                         title: teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
-                                        content: teams.length >= 1 ? Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(top: borderSideDivider),
-                                          ),
-                                          width: MediaQuery.of(context).size.width / 1.7 ,
-                                          height: MediaQuery.of(context).size.height / 6,
-                                          child: ListView(
-                                            shrinkWrap: true,
-                                            children: teams.map((e) {
-                                              return Container(
-                                                margin: EdgeInsets.zero,
-                                                padding: EdgeInsets.zero,
-                                                height: 37,
-
-                                                child: Container(
-                                                  padding: EdgeInsets.all(10),
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    e.name,
-                                                    style: Theme.of(context).textTheme.bodyText2,
-                                                  ),
+                                        content: teams.length >= 1
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(top: borderSideDivider),
                                                 ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ) : Container(),
+                                                width: MediaQuery.of(context).size.width / 1.7,
+                                                height: MediaQuery.of(context).size.height / 6,
+                                                child: ListView(
+                                                  shrinkWrap: true,
+                                                  children: teams.map((e) {
+                                                    return Container(
+                                                      margin: EdgeInsets.zero,
+                                                      padding: EdgeInsets.zero,
+                                                      height: 37,
+                                                      child: Container(
+                                                        padding: EdgeInsets.all(10),
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          e.name,
+                                                          style: Theme.of(context).textTheme.bodyText2,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              )
+                                            : Container(),
                                         actionsVertical: [
                                           TextButton(
                                               onPressed: () => Navigator.of(context).pop(),
