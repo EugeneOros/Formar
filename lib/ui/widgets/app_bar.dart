@@ -9,12 +9,10 @@ import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/icon_button_app_bar.dart';
 import 'package:repositories/repositories.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'app_logo_search.dart';
 

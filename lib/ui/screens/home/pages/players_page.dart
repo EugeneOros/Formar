@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -10,7 +8,6 @@ import 'package:form_it/logic/blocs/people/people_event.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/ui/screens/add_edit_player_screen.dart';
 import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 import 'package:form_it/ui/widgets/app_dialog.dart';
 import 'package:form_it/ui/widgets/app_snack_bar.dart';
 import 'package:form_it/ui/widgets/item_player.dart';
