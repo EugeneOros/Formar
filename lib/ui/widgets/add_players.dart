@@ -65,6 +65,7 @@ class _AddPlayersListState extends State<AddPlayersList> {
     );
     // items.addAll(widget.checkBoxListTileModel);
     return Container(
+      constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(

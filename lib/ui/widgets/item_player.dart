@@ -1,3 +1,4 @@
+import 'package:form_it/config/dependency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/ui/shared/constants.dart';
 import 'package:form_it/ui/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 
 class PlayerItem extends StatelessWidget {
   final Function onDelete;

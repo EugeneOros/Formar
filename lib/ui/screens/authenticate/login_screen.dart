@@ -1,4 +1,4 @@
-import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_it/ui/widgets/loading.dart';
@@ -77,59 +77,62 @@ class _LoginState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    child: Form(
-                      key: _formKey,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SvgPicture.asset(
-                              'assets/login.svg',
-                              height: size.height * 0.17,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              AppLocalizations.of(context)!.login.toUpperCase(),
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
-                            SizedBox(height: size.height * 0.03),
-                            Text(
-                              loginState.isFailure
-                                  ? AppLocalizations.of(context)!.errorLogin
-                                  : "",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 14.0,
+                    child: Container(
+                      constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+                      child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.asset(
+                                'assets/login.svg',
+                                height: size.height * 0.17,
                               ),
-                            ),
-                            SizedBox(height: 12.0),
-                            RoundedInputField(
-                              icon: Icons.person,
-                              controller: _emailController,
-                              hintText: AppLocalizations.of(context)!.email,
-                              validator: (_) => loginState.isEmailValid
-                                  ? null
-                                  : AppLocalizations.of(context)!.errorEmail,
-                            ),
-                            RoundedPasswordField(
-                              controller: _passwordController,
-                              validator: (_) => loginState.isPasswordValid
-                                  ? null
-                                  : AppLocalizations.of(context)!.errorPassword,
-                            ),
-                            SizedBox(height: size.height * 0.03),
-                            RoundedButton(
-                              text: AppLocalizations.of(context)!.login,
-                              onPressed: _onLoginEmailAndPassword,
-                            ),
-                            SizedBox(height: size.height * 0.03),
-                            HaveAccountCheck(
-                              onTap: () {
-                                Navigator.of(context).pushNamed("/signUp");
-                              },
-                            )
-                          ],
+                              SizedBox(height: 8),
+                              Text(
+                                AppLocalizations.of(context)!.login.toUpperCase(),
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              Text(
+                                loginState.isFailure
+                                    ? AppLocalizations.of(context)!.errorLogin
+                                    : "",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              SizedBox(height: 12.0),
+                              RoundedInputField(
+                                icon: Icons.person,
+                                controller: _emailController,
+                                hintText: AppLocalizations.of(context)!.email,
+                                validator: (_) => loginState.isEmailValid
+                                    ? null
+                                    : AppLocalizations.of(context)!.errorEmail,
+                              ),
+                              RoundedPasswordField(
+                                controller: _passwordController,
+                                validator: (_) => loginState.isPasswordValid
+                                    ? null
+                                    : AppLocalizations.of(context)!.errorPassword,
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              RoundedButton(
+                                text: AppLocalizations.of(context)!.login,
+                                onPressed: _onLoginEmailAndPassword,
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              HaveAccountCheck(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed("/signUp");
+                                },
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

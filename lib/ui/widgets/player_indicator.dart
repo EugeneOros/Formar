@@ -1,6 +1,6 @@
+import 'package:form_it/config/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:repositories/repositories.dart';
 
 class PlayerIndicator extends StatelessWidget {

@@ -57,7 +57,7 @@ class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   }
 
   Stream<TeamsState> _mapFormTeamsToState(FormTeams event) async* {
-    _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember!);
+    _teamsRepository.formTeams(event.isBalanced, event.counterTeamMember!, defaultReplacementName: event.defaultReplacementName, defaultTeamName: event.defaultTeamName);
   }
 
   Stream<TeamsState> _mapAddTeamToState(AddTeam event) async* {

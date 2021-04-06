@@ -7,7 +7,7 @@ abstract class TeamRepository {
 
   Stream<List<Team>> teams();
 
-  Future<void> formTeams( bool isBalanced, int numMembers);
+  Future<void> formTeams( bool isBalanced, int numMembers, {String? defaultTeamName, String? defaultReplacementName});
 
   Future<void> updateTeam(Team team);
 

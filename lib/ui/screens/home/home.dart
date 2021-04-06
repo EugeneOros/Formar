@@ -1,5 +1,5 @@
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';

@@ -17,6 +17,7 @@ class ItemTeam extends StatelessWidget {
     return GestureDetector(
       onTap: onEdit,
       child: Container(
+          constraints: BoxConstraints(minWidth: 50, maxWidth: 400),
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
           decoration: BoxDecoration(boxShadow: [

@@ -1,7 +1,7 @@
+import 'package:form_it/config/dependency.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 
 class AppDialog extends StatefulWidget {
   final Widget? content;

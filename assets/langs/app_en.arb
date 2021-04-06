@@ -288,6 +288,17 @@
   "filter": "Filter",
   "@filter": {
     "description": ""
+  },
+  "removeAllTeams": "Remove all teams",
+  "@removeAllTeams": {
+    "description": ""
+  },
+  "allPlayersInactive": "All players will become inactive",
+  "@allPlayersInactive": {
+    "description": ""
+  },
+ "team": "Team",
+  "@team": {
+    "description": ""
   }
-
 }

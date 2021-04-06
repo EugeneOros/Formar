@@ -1,4 +1,4 @@
-import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/config/dependency.dart';
 
 class TournamentPage extends StatelessWidget {
   @override

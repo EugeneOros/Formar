@@ -97,5 +97,8 @@
   "all": "Всі",
   "active": "Активні",
   "inactive": "Неактивні",
-  "filter": "Фільтр"
+  "filter": "Фільтр",
+  "removeAllTeams": "Видалити всі команди",
+  "allPlayersInactive": "Всі гравці стануть неактивними",
+  "team": "Команда"
 }

@@ -1,4 +1,4 @@
-import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
@@ -25,103 +25,108 @@ class _SettingsPageState extends State<SettingsPage> {
     return BlocBuilder<SettingsBloc, SettingsState>(builder: (context, state) {
       if (state is SettingsLoaded) {
         _currentPlayerCountValue = state.settings!.counterTeamMembers;
-        return ListView(
-          children: [
-            ItemSettings(
-              icon: Icons.people,
-              text: AppLocalizations.of(context)!.playersInTeam,
-              drawDivider: true,
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AppDialog(
-                        title: AppLocalizations.of(context)!.playersInTeam,
-                        content: Padding(
-                          padding: const EdgeInsets.only(bottom: 15, right: 10, left: 10),
-                          child: NumberPickerHorizontal(
-                            handleValueChange: handleNumChange,
-                            initValue: _currentPlayerCountValue,
-                          ),
-                        ),
-                        actionsHorizontal: [
-                          TextButton(
-                            child: Text(
-                              AppLocalizations.of(context)!.apply,
-                              style: Theme.of(context).textTheme.button,
+        return Center(
+          child: Container(
+            constraints: BoxConstraints(minWidth: 50, maxWidth: 700),
+            child: ListView(
+              children: [
+                ItemSettings(
+                  icon: Icons.people,
+                  text: AppLocalizations.of(context)!.playersInTeam,
+                  drawDivider: true,
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AppDialog(
+                            title: AppLocalizations.of(context)!.playersInTeam,
+                            content: Padding(
+                              padding: const EdgeInsets.only(bottom: 15, right: 10, left: 10),
+                              child: NumberPickerHorizontal(
+                                handleValueChange: handleNumChange,
+                                initValue: _currentPlayerCountValue,
+                              ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              if (state is SettingsLoaded) {
-                                print(_currentPlayerCountValue);
-                                BlocProvider.of<SettingsBloc>(context).add(
-                                  UpdateSettings(state.settings!.copyWith(counterTeamMember: _currentPlayerCountValue)),
-                                );
-                              }
-                            },
-                          ),
-                          TextButton(
-                            child: Text(
-                              MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    }).then((value) {
-                  _currentPlayerCountValue = state.settings!.counterTeamMembers;
-                });
-              },
-            ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     border: Border(bottom: borderSideDivider)
-            //   ),
-            //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            // ),
-            ItemSettings(
-              icon: Icons.logout,
-              text: AppLocalizations.of(context)!.signOut,
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AppDialog(
-                        title: AppLocalizations.of(context)!.areYouSureLogOut,
-                        actionsHorizontal: [
-                          TextButton(
-                            child: Text(
-                              AppLocalizations.of(context)!.yes,
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-                            },
-                          ),
-                          TextButton(
-                            child: Text(
-                              AppLocalizations.of(context)!.no,
-                              style: Theme.of(context).textTheme.button,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
+                            actionsHorizontal: [
+                              TextButton(
+                                child: Text(
+                                  AppLocalizations.of(context)!.apply,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  if (state is SettingsLoaded) {
+                                    print(_currentPlayerCountValue);
+                                    BlocProvider.of<SettingsBloc>(context).add(
+                                      UpdateSettings(state.settings!.copyWith(counterTeamMember: _currentPlayerCountValue)),
+                                    );
+                                  }
+                                },
+                              ),
+                              TextButton(
+                                child: Text(
+                                  MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        }).then((value) {
+                      _currentPlayerCountValue = state.settings!.counterTeamMembers;
                     });
-              },
+                  },
+                ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     border: Border(bottom: borderSideDivider)
+                //   ),
+                //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                // ),
+                ItemSettings(
+                  icon: Icons.logout,
+                  text: AppLocalizations.of(context)!.signOut,
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AppDialog(
+                            title: AppLocalizations.of(context)!.areYouSureLogOut,
+                            actionsHorizontal: [
+                              TextButton(
+                                child: Text(
+                                  AppLocalizations.of(context)!.yes,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                                },
+                              ),
+                              TextButton(
+                                child: Text(
+                                  AppLocalizations.of(context)!.no,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                ),
+                Text(
+                  AppLocalizations.of(context)!.version + " 1.0",
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            Text(
-              AppLocalizations.of(context)!.version + " 1.0",
-              style: Theme.of(context).textTheme.subtitle1,
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         );
       } else {
         return Loading();

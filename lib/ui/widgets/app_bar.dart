@@ -1,9 +1,9 @@
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_event.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/ui/shared/constants.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
@@ -25,7 +25,8 @@ class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
   _AppTopBarState createState() => _AppTopBarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(70);
+  Size get preferredSize => const Size.fromHeight(60);
+
 }
 
 class _AppTopBarState extends State<AppTopBar> {
@@ -71,6 +72,7 @@ class _AppTopBarState extends State<AppTopBar> {
           return [
             IconButtonAppBar(
               icon: logoSearch.state.isFlipped ? Icons.close : Icons.search,
+              tooltip: MaterialLocalizations.of(context).searchFieldLabel,
               onPressed: () {
                 setState(() {
                   logoSearch.state.flip();
@@ -87,9 +89,10 @@ class _AppTopBarState extends State<AppTopBar> {
                   width: 40,
                   height: 40,
                   child: PopupMenuButton<VisibilityFilter>(
-                    offset: Offset(0, 45 + (46 * VisibilityFilter.values.indexOf(currentFilter).toDouble())),
+                    offset: Offset(0, 55 + (46 * VisibilityFilter.values.indexOf(currentFilter).toDouble())),
                     initialValue: currentFilter,
                     tooltip: AppLocalizations.of(context)!.filter,
+                    // child: IconButtonAppBar(onPressed: (){}, icon: Icons.filter_list_rounded),
                     icon: Icon(
                       Icons.filter_list_rounded,
                       color: Colors.black,
@@ -130,12 +133,14 @@ class _AppTopBarState extends State<AppTopBar> {
             ),
             IconButtonAppBar(
               icon: Icons.toggle_off_outlined,
+              tooltip: AppLocalizations.of(context)!.allPlayersInactive,
               onPressed: () {
                 BlocProvider.of<PeopleBloc>(context).add(TurnOffPeople());
               },
             ),
             IconButtonAppBar(
               icon: Icons.add,
+              tooltip: AppLocalizations.of(context)!.addPlayer,
               onPressed: () {
                 Navigator.of(context).pushNamed("/add");
               },
@@ -145,6 +150,7 @@ class _AppTopBarState extends State<AppTopBar> {
           return [
             IconButtonAppBar(
               icon: Icons.delete,
+              tooltip: AppLocalizations.of(context)!.removeAllTeams,
               onPressed: () {
                 showDialog(
                   context: context,
@@ -184,6 +190,7 @@ class _AppTopBarState extends State<AppTopBar> {
                     int counterTeamMembers = settingsState.settings!.counterTeamMembers!;
                     return IconButtonAppBar(
                         icon: Icons.add,
+                        tooltip: AppLocalizations.of(context)!.addTeam,
                         onPressed: () {
                           if (state.people.where((element) => element.available).length == 1) {
                             Navigator.of(context).pushNamed("/add_team");
@@ -219,7 +226,7 @@ class _AppTopBarState extends State<AppTopBar> {
                                       padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 0)),
                                     ),
                                     onPressed: () {
-                                      BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers));
+                                      BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers, defaultReplacementName: AppLocalizations.of(context)!.replacement, defaultTeamName: AppLocalizations.of(context)!.team));
                                       Navigator.of(context).pop();
                                     },
                                   ),
@@ -233,7 +240,7 @@ class _AppTopBarState extends State<AppTopBar> {
                                       ),
                                       style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 0))),
                                       onPressed: () {
-                                        BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers));
+                                        BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers, defaultReplacementName: AppLocalizations.of(context)!.replacement, defaultTeamName: AppLocalizations.of(context)!.team));
                                         Navigator.of(context).pop();
                                       },
                                     ),
@@ -275,9 +282,10 @@ class _AppTopBarState extends State<AppTopBar> {
     }
 
     return AppBar(
+      // primary: false,
       titleSpacing: 0,
       elevation: 0.0,
-      toolbarHeight: 65,
+      toolbarHeight: 60,
       shadowColor: Colors.transparent,
       backgroundColor: widget.activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
       title: logoSearch..state.closeSearch(widget.activeTab),

@@ -1,7 +1,7 @@
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
 import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/ui/screens/add_edit_team_screen.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
@@ -94,9 +94,10 @@ class TeamsPage extends StatelessWidget {
                 );
               },
               options: CarouselOptions(
+
                 height: 6 / 10 * size.height,
                 aspectRatio: 1,
-                viewportFraction: 0.7,
+                viewportFraction: MediaQuery.of(context).size.width > 600 ? 0.5 : 0.7,
                 initialPage: 0,
                 enableInfiniteScroll: false,
                 reverse: false,

@@ -1,5 +1,5 @@
+import 'package:form_it/config/dependency.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 
 enum AppTab {players, teams, tournament, settings}
 
@@ -30,7 +30,4 @@ extension AppTabExtension on AppTab{
         return SvgPicture.asset(isActive ? "assets/settings_fill.svg" : "assets/settings_empty.svg");
     }
   }
-
-
-
 }

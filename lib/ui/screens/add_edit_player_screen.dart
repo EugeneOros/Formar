@@ -1,9 +1,10 @@
+import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/palette.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_it/ui/shared/dependency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/widgets/fade_end_listview.dart';
+import 'package:form_it/ui/widgets/icon_button_app_bar.dart';
 import 'package:form_it/ui/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/ui/shared/constants.dart';
@@ -109,11 +110,8 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
         toolbarHeight: 50,
         shadowColor: Colors.transparent,
         backgroundColor: Theme.of(context).accentColor,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
-          ),
+        leading: IconButtonAppBar(
+          icon: Icons.arrow_back_ios_rounded,
           onPressed: () => Navigator.pop(context, false),
         ),
         actions: [
@@ -137,7 +135,8 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
         ],
       ),
       body: Container(
-        // padding: EdgeInsets.symmetric(horizontal: 16),
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -150,105 +149,108 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
             ],
           ),
         ),
-        child: Stack(children: [
-          Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20.0),
-                  child: Text(
-                    isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
-                    style: Theme.of(context).textTheme.headline1,
-                    textAlign: TextAlign.center,
+        child: Container(
+          constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+          child: Stack(children: [
+            Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20.0),
+                    child: Text(
+                      isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
+                      style: Theme.of(context).textTheme.headline1,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: RoundedInputField(
-                    autofocus: !isEditing,
-                    initialValue: isEditing ? widget.person!.nickname : '',
-                    onSaved: (value) => _nickname = value,
-                    hintText: AppLocalizations.of(context)!.enterNickname,
-                    validator: (val) {
-                      return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: RoundedInputField(
+                      autofocus: !isEditing,
+                      initialValue: isEditing ? widget.person!.nickname : '',
+                      onSaved: (value) => _nickname = value,
+                      hintText: AppLocalizations.of(context)!.enterNickname,
+                      validator: (val) {
+                        return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 40.0, right: 20),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.level,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      Expanded(
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: _getLevelColor(_level),
-                            inactiveTrackColor: Colors.black,
-                            valueIndicatorTextStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
-                            valueIndicatorShape: RectangularSliderValueIndicatorShape(),
-                            trackHeight: 3.0,
-                            valueIndicatorColor: Colors.black,
-                            thumbColor: Colors.white,
-                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
-                            inactiveTickMarkColor: Colors.transparent,
-                            activeTickMarkColor: Colors.transparent,
-                            overlayColor: Theme.of(context).accentColor.withAlpha(50),
-                          ),
-                          child: Slider(
-                            label: _getLevelName(_level),
-                            value: _level.index.toDouble(),
-                            onChanged: (double newLevelIndex) {
-                              onLevelChanged(Level.values[newLevelIndex.toInt()]);
-                            },
-                            divisions: 4,
-                            min: 0,
-                            max: 4,
-                          ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 40.0, right: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.level,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  children: Sex.values
-                      .map(
-                        (sex) => Padding(
-                          padding: EdgeInsets.all(15.0),
-                          child: GestureDetector(
-                            onTap: () => onSexChanged(sex),
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              color: Colors.transparent,
-                              child: _getSvgPicture(sex),
+                        Expanded(
+                          child: SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              activeTrackColor: _getLevelColor(_level),
+                              inactiveTrackColor: Colors.black,
+                              valueIndicatorTextStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+                              valueIndicatorShape: RectangularSliderValueIndicatorShape(),
+                              trackHeight: 3.0,
+                              valueIndicatorColor: Colors.black,
+                              thumbColor: Colors.white,
+                              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                              inactiveTickMarkColor: Colors.transparent,
+                              activeTickMarkColor: Colors.transparent,
+                              overlayColor: Theme.of(context).accentColor.withAlpha(50),
+                            ),
+                            child: Slider(
+                              label: _getLevelName(_level),
+                              value: _level.index.toDouble(),
+                              onChanged: (double newLevelIndex) {
+                                onLevelChanged(Level.values[newLevelIndex.toInt()]);
+                              },
+                              divisions: 4,
+                              min: 0,
+                              max: 4,
                             ),
                           ),
                         ),
-                      )
-                      .toList(),
-                ),
-              ],
+                      ],
+                    ),
+                  ),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
+                    children: Sex.values
+                        .map(
+                          (sex) => Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: GestureDetector(
+                              onTap: () => onSexChanged(sex),
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                color: Colors.transparent,
+                                child: _getSvgPicture(sex),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
             ),
-          ),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).accentColor,
-          ),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).primaryColor,
-            fromTopToBottom: false,
-          ),
-        ]),
+            FadeEndLIstView(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).accentColor,
+            ),
+            FadeEndLIstView(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColor,
+              fromTopToBottom: false,
+            ),
+          ]),
+        ),
       ),
     );
   }

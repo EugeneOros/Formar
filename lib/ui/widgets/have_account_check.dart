@@ -1,5 +1,5 @@
-import 'package:form_it/ui/shared/dependency.dart';
-import 'package:form_it/ui/shared/colors.dart';
+import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/palette.dart';
 
 
 class HaveAccountCheck extends StatelessWidget {

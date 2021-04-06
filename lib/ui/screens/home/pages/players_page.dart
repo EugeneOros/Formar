@@ -1,4 +1,4 @@
-import 'package:form_it/ui/shared/dependency.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -102,105 +102,115 @@ class PlayersPage extends StatelessWidget {
           final players = state.filteredPeople;
           return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, stateTeam) {
             if (stateTeam is TeamsLoaded) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: players.length,
-                      itemBuilder: (context, index) {
-                        final player = players[index];
-                        bool isLastInLetterGroup =
-                            (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
-                        return Column(
-                          children: [
-                            if (isLastInLetterGroup)
-                              LetterDivider(
-                                letter: player.nickname[0].toUpperCase(),
-                                secondaryString: index == 0
-                                    ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString()
-                                    : null,
-                              ),
-                            PlayerItem(
-                              drawDivider: !isLastInLetterGroup,
-                              slidableController: _slidableController,
-                              player: player,
-                              onDelete: () => _onDelete(player, stateTeam.teams),
-                              onEdit: () async {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return AddEditPlayerScreen(
-                                        onSave: (nickname, level, sex) {
-                                          BlocProvider.of<PeopleBloc>(context).add(
-                                            UpdatePerson(
-                                              player.copyWith(nickname: nickname, level: level, sex: sex),
-                                            ),
+              return Container(
+                alignment: Alignment.center,
+                color: Theme.of(context).accentColor,
+                child: Container(
+                  color: Colors.white,
+                  constraints: BoxConstraints(minWidth: 50, maxWidth: 700),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: players.length,
+                          itemBuilder: (context, index) {
+                            final player = players[index];
+                            bool isLastInLetterGroup =
+                                (index == 0 || players[index].nickname[0].toUpperCase() != players[index - 1].nickname[0].toUpperCase());
+                            return Column(
+                              children: [
+                                if (isLastInLetterGroup)
+                                  LetterDivider(
+                                    letter: player.nickname[0].toUpperCase(),
+                                    secondaryString: index == 0
+                                        ? players.where((player) => player.available == true).length.toString() + "/" + players.length.toString()
+                                        : null,
+                                  ),
+                                PlayerItem(
+                                  drawDivider: !isLastInLetterGroup,
+                                  slidableController: _slidableController,
+                                  player: player,
+                                  onDelete: () => _onDelete(player, stateTeam.teams),
+                                  onEdit: () async {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return AddEditPlayerScreen(
+                                            onSave: (nickname, level, sex) {
+                                              BlocProvider.of<PeopleBloc>(context).add(
+                                                UpdatePerson(
+                                                  player.copyWith(nickname: nickname, level: level, sex: sex),
+                                                ),
+                                              );
+                                            },
+                                            isEditing: true,
+                                            person: player,
                                           );
                                         },
-                                        isEditing: true,
-                                        person: player,
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                              onShowTeams: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      List<Team> teams = _teamsThatContains(player, stateTeam.teams);
-                                      return AppDialog(
-                                        title: teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
-                                        content: teams.length >= 1
-                                            ? Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border(top: borderSideDivider),
-                                                ),
-                                                width: MediaQuery.of(context).size.width / 1.7,
-                                                height: MediaQuery.of(context).size.height / 6,
-                                                child: ListView(
-                                                  shrinkWrap: true,
-                                                  children: teams.map((e) {
-                                                    return Container(
-                                                      margin: EdgeInsets.zero,
-                                                      padding: EdgeInsets.zero,
-                                                      height: 37,
-                                                      child: Container(
-                                                        padding: EdgeInsets.all(10),
-                                                        alignment: Alignment.center,
-                                                        child: Text(
-                                                          e.name,
-                                                          style: Theme.of(context).textTheme.bodyText2,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                              )
-                                            : Container(),
-                                        actionsVertical: [
-                                          TextButton(
-                                              onPressed: () => Navigator.of(context).pop(),
-                                              child: Text(
-                                                MaterialLocalizations.of(context).okButtonLabel,
-                                                style: Theme.of(context).textTheme.button,
-                                              ))
-                                        ],
-                                      );
-                                    });
-                              },
-                              onSwitchChanged: (_) {
-                                BlocProvider.of<PeopleBloc>(context).add(
-                                  UpdatePerson(player.copyWith(available: !player.available)),
-                                );
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                                      ),
+                                    );
+                                  },
+                                  onShowTeams: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          List<Team> teams = _teamsThatContains(player, stateTeam.teams);
+                                          return AppDialog(
+                                            title:
+                                                teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
+                                            content: teams.length >= 1
+                                                ? Container(
+                                                    constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
+                                                    decoration: BoxDecoration(
+                                                      border: Border(top: borderSideDivider),
+                                                    ),
+                                                    width: MediaQuery.of(context).size.width / 1.7,
+                                                    height: MediaQuery.of(context).size.height / 6,
+                                                    child: ListView(
+                                                      shrinkWrap: true,
+                                                      children: teams.map((e) {
+                                                        return Container(
+                                                          margin: EdgeInsets.zero,
+                                                          padding: EdgeInsets.zero,
+                                                          height: 37,
+                                                          child: Container(
+                                                            padding: EdgeInsets.all(10),
+                                                            alignment: Alignment.center,
+                                                            child: Text(
+                                                              e.name,
+                                                              style: Theme.of(context).textTheme.bodyText2,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  )
+                                                : Container(),
+                                            actionsVertical: [
+                                              TextButton(
+                                                  onPressed: () => Navigator.of(context).pop(),
+                                                  child: Text(
+                                                    MaterialLocalizations.of(context).okButtonLabel,
+                                                    style: Theme.of(context).textTheme.button,
+                                                  ))
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  onSwitchChanged: (_) {
+                                    BlocProvider.of<PeopleBloc>(context).add(
+                                      UpdatePerson(player.copyWith(available: !player.available)),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               );
             }
             return Loading();

@@ -1,6 +1,6 @@
+import 'package:form_it/config/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_it/ui/shared/colors.dart';
 import 'package:form_it/ui/shared/constants.dart';
 
 class RoundedInputField extends StatelessWidget {

@@ -19,7 +19,7 @@ class FirebaseTeamRepository implements TeamRepository {
   }
 
   @override
-  Future<void> formTeams(bool isBalanced, int numMembers) async {
+  Future<void> formTeams(bool isBalanced, int numMembers, {String? defaultTeamName, String? defaultReplacementName}) async {
     List<Team> teams;
     CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("teams");
     (await teamsCollection.get()).docs.length;
@@ -28,13 +28,13 @@ class FirebaseTeamRepository implements TeamRepository {
     if (people.length < 2) return;
 
     if (!isBalanced && people.length / numMembers >= 2) {
-      teams = _createTeams((people.length / numMembers).floor(), (await teamsCollection.get()).docs.length);
+      teams = _createTeams((people.length / numMembers).floor(), (await teamsCollection.get()).docs.length, defaultTeamName: defaultTeamName);
       teams = _sortPeopleToTeams(people.sublist(0, people.length - (people.length % numMembers)), teams);
       if (people.length % numMembers != 0 && people.length / numMembers > 2) {
-        teams.add(_createTeamReplacement(people.sublist(people.length - (people.length % numMembers), people.length)));
+        teams.add(_createTeamReplacement(people.sublist(people.length - (people.length % numMembers), people.length), defaultReplacementName: defaultReplacementName));
       }
     } else {
-      teams = _createTeams(max((people.length / numMembers).ceil(), 2), (await teamsCollection.get()).docs.length);
+      teams = _createTeams(max((people.length / numMembers).ceil(), 2), (await teamsCollection.get()).docs.length, defaultTeamName: defaultTeamName);
       teams = _sortPeopleToTeams(people, teams);
     }
 
@@ -135,14 +135,14 @@ class FirebaseTeamRepository implements TeamRepository {
     return teams;
   }
 
-  Team _createTeamReplacement(List<Player> players) {
-    return Team(name: "Replacement", players: players);
+  Team _createTeamReplacement(List<Player> players, {String? defaultReplacementName}) {
+    return Team(name: defaultReplacementName ?? "Replacement", players: players);
   }
 
-  List<Team> _createTeams(int numTeams, int startWithNumber) {
+  List<Team> _createTeams(int numTeams, int startWithNumber, {String? defaultTeamName}) {
     List<Team> teams = [];
     for (int i = 0; i < numTeams; i++) {
-      teams.add(Team(name: "Team " + (i + startWithNumber + 1).toString(), players: []));
+      teams.add(Team(name: (defaultTeamName ?? "Team") + " " + (i + startWithNumber + 1).toString(), players: []));
     }
     return teams;
   }

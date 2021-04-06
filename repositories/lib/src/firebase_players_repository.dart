@@ -28,7 +28,9 @@ class FirebasePlayersRepository implements PlayersRepository {
 
   @override
   Stream<List<Player>> players() {
-    User user = _auth.currentUser!;
+    if(_auth.currentUser == null)
+      return Stream.empty();
+    User user =  _auth.currentUser!;
     CollectionReference playersCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("peoples");
     return playersCollection.snapshots().map((snapshot) {
       List<Player> players = snapshot.docs.map((doc) => Player.fromEntity(PlayerEntity.fromSnapshot(doc))).toList();
