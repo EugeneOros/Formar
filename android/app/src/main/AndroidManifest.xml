@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pl.edu.agh.oros.form_it">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="form_it"
+        android:label="Formar"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
