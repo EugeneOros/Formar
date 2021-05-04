@@ -11,14 +11,13 @@ import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 
-import 'package:form_it/ui/screens/splash_screen.dart';
-import 'package:form_it/ui/screens/authenticate/login_screen.dart';
-import 'package:form_it/ui/screens/authenticate/signup_screeen.dart';
-import 'package:form_it/ui/screens/home/home.dart';
-import 'package:form_it/ui/screens/add_edit_player_screen.dart';
-import 'package:form_it/ui/screens/add_edit_team_screen.dart';
-
-import 'package:form_it/ui/widgets/app_scroll_behavior.dart';
+import 'package:form_it/pages/splash/splash_screen.dart';
+import 'package:form_it/pages/authenticate/view/login_page.dart';
+import 'package:form_it/pages/authenticate/view/signup_page.dart';
+import 'package:form_it/pages/home/view/home_page.dart';
+import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
+import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
+import 'package:form_it/widgets/app_scroll_behavior.dart';
 import 'package:form_it/logic/localizations/constants.dart';
 
 import 'package:repositories/repositories.dart';
