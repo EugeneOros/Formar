@@ -106,6 +106,11 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
           ),
         ),
         child: Stack(children: [
+          FadeEndLIstView(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            color: Theme.of(context).accentColor,
+          ),
           Form(
             key: _formKey,
             child: ListView(
@@ -139,13 +144,8 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
           FadeEndLIstView(
             height: 30,
             width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).accentColor,
-          ),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
             color: Theme.of(context).primaryColor,
-            fromTopToBottom: false,
+            isTop: false,
           ),
         ]),
       ),

@@ -5,7 +5,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
-import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/widgets/widgets.dart';
 import 'package:repositories/repositories.dart';
 
@@ -13,83 +12,85 @@ import 'package:form_it/pages/players/widgets/widgets.dart';
 
 
 class PlayersPage extends StatelessWidget {
+
+  List<Team> _teamsThatContains(Player player, List<Team> teams) {
+    List<Team> teamsThatContains = [];
+    teams.forEach((team) {
+      team.players.forEach((teamPlayer) {
+        if (teamPlayer.id == player.id) teamsThatContains.add(team);
+      });
+    });
+    return teamsThatContains;
+  }
+
+  void _deleteFormPlayers(Player player) {
+    BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(DeletePerson(player));
+    ScaffoldMessenger.of(homeKey.currentContext!).showSnackBar(
+      AppSnackBar(
+        text: AppLocalizations.of(homeKey.currentContext!)!.deleted + " " + player.nickname,
+        actionName: AppLocalizations.of(homeKey.currentContext!)!.undo,
+        onAction: () {
+          BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(AddPerson(player));
+        },
+        actionColor: Theme.of(homeKey.currentContext!).accentColor,
+      ),
+    );
+  }
+
+  Future<bool> _onDelete(player, teams) async {
+    List<Team> teamsThatContains = [];
+    teams.forEach((team) {
+      team.players.forEach((teamPlayer) {
+        if (teamPlayer.id == player.id) teamsThatContains.add(team);
+      });
+    });
+    if (teamsThatContains.isNotEmpty) {
+      Future<bool?> result = showDialog<bool>(
+          context: homeKey.currentContext!,
+          builder: (context) {
+            return AppDialog(
+              title: AppLocalizations.of(context)!.playerDeletedFromTeams,
+              actionsHorizontal: [
+                TextButton(
+                  onPressed: () {
+                    Player? toDelete;
+                    teamsThatContains.forEach((team) {
+                      team.players.forEach((teamPlayer) {
+                        if (teamPlayer.id == player.id) {
+                          toDelete = teamPlayer;
+                        }
+                      });
+                      team.players.remove(toDelete);
+                      BlocProvider.of<TeamsBloc>(context).add(UpdateTeam(team));
+                    });
+                    _deleteFormPlayers(player);
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    MaterialLocalizations.of(context).okButtonLabel,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(
+                    MaterialLocalizations.of(context).backButtonTooltip,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                )
+              ],
+            );
+          });
+      return await result ?? false;
+    } else {
+      _deleteFormPlayers(player);
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SlidableController _slidableController = SlidableController();
-    void _deleteFormPlayers(Player player) {
-      BlocProvider.of<PeopleBloc>(context).add(DeletePerson(player));
-      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
-        AppSnackBar(
-          text: AppLocalizations.of(scaffoldKey.currentContext!)!.deleted + " " + player.nickname,
-          actionName: AppLocalizations.of(scaffoldKey.currentContext!)!.undo,
-          onAction: () {
-            BlocProvider.of<PeopleBloc>(scaffoldKey.currentContext!).add(AddPerson(player));
-          },
-          actionColor: Theme.of(scaffoldKey.currentContext!).accentColor,
-        ),
-      );
-    }
-
-    List<Team> _teamsThatContains(Player player, List<Team> teams) {
-      List<Team> teamsThatContains = [];
-      teams.forEach((team) {
-        team.players.forEach((teamPlayer) {
-          if (teamPlayer.id == player.id) teamsThatContains.add(team);
-        });
-      });
-      return teamsThatContains;
-    }
-
-    Future<bool> _onDelete(player, teams) async {
-      List<Team> teamsThatContains = [];
-      teams.forEach((team) {
-        team.players.forEach((teamPlayer) {
-          if (teamPlayer.id == player.id) teamsThatContains.add(team);
-        });
-      });
-      if (teamsThatContains.isNotEmpty) {
-        Future<bool?> result = showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return AppDialog(
-                title: AppLocalizations.of(context)!.playerDeletedFromTeams,
-                actionsHorizontal: [
-                  TextButton(
-                    onPressed: () {
-                      Player? toDelete;
-                      teamsThatContains.forEach((team) {
-                        team.players.forEach((teamPlayer) {
-                          if (teamPlayer.id == player.id) {
-                            toDelete = teamPlayer;
-                          }
-                        });
-                        team.players.remove(toDelete);
-                        BlocProvider.of<TeamsBloc>(context).add(UpdateTeam(team));
-                      });
-                      _deleteFormPlayers(player);
-                      Navigator.of(context).pop(true);
-                    },
-                    child: Text(
-                      MaterialLocalizations.of(context).okButtonLabel,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: Text(
-                      MaterialLocalizations.of(context).backButtonTooltip,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  )
-                ],
-              );
-            });
-        return await result ?? false;
-      } else {
-        _deleteFormPlayers(player);
-        return true;
-      }
-    }
 
     return BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
       builder: (context, state) {
@@ -127,73 +128,8 @@ class PlayersPage extends StatelessWidget {
                                   drawDivider: !isLastInLetterGroup,
                                   slidableController: _slidableController,
                                   player: player,
+                                  teams: _teamsThatContains(player, stateTeam.teams),
                                   onDelete: () => _onDelete(player, stateTeam.teams),
-                                  onEdit: () async {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return AddEditPlayerScreen(
-                                            onSave: (nickname, level, sex) {
-                                              BlocProvider.of<PeopleBloc>(context).add(
-                                                UpdatePerson(
-                                                  player.copyWith(nickname: nickname, level: level, sex: sex),
-                                                ),
-                                              );
-                                            },
-                                            isEditing: true,
-                                            person: player,
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  onShowTeams: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          List<Team> teams = _teamsThatContains(player, stateTeam.teams);
-                                          return AppDialog(
-                                            title:
-                                                teams.length >= 1 ? AppLocalizations.of(context)!.teamsNames : AppLocalizations.of(context)!.noTeam,
-                                            content: teams.length >= 1
-                                                ? Container(
-                                                    constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
-                                                    decoration: BoxDecoration(
-                                                      border: Border(top: borderSideDivider),
-                                                    ),
-                                                    width: MediaQuery.of(context).size.width / 1.7,
-                                                    height: MediaQuery.of(context).size.height / 6,
-                                                    child: ListView(
-                                                      shrinkWrap: true,
-                                                      children: teams.map((e) {
-                                                        return Container(
-                                                          margin: EdgeInsets.zero,
-                                                          padding: EdgeInsets.zero,
-                                                          height: 37,
-                                                          child: Container(
-                                                            padding: EdgeInsets.all(10),
-                                                            alignment: Alignment.center,
-                                                            child: Text(
-                                                              e.name,
-                                                              style: Theme.of(context).textTheme.bodyText2,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  )
-                                                : Container(),
-                                            actionsVertical: [
-                                              TextButton(
-                                                  onPressed: () => Navigator.of(context).pop(),
-                                                  child: Text(
-                                                    MaterialLocalizations.of(context).okButtonLabel,
-                                                    style: Theme.of(context).textTheme.button,
-                                                  ))
-                                            ],
-                                          );
-                                        });
-                                  },
                                   onSwitchChanged: (_) {
                                     BlocProvider.of<PeopleBloc>(context).add(
                                       UpdatePerson(player.copyWith(available: !player.available)),

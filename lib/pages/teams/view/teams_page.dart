@@ -13,37 +13,38 @@ import 'package:repositories/repositories.dart';
 import 'package:form_it/pages/teams/widgets/widgets.dart';
 
 class TeamsPage extends StatelessWidget {
+
+  void onEdit(Team team) {
+    Navigator.of(homeKey.currentContext!).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+            List<Player> players = [];
+            if (state is PeopleLoaded) {
+              players = state.people;
+            }
+            return Provider<List<Player>>.value(
+                value: players,
+                child: AddEditTeamScreen(
+                  onSave: (name, players) {
+                    BlocProvider.of<TeamsBloc>(context).add(
+                      UpdateTeam(
+                        team.copyWith(name: name, players: players),
+                      ),
+                    );
+                  },
+                  isEditing: true,
+                  team: team,
+                ));
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.maybeOf(context)!.size;
-
-    void onEdit(Team team) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
-              List<Player> players = [];
-              if (state is PeopleLoaded) {
-                players = state.people;
-              }
-              return Provider<List<Player>>.value(
-                value: players,
-                child: AddEditTeamScreen(
-                onSave: (name, players) {
-                  BlocProvider.of<TeamsBloc>(context).add(
-                    UpdateTeam(
-                      team.copyWith(name: name, players: players),
-                    ),
-                  );
-                },
-                isEditing: true,
-                team: team,
-              ));
-            });
-          },
-        ),
-      );
-    }
 
     return BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
       if (state is TeamsLoading) {
@@ -82,13 +83,13 @@ class TeamsPage extends StatelessWidget {
                   team: team,
                   onDelete: () {
                     BlocProvider.of<TeamsBloc>(context).add(DeleteTeam(team));
-                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+                    ScaffoldMessenger.of(homeKey.currentContext!).showSnackBar(
                       AppSnackBar(
-                        text: AppLocalizations.of(scaffoldKey.currentContext!)!.deleted + " " + team.name,
-                        actionName: AppLocalizations.of(scaffoldKey.currentContext!)!.undo,
-                        onAction: () => BlocProvider.of<TeamsBloc>(scaffoldKey.currentContext!)
+                        text: AppLocalizations.of(homeKey.currentContext!)!.deleted + " " + team.name,
+                        actionName: AppLocalizations.of(homeKey.currentContext!)!.undo,
+                        onAction: () => BlocProvider.of<TeamsBloc>(homeKey.currentContext!)
                             .add(AddTeam(team)),
-                        actionColor: Theme.of(scaffoldKey.currentContext!).accentColor,
+                        actionColor: Theme.of(homeKey.currentContext!).accentColor,
                       ),
                     );
                   },

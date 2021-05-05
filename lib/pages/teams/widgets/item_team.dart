@@ -92,7 +92,7 @@ class ItemTeam extends StatelessWidget {
                       FadeEndLIstView(
                         height: 30,
                         width: MediaQuery.of(context).size.width,
-                        fromTopToBottom: false,
+                        isTop: false,
                       ),
                     ],
                   ),
