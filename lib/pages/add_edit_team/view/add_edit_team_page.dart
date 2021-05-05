@@ -1,15 +1,9 @@
 import 'package:form_it/config/dependency.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter/foundation.dart';
-import 'package:form_it/pages/add_edit_team/widgets/add_players.dart';
-import 'package:form_it/widgets/app_dialog.dart';
-import 'package:form_it/widgets/fade_end_listview.dart';
-import 'package:form_it/widgets/icon_button_app_bar.dart';
-import 'package:form_it/pages/players/widgets/player_indicator.dart';
-import 'package:form_it/widgets/rounded_button.dart';
-import 'package:form_it/widgets/rounded_input_field.dart';
-import 'package:repositories/repositories.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:form_it/widgets/widgets.dart';
+import 'package:repositories/repositories.dart';
+
+import 'package:form_it/pages/add_edit_team/widgets/widgets.dart';
 
 typedef OnSaveCallback = Function(String? name, List<Player>? players);
 
@@ -17,14 +11,12 @@ class AddEditTeamScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Team? team;
-  final List<Player> players;
 
   AddEditTeamScreen({
     Key? key,
     required this.onSave,
     required this.isEditing,
     this.team,
-    required this.players,
   }) : super(key: key);
 
   @override
@@ -47,51 +39,11 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _onAddPlayer() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          AddPlayersList _addPlayersList = AddPlayersList(
-            players: widget.players,
-            playersAdded: _players,
-          );
-          return AppDialog(
-            title: AppLocalizations.of(context)!.chosePlayers,
-            content: _addPlayersList,
-            actionsHorizontal: [
-              TextButton(
-                child: Text(
-                  MaterialLocalizations.of(context).okButtonLabel,
-                  style: Theme.of(context).textTheme.button,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _players = _addPlayersList.getPlayers();
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
-                  style: Theme.of(context).textTheme.button,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
-    int getPower(List<Player> players) {
-      int power = 0;
-      for (Player player in _players!) {
-        power += player.level.index + 1;
-      }
-      return power;
+    _onAddPlayer(List<Player> newPlayers){
+      setState(() {
+        _players = newPlayers;
+      });
     }
 
     return Scaffold(
@@ -167,114 +119,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                         },
                       ),
                     ),
-                    _players!.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                            child: RoundedButton(
-                              text: AppLocalizations.of(context)!.addPlayers,
-                              textColor: Colors.black,
-                              color: Theme.of(context).accentColor,
-                              sizeRatio: 0.9,
-                              onPressed: () {
-                                _onAddPlayer();
-                              },
-                            ),
-                          )
-                        : Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20, bottom: 60),
-                                // padding: EdgeInsets.all(20.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(2, 2),
-                                    )
-                                  ],
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      padding: EdgeInsets.only(left: 10, top: 10),
-                                      child: Wrap(
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 20,
-                                            height: 20,
-                                            child: SvgPicture.asset("assets/power.svg"),
-                                          ),
-                                          Text(
-                                            getPower(_players!).toString(),
-                                            style: Theme.of(context).textTheme.bodyText2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(27).copyWith(top: 0),
-                                      child: ListView.builder(
-                                        physics: const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: _players!.length,
-                                        itemBuilder: (context, index) {
-                                          return Row(
-                                            children: [
-                                              PlayerIndicator(player: _players![index]),
-                                              SizedBox(width: 5),
-                                              Expanded(
-                                                child: Text(
-                                                  _players![index].nickname,
-                                                  style: Theme.of(context).textTheme.bodyText2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              // Spacer(),
-                                              IconButton(
-                                                padding: new EdgeInsets.all(0.0),
-                                                icon: Icon(
-                                                  Icons.close,
-                                                  size: 15,
-                                                  color: Colors.black,
-                                                ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    _players!.removeAt(index);
-                                                  });
-                                                },
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned.fill(
-                                bottom: 30,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: FloatingActionButton(
-                                    backgroundColor: Theme.of(context).accentColor,
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      _onAddPlayer();
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
+                    MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer)
                   ],
                 ),
               ),

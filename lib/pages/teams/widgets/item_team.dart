@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
+import 'package:form_it/widgets/power.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 
@@ -34,20 +35,7 @@ class ItemTeam extends StatelessWidget {
                   Positioned(
                     top: 13,
                     left: 13,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          child: SvgPicture.asset("assets/power.svg"),
-                        ),
-                        Text(
-                          team.power.toString(),
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
+                    child: Power(power: team.power),
                   ),
                   Positioned(
                     top: 0,

@@ -7,6 +7,7 @@ import 'package:form_it/logic/blocs/people/people_state.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
 import 'package:form_it/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
 
 import 'package:form_it/pages/teams/widgets/widgets.dart';
@@ -25,8 +26,9 @@ class TeamsPage extends StatelessWidget {
               if (state is PeopleLoaded) {
                 players = state.people;
               }
-              return AddEditTeamScreen(
-                players: players,
+              return Provider<List<Player>>.value(
+                value: players,
+                child: AddEditTeamScreen(
                 onSave: (name, players) {
                   BlocProvider.of<TeamsBloc>(context).add(
                     UpdateTeam(
@@ -36,7 +38,7 @@ class TeamsPage extends StatelessWidget {
                 },
                 isEditing: true,
                 team: team,
-              );
+              ));
             });
           },
         ),

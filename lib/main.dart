@@ -5,5 +5,5 @@ import 'package:form_it/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(FormItApp());
+  runApp(FormarApp());
 }

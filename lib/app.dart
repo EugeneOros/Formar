@@ -19,16 +19,16 @@ import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/widgets/app_scroll_behavior.dart';
 import 'package:form_it/logic/localizations/constants.dart';
+import 'package:provider/provider.dart';
 
 import 'package:repositories/repositories.dart';
 
-
-class FormItApp extends StatefulWidget {
+class FormarApp extends StatefulWidget {
   @override
-  _FormItAppState createState() => _FormItAppState();
+  _FormarAppState createState() => _FormarAppState();
 }
 
-class _FormItAppState extends State<FormItApp> {
+class _FormarAppState extends State<FormarApp> {
   final UserRepository _userRepository = UserRepository();
   final PlayersRepository _peopleRepository = FirebasePlayersRepository();
 
@@ -98,17 +98,30 @@ class _FormItAppState extends State<FormItApp> {
             if (state is PeopleLoaded) {
               players = state.people;
             }
-            return AddEditTeamScreen(
-              players: players,
-              onSave: (name, players) {
-                BlocProvider.of<TeamsBloc>(context).add(
-                  AddTeam(
-                    Team(name: name!, players: players),
-                  ),
-                );
-              },
-              isEditing: false,
+            return Provider<List<Player>>.value(
+              value: players,
+              child: AddEditTeamScreen(
+                onSave: (name, players) {
+                  BlocProvider.of<TeamsBloc>(context).add(
+                    AddTeam(
+                      Team(name: name!, players: players),
+                    ),
+                  );
+                },
+                isEditing: false,
+              ),
             );
+            // return AddEditTeamScreen(
+            //   players: players,
+            //   onSave: (name, players) {
+            //     BlocProvider.of<TeamsBloc>(context).add(
+            //       AddTeam(
+            //         Team(name: name!, players: players),
+            //       ),
+            //     );
+            //   },
+            //   isEditing: false,
+            // );
           });
         },
       };
@@ -161,48 +174,6 @@ class _FormItAppState extends State<FormItApp> {
 
     return MultiBlocProvider(
       providers: _getBlocProviders(),
-      // providers: [
-      //   BlocProvider<AuthenticationBloc>(
-      //     create: (BuildContext context) {
-      //       final authBloc = AuthenticationBloc(authService: _userRepository);
-      //       authBloc.add(AppStarted());
-      //       return authBloc;
-      //     },
-      //   ),
-      //   BlocProvider<PeopleBloc>(
-      //     lazy: false,
-      //     create: (context) {
-      //       return PeopleBloc(
-      //         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-      //         peopleRepository: _peopleRepository,
-      //       )..add(LoadPeople());
-      //     },
-      //   ),
-      //   BlocProvider<FilteredPeopleBloc>(
-      //     create: (context) => FilteredPeopleBloc(
-      //       peopleBloc: BlocProvider.of<PeopleBloc>(context),
-      //     ),
-      //   ),
-      //   BlocProvider<TeamsBloc>(
-      //     create: (context) {
-      //       return TeamsBloc(
-      //         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-      //         teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
-      //       )..add(LoadTeams());
-      //     },
-      //   ),
-      //   BlocProvider<SettingsBloc>(
-      //     create: (context) {
-      //       return SettingsBloc(
-      //         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-      //         settingsRepository: FirebaseSettingsRepository(),
-      //       )..add(LoadSettings());
-      //     },
-      //   ),
-      //   BlocProvider<TabBloc>(
-      //     create: (context) => TabBloc(),
-      //   ),
-      // ],
       child: MaterialApp(
         title: "Formar",
         color: Colors.white,

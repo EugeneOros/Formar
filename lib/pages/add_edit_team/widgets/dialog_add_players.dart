@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
-class AddPlayersList extends StatefulWidget {
+class DialogAddPlayers extends StatefulWidget {
   final List<Player> players;
   final List<Player>? playersAdded;
 
   late final List<CheckBoxListTileModel> checkBoxListTileModel;
 
-  AddPlayersList({Key? key, required this.players, this.playersAdded}) : super(key: key) {
+  DialogAddPlayers({Key? key, required this.players, this.playersAdded}) : super(key: key) {
     checkBoxListTileModel = CheckBoxListTileModel.getFromPlayers(players, playersAdded);
   }
 
@@ -21,10 +21,10 @@ class AddPlayersList extends StatefulWidget {
   }
 
   @override
-  _AddPlayersListState createState() => _AddPlayersListState();
+  _DialogAddPlayersState createState() => _DialogAddPlayersState();
 }
 
-class _AddPlayersListState extends State<AddPlayersList> {
+class _DialogAddPlayersState extends State<DialogAddPlayers> {
   TextEditingController editingController = TextEditingController();
 
   List<CheckBoxListTileModel> items = [];
@@ -63,7 +63,6 @@ class _AddPlayersListState extends State<AddPlayersList> {
     var borderSearch = UnderlineInputBorder(
       borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
     );
-    // items.addAll(widget.checkBoxListTileModel);
     return Container(
       constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
       height: MediaQuery.of(context).size.height / 2,

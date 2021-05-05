@@ -81,7 +81,6 @@ class _LevelPickerState extends State<LevelPicker> {
                 value: widget.level.index.toDouble(),
                 onChanged: (double newLevelIndex) {
                   widget.onLevelChanged(Level.values[newLevelIndex.toInt()]);
-                  // onLevelChanged(Level.values[newLevelIndex.toInt()]);
                 },
                 divisions: 4,
                 min: 0,
