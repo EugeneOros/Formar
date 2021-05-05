@@ -10,6 +10,7 @@ import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
+import 'package:form_it/pages/add_edit_tournament/view/add_edit_tournament_page.dart';
 
 import 'package:form_it/pages/splash/splash_screen.dart';
 import 'package:form_it/pages/authenticate/view/login_page.dart';
@@ -65,7 +66,6 @@ class _FormarAppState extends State<FormarApp> {
                   child: LoginScreen(),
                 );
               } else if (state is AuthenticationStateAuthenticated) {
-                //todo
                 BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
                 return HomeScreen(email: state.user!.email ?? "");
               }
@@ -111,18 +111,10 @@ class _FormarAppState extends State<FormarApp> {
                 isEditing: false,
               ),
             );
-            // return AddEditTeamScreen(
-            //   players: players,
-            //   onSave: (name, players) {
-            //     BlocProvider.of<TeamsBloc>(context).add(
-            //       AddTeam(
-            //         Team(name: name!, players: players),
-            //       ),
-            //     );
-            //   },
-            //   isEditing: false,
-            // );
           });
+        },
+        "/add_tournament": (BuildContext context) {
+          return AddEditTournamentPage();
         },
       };
     }

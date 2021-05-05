@@ -26,7 +26,6 @@ class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
-
 }
 
 class _AppTopBarState extends State<AppTopBar> {
@@ -82,7 +81,7 @@ class _AppTopBarState extends State<AppTopBar> {
             BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
               builder: (context, state) {
                 VisibilityFilter currentFilter = VisibilityFilter.all;
-                if(state is FilteredPeopleLoaded){
+                if (state is FilteredPeopleLoaded) {
                   currentFilter = state.activeFilter;
                 }
                 return SizedBox(
@@ -120,11 +119,13 @@ class _AppTopBarState extends State<AppTopBar> {
                       ),
                       PopupMenuItem<VisibilityFilter>(
                         value: VisibilityFilter.active,
-                        child: Text(AppLocalizations.of(context)!.active, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                        child:
+                            Text(AppLocalizations.of(context)!.active, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
                       ),
                       PopupMenuItem<VisibilityFilter>(
                         value: VisibilityFilter.inactive,
-                        child: Text(AppLocalizations.of(context)!.inactive, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
+                        child:
+                            Text(AppLocalizations.of(context)!.inactive, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white)),
                       ),
                     ],
                   ),
@@ -226,7 +227,9 @@ class _AppTopBarState extends State<AppTopBar> {
                                       padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 0)),
                                     ),
                                     onPressed: () {
-                                      BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers, defaultReplacementName: AppLocalizations.of(context)!.replacement, defaultTeamName: AppLocalizations.of(context)!.team));
+                                      BlocProvider.of<TeamsBloc>(context).add(FormTeams(true, counterTeamMembers,
+                                          defaultReplacementName: AppLocalizations.of(context)!.replacement,
+                                          defaultTeamName: AppLocalizations.of(context)!.team));
                                       Navigator.of(context).pop();
                                     },
                                   ),
@@ -240,7 +243,9 @@ class _AppTopBarState extends State<AppTopBar> {
                                       ),
                                       style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 0))),
                                       onPressed: () {
-                                        BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers, defaultReplacementName: AppLocalizations.of(context)!.replacement, defaultTeamName: AppLocalizations.of(context)!.team));
+                                        BlocProvider.of<TeamsBloc>(context).add(FormTeams(false, counterTeamMembers,
+                                            defaultReplacementName: AppLocalizations.of(context)!.replacement,
+                                            defaultTeamName: AppLocalizations.of(context)!.team));
                                         Navigator.of(context).pop();
                                       },
                                     ),
@@ -275,7 +280,15 @@ class _AppTopBarState extends State<AppTopBar> {
             }),
           ];
         case AppTab.tournament:
-          return [];
+          return [
+            IconButtonAppBar(
+              icon: Icons.add,
+              tooltip: AppLocalizations.of(context)!.addTeam,
+              onPressed: () {
+                Navigator.of(context).pushNamed("/add_tournament");
+              },
+            )
+          ];
         case AppTab.settings:
           return [];
       }
