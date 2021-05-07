@@ -30,12 +30,19 @@ class TabSelector extends StatelessWidget {
         case AppTab.players:
           return BoxDecoration(
             color: _getBackgroundColor(activeTab),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 7,
+              )
+            ],
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                Theme.of(context).accentColor,
                 Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
               ],
             ),
           );

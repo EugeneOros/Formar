@@ -94,7 +94,7 @@ class _AppTopBarState extends State<AppTopBar> {
                     // child: IconButtonAppBar(onPressed: (){}, icon: Icons.filter_list_rounded),
                     icon: Icon(
                       Icons.filter_list_rounded,
-                      color: Colors.black,
+                      color: currentFilter == VisibilityFilter.all ? Colors.black : Theme.of(context).primaryColorDark,
                     ),
                     shape: _ShapedWidgetBorder(padding: 10, borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     padding: EdgeInsets.all(0),
@@ -294,15 +294,61 @@ class _AppTopBarState extends State<AppTopBar> {
       }
     }
 
-    return AppBar(
-      // primary: false,
-      titleSpacing: 0,
-      elevation: 0.0,
-      toolbarHeight: 60,
-      shadowColor: Colors.transparent,
-      backgroundColor: widget.activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
-      title: logoSearch..state.closeSearch(widget.activeTab),
-      actions: getActions(widget.activeTab),
+    BoxDecoration? _getDecoration(AppTab activeTab) {
+      switch (activeTab) {
+        case AppTab.settings:
+        case AppTab.players:
+          return BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 7,
+              )
+            ],
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+                // Theme.of(context).primaryColor,
+              ],
+            ),
+          );
+        case AppTab.teams:
+          return BoxDecoration(
+            color: Theme.of(context).accentColor,
+          );
+        case AppTab.tournament:
+          return BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          );
+        // case AppTab.settings:
+        //   return BoxDecoration(
+        //     color: Theme.of(context).primaryColor,
+        //   );
+      }
+    }
+
+    return PreferredSize(
+      preferredSize: Size.fromHeight(50.0),
+      child: Stack(children: [
+        Container(
+          decoration: _getDecoration(widget.activeTab),
+        ),
+        AppBar(
+          // primary: false,
+          titleSpacing: 0,
+          elevation: 0.0,
+          toolbarHeight: 60,
+          shadowColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          // backgroundColor: widget.activeTab == AppTab.teams ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
+          title: logoSearch..state.closeSearch(widget.activeTab),
+          actions: getActions(widget.activeTab),
+        ),
+      ]),
     );
   }
 }
