@@ -12,7 +12,7 @@ class ItemAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: drawDivider ? BoxDecoration(border: Border(right: borderSideDivider)) : null,
+      // decoration: drawDivider ? BoxDecoration(border: Border(right: borderSideDivider)) : null,
       height: 35,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

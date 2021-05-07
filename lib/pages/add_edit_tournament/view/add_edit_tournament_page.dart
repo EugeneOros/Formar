@@ -8,6 +8,8 @@ import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_neumorphic_null_safety/generated/i18n.dart';
 
 class AddEditTournamentPage extends StatefulWidget {
   @override
@@ -70,117 +72,48 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             ),
           )
         ],
-        // bottom: PreferredSize(
-        //   preferredSize: Size(100,100),
-        //   child: Container(
-        //     padding: EdgeInsets.all(100),
-        //     child: TabBar(
-        //       controller: _tabController,
-        //       tabs: [
-        //         Tab(icon: Icon(Icons.directions_car)),
-        //         Tab(icon: Icon(Icons.directions_transit)),
-        //         Tab(icon: Icon(Icons.directions_bike)),
-        //         Tab(icon: Icon(Icons.directions_bike)),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // bottom: PreferredSize(
-        //   preferredSize: Size(50, 50),
-        //   child: Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-        //     child: GNav(
-        //         rippleColor: Colors.white,
-        //         // tab button ripple color when pressed
-        //         hoverColor: Colors.white,
-        //         // tab button hover color
-        //         haptic: true,
-        //         // haptic feedback
-        //         tabBorderRadius: 30,
-        //         tabActiveBorder: Border.all(color: Colors.transparent, width: 1),
-        //         // tab button border
-        //         tabBorder: Border.all(color: Colors.transparent, width: 1),
-        //         // tab button border
-        //         tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0), blurRadius: 8)],
-        //         // tab button shadow
-        //         curve: Curves.easeInOut,
-        //         // tab animation curves
-        //         duration: Duration(milliseconds: 800),
-        //         // tab animation duration
-        //         gap: 8,
-        //         // the tab button gap between icon and text
-        //         color: color,
-        //         // unselected icon color
-        //         activeColor: Color(0xffffc2f1),
-        //         // selected icon and text color
-        //         iconSize: 20,
-        //         // tab button icon size
-        //         tabBackgroundColor: Colors.white,
-        //         // selected tab background color
-        //         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        //         selectedIndex: _selectedIndex,
-        //         onTabChange: (index) {
-        //           setState(() {
-        //             _tabController.animateTo(index);
-        //             // DefaultTabController.of(context)!.animateTo(2);
-        //             _selectedIndex = index;
-        //           });
-        //         },
-        //         tabs: [
-        //           GButton(
-        //             icon: Icons.info,
-        //             text: 'Info',
-        //           ),
-        //           GButton(
-        //             icon: Icons.people,
-        //             text: 'Teams',
-        //           ),
-        //           GButton(
-        //             icon: Icons.event,
-        //             text: 'Matches',
-        //           ),
-        //           GButton(
-        //             icon: Icons.stacked_bar_chart,
-        //             text: 'Statistic',
-        //           )
-        //         ]),
-        //   ),
-        // ),
       ),
       body: Stack(
         children: [
           TabBarView(controller: _tabController, children: [
             Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white,
-                      Colors.white,
-                      Theme.of(context).primaryColor,
-                    ],
-                  ),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.white,
+                    Colors.white,
+                  ],
                 ),
-                child: Text("hi")),
+              ),
+              child:
+              NeumorphicIcon(
+                Icons.add_circle,
+                size: 80,
+              ),
+            ),
             Icon(Icons.movie),
             Icon(Icons.games),
             Icon(Icons.movie),
           ]),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            isTop: true,
-          ),
+          // FadeEndLIstView(
+          //   height: 30,
+          //   width: MediaQuery.of(context).size.width,
+          //   color: Colors.white,
+          //   isTop: true,
+          // ),
           FadeEndLIstView(
             height: 30,
             width: MediaQuery.of(context).size.width,
             color: Theme.of(context).primaryColor,
             isTop: false,
           ),
-          TabBarTournament(controller: _tabController,)
+          TabBarTournament(
+            controller: _tabController,
+          )
         ],
       ),
     );
