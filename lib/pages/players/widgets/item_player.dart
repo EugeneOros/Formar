@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -150,7 +151,18 @@ class PlayerItem extends StatelessWidget {
               ),
               Transform.scale(
                 scale: 0.8,
-                child: CupertinoSwitch(
+                child:
+                // NeumorphicSwitch(
+                //   value: player.available,
+                //   onChanged: onSwitchChanged,
+                //   style: NeumorphicSwitchStyle(
+                //     activeTrackColor: Colors.black,
+                //     inactiveTrackColor: Colors.grey[200],
+                //     activeThumbColor: Colors.grey[200],
+                //     inactiveThumbColor: Colors.grey[200],
+                //   ),
+                // )
+                CupertinoSwitch(
                   activeColor: Colors.black,
                   value: player.available,
                   onChanged: onSwitchChanged,

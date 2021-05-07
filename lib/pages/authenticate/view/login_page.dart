@@ -111,6 +111,7 @@ class _LoginState extends State<LoginScreen> {
                                     ? null
                                     : AppLocalizations.of(context)!.errorEmail,
                               ),
+                              SizedBox(height: 20.0),
                               RoundedPasswordField(
                                 controller: _passwordController,
                                 validator: (_) => loginState.isPasswordValid

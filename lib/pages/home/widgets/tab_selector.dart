@@ -1,3 +1,4 @@
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/palette.dart';
 import 'package:form_it/logic/models/app_tab.dart';
@@ -22,9 +23,40 @@ class TabSelector extends StatelessWidget {
       }
     }
 
+    BoxDecoration? _getDecoration(AppTab activeTab) {
+      switch (activeTab) {
+        case (AppTab.settings):
+          return null;
+        case AppTab.players:
+          return BoxDecoration(
+            color: _getBackgroundColor(activeTab),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Theme.of(context).accentColor,
+                Theme.of(context).primaryColor,
+              ],
+            ),
+          );
+        case AppTab.teams:
+          return BoxDecoration(
+            color: _getBackgroundColor(activeTab),
+          );
+        case AppTab.tournament:
+          return BoxDecoration(
+            color: _getBackgroundColor(activeTab),
+          );
+        case AppTab.settings:
+          return BoxDecoration(
+            color: _getBackgroundColor(activeTab),
+          );
+      }
+    }
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 5),
-      decoration: BoxDecoration(color: _getBackgroundColor(activeTab)),
+      decoration: _getDecoration(activeTab),
       child: BottomNavigationBar(
         elevation: 0.0,
         iconSize: 20,
