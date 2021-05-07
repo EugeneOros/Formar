@@ -94,11 +94,6 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
           child: Stack(
             children: [
-              FadeEndLIstView(
-                height: 30,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).accentColor,
-              ),
               Form(
                 key: _formKey,
                 child: ListView(
@@ -127,6 +122,11 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                     MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer)
                   ],
                 ),
+              ),
+              FadeEndLIstView(
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).accentColor,
               ),
               FadeEndLIstView(
                 height: 30,

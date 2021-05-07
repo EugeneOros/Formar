@@ -48,7 +48,7 @@ class _FormarAppState extends State<FormarApp> {
           bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
           bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
           subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
-          subtitle2: TextStyle(fontSize: 11, color: Colors.black),
+          subtitle2: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: Colors.black),
           button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4)),
           caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black),
         ),
