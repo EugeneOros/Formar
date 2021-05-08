@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
+import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
@@ -69,7 +70,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
         children: [
           TabBarView(controller: _tabController, children: [
             TournamentInfo(),
-            Icon(Icons.movie),
+            TournamentTeams(),
             Icon(Icons.games),
             Icon(Icons.movie),
           ]),
@@ -79,12 +80,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             color: Theme.of(context).primaryColorLight,
             isTop: true,
           ),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).accentColor,
-            isTop: false,
-          ),
+          // FadeEndLIstView(
+          //   height: 30,
+          //   width: MediaQuery.of(context).size.width,
+          //   color: Theme.of(context).accentColor,
+          //   isTop: false,
+          // ),
           TabBarTournament(
             controller: _tabController,
           )

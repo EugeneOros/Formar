@@ -91,11 +91,11 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
             ],
           ),
         ),
-        child: Container(
-          constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
-          child: Stack(
-            children: [
-              Form(
+        child: Stack(
+          children: [
+            Container(
+              constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+              child: Form(
                 key: _formKey,
                 child: ListView(
                   children: [
@@ -124,19 +124,19 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                   ],
                 ),
               ),
-              FadeEndLIstView(
-                height: 30,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColorLight,
-              ),
-              FadeEndLIstView(
-                height: 30,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColor,
-                isTop: false,
-              ),
-            ],
-          ),
+            ),
+            FadeEndLIstView(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColorLight,
+            ),
+            FadeEndLIstView(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColor,
+              isTop: false,
+            ),
+          ],
         ),
       ),
     );

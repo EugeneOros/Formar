@@ -92,7 +92,6 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.center,
-        constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -106,34 +105,37 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
           ),
         ),
         child: Stack(children: [
-          Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20.0),
-                  child: Text(
-                    isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
-                    style: Theme.of(context).textTheme.headline1,
-                    textAlign: TextAlign.center,
+          Container(
+            constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20.0),
+                    child: Text(
+                      isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
+                      style: Theme.of(context).textTheme.headline1,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: RoundedInputField(
-                    autofocus: !isEditing,
-                    initialValue: isEditing ? widget.person!.nickname : '',
-                    onSaved: (value) => _nickname = value,
-                    hintText: AppLocalizations.of(context)!.enterNickname,
-                    validator: (val) {
-                      return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: RoundedInputField(
+                      autofocus: !isEditing,
+                      initialValue: isEditing ? widget.person!.nickname : '',
+                      onSaved: (value) => _nickname = value,
+                      hintText: AppLocalizations.of(context)!.enterNickname,
+                      validator: (val) {
+                        return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
+                      },
+                    ),
                   ),
-                ),
-                LevelPicker(level: _level, onLevelChanged: onLevelChanged),
-                SexPicker(sex: _sex, onSexChanged: onSexChanged)
-              ],
+                  LevelPicker(level: _level, onLevelChanged: onLevelChanged),
+                  SexPicker(sex: _sex, onSexChanged: onSexChanged)
+                ],
+              ),
             ),
           ),
           FadeEndLIstView(
