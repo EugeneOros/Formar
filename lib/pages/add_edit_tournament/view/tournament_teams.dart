@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
+import 'package:form_it/widgets/emboss_container.dart';
+import 'package:form_it/widgets/round_icon_button.dart';
 
 class TournamentTeams extends StatelessWidget {
   List<String> teams = [
@@ -12,11 +14,11 @@ class TournamentTeams extends StatelessWidget {
     "Team 1",
     "Team2",
     "Team3",
-    "Team4","Team 1",
+    "Team4",
+    "Team 1",
     "Team2",
     "Team3",
     "Team4",
-
   ];
 
   @override
@@ -62,57 +64,35 @@ class TournamentTeams extends StatelessWidget {
                 ],
               ),
             ),
-
           ),
           SingleChildScrollView(
             child: Stack(
               children: [
-                Container(
+                EmbossContainer(
                   padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 90, bottom: 60),
-                  child: Neumorphic(
-                    style: NeumorphicStyle(
-                        depth: -1.5,
-                        intensity: 1,
-                        shape: NeumorphicShape.concave,
-                        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                        lightSource: LightSource.topLeft,
-                        color: Colors.white),
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.only(left: 10, top: 10),
-                        ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: teams.length,
-                          itemBuilder: (context, index) {
-                            return ItemTournamentTeams(
-                              text: teams[index],
-                              drawDivider: index == 0 ? false : true,
-                              secondaryWidget:
-                              NeumorphicButton(
-                                onPressed: () {},
-                                style: NeumorphicStyle(
-                                  depth: 1,
-                                  surfaceIntensity: 0.4,
-                                  color: Theme.of(context).primaryColorLight,
-                                  shape: NeumorphicShape.concave,
-                                  boxShape: NeumorphicBoxShape.circle(),
-                                ),
-                                padding: const EdgeInsets.all(7.0),
-                                child: Icon(
-                                  Icons.remove,
-                                  size: 13,
-                                ),
-                              ),
-                            );
-                            // teams.removeAt(index);
-                          },
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.only(left: 10, top: 10),
+                      ),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: teams.length,
+                        itemBuilder: (context, index) {
+                          return ItemTournamentTeams(
+                            text: teams[index],
+                            drawDivider: index == 0 ? false : true,
+                            secondaryWidget: RoundIconButton(
+                              icon: Icons.remove,
+                              onPressed: () {},
+                            ),
+                          );
+                          // teams.removeAt(index);
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 Positioned.fill(

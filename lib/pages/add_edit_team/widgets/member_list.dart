@@ -3,6 +3,7 @@ import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/pages/add_edit_team/widgets/item_member.dart';
 import 'package:form_it/widgets/app_dialog.dart';
+import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/power.dart';
 import 'package:form_it/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
@@ -87,53 +88,35 @@ class _MemberListState extends State<MemberList> {
           )
         : Stack(
             children: [
-              Container(
-                margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20, bottom: 60),
-                // padding: EdgeInsets.all(20.0),
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.all(Radius.circular(15)),
-                //   boxShadow: [
-                //     BoxShadow(
-                //       color: Colors.grey.withOpacity(0.3),
-                //       spreadRadius: 5,
-                //       blurRadius: 7,
-                //       offset: Offset(2, 2),
-                //     )
-                //   ],
-                //   color: Colors.white,
-                // ),
-                child: Neumorphic(
-                  style: NeumorphicStyle(
-                      depth: -1.5,
-                      intensity: 1,
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                      lightSource: LightSource.topLeft,
-                      color: Colors.white),
-                  child: Column(
-                    children: [
-                      Container(
-                          alignment: Alignment.topLeft, padding: EdgeInsets.only(left: 10, top: 10), child: Power(power: getPower(widget.members))),
-                      Padding(
-                        padding: const EdgeInsets.all(27).copyWith(top: 0),
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.members.length,
-                          itemBuilder: (context, index) {
-                            return ItemMember(
-                              member: widget.members[index],
-                              onDelete: () {
-                                setState(() {
-                                  widget.members.removeAt(index);
-                                });
-                              },
-                            );
-                          },
-                        ),
+              EmbossContainer(
+                name: "Members",
+                margin: EdgeInsets.only(bottom: 60),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.only(left: 10, top: 10),
+                      child: Power(power: getPower(widget.members)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(27).copyWith(top: 0),
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: widget.members.length,
+                        itemBuilder: (context, index) {
+                          return ItemMember(
+                            member: widget.members[index],
+                            onDelete: () {
+                              setState(() {
+                                widget.members.removeAt(index);
+                              });
+                            },
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Positioned.fill(

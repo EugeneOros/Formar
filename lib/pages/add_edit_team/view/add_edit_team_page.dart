@@ -111,6 +111,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: RoundedInputField(
+                        name: "Name",
                         autofocus: !isEditing,
                         initialValue: isEditing ? widget.team!.name : '',
                         onSaved: (value) => _name = value,
@@ -118,9 +119,13 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                         validator: (val) {
                           return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                         },
+                        radius: 15,
                       ),
                     ),
-                    MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer),
+                    )
                   ],
                 ),
               ),

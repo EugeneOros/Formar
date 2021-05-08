@@ -3,6 +3,8 @@ import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/counter_element.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
+import 'package:form_it/widgets/emboss_container.dart';
+import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_input_field.dart';
 
 class TournamentInfo extends StatelessWidget {
@@ -33,34 +35,14 @@ class TournamentInfo extends StatelessWidget {
         // color: Theme.of(context).primaryColorLight,
         child: ListView(
           children: [
-            SizedBox(height: 70),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5, top: 25, left: 10),
-              child: Text(
-                "Name",
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-            ),
+            SizedBox(height: 90),
             RoundedInputField(
+              name: "Name",
               hintText: "Enter name of tournament",
-              radius: 13,
+              radius: 15,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5, top: 25, left: 10),
-              child: Text(
-                "Points",
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-            ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                depth: -1.5,
-                intensity: 1,
-                shape: NeumorphicShape.concave,
-                boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(13)),
-                lightSource: LightSource.topLeft,
-                color: Colors.white, //Theme.of(context).primaryColorLight.withOpacity(0.4),
-              ),
+            EmbossContainer(
+              name: "Points",
               child: Column(
                 children: [
                   ItemTournamentInfo(
@@ -86,22 +68,8 @@ class TournamentInfo extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5, top: 25, left: 10),
-              child: Text(
-                "Other",
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-            ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                depth: -1.5,
-                intensity: 1,
-                shape: NeumorphicShape.concave,
-                boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(13)),
-                lightSource: LightSource.topLeft,
-                color: Colors.white, //Theme.of(context).primaryColorLight.withOpacity(0.4),
-              ),
+            EmbossContainer(
+              name: "Other",
               child: Column(
                 children: [
                   ItemTournamentInfo(
@@ -114,21 +82,7 @@ class TournamentInfo extends StatelessWidget {
                     secondaryWidget: Container(
                       width: 90,
                       alignment: Alignment.center,
-                      child: NeumorphicButton(
-                        onPressed: () {},
-                        style: NeumorphicStyle(
-                          depth: 1,
-                          surfaceIntensity: 0.4,
-                          color: Theme.of(context).primaryColorLight,
-                          shape: NeumorphicShape.concave,
-                          boxShape: NeumorphicBoxShape.circle(),
-                        ),
-                        padding: const EdgeInsets.all(7.0),
-                        child: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 13,
-                        ),
-                      ),
+                      child: RoundIconButton(icon: Icons.arrow_forward_ios_rounded, onPressed: () {},)
                     ),
                   ),
                   ItemTournamentInfo(

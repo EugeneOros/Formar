@@ -59,7 +59,7 @@ class _LevelPickerState extends State<LevelPicker> {
         children: [
           Text(
             AppLocalizations.of(context)!.level,
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.subtitle1,
           ),
           Expanded(
             child: SliderTheme(

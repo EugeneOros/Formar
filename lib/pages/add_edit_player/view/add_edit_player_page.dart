@@ -123,6 +123,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RoundedInputField(
+                      name: "Name",
                       autofocus: !isEditing,
                       initialValue: isEditing ? widget.person!.nickname : '',
                       onSaved: (value) => _nickname = value,
@@ -130,6 +131,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                       validator: (val) {
                         return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                       },
+                      radius: 15,
                     ),
                   ),
                   LevelPicker(level: _level, onLevelChanged: onLevelChanged),
