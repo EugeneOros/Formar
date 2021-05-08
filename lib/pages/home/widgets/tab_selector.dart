@@ -16,8 +16,8 @@ class TabSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color _getBackgroundColor(AppTab activeTab) {
-      if (activeTab == AppTab.settings) {
-        return Colors.transparent;
+      if (activeTab == AppTab.settings || activeTab == AppTab.tournament) {
+        return Theme.of(context).primaryColorLight;
       } else {
         return Theme.of(context).primaryColor;
       }
@@ -53,6 +53,13 @@ class TabSelector extends StatelessWidget {
         case AppTab.tournament:
           return BoxDecoration(
             color: _getBackgroundColor(activeTab),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 7,
+              )
+            ],
           );
         case AppTab.settings:
           return BoxDecoration(

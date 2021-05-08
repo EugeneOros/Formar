@@ -120,11 +120,12 @@ class PlayerItem extends StatelessWidget {
       actionPane: SlidableDrawerActionPane(),
       key: Key(player.id!),
       child: GestureDetector(
+
         onTap: _onEdit,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
-          decoration: drawDivider ? BoxDecoration(border: Border(top: borderSideDivider)) : null,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          // margin: EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(border: drawDivider ? Border(top: borderSideDivider) : null, color: Colors.white),
           child: Row(
             children: [
               Expanded(

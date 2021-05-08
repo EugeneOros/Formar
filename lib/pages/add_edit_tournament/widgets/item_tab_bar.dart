@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:form_it/config/constants.dart';
 
 class ItemAppBar extends StatelessWidget {
   final IconData icon;

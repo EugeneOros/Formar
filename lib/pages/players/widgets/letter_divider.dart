@@ -11,18 +11,19 @@ class LetterDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
-          depth: -3,
-          intensity: 0.6,
-          shape: NeumorphicShape.concave,
-          // intensity: 1,
-          surfaceIntensity: 1,
-          boxShape: NeumorphicBoxShape.rect(),
-          // depth: -15,
-          lightSource: LightSource.topLeft,
-          color: Theme.of(context).primaryColorLight.withOpacity(0.4)),
+        depth: -3,
+        intensity: 0.6,
+        shape: NeumorphicShape.flat,
+        // intensity: 1,
+        surfaceIntensity: 1,
+        boxShape: NeumorphicBoxShape.rect(),
+        // depth: -15,
+        lightSource: LightSource.topLeft,
+        color: Colors.transparent//Theme.of(context).primaryColorLight,
+      ),
       child: Container(
         height: 20,
-        color: Colors.grey[200],
+        // color: Colors.grey[200],
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

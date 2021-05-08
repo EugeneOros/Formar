@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_it/config/constants.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String? hintText;
@@ -17,6 +16,7 @@ class RoundedInputField extends StatelessWidget {
   final int lengthLimit;
   final double? height;
   final double? width;
+  final double radius;
 
   const RoundedInputField({
     Key? key,
@@ -31,18 +31,26 @@ class RoundedInputField extends StatelessWidget {
     this.lengthLimit = 40,
     this.height,
     this.width,
+    this.radius = 50,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    OutlineInputBorder borderRoundedTransparent = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      borderSide: BorderSide(
+        color: Colors.transparent,
+      ),
+    );
     return Neumorphic(
       style: NeumorphicStyle(
-          depth: -1.5,
-          intensity: 1,
-          shape: NeumorphicShape.concave,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
-          lightSource: LightSource.topLeft,
-          color: Theme.of(context).primaryColorLight.withOpacity(0.4)),
+        depth: -1.5,
+        intensity: 1,
+        shape: NeumorphicShape.concave,
+        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(radius)),
+        lightSource: LightSource.topLeft,
+        color: Theme.of(context).primaryColorLight.withOpacity(0.4),
+      ),
       child: Container(
         // decoration: roundedShadowDecoration,
         height: height,
@@ -60,29 +68,19 @@ class RoundedInputField extends StatelessWidget {
           controller: controller,
           cursorColor: Colors.black,
           validator: validator,
-          decoration: icon != null
-              ? InputDecoration(
+          decoration: InputDecoration(
                   filled: true,
                   fillColor: TextFieldFillColor,
                   hintText: hintText,
-                  contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                  prefixIcon: Icon(icon, color: Colors.black),
-                  // prefixIcon: icon != null ?  Icon(icon, color: Colors.black) : null,
+                  contentPadding: icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                  // prefixIcon: Icon(icon, color: Colors.black),
+                  prefixIcon: icon != null ?  Icon(icon, color: Colors.black) : null,
                   border: borderRoundedTransparent,
                   focusedBorder: borderRoundedTransparent,
                   enabledBorder: borderRoundedTransparent,
                   errorStyle: TextStyle(height: 0),
+                  hintStyle: Theme.of(context).textTheme.subtitle1,
                 )
-              : InputDecoration(
-                  filled: true,
-                  fillColor: TextFieldFillColor,
-                  hintText: hintText,
-                  contentPadding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                  border: borderRoundedTransparent,
-                  focusedBorder: borderRoundedTransparent,
-                  enabledBorder: borderRoundedTransparent,
-                  errorStyle: TextStyle(height: 0),
-                ),
         ),
       ),
     );

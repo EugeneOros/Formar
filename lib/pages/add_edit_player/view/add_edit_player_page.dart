@@ -64,7 +64,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
         elevation: 0.0,
         toolbarHeight: 50,
         shadowColor: Colors.transparent,
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).primaryColorLight,
         leading: IconButtonAppBar(
           icon: Icons.arrow_back_ios_rounded,
           onPressed: () => Navigator.pop(context, false),
@@ -98,10 +98,10 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomLeft,
             colors: [
-              Theme.of(context).accentColor,
+              Theme.of(context).primaryColorLight,
               Theme.of(context).primaryColor,
               Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor,
+              // Theme.of(context).accentColor,
             ],
           ),
         ),
@@ -139,7 +139,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
           FadeEndLIstView(
             height: 30,
             width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColorLight,
           ),
           FadeEndLIstView(
             height: 30,

@@ -322,7 +322,7 @@ class _AppTopBarState extends State<AppTopBar> {
           );
         case AppTab.tournament:
           return BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColorLight,
           );
         // case AppTab.settings:
         //   return BoxDecoration(

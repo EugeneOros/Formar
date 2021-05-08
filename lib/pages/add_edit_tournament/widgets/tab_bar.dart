@@ -17,78 +17,91 @@ class TabBarTournament extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Container(
-          decoration: BoxDecoration(boxShadow: [
-            // BoxShadow(
-            //   color: Colors.grey.withOpacity(0.3),
-            //   spreadRadius: 5,
-            //   blurRadius: 7,
-            //   offset: Offset(2, 2),
-            // )
-          ], borderRadius: BorderRadius.all(Radius.circular(50)), color: Colors.white),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            color: Theme.of(context).primaryColorLight,
+          ),
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           height: 50,
           child: Neumorphic(
             style: NeumorphicStyle(
-                depth: -3,
+                depth: 3,
                 intensity: 0.8,
                 shape: NeumorphicShape.concave,
                 // intensity: 1,
-                surfaceIntensity: 1,
+                surfaceIntensity: 0,
                 boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
                 // depth: -15,
                 lightSource: LightSource.topLeft,
-                color: Theme.of(context).primaryColorLight.withOpacity(0.4)),
-            child: TabBar(
-              indicatorPadding: EdgeInsets.all(4),
-              unselectedLabelColor: Theme.of(context).dividerColor,
-              labelColor: Colors.black,
-              indicator:
-              // NeumorphicDecoration(
-              //   shape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
-              //   isForeground: false,
-              //   renderingByPath: false,
-              //   splitBackgroundForeground: true,
-              //   style: NeumorphicStyle(
-              //       depth: 3,
-              //       intensity: 1,
-              //       shape: NeumorphicShape.concave,
-              //       surfaceIntensity: 3,
-              //       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
-              //       lightSource: LightSource.topLeft,
-              //       shadowLightColor:  Colors.white,
-              //       shadowDarkColor: Colors.grey[100],
-              //       color: Colors.white
-              //   ),
-              // ),
-              BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).accentColor,
+                // gradient: LinearGradient(
+                //   // begin: Alignment.centerLeft,
+                //   begin: Alignment.topCenter,
+                //   // end: Alignment.centerRight,
+                //   end: Alignment.bottomCenter,
+                //   colors: [
+                //     // Theme.of(context).primaryColor,
+                //     Theme.of(context).primaryColor,
+                //     Theme.of(context).accentColor,
+                //   ],
+                // ),
               ),
-              labelPadding: EdgeInsets.all(0),
-              controller: controller,
-              tabs: [
-                ItemAppBar(
-                  icon: FontAwesomeIcons.info,
-                  text: "Info",
-                  drawDivider: true,
+              child: TabBar(
+                indicatorPadding: EdgeInsets.all(4),
+                unselectedLabelColor: Colors.black,//Theme.of(context).dividerColor,
+                labelColor: Colors.black,
+                indicator:
+                    // NeumorphicDecoration(
+                    //   shape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+                    //   isForeground: false,
+                    //   renderingByPath: false,
+                    //   splitBackgroundForeground: true,
+                    //   style: NeumorphicStyle(
+                    //       depth: 3,
+                    //       intensity: 1,
+                    //       shape: NeumorphicShape.concave,
+                    //       surfaceIntensity: 3,
+                    //       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+                    //       lightSource: LightSource.topLeft,
+                    //       shadowLightColor:  Colors.white,
+                    //       shadowDarkColor: Colors.grey[100],
+                    //       color: Colors.white
+                    //   ),
+                    // ),
+                    BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Colors.white,
                 ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.users,
-                  text: "Teams",
-                  drawDivider: true,
-                ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.compressAlt,
-                  text: "Matches",
-                  drawDivider: true,
-                ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.chartBar,
-                  text: "Statistics",
-                  drawDivider: false,
-                ), // Tab(icon: FaIcon(FontAwesomeIcons.users)),
-                // Tab(icon: FaIcon(FontAwesomeIcons.chartBar)),
-              ],
+                labelPadding: EdgeInsets.all(0),
+                controller: controller,
+                tabs: [
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.info,
+                    text: "Info",
+                    drawDivider: true,
+                  ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.users,
+                    text: "Teams",
+                    drawDivider: true,
+                  ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.compressAlt,
+                    text: "Matches",
+                    drawDivider: true,
+                  ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.chartBar,
+                    text: "Statistics",
+                    drawDivider: false,
+                  ), // Tab(icon: FaIcon(FontAwesomeIcons.users)),
+                  // Tab(icon: FaIcon(FontAwesomeIcons.chartBar)),
+                ],
+              ),
             ),
           ),
         ),

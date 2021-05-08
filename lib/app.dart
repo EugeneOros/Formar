@@ -40,7 +40,8 @@ class _FormarAppState extends State<FormarApp> {
         brightness: Brightness.light,
         primaryColor: Color(0xffd1dbf1),
         accentColor: Color(0xffffdcf7),
-        primaryColorLight: Color(0xffe2ecf2),
+        primaryColorLight: Color(0xfff4f9fa),
+        primaryColorDark: Color(0xff7aa1f5),
         dividerColor: Colors.grey[400],
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),

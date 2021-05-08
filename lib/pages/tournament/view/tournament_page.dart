@@ -15,9 +15,9 @@ class TournamentPage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColorLight,
+              // Theme.of(context).accentColor,
+              Theme.of(context).primaryColorLight,
             ],
           ),
         ),
