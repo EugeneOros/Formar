@@ -75,7 +75,7 @@ class _MemberListState extends State<MemberList> {
 
     return widget.members.isEmpty
         ? Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: RoundedButton(
               text: AppLocalizations.of(context)!.addPlayers,
               textColor: Colors.black,

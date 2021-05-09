@@ -123,7 +123,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25),
                       child: MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer),
                     )
                   ],

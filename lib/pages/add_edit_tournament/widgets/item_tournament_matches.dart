@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/dependency.dart';
+
+class ItemTournamentMatches extends StatelessWidget {
+  final String team1;
+  final String team2;
+  final bool drawDivider;
+  final Widget? secondaryWidget;
+  final Color? color;
+
+  const ItemTournamentMatches({Key? key, required this.team1, required this.team2, this.drawDivider = false, this.secondaryWidget, this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: 50),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      decoration: BoxDecoration(border: drawDivider ?  Border(top: borderSideDivider) : null, color: color ?? Colors.white),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              team1,
+              style: Theme.of(context).textTheme.bodyText2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          // Spacer(),
+          NeumorphicButton(
+            onPressed: () {},
+            style: NeumorphicStyle(
+              depth: 1,
+              surfaceIntensity: 0.4,
+              color: Theme.of(context).primaryColorLight,
+              shape: NeumorphicShape.concave,
+              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 13),
+            child: Text(
+              "1 : 0",// "unknown",
+              style: Theme.of(context).textTheme.bodyText2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+
+          // Spacer(),
+          Expanded(
+            child: Text(
+              team2,
+              style: Theme.of(context).textTheme.bodyText2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.right,
+            ),
+          ),
+          // if (secondaryWidget != null) secondaryWidget!,
+        ],
+      ),
+    );
+  }
+}

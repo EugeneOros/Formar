@@ -32,11 +32,11 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
           depth: -1.5,
           intensity: 1,
           shape: NeumorphicShape.concave,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
           lightSource: LightSource.topLeft,
           color: Theme.of(context).primaryColorLight.withOpacity(0.4)),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: TextFormField(
           style: Theme.of(context).textTheme.bodyText2,
           controller: widget.controller,

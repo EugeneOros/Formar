@@ -69,7 +69,7 @@ class TournamentTeams extends StatelessWidget {
             child: Stack(
               children: [
                 EmbossContainer(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 90, bottom: 60),
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),
                   child: Column(
                     children: [
                       Container(
@@ -83,7 +83,7 @@ class TournamentTeams extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return ItemTournamentTeams(
                             text: teams[index],
-                            drawDivider: index == 0 ? false : true,
+                            // drawDivider: index == 0 ? false : true,
                             secondaryWidget: RoundIconButton(
                               icon: Icons.remove,
                               onPressed: () {},

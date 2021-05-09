@@ -27,7 +27,7 @@ class ItemMember extends StatelessWidget {
             ),
           ),
           // Spacer(),
-          RoundIconButton(icon: Icons.remove, onPressed: () {},),
+          RoundIconButton(icon: Icons.remove, onPressed: () => onDelete(),),
         ],
       ),
     );

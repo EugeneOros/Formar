@@ -32,7 +32,7 @@ class RoundedInputField extends StatelessWidget {
     this.lengthLimit = 40,
     this.height,
     this.width,
-    this.radius = 50, this.name,
+    this.radius = 15, this.name,
   }) : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class RoundedInputField extends StatelessWidget {
           name != null ? Padding(
             padding: const EdgeInsets.only(bottom: 5, left: 10),
             child: Text(
-              "Name",
+              name!,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ) : SizedBox(height: 0, width: 0,),

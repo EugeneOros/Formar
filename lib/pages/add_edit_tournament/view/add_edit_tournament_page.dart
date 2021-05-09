@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
+import 'package:form_it/pages/add_edit_tournament/view/tournament_statistic.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+
+import 'matches.dart';
 
 class AddEditTournamentPage extends StatefulWidget {
   @override
@@ -71,8 +74,8 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
           TabBarView(controller: _tabController, children: [
             TournamentInfo(),
             TournamentTeams(),
-            Icon(Icons.games),
-            Icon(Icons.movie),
+            Matches(),
+            TournamentStatistic(),
           ]),
           FadeEndLIstView(
             height: 50,

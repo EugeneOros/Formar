@@ -43,6 +43,7 @@ class TournamentInfo extends StatelessWidget {
             ),
             EmbossContainer(
               name: "Points",
+              padding: EdgeInsets.only(top: 25),
               child: Column(
                 children: [
                   ItemTournamentInfo(
@@ -70,6 +71,7 @@ class TournamentInfo extends StatelessWidget {
             ),
             EmbossContainer(
               name: "Other",
+              padding: EdgeInsets.only(top: 25),
               child: Column(
                 children: [
                   ItemTournamentInfo(

@@ -1,3 +1,4 @@
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:flutter/material.dart';
 import 'package:form_it/config/palette.dart';
@@ -54,18 +55,19 @@ class _LevelPickerState extends State<LevelPicker> {
     }
 
     return Padding(
-      padding: EdgeInsets.only(left: 40.0, right: 20),
+      padding: EdgeInsets.only(left: 10.0, top: 10),
       child: Row(
         children: [
           Text(
             AppLocalizations.of(context)!.level,
             style: Theme.of(context).textTheme.subtitle1,
           ),
+          SizedBox(width: 20),
           Expanded(
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 activeTrackColor: _getLevelColor(widget.level),
-                inactiveTrackColor: Colors.black,
+                inactiveTrackColor: Colors.white,
                 valueIndicatorTextStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
                 valueIndicatorShape: RectangularSliderValueIndicatorShape(),
                 trackHeight: 3.0,
@@ -75,8 +77,10 @@ class _LevelPickerState extends State<LevelPicker> {
                 inactiveTickMarkColor: Colors.transparent,
                 activeTickMarkColor: Colors.transparent,
                 overlayColor: Theme.of(context).accentColor.withAlpha(50),
+                trackShape: CustomTrackShape(),
               ),
-              child: Slider(
+              child:
+              Slider(
                 label: _getLevelName(widget.level),
                 value: widget.level.index.toDouble(),
                 onChanged: (double newLevelIndex) {
@@ -86,10 +90,28 @@ class _LevelPickerState extends State<LevelPicker> {
                 min: 0,
                 max: 4,
               ),
+
             ),
           ),
+          SizedBox(width: 5),
         ],
       ),
     );
+  }
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight!;
+    final double trackLeft = offset.dx;
+    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }

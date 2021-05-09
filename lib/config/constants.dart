@@ -12,7 +12,7 @@ const textInputDecoration = InputDecoration(
 );
 
 const borderRoundedTransparent = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+  borderRadius: BorderRadius.all(Radius.circular(15.0)),
   borderSide: BorderSide(
     color: Colors.transparent,
   ),

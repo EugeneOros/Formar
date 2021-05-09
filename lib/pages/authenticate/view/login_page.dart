@@ -76,6 +76,7 @@ class _LoginState extends State<LoginScreen> {
                     ),
                     child: Container(
                       constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
                       child: Form(
                         key: _formKey,
                         child: SingleChildScrollView(
@@ -120,6 +121,7 @@ class _LoginState extends State<LoginScreen> {
                               ),
                               SizedBox(height: size.height * 0.03),
                               RoundedButton(
+                                sizeRatio: 0.9,
                                 text: AppLocalizations.of(context)!.login,
                                 onPressed: _onLoginEmailAndPassword,
                               ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/widgets/app_check_box.dart';
+import 'package:flutter_neumorphic_null_safety/generated/i18n.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
 
@@ -94,8 +96,8 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
               shrinkWrap: false,
               itemCount: items.length,
               itemBuilder: (context, index) {
-                return CheckboxListTile(
-                  activeColor: Colors.black,
+                return ListTile(
+                  // activeColor: Colors.black,
                   title: Row(
                     children: [
                       PlayerIndicator(
@@ -111,27 +113,31 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // NeumorphicCheckbox(
-                      //   value: items[index].isCheck,
-                      //   onChanged: (val) {
-                      //     itemChange(val!, index);
-                      //   },
-                      //
-                      //   padding: EdgeInsets.all(3),
-                      //   style: NeumorphicCheckboxStyle(
-                      //     boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
-                      //     selectedColor: Theme.of(context).accentColor,
-                      //     disabledColor: Theme.of(context).dividerColor,
-                      //
-                      //   ),
-                      // )
+                      // Icon(
+                      //   NeumorphicIcons.check,
+                      //   color: iconColor,
+                      //   size: 20.0,
+                      // ),
+                      AppCheckbox(
+                        value: items[index].isCheck,
+                        onChanged: (val) {
+                          itemChange(val!, index);
+                        },
+                        padding: EdgeInsets.all(3),
+                        style: AppCheckboxStyle(
+                          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
+                          selectedColor: Theme.of(context).primaryColor,
+                          disabledColor: Theme.of(context).primaryColor,
+                          unselectedColor: Theme.of(context).primaryColorLight,
+                        ),
+                      )
                     ],
                   ),
 
-                  value: items[index].isCheck,
-                  onChanged: (val) {
-                    itemChange(val!, index);
-                  },
+                  // value: items[index].isCheck,
+                  // onChanged: (val) {
+                  //   itemChange(val!, index);
+                  // },
                 );
               },
             ),

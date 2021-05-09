@@ -14,9 +14,7 @@ class RoundIconButton extends StatelessWidget {
       style: NeumorphicStyle(
         depth: 1,
         surfaceIntensity: 0.4,
-        color: Theme
-            .of(context)
-            .primaryColorLight,
+        color: Theme.of(context).primaryColorLight,
         shape: NeumorphicShape.concave,
         boxShape: NeumorphicBoxShape.circle(),
       ),
@@ -26,6 +24,5 @@ class RoundIconButton extends StatelessWidget {
         size: 13,
       ),
     );
-
   }
 }
