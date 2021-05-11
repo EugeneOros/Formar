@@ -100,5 +100,20 @@
   "filter": "Фільтр",
   "removeAllTeams": "Видалити всі команди",
   "allPlayersInactive": "Всі гравці стануть неактивними",
-  "team": "Команда"
+  "team": "Команда",
+  "name": "Назва",
+  "sex": "Стать",
+  "nickname": "Ім'я/Nickname",
+  "members": "Гравці",
+  "info": "Інформація",
+  "statistic": "Статистика",
+  "other": "Інше",
+  "points": "Очки",
+  "pointsForWin": "Очки за перемогу",
+  "pointsForDraw": "Очки за нічию",
+  "pointsForLoss": "Очки за поразку",
+  "numbersOfEncounters": "Кількість зустрічей",
+  "enterNameOfTournament": "Введіть назву турніру",
+  "bonusPenaltyPoints": "Бонусні/штрафні очки",
+  "matches": "Матчі"
 }

@@ -122,7 +122,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                     ),
                   ),
                   RoundedInputField(
-                    name: "Name",
+                    name: AppLocalizations.of(context)!.nickname,
                     autofocus: !isEditing,
                     initialValue: isEditing ? widget.person!.nickname : '',
                     onSaved: (value) => _nickname = value,

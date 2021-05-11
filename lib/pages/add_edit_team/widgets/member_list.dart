@@ -5,6 +5,7 @@ import 'package:form_it/pages/add_edit_team/widgets/item_member.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/power.dart';
+import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
@@ -89,7 +90,7 @@ class _MemberListState extends State<MemberList> {
         : Stack(
             children: [
               EmbossContainer(
-                name: "Members",
+                name: AppLocalizations.of(context)!.members,
                 margin: EdgeInsets.only(bottom: 60),
                 child: Column(
                   children: [
@@ -123,54 +124,11 @@ class _MemberListState extends State<MemberList> {
                 bottom: 30,
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: FloatingActionButton(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    backgroundColor: Theme.of(context).accentColor,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      // decoration: BoxDecoration(
-                      //   color: Colors.white,
-                      //   shape: BoxShape.circle,
-                      //   boxShadow: [
-                      //     BoxShadow(
-                      //       color: Colors.white,
-                      //       offset: Offset(-4, -4),
-                      //       blurRadius: 10.0,
-                      //       spreadRadius: 1.0
-                      //     ),
-                      //     BoxShadow(
-                      //         color: Colors.grey[600]!,
-                      //         offset: Offset(4, 4),
-                      //         blurRadius: 10.0,
-                      //         spreadRadius: 1.0
-                      //     )
-                      //   ],
-                      //   gradient: LinearGradient(
-                      //     begin: Alignment.topLeft,
-                      //     end: Alignment.bottomRight,
-                      //     colors: [
-                      //       Color(0xfffffdf8),
-                      //       Color(0xffffddf8),
-                      //       Color(0xffffdff9),
-                      //       Color(0xffffdcf7),
-                      //     ],
-                      //     stops: [
-                      //       0.1,
-                      //       0.3,
-                      //       0.8,
-                      //       0.9,
-                      //     ]
-                      //   )
-                      // ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
-                    ),
-                    onPressed: () {
-                      _onAddPlayer();
-                    },
+                  child: RoundIconButton(
+                    icon: Icons.add,
+                    size: 60,
+                    color: Theme.of(context).accentColor,
+                    onPressed: _onAddPlayer,
                   ),
                 ),
               ),

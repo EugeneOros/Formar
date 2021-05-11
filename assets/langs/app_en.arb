@@ -300,5 +300,65 @@
  "team": "Team",
   "@team": {
     "description": ""
+  },
+  "name": "Name",
+  "@name": {
+    "description": ""
+  },
+  "sex": "Sex",
+  "@sex": {
+    "description": ""
+  },
+  "nickname": "Nickname",
+  "@namePerson": {
+    "description": ""
+  },
+  "members": "Members",
+  "@members": {
+    "description": ""
+  },
+  "info": "Info",
+  "@info": {
+    "description": ""
+  },
+  "statistic": "Statistic",
+  "@statistic": {
+    "description": ""
+  },
+  "other": "Other",
+  "@other": {
+    "description": ""
+  },
+  "points": "Points",
+  "@points": {
+    "description": ""
+  },
+  "pointsForWin": "Points for win",
+  "@pointsForWin": {
+    "description": ""
+  },
+  "pointsForDraw": "Points for draw",
+  "@pointsForDraw": {
+    "description": ""
+  },
+  "pointsForLoss": "Points for loss",
+  "@pointsForLoss": {
+    "description": ""
+  },
+  "numbersOfEncounters": "Numbers of encounters",
+  "@numbersOfEncounters": {
+    "description": ""
+  },
+  "enterNameOfTournament": "Enter name of tournament",
+  "@enterNameOfTournament": {
+    "description": ""
+  },
+  "bonusPenaltyPoints": "Bonus/penalty points",
+  "@bonusPenaltyPoints": {
+    "description": ""
+  },
+  "matches": "Matches",
+  "@matches": {
+    "description": ""
   }
 }

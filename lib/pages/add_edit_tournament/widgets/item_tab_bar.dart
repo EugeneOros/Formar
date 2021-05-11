@@ -19,7 +19,7 @@ class ItemAppBar extends StatelessWidget {
         children: [
           FaIcon(icon, size: 13),
           SizedBox(height: 5,),
-          Text(text, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w300))
+          Text(text, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300))
         ],
       ),
     );

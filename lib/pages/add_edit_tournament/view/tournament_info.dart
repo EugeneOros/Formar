@@ -37,30 +37,30 @@ class TournamentInfo extends StatelessWidget {
           children: [
             SizedBox(height: 90),
             RoundedInputField(
-              name: "Name",
-              hintText: "Enter name of tournament",
+              name: AppLocalizations.of(context)!.name,
+              hintText: AppLocalizations.of(context)!.enterNameOfTournament,
               radius: 15,
             ),
             EmbossContainer(
-              name: "Points",
+              name: AppLocalizations.of(context)!.points,
               padding: EdgeInsets.only(top: 25),
               child: Column(
                 children: [
                   ItemTournamentInfo(
-                    text: "Points for win",
+                    text: AppLocalizations.of(context)!.pointsForWin,
                     secondaryWidget: CounterElement(
                       counter: 2,
                     ),
                   ),
                   ItemTournamentInfo(
-                    text: "Points for draw",
+                    text: AppLocalizations.of(context)!.pointsForDraw,
                     secondaryWidget: CounterElement(
                       counter: 1,
                     ),
                     drawDivider: true,
                   ),
                   ItemTournamentInfo(
-                    text: "Points for loss",
+                    text: AppLocalizations.of(context)!.pointsForLoss,
                     secondaryWidget: CounterElement(
                       counter: -1,
                     ),
@@ -70,16 +70,16 @@ class TournamentInfo extends StatelessWidget {
               ),
             ),
             EmbossContainer(
-              name: "Other",
+              name: AppLocalizations.of(context)!.other,
               padding: EdgeInsets.only(top: 25),
               child: Column(
                 children: [
                   ItemTournamentInfo(
-                    text: "Number of encounters",
+                    text: AppLocalizations.of(context)!.numbersOfEncounters,
                     secondaryWidget: CounterElement(counter: 1),
                   ),
                   ItemTournamentInfo(
-                    text: "Bonus/penalty points",
+                    text: AppLocalizations.of(context)!.bonusPenaltyPoints,
                     drawDivider: true,
                     secondaryWidget: Container(
                       width: 90,

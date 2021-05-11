@@ -54,22 +54,22 @@ class TabBarTournament extends StatelessWidget {
               tabs: [
                 ItemAppBar(
                   icon: FontAwesomeIcons.info,
-                  text: "Info",
+                  text: AppLocalizations.of(context)!.info,
                   drawDivider: true,
                 ),
                 ItemAppBar(
                   icon: FontAwesomeIcons.users,
-                  text: "Teams",
+                  text: AppLocalizations.of(context)!.teams,
                   drawDivider: true,
                 ),
                 ItemAppBar(
                   icon: FontAwesomeIcons.compressAlt,
-                  text: "Matches",
+                  text: AppLocalizations.of(context)!.matches,
                   drawDivider: true,
                 ),
                 ItemAppBar(
                   icon: FontAwesomeIcons.chartBar,
-                  text: "Statistics",
+                  text: AppLocalizations.of(context)!.statistic,
                   drawDivider: false,
                 ),
               ],

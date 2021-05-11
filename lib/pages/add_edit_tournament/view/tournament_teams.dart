@@ -99,20 +99,12 @@ class TournamentTeams extends StatelessWidget {
                   bottom: 30,
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: FloatingActionButton(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      backgroundColor: Theme.of(context).accentColor,
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
-                      ),
-                      onPressed: () {
-                        // _onAddPlayer();
-                      },
+                    child:
+                    RoundIconButton(
+                      icon: Icons.add,
+                      size: 60,
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {},
                     ),
                   ),
                 ),
