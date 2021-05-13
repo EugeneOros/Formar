@@ -41,7 +41,7 @@ class TabBarTournament extends StatelessWidget {
                   depth: 1,
                   intensity: 1,
                   surfaceIntensity: 0.2,
-                  color: Theme.of(context).primaryColorLight,
+                  color: Colors.white,
                   shape: NeumorphicShape.concave,
                   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   lightSource: LightSource.topLeft,

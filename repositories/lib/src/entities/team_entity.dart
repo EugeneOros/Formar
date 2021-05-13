@@ -16,7 +16,6 @@ class TeamEntity extends Equatable {
     };
   }
 
-
   static TeamEntity fromJson(Map<String, Object> json) {
     return TeamEntity(
       json['id'] as String?,
