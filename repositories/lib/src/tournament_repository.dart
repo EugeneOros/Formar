@@ -1,4 +1,12 @@
 
-abstract class TournamentRepository{
+import 'package:repositories/repositories.dart';
 
+abstract class TournamentRepository{
+  Stream<List<Tournament>> tournament();
+
+  Future<void> updateTournament(Tournament tournament);
+
+  Future<void> addTournament(Tournament tournament);
+
+  Future<void> deleteTournament(Tournament tournament);
 }

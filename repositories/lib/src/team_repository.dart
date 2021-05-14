@@ -17,4 +17,7 @@ abstract class TeamRepository {
 
   Future<void> deleteAll();
 
+  Future getTeam(String teamID);
+
+  Future<List<Team>> currentTeamsList();
 }

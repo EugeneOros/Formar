@@ -31,7 +31,8 @@ class FirebaseTeamRepository implements TeamRepository {
       teams = _createTeams((people.length / numMembers).floor(), (await teamsCollection.get()).docs.length, defaultTeamName: defaultTeamName);
       teams = _sortPeopleToTeams(people.sublist(0, people.length - (people.length % numMembers)), teams);
       if (people.length % numMembers != 0 && people.length / numMembers > 2) {
-        teams.add(_createTeamReplacement(people.sublist(people.length - (people.length % numMembers), people.length), defaultReplacementName: defaultReplacementName));
+        teams.add(_createTeamReplacement(
+            people.sublist(people.length - (people.length % numMembers), people.length), defaultReplacementName: defaultReplacementName));
       }
     } else {
       teams = _createTeams(max((people.length / numMembers).ceil(), 2), (await teamsCollection.get()).docs.length, defaultTeamName: defaultTeamName);
@@ -93,7 +94,8 @@ class FirebaseTeamRepository implements TeamRepository {
     people = people.reversed.toList();
     List<Player> result = [];
     for (Level level in Level.values) {
-      result.addAll(people.where((element) => element.level == level).toList()..shuffle());
+      result.addAll(people.where((element) => element.level == level).toList()
+        ..shuffle());
     }
     return result.reversed.toList();
   }
@@ -147,4 +149,27 @@ class FirebaseTeamRepository implements TeamRepository {
     return teams;
   }
 
+  Future<List<Team>> currentTeamsList() async {
+    User user = _auth.currentUser!;
+    CollectionReference teamsCollection = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("teams");
+    List<Future<Team>> teams;
+    QuerySnapshot querySnapshot = await teamsCollection.get();
+    teams = querySnapshot.docs.map((doc) async {
+      TeamEntity teamEntity = TeamEntity.fromSnapshot(doc);
+      return Team.fromEntity(teamEntity.id, teamEntity.name, await _getPeopleByIds(teamEntity.playersIds!));
+    }).toList();
+
+    return Future.wait(teams);
+  }
+
+
+  Future getTeam(String teamID) async {
+    List<Team> teams = await currentTeamsList();
+    for (Team t in teams) {
+      if (t.id == teamID) {
+        return t;
+      }
+    }
+    return null;
+  }
 }

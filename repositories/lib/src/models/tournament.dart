@@ -41,23 +41,15 @@ class Tournament {
     return teamsIds;
   }
 
-  static Tournament fromEntity(
-    String? id,
-    String name,
-    List<Team> teams,
-    int winPoints,
-    int drawPoints,
-    int lossPoints,
-    int encountersNum,
-  ) {
+  static Tournament fromEntity(TournamentEntity tournamentEntity, List<Team> teams) {
     return Tournament(
-      id: id,
-      name: name,
+      id: tournamentEntity.id,
+      name: tournamentEntity.name,
       teams: teams,
-      winPoints: winPoints,
-      drawPoints: drawPoints,
-      lossPoints: lossPoints,
-      encountersNum: encountersNum,
+      winPoints: tournamentEntity.winPoints,
+      drawPoints: tournamentEntity.drawPoints,
+      lossPoints: tournamentEntity.lossPoints,
+      encountersNum: tournamentEntity.encountersNum,
     );
   }
 
