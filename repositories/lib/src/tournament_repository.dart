@@ -2,7 +2,7 @@
 import 'package:repositories/repositories.dart';
 
 abstract class TournamentRepository{
-  Stream<List<Tournament>> tournament();
+  Stream<List<Tournament>> tournaments();
 
   Future<void> updateTournament(Tournament tournament);
 

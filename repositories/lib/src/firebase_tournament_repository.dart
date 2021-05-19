@@ -12,7 +12,7 @@ class FirebaseTournamentRepository implements TournamentRepository {
   FirebaseTournamentRepository({required this.teamRepository});
 
   @override
-  Stream<List<Tournament>> tournament() {
+  Stream<List<Tournament>> tournaments() {
     CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("tournament");
     return tournamentCollection.snapshots().asyncMap(_tournamentsFromSnapshot);
   }

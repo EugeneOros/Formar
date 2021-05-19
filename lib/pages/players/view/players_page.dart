@@ -40,7 +40,7 @@ class PlayersPage extends StatelessWidget {
   Future<bool> _onDelete(player, teams) async {
     List<Team> teamsThatContains = [];
     teams.forEach((team) {
-      team.teams.forEach((teamPlayer) {
+      team.tournaments.forEach((teamPlayer) {
         if (teamPlayer.id == player.id) teamsThatContains.add(team);
       });
     });
