@@ -8,25 +8,39 @@ import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:repositories/repositories.dart';
 
 import 'matches.dart';
 
+typedef OnSaveCallback = Function(String? name, List<Team>? teams, int winPoints, int drawPoints, int lossPoints, int encountersNum);
+
 class AddEditTournamentPage extends StatefulWidget {
+  final bool isEditing;
+  final OnSaveCallback onSave;
+  final Tournament? tournament;
+
+  const AddEditTournamentPage({
+    Key? key,
+    required this.isEditing,
+    required this.onSave,
+    this.tournament,
+  }) : super(key: key);
+
   @override
   _AddEditTournamentPageState createState() => _AddEditTournamentPageState();
 }
 
 class _AddEditTournamentPageState extends State<AddEditTournamentPage> with SingleTickerProviderStateMixin {
-
   late TabController _tabController;
 
-  //
+  GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
+  static final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
+
   @override
   void initState() {
     _tabController = new TabController(vsync: this, length: 4);
     _tabController.addListener(() {
-      setState(() {
-      });
+      setState(() {});
     });
     super.initState();
   }
@@ -52,6 +66,17 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
         actions: [
           GestureDetector(
             onTap: () {
+              if (_formKeyInfo.currentState!.validate()) {
+                _formKeyInfo.currentState!.save();
+                print(_keyTournamentInfo.currentState!.name);
+                print(_keyTournamentInfo.currentState!.winPoints);
+                print(_keyTournamentInfo.currentState!.drawPoints);
+                print(_keyTournamentInfo.currentState!.encountersNum);
+                // todo widget.onSave(_name, _players);
+                // Navigator.pop(context);
+              }
+              // widget.onSave(_name, _players);
+              // Navigator.pop(context);
               // if (_formKey.currentState!.validate()) {
               //   _formKey.currentState!.save();
               //   widget.onSave(_name, _players);
@@ -72,7 +97,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       body: Stack(
         children: [
           TabBarView(controller: _tabController, children: [
-            TournamentInfo(),
+            TournamentInfo(key: _keyTournamentInfo, formKey: _formKeyInfo,),
             TournamentTeams(),
             Matches(),
             TournamentStatistic(),

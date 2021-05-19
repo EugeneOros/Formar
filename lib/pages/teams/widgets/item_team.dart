@@ -14,95 +14,99 @@ class ItemTeam extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onEdit,
-      child: Container(
-          constraints: BoxConstraints(minWidth: 50, maxWidth: 400),
-          width: MediaQuery.of(context).size.width,
-
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
-          child: Neumorphic(
-            style: NeumorphicStyle(
-                depth: 7,
-                intensity: 0.7,
-                surfaceIntensity: 0.3,
-                shape: NeumorphicShape.convex,
-                boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                lightSource: LightSource.topRight,
-                color: Colors.white),
-            child: Column(
-              children: [
-                Stack(
+    return Hero(tag: "TeamItem" + team.id!,
+      child: Material(
+        color: Colors.transparent,
+        child: GestureDetector(
+          onTap: onEdit,
+          child: Container(
+              constraints: BoxConstraints(minWidth: 50, maxWidth: 400),
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+              child: Neumorphic(
+                style: NeumorphicStyle(
+                    depth: 7,
+                    intensity: 0.7,
+                    surfaceIntensity: 0.3,
+                    shape: NeumorphicShape.convex,
+                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+                    lightSource: LightSource.topRight,
+                    color: Colors.white),
+                child: Column(
                   children: [
-                    Positioned(
-                      top: 13,
-                      left: 13,
-                      child: Power(power: team.power),
-                    ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: IconButton(
-                        onPressed: () => onDelete(),
-                        icon: Icon(
-                          Icons.delete,
-                          size: 17,
-                          color: Colors.black,
+                    Stack(
+                      children: [
+                        Positioned(
+                          top: 13,
+                          left: 13,
+                          child: Power(power: team.power),
                         ),
-                      ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: IconButton(
+                            onPressed: () => onDelete(),
+                            icon: Icon(
+                              Icons.delete,
+                              size: 17,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 35, bottom: 0, right: 20, left: 20),
+                          alignment: Alignment.center,
+                          child: Text(
+                            team.name,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 35, bottom: 0, right: 20, left: 20),
-                      alignment: Alignment.center,
-                      child: Text(
-                        team.name,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 0),
+                        child: Stack(
+                          children: [
+                            ListView.builder(
+                              itemCount: team.players.length,
+                              itemBuilder: (context, index) {
+                                final player = team.players[index];
+                                return Padding(
+                                  padding: EdgeInsets.only(top: index == 0 ? 15 : 7),
+                                  child: Row(children: [
+                                    PlayerIndicator(player: player),
+                                    SizedBox(width: 5),
+                                    Expanded(
+                                      child: Text(
+                                        player.nickname,
+                                        style: Theme.of(context).textTheme.bodyText2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ]),
+                                );
+                              },
+                            ),
+                            FadeEndLIstView(
+                              height: 15,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                            FadeEndLIstView(
+                              height: 30,
+                              width: MediaQuery.of(context).size.width,
+                              isTop: false,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 0),
-                    child: Stack(
-                      children: [
-                        ListView.builder(
-                          itemCount: team.players.length,
-                          itemBuilder: (context, index) {
-                            final player = team.players[index];
-                            return Padding(
-                              padding: EdgeInsets.only(top: index == 0 ? 15 : 7),
-                              child: Row(children: [
-                                PlayerIndicator(player: player),
-                                SizedBox(width: 5),
-                                Expanded(
-                                  child: Text(
-                                    player.nickname,
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ]),
-                            );
-                          },
-                        ),
-                        FadeEndLIstView(
-                          height: 15,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                        FadeEndLIstView(
-                          height: 30,
-                          width: MediaQuery.of(context).size.width,
-                          isTop: false,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )),
+              )),
+        ),
+      ),
     );
   }
 }

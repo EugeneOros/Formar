@@ -48,9 +48,8 @@ class PlayerItem extends StatelessWidget {
 
   void _onEdit() {
     Navigator.of(homeKey.currentContext!).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return AddEditPlayerScreen(
+        getPageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
             onSave: (nickname, level, sex) {
               BlocProvider.of<PeopleBloc>(context).add(
                 UpdatePerson(
@@ -59,10 +58,9 @@ class PlayerItem extends StatelessWidget {
               );
             },
             isEditing: true,
-            person: player,
-          );
-        },
-      ),
+            player: player,
+          ),
+        )
     );
   }
 
@@ -120,7 +118,6 @@ class PlayerItem extends StatelessWidget {
       actionPane: SlidableDrawerActionPane(),
       key: Key(player.id!),
       child: GestureDetector(
-
         onTap: _onEdit,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -139,7 +136,10 @@ class PlayerItem extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        PlayerIndicator(player: player, size: 15),
+                        Hero(
+                          tag: "playerItem" + player.id!,
+                          child: PlayerIndicator(player: player, size: 15),
+                        ),
                         SizedBox(width: 5),
                         Text(
                           _getLevelName(player.level),
@@ -153,17 +153,17 @@ class PlayerItem extends StatelessWidget {
               Transform.scale(
                 scale: 0.8,
                 child:
-                // NeumorphicSwitch(
-                //   value: player.available,
-                //   onChanged: onSwitchChanged,
-                //   style: NeumorphicSwitchStyle(
-                //     activeTrackColor: Colors.black,
-                //     inactiveTrackColor: Colors.grey[200],
-                //     activeThumbColor: Colors.grey[200],
-                //     inactiveThumbColor: Colors.grey[200],
-                //   ),
-                // )
-                CupertinoSwitch(
+                    // NeumorphicSwitch(
+                    //   value: player.available,
+                    //   onChanged: onSwitchChanged,
+                    //   style: NeumorphicSwitchStyle(
+                    //     activeTrackColor: Colors.black,
+                    //     inactiveTrackColor: Colors.grey[200],
+                    //     activeThumbColor: Colors.grey[200],
+                    //     inactiveThumbColor: Colors.grey[200],
+                    //   ),
+                    // )
+                    CupertinoSwitch(
                   activeColor: Colors.black,
                   value: player.available,
                   onChanged: onSwitchChanged,

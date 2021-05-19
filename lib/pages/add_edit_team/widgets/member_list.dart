@@ -17,8 +17,9 @@ typedef void OnAddPlayersCallback(List<Player> newPlayers);
 class MemberList extends StatefulWidget {
   final List<Player> members;
   final OnAddPlayersCallback onAddPlayersCallback;
+  final String? heroTag;
 
-  const MemberList({Key? key, required this.onAddPlayersCallback, required this.members}) : super(key: key);
+  const MemberList({Key? key, required this.onAddPlayersCallback, required this.members, this.heroTag}) : super(key: key);
 
   @override
   _MemberListState createState() => _MemberListState();
@@ -74,65 +75,68 @@ class _MemberListState extends State<MemberList> {
       return power;
     }
 
-    return widget.members.isEmpty
-        ? Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: RoundedButton(
-              text: AppLocalizations.of(context)!.addPlayers,
-              textColor: Colors.black,
-              color: Theme.of(context).accentColor,
-              sizeRatio: 0.9,
-              onPressed: () {
-                _onAddPlayer();
-              },
-            ),
-          )
-        : Stack(
-            children: [
-              EmbossContainer(
-                name: AppLocalizations.of(context)!.members,
-                margin: EdgeInsets.only(bottom: 60),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding: EdgeInsets.only(left: 10, top: 10),
-                      child: Power(power: getPower(widget.members)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(27).copyWith(top: 0),
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.members.length,
-                        itemBuilder: (context, index) {
-                          return ItemMember(
-                            member: widget.members[index],
-                            onDelete: () {
-                              setState(() {
-                                widget.members.removeAt(index);
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+    return  Hero(
+      tag: widget.heroTag ?? "TeamItem",
+      child: widget.members.isEmpty
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: RoundedButton(
+                text: AppLocalizations.of(context)!.addPlayers,
+                textColor: Colors.black,
+                color: Theme.of(context).accentColor,
+                sizeRatio: 0.9,
+                onPressed: () {
+                  _onAddPlayer();
+                },
               ),
-              Positioned.fill(
-                bottom: 30,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: RoundIconButton(
-                    icon: Icons.add,
-                    size: 60,
-                    color: Theme.of(context).accentColor,
-                    onPressed: _onAddPlayer,
+            )
+          : Stack(
+              children: [
+                EmbossContainer(
+                  name: AppLocalizations.of(context)!.members,
+                  margin: EdgeInsets.only(bottom: 60),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.only(left: 10, top: 10),
+                        child: Power(power: getPower(widget.members)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(27).copyWith(top: 0),
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: widget.members.length,
+                          itemBuilder: (context, index) {
+                            return ItemMember(
+                              member: widget.members[index],
+                              onDelete: () {
+                                setState(() {
+                                  widget.members.removeAt(index);
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          );
+                Positioned.fill(
+                  bottom: 30,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: RoundIconButton(
+                      icon: Icons.add,
+                      size: 60,
+                      color: Theme.of(context).accentColor,
+                      onPressed: _onAddPlayer,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    );
   }
 }

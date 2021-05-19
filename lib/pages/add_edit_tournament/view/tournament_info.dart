@@ -6,11 +6,46 @@ import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.d
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_input_field.dart';
+import 'package:repositories/repositories.dart';
 
-class TournamentInfo extends StatelessWidget {
+class TournamentInfo extends StatefulWidget {
+  final Tournament? tournament;
+  final GlobalKey<FormState> formKey;
+
+  const TournamentInfo({Key? key, this.tournament, required this.formKey}) : super(key: key);
+
+  @override
+  TournamentInfoState createState() => TournamentInfoState();
+}
+
+class TournamentInfoState extends State<TournamentInfo> {
+  // static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String? name;
+  late int winPoints;
+  late int drawPoints;
+  late int lossPoints;
+  late int encountersNum;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.tournament == null) {
+      winPoints = 2;
+      drawPoints = 1;
+      lossPoints = 0;
+      encountersNum = 1;
+    } else {
+      winPoints = widget.tournament!.winPoints;
+      drawPoints = widget.tournament!.drawPoints;
+      lossPoints = widget.tournament!.lossPoints;
+      encountersNum = widget.tournament!.encountersNum;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return 	Neumorphic(
+    return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,
         color: Theme.of(context).primaryColorLight,
@@ -33,77 +68,109 @@ class TournamentInfo extends StatelessWidget {
           ),
         ),
         // color: Theme.of(context).primaryColorLight,
-        child: ListView(
-          children: [
-            SizedBox(height: 90),
-            RoundedInputField(
-              name: AppLocalizations.of(context)!.name,
-              hintText: AppLocalizations.of(context)!.enterNameOfTournament,
-              radius: 15,
-            ),
-            EmbossContainer(
-              name: AppLocalizations.of(context)!.points,
-              padding: EdgeInsets.only(top: 25),
-              child: Column(
-                children: [
-                  ItemTournamentInfo(
-                    text: AppLocalizations.of(context)!.pointsForWin,
-                    secondaryWidget: CounterElement(
-                      counter: 2,
-                    ),
-                  ),
-                  ItemTournamentInfo(
-                    text: AppLocalizations.of(context)!.pointsForDraw,
-                    secondaryWidget: CounterElement(
-                      counter: 1,
-                    ),
-                    drawDivider: true,
-                  ),
-                  ItemTournamentInfo(
-                    text: AppLocalizations.of(context)!.pointsForLoss,
-                    secondaryWidget: CounterElement(
-                      counter: -1,
-                    ),
-                    drawDivider: true,
-                  )
-                ],
+        child: Form(
+          key: widget.formKey,
+          child: ListView(
+            children: [
+              SizedBox(height: 90),
+              RoundedInputField(
+                name: AppLocalizations.of(context)!.name,
+                hintText: AppLocalizations.of(context)!.enterNameOfTournament,
+                radius: 15,
+                onSaved: (value) => name = value,
+                validator: (val) {
+                  return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
+                },
               ),
-            ),
-            EmbossContainer(
-              name: AppLocalizations.of(context)!.other,
-              padding: EdgeInsets.only(top: 25),
-              child: Column(
-                children: [
-                  ItemTournamentInfo(
-                    text: AppLocalizations.of(context)!.numbersOfEncounters,
-                    secondaryWidget: CounterElement(counter: 1),
-                  ),
-                  ItemTournamentInfo(
-                    text: AppLocalizations.of(context)!.bonusPenaltyPoints,
-                    drawDivider: true,
-                    secondaryWidget: Container(
-                      width: 90,
-                      alignment: Alignment.center,
-                      child: RoundIconButton(icon: Icons.arrow_forward_ios_rounded, onPressed: () {},)
+              EmbossContainer(
+                name: AppLocalizations.of(context)!.points,
+                padding: EdgeInsets.only(top: 25),
+                child: Column(
+                  children: [
+                    ItemTournamentInfo(
+                      text: AppLocalizations.of(context)!.pointsForWin,
+                      secondaryWidget: CounterElement(
+                        counter: winPoints,
+                        onChange: (value) {
+                          setState(() {
+                            winPoints = value;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                  ItemTournamentInfo(
-                      text: "Ranking criteria",
+                    ItemTournamentInfo(
+                      text: AppLocalizations.of(context)!.pointsForDraw,
+                      secondaryWidget: CounterElement(
+                        counter: drawPoints,
+                        onChange: (value) {
+                          setState(() {
+                            drawPoints = value;
+                          });
+                        },
+                      ),
+                      drawDivider: true,
+                    ),
+                    ItemTournamentInfo(
+                      text: AppLocalizations.of(context)!.pointsForLoss,
+                      secondaryWidget: CounterElement(
+                        counter: lossPoints,
+                        onChange: (value) {
+                          setState(() {
+                            lossPoints = value;
+                          });
+                        },
+                      ),
+                      drawDivider: true,
+                    )
+                  ],
+                ),
+              ),
+              EmbossContainer(
+                name: AppLocalizations.of(context)!.other,
+                padding: EdgeInsets.only(top: 25),
+                child: Column(
+                  children: [
+                    ItemTournamentInfo(
+                      text: AppLocalizations.of(context)!.numbersOfEncounters,
+                      secondaryWidget: CounterElement(
+                        counter: encountersNum,
+                        isPositive: true,
+                        onChange: (value) {
+                          setState(() {
+                            encountersNum = value;
+                          });
+                        },
+                      ),
+                    ),
+                    ItemTournamentInfo(
+                      text: AppLocalizations.of(context)!.bonusPenaltyPoints,
                       drawDivider: true,
                       secondaryWidget: Container(
                           width: 90,
                           alignment: Alignment.center,
-                          child: Text(
-                            "Total",
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ))),
-                ],
+                          child: RoundIconButton(
+                            icon: Icons.arrow_forward_ios_rounded,
+                            onPressed: () {},
+                          )),
+                    ),
+                    ItemTournamentInfo(
+                        text: "Ranking criteria",
+                        drawDivider: true,
+                        secondaryWidget: Container(
+                            width: 90,
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Total",
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ))),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 50,
-            )
-          ],
+              SizedBox(
+                height: 50,
+              )
+            ],
+          ),
         ),
       ),
     );

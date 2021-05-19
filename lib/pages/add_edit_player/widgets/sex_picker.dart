@@ -9,8 +9,9 @@ typedef void OnSexCallback(Sex newSex);
 class SexPicker extends StatefulWidget {
   final Sex sex;
   final OnSexCallback onSexChanged;
+  final String? heroTag;
 
-  const SexPicker({Key? key, required this.sex, required this.onSexChanged}) : super(key: key);
+  const SexPicker({Key? key, required this.sex, required this.onSexChanged, this.heroTag}) : super(key: key);
 
   @override
   _SexPickerState createState() => _SexPickerState();
@@ -35,6 +36,7 @@ class _SexPickerState extends State<SexPicker> {
       child: Row(
         children: [
           Text(
+
             AppLocalizations.of(context)!.sex,
             style: Theme.of(context).textTheme.subtitle1,
           ),
@@ -46,7 +48,28 @@ class _SexPickerState extends State<SexPicker> {
                   .map(
                     (sex) => Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Container(
+                      child: widget.heroTag != null && sex == widget.sex ? Hero(
+                        tag: widget.heroTag!,
+                        child: Container(
+                          height: 37,
+                          width: 37,
+                          child: NeumorphicRadio(
+                            style: NeumorphicRadioStyle(
+                              selectedDepth: -2,
+                              unselectedDepth: 3,
+                              shape: NeumorphicShape.concave,
+                              intensity: 0.8,
+                              selectedColor: Theme.of(context).primaryColorLight,
+                              unselectedColor: Theme.of(context).primaryColorLight,
+                              boxShape: NeumorphicBoxShape.circle(),
+                            ),
+                            groupValue: widget.sex,
+                            value: sex,
+                            child: _getSvgPicture(sex),
+                            onChanged: (Sex? val) => widget.onSexChanged(sex),
+                          ),
+                        ),
+                      ): Container(
                         height: 37,
                         width: 37,
                         child: NeumorphicRadio(

@@ -13,13 +13,13 @@ typedef OnSaveCallback = Function(String? nickname, Level? level, Sex? sex);
 class AddEditPlayerScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
-  final Player? person;
+  final Player? player;
 
   AddEditPlayerScreen({
     Key? key,
     required this.onSave,
     required this.isEditing,
-    this.person,
+    this.player,
   }) : super(key: key);
 
   @override
@@ -50,9 +50,9 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.person != null) {
-      _level = widget.person!.level;
-      _sex = widget.person!.sex;
+    if (widget.player != null) {
+      _level = widget.player!.level;
+      _sex = widget.player!.sex;
     }
   }
 
@@ -67,7 +67,10 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
         backgroundColor: Theme.of(context).primaryColorLight,
         leading: IconButtonAppBar(
           icon: Icons.arrow_back_ios_rounded,
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => Navigator.pop(
+            context,
+            false,
+          ),
         ),
         actions: [
           GestureDetector(
@@ -124,7 +127,7 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                   RoundedInputField(
                     name: AppLocalizations.of(context)!.nickname,
                     autofocus: !isEditing,
-                    initialValue: isEditing ? widget.person!.nickname : '',
+                    initialValue: isEditing ? widget.player!.nickname : '',
                     onSaved: (value) => _nickname = value,
                     hintText: AppLocalizations.of(context)!.enterNickname,
                     validator: (val) {
@@ -133,7 +136,11 @@ class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
                     radius: 15,
                   ),
                   LevelPicker(level: _level, onLevelChanged: onLevelChanged),
-                  SexPicker(sex: _sex, onSexChanged: onSexChanged)
+                  SexPicker(
+                    sex: _sex,
+                    onSexChanged: onSexChanged,
+                    heroTag: widget.player != null ? ("playerItem" + widget.player!.id!) : null,
+                  )
                 ],
               ),
             ),

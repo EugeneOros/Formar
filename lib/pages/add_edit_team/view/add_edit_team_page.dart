@@ -27,7 +27,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _name;
-  List<Player>? _players;
+  late List<Player> _players;
 
   bool get isEditing => widget.isEditing;
 
@@ -114,17 +114,17 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                         name: AppLocalizations.of(context)!.name,
                         autofocus: !isEditing,
                         initialValue: isEditing ? widget.team!.name : '',
+                        radius: 15,
                         onSaved: (value) => _name = value,
                         hintText: AppLocalizations.of(context)!.enterNameTeam,
                         validator: (val) {
                           return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;
                         },
-                        radius: 15,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25),
-                      child: MemberList(members: _players!, onAddPlayersCallback: _onAddPlayer),
+                      child: MemberList(members: _players, onAddPlayersCallback: _onAddPlayer, heroTag:  "TeamItem" + (widget.team != null ? widget.team!.id! : "")),
                     )
                   ],
                 ),

@@ -4,8 +4,10 @@ import 'package:form_it/widgets/round_icon_button.dart';
 
 class CounterElement extends StatelessWidget {
   final int counter;
+  final ValueChanged<int> onChange;
+  final bool isPositive;
 
-  const CounterElement({Key? key, required this.counter}) : super(key: key);
+  const CounterElement({Key? key, required this.counter, required this.onChange, this.isPositive=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,22 @@ class CounterElement extends StatelessWidget {
         children: [
           RoundIconButton(
             icon: Icons.remove,
-            onPressed: () {},
+            onPressed: () {
+              if (counter - 1 > (isPositive ? 0 : -10)) {
+                onChange(counter - 1);
+              }
+            },
           ),
           SizedBox(width: counter < 0 ? 10 : 12),
           Text(counter.toString(), style: Theme.of(context).textTheme.bodyText2),
           SizedBox(width: counter < 0 ? 10 : 12),
           RoundIconButton(
             icon: Icons.add,
-            onPressed: () {},
+            onPressed: () {
+              if (counter + 1 < 10) {
+                onChange(counter + 1);
+              }
+            },
           ),
         ],
       ),

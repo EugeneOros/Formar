@@ -16,9 +16,8 @@ class TeamsPage extends StatelessWidget {
 
   void onEdit(Team team) {
     Navigator.of(homeKey.currentContext!).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+        getPageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
             List<Player> players = [];
             if (state is PeopleLoaded) {
               players = state.people;
@@ -36,8 +35,7 @@ class TeamsPage extends StatelessWidget {
                   isEditing: true,
                   team: team,
                 ));
-          });
-        },
+          })
       ),
     );
   }

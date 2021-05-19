@@ -5,10 +5,8 @@ final GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
 const textInputDecoration = InputDecoration(
   fillColor: Colors.white,
   filled: true,
-  enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xffc0c0c0), width: 2.0)),
-  focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.pink, width: 2.0)),
+  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xffc0c0c0), width: 2.0)),
+  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.pink, width: 2.0)),
 );
 
 const borderRoundedTransparent = OutlineInputBorder(
@@ -33,8 +31,7 @@ BoxDecoration roundedShadowDecoration = BoxDecoration(
 );
 
 Size textSize(String text, TextStyle? style) {
-  final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
+  final TextPainter textPainter = TextPainter(text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
     ..layout(minWidth: 0, maxWidth: double.infinity);
   return textPainter.size;
 }
@@ -43,4 +40,18 @@ extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
+}
+
+PageRouteBuilder getPageRouteBuilder({required Widget Function(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) pageBuilder}) {
+  return PageRouteBuilder(
+    pageBuilder: pageBuilder,
+    transitionDuration: Duration(milliseconds: 700),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      animation = CurvedAnimation(curve: Curves.easeOutExpo, parent: animation);
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
 }
