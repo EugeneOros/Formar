@@ -18,8 +18,7 @@ class TournamentInfo extends StatefulWidget {
   TournamentInfoState createState() => TournamentInfoState();
 }
 
-class TournamentInfoState extends State<TournamentInfo> {
-  // static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveClientMixin  {
 
   String? name;
   late int winPoints;
@@ -175,4 +174,7 @@ class TournamentInfoState extends State<TournamentInfo> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -1,28 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/dependency.dart';
+import 'package:form_it/pages/add_edit_tournament/widgets/dialog_add_list.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
+import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
+import 'package:provider/provider.dart';
+import 'package:repositories/repositories.dart';
+import 'package:form_it/config/constants.dart';
 
-class TournamentTeams extends StatelessWidget {
-  List<String> teams = [
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-  ];
+typedef void OnAddTeamsCallback(List<Team> newTeams);
+
+class TournamentTeams extends StatefulWidget {
+  final List<Team> teams;
+  final OnAddTeamsCallback onAddTeamsCallback;
+
+  const TournamentTeams({Key? key, required this.teams, required this.onAddTeamsCallback}) : super(key: key);
 
   @override
+  _TournamentTeamsState createState() => _TournamentTeamsState();
+}
+
+class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
+  @override
   Widget build(BuildContext context) {
+
+    final teamsAll = Provider.of<List<Team>>(context);
+
+    _onAddTeams() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          DialogAddTeams _dialogAddPlayers = DialogAddTeams(
+            teams: teamsAll,
+            teamsAdded: widget.teams,
+          );
+          return AppDialog(
+            title: AppLocalizations.of(context)!.chosePlayers,
+            content: _dialogAddPlayers,
+            actionsHorizontal: [
+              TextButton(
+                child: Text(
+                  MaterialLocalizations.of(context).okButtonLabel,
+                  style: Theme.of(context).textTheme.button,
+                ),
+                onPressed: () {
+                  this.widget.onAddTeamsCallback(_dialogAddPlayers.getTeams());
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  MaterialLocalizations.of(context).cancelButtonLabel.toLowerCase().capitalize(),
+                  style: Theme.of(context).textTheme.button,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,
@@ -79,14 +122,18 @@ class TournamentTeams extends StatelessWidget {
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: teams.length,
+                        itemCount: widget.teams.length,
                         itemBuilder: (context, index) {
                           return ItemTournamentTeams(
-                            text: teams[index],
+                            text: widget.teams[index].name,
                             // drawDivider: index == 0 ? false : true,
                             secondaryWidget: RoundIconButton(
                               icon: Icons.remove,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  widget.teams.removeAt(index);
+                                });
+                              },
                             ),
                           );
                           // teams.removeAt(index);
@@ -99,12 +146,11 @@ class TournamentTeams extends StatelessWidget {
                   bottom: 30,
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child:
-                    RoundIconButton(
+                    child: RoundIconButton(
                       icon: Icons.add,
                       size: 60,
                       color: Theme.of(context).accentColor,
-                      onPressed: () {},
+                      onPressed: _onAddTeams,
                     ),
                   ),
                 ),
@@ -115,4 +161,7 @@ class TournamentTeams extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

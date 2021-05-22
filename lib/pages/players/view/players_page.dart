@@ -37,10 +37,10 @@ class PlayersPage extends StatelessWidget {
     );
   }
 
-  Future<bool> _onDelete(player, teams) async {
+  Future<bool> _onDelete(Player player, List<Team> teams) async {
     List<Team> teamsThatContains = [];
     teams.forEach((team) {
-      team.tournaments.forEach((teamPlayer) {
+      team.players.forEach((teamPlayer) {
         if (teamPlayer.id == player.id) teamsThatContains.add(team);
       });
     });

@@ -45,9 +45,9 @@ extension StringExtension on String {
 PageRouteBuilder getPageRouteBuilder({required Widget Function(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) pageBuilder}) {
   return PageRouteBuilder(
     pageBuilder: pageBuilder,
-    transitionDuration: Duration(milliseconds: 700),
+    transitionDuration: Duration(milliseconds: 500),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      animation = CurvedAnimation(curve: Curves.easeOutExpo, parent: animation);
+      animation = CurvedAnimation(curve: Curves.easeInOutSine, parent: animation);
       return FadeTransition(
         opacity: animation,
         child: child,

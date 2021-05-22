@@ -84,7 +84,9 @@ class FirebaseTeamRepository implements TeamRepository {
   Future<List<Player>> _getPeopleByIds(List<String> playersIds) async {
     List<Player> players = [];
     for (String playerId in playersIds) {
-      players.add(await peopleRepository.getPlayer(playerId) as Player);
+      var player = await peopleRepository.getPlayer(playerId);
+      if(player != null)
+        players.add(player as Player);
     }
     return players;
   }

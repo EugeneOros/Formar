@@ -14,15 +14,15 @@ class ItemTeam extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(tag: "TeamItem" + team.id!,
-      child: Material(
-        color: Colors.transparent,
-        child: GestureDetector(
-          onTap: onEdit,
-          child: Container(
-              constraints: BoxConstraints(minWidth: 50, maxWidth: 400),
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+    return GestureDetector(
+      onTap: onEdit,
+      child: Container(
+          constraints: BoxConstraints(minWidth: 50, maxWidth: 400),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+          child: Hero(tag: "TeamItem" + team.id!,
+            child: Material(
+              type: MaterialType.transparency,
               child: Neumorphic(
                 style: NeumorphicStyle(
                     depth: 7,
@@ -104,9 +104,9 @@ class ItemTeam extends StatelessWidget {
                     ),
                   ],
                 ),
-              )),
-        ),
-      ),
+              ),
+            ),
+          )),
     );
   }
 }

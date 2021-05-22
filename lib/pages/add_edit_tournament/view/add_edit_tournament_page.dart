@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/pages/add_edit_team/widgets/widgets.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_statistic.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
+import 'package:form_it/pages/add_edit_tournament/widgets/dialog_add_list.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
+import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
@@ -12,7 +15,7 @@ import 'package:repositories/repositories.dart';
 
 import 'matches.dart';
 
-typedef OnSaveCallback = Function(String? name, List<Team>? teams, int winPoints, int drawPoints, int lossPoints, int encountersNum);
+typedef OnSaveCallback = Function({String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum});
 
 class AddEditTournamentPage extends StatefulWidget {
   final bool isEditing;
@@ -32,6 +35,7 @@ class AddEditTournamentPage extends StatefulWidget {
 
 class _AddEditTournamentPageState extends State<AddEditTournamentPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late List<Team> teams;
 
   GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
   static final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
@@ -42,6 +46,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     _tabController.addListener(() {
       setState(() {});
     });
+    this.teams = widget.isEditing ? widget.tournament!.teams : [];
     super.initState();
   }
 
@@ -49,6 +54,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void onAddTeams(List<Team> teams) {
+    setState(() {
+      this.teams = teams;
+    });
   }
 
   @override
@@ -72,16 +83,18 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 print(_keyTournamentInfo.currentState!.winPoints);
                 print(_keyTournamentInfo.currentState!.drawPoints);
                 print(_keyTournamentInfo.currentState!.encountersNum);
+                print(teams);
+                widget.onSave(
+                  name: _keyTournamentInfo.currentState!.name,
+                  teams: teams,
+                  winPoints: _keyTournamentInfo.currentState!.winPoints,
+                  drawPoints: _keyTournamentInfo.currentState!.drawPoints,
+                  lossPoints: _keyTournamentInfo.currentState!.lossPoints,
+                  encountersNum: _keyTournamentInfo.currentState!.encountersNum,
+                );
                 // todo widget.onSave(_name, _players);
                 // Navigator.pop(context);
               }
-              // widget.onSave(_name, _players);
-              // Navigator.pop(context);
-              // if (_formKey.currentState!.validate()) {
-              //   _formKey.currentState!.save();
-              //   widget.onSave(_name, _players);
-              //   Navigator.pop(context);
-              // }
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -97,8 +110,14 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       body: Stack(
         children: [
           TabBarView(controller: _tabController, children: [
-            TournamentInfo(key: _keyTournamentInfo, formKey: _formKeyInfo,),
-            TournamentTeams(),
+            TournamentInfo(
+              key: _keyTournamentInfo,
+              formKey: _formKeyInfo,
+            ),
+            TournamentTeams(
+              teams: this.teams,
+              onAddTeamsCallback: onAddTeams,
+            ),
             Matches(),
             TournamentStatistic(),
           ]),
@@ -108,12 +127,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             color: Theme.of(context).primaryColorLight,
             isTop: true,
           ),
-          // FadeEndLIstView(
-          //   height: 30,
-          //   width: MediaQuery.of(context).size.width,
-          //   color: Theme.of(context).accentColor,
-          //   isTop: false,
-          // ),
+          FadeEndLIstView(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            color: Theme.of(context).accentColor,
+            isTop: false,
+          ),
           TabBarTournament(
             controller: _tabController,
           )

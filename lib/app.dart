@@ -57,17 +57,17 @@ class _FormarAppState extends State<FormarApp> {
 
   @override
   Widget build(BuildContext context) {
-    _getTheme() {
+    _getTheme({bool isDark = false}) {
       return ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
         }),
-        brightness: Brightness.light,
-        primaryColor: Color(0xffd1dbf1),
-        accentColor: Color(0xffffdcf7),
-        primaryColorLight: Color(0xfff4f9fa),
-        primaryColorDark: Color(0xff7aa1f5),
-        dividerColor: Colors.grey[400],
+        brightness: isDark ? Brightness.dark : Brightness.light ,
+        primaryColor: isDark ? Color(0xff2a2945) : Color(0xffd1dbf1),
+        accentColor: isDark ? Color(0xff803942) : Color(0xffffdcf7),
+        primaryColorLight: isDark ? Color(0xff927787) : Color(0xfff4f9fa),
+        primaryColorDark: isDark ? Color(0xff261c2c) : Color(0xff7aa1f5),
+        dividerColor: isDark ? Color(0xff555555) : Colors.grey[400],
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
           headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
@@ -81,87 +81,88 @@ class _FormarAppState extends State<FormarApp> {
       );
     }
 
-    _getRoutes() {
-      return <String, WidgetBuilder>{
-        "/": (BuildContext context) {
-          return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (BuildContext context, AuthenticationState state) {
-              if (state is AuthenticationStateUnauthenticated) {
-                return BlocProvider<LoginBloc>(
-                  create: (context) => LoginBloc(userRepository: _userRepository),
-                  child: LoginScreen(),
-                );
-              } else if (state is AuthenticationStateAuthenticated) {
-                BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
-                return HomeScreen(email: state.user!.email ?? "");
-              }
-              return SplashScreen();
-            },
-          );
-        },
-        "/signUp": (BuildContext context) {
-          return BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen());
-        },
-        "/add": (BuildContext context) {
-          return AddEditPlayerScreen(
-            onSave: (nickname, level, sex) {
-              BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
-            },
-            isEditing: false,
-          );
-        },
-        "/edit": (BuildContext context) {
-          return AddEditPlayerScreen(
-            onSave: (nickname, level, sex) {
-              BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
-            },
-            isEditing: true,
-          );
-        },
-        "/add_team": (BuildContext context) {
-          return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
-            List<Player> players = [];
-            if (state is PeopleLoaded) {
-              players = state.people;
-            }
-            return Provider<List<Player>>.value(
-              value: players,
-              child: AddEditTeamScreen(
-                onSave: (name, players) {
-                  BlocProvider.of<TeamsBloc>(context).add(
-                    AddTeam(
-                      Team(name: name!, players: players),
-                    ),
-                  );
-                },
-                isEditing: false,
-              ),
-            );
-          });
-        },
-        "/add_tournament": (BuildContext context) {
-          return AddEditTournamentPage(
-            onSave: (String? name, List<Team>? teams, int winPoints, int drawPoints, int lossPoints, int encountersNum) {
-              BlocProvider.of<TournamentsBloc>(context).add(
-                AddTournament(
-                  Tournament(
-                    name: name!,
-                    teams: teams,
-                    winPoints: winPoints,
-                    drawPoints: drawPoints,
-                    lossPoints: lossPoints,
-                    encountersNum: encountersNum,
-                  ),
-                ),
-              );
-            },
-            isEditing: false,
-          );
-        },
-      };
-    }
+    // _getRoutes() {
+    //   return <String, WidgetBuilder>{
+    //     "/": (BuildContext context) {
+    //       return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    //         builder: (BuildContext context, AuthenticationState state) {
+    //           if (state is AuthenticationStateUnauthenticated) {
+    //             return BlocProvider<LoginBloc>(
+    //               create: (context) => LoginBloc(userRepository: _userRepository),
+    //               child: LoginScreen(),
+    //             );
+    //           } else if (state is AuthenticationStateAuthenticated) {
+    //             BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
+    //             return HomeScreen(email: state.user!.email ?? "");
+    //           }
+    //           return SplashScreen();
+    //         },
+    //       );
+    //     },
+    //     "/signUp": (BuildContext context) {
+    //       return BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen());
+    //     },
+    //     "/add": (BuildContext context) {
+    //       return AddEditPlayerScreen(
+    //         onSave: (nickname, level, sex) {
+    //           BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+    //         },
+    //         isEditing: false,
+    //       );
+    //     },
+    //     "/edit": (BuildContext context) {
+    //       return AddEditPlayerScreen(
+    //         onSave: (nickname, level, sex) {
+    //           BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+    //         },
+    //         isEditing: true,
+    //       );
+    //     },
+    //     "/add_team": (BuildContext context) {
+    //       return BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+    //         List<Player> players = [];
+    //         if (state is PeopleLoaded) {
+    //           players = state.people;
+    //         }
+    //         return Provider<List<Player>>.value(
+    //           value: players,
+    //           child: AddEditTeamScreen(
+    //             onSave: (name, players) {
+    //               BlocProvider.of<TeamsBloc>(context).add(
+    //                 AddTeam(
+    //                   Team(name: name!, players: players),
+    //                 ),
+    //               );
+    //             },
+    //             isEditing: false,
+    //           ),
+    //         );
+    //       });
+    //     },
+    //     "/add_tournament": (BuildContext context) {
+    //       return AddEditTournamentPage(
+    //         onSave: (String? name, List<Team>? teams, int winPoints, int drawPoints, int lossPoints, int encountersNum) {
+    //           BlocProvider.of<TournamentsBloc>(context).add(
+    //             AddTournament(
+    //               Tournament(
+    //                 name: name!,
+    //                 teams: teams,
+    //                 winPoints: winPoints,
+    //                 drawPoints: drawPoints,
+    //                 lossPoints: lossPoints,
+    //                 encountersNum: encountersNum,
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //         isEditing: false,
+    //       );
+    //     },
+    //   };
+    // }
 
     List<BlocProvider<Object?>> _getBlocProviders() {
+      final TeamRepository _teamRepository = FirebaseTeamRepository(peopleRepository: _peopleRepository);
       return [
         BlocProvider<AuthenticationBloc>(
           create: (BuildContext context) {
@@ -188,8 +189,17 @@ class _FormarAppState extends State<FormarApp> {
           create: (context) {
             return TeamsBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-              teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
+              // teamsRepository: FirebaseTeamRepository(peopleRepository: _peopleRepository),
+              teamsRepository: _teamRepository,
             )..add(LoadTeams());
+          },
+        ),
+        BlocProvider<TournamentsBloc>(
+          create: (context) {
+            return TournamentsBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+              tournamentsRepository: FirebaseTournamentRepository(teamRepository: _teamRepository),
+            )..add(LoadTournaments());
           },
         ),
         BlocProvider<SettingsBloc>(
@@ -216,6 +226,8 @@ class _FormarAppState extends State<FormarApp> {
         supportedLocales: SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
         debugShowCheckedModeBanner: false,
         theme: _getTheme(),
+        darkTheme: _getTheme(isDark: true),
+        themeMode: ThemeMode.light,
         builder: (context, child) {
           return ScrollConfiguration(
             behavior: AppScrollBehavior(),
@@ -261,6 +273,7 @@ class _FormarAppState extends State<FormarApp> {
                           value: players,
                           child: AddEditTeamScreen(
                             onSave: (name, players) {
+                              // print(Team(name: name!, players: players));
                               BlocProvider.of<TeamsBloc>(context).add(
                                 AddTeam(
                                   Team(name: name!, players: players),
@@ -273,23 +286,41 @@ class _FormarAppState extends State<FormarApp> {
                       }));
             case '/add_tournament':
               return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AddEditTournamentPage(
-                        onSave: (String? name, List<Team>? teams, int winPoints, int drawPoints, int lossPoints, int encountersNum) {
-                          BlocProvider.of<TournamentsBloc>(context).add(
-                            AddTournament(
-                              Tournament(
-                                name: name!,
-                                teams: teams,
-                                winPoints: winPoints,
-                                drawPoints: drawPoints,
-                                lossPoints: lossPoints,
-                                encountersNum: encountersNum,
-                              ),
-                            ),
-                          );
-                        },
-                        isEditing: false,
-                      ));
+                  pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
+                        List<Team> teams = [];
+                        if (state is TeamsLoaded) {
+                          teams = state.teams;
+                        }
+                        return Provider<List<Team>>.value(
+                          value: teams,
+                          child: AddEditTournamentPage(
+                            onSave: ({String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum}) {
+                              // Tournament tournament = Tournament(
+                              //   name: name!,
+                              //   teams: teams,
+                              //   winPoints: winPoints,
+                              //   drawPoints: drawPoints,
+                              //   lossPoints: lossPoints,
+                              //   encountersNum: encountersNum,
+                              // );
+                              // print(tournament);
+                              BlocProvider.of<TournamentsBloc>(context).add(
+                                AddTournament(
+                                  Tournament(
+                                    name: name!,
+                                    teams: teams,
+                                    winPoints: winPoints,
+                                    drawPoints: drawPoints,
+                                    lossPoints: lossPoints,
+                                    encountersNum: encountersNum,
+                                  ),
+                                ),
+                              );
+                            },
+                            isEditing: false,
+                          ),
+                        );
+                      }));
             case '/add':
               return getPageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(

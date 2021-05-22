@@ -75,8 +75,8 @@ class _MemberListState extends State<MemberList> {
       return power;
     }
 
-    return  Hero(
-      tag: widget.heroTag ?? "TeamItem",
+    return  Material(
+      type: MaterialType.transparency,
       child: widget.members.isEmpty
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -104,20 +104,23 @@ class _MemberListState extends State<MemberList> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(27).copyWith(top: 0),
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.members.length,
-                          itemBuilder: (context, index) {
-                            return ItemMember(
-                              member: widget.members[index],
-                              onDelete: () {
-                                setState(() {
-                                  widget.members.removeAt(index);
-                                });
-                              },
-                            );
-                          },
+                        child:  Hero(
+                          tag: widget.heroTag ?? "TeamItem",
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: widget.members.length,
+                            itemBuilder: (context, index) {
+                              return ItemMember(
+                                member: widget.members[index],
+                                onDelete: () {
+                                  setState(() {
+                                    widget.members.removeAt(index);
+                                  });
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],
