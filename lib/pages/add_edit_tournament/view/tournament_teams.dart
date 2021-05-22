@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/dialog_add_list.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
@@ -26,9 +25,8 @@ class TournamentTeams extends StatefulWidget {
 class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
   @override
   Widget build(BuildContext context) {
-
+    super.build(context);
     final teamsAll = Provider.of<List<Team>>(context);
-
     _onAddTeams() {
       showDialog(
         context: context,

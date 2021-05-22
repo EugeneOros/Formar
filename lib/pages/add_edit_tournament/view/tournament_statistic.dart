@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
 import 'package:form_it/widgets/emboss_container.dart';
-import 'package:form_it/widgets/round_icon_button.dart';
 
 class TournamentStatistic extends StatelessWidget {
-  List<String> teams = [
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4"
-  ];
 
   @override
   Widget build(BuildContext context) {
+    List<String> teams = [
+      "Team 1",
+      "Team2",
+      "Team3",
+      "Team4",
+      "Team 1",
+      "Team2",
+      "Team3",
+      "Team4",
+      "Team 1",
+      "Team2",
+      "Team3",
+      "Team4",
+      "Team 1",
+      "Team2",
+      "Team3",
+      "Team4"
+    ];
     return Neumorphic(
         style: NeumorphicStyle(
           depth: 0,

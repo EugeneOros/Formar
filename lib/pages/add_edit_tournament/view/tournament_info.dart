@@ -44,6 +44,7 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,

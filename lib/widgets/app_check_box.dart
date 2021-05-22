@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
-import 'package:flutter_neumorphic_null_safety/src/neumorphic_icons.dart';
-import 'package:flutter_neumorphic_null_safety/src/widget/container.dart';
 
 typedef void AppCheckboxListener<T>(T value);
 

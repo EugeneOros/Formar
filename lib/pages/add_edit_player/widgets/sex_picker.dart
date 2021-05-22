@@ -24,10 +24,8 @@ class _SexPickerState extends State<SexPicker> {
       switch (sex) {
         case Sex.man:
           return SvgPicture.asset(sex == widget.sex ? "assets/man_black.svg" : "assets/man_empty.svg");
-          return SvgPicture.asset("assets/man_empty.svg");
         case Sex.woman:
           return SvgPicture.asset(sex == widget.sex ? "assets/woman_black.svg" : "assets/woman_empty.svg");
-          // return SvgPicture.asset("assets/woman_empty.svg");
       }
     }
 

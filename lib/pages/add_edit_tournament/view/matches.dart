@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_matches.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
 
 class Matches extends StatelessWidget {
-  List<String> teams = [
-    "Team 1",
-    "Team2",
-    "Team3",
-    "Team4",
-    "Team 1",
-    "Team2",
-  ];
-  List<String> rounds = [
-    "Round 1",
-    "Round 2",
-    "Round 3",
-    "Round 4",
-  ];
 
   @override
   Widget build(BuildContext context) {
+    List<String> teams = [
+      "Team 1",
+      "Team2",
+      "Team3",
+      "Team4",
+      "Team 1",
+      "Team2",
+    ];
+    List<String> rounds = [
+      "Round 1",
+      "Round 2",
+      "Round 3",
+      "Round 4",
+    ];
+
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,

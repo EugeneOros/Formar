@@ -87,8 +87,8 @@ class _LogoSearchState extends State<LogoSearch> with TickerProviderStateMixin {
         child: widget,
         builder: (context, widget) {
           final isUnder = (ValueKey(_isFlipped) != widget!.key);
-          var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
-          tilt *= isUnder ? -1.0 : 1.0;
+          // var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
+          // tilt *= isUnder ? -1.0 : 1.0;
           final value = isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
           return Transform(
             // transform: (Matrix4.rotationY(value)..setEntry(3, 0, tilt)),

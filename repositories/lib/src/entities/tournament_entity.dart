@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class TournamentEntity {
+class TournamentEntity extends Equatable {
   final String? id;
+  final String ownerId;
   final String name;
   final int winPoints;
   final int drawPoints;
@@ -9,11 +11,12 @@ class TournamentEntity {
   final int encountersNum;
   final List<String>? teamsIds;
 
-  TournamentEntity(this.id, this.name, this.teamsIds, this.winPoints, this.drawPoints, this.lossPoints, this.encountersNum);
+  TournamentEntity(this.id, this.ownerId, this.name, this.teamsIds, this.winPoints, this.drawPoints, this.lossPoints, this.encountersNum);
 
   Map<String, Object?> toJson() {
     return {
       'id': id,
+      'ownerId': ownerId,
       'name': name,
       'teams': teamsIds,
       'winPoints': winPoints,
@@ -26,6 +29,7 @@ class TournamentEntity {
   static TournamentEntity fromJson(Map<String, Object> json) {
     return TournamentEntity(
       json['id'] as String?,
+      json['ownerId'] as String,
       json['name'] as String,
       json['teamsIds'] as List<String>?,
       json['winPoints'] as int,
@@ -38,6 +42,7 @@ class TournamentEntity {
   static TournamentEntity fromSnapshot(DocumentSnapshot snap) {
     return TournamentEntity(
       snap.id,
+      snap['ownerId'],
       snap['name'],
       (snap['teamsIds'] as List?)?.map((item) => item as String).toList(),
       snap['winPoints'],
@@ -50,6 +55,7 @@ class TournamentEntity {
   Map<String, Object?> toDocument() {
     return {
       'name': name,
+      'ownerId': ownerId,
       'teamsIds': teamsIds,
       'winPoints': winPoints,
       'drawPoints': drawPoints,
@@ -59,10 +65,10 @@ class TournamentEntity {
   }
 
   @override
-  List<Object?> get props => [id, name, teamsIds, winPoints, drawPoints, lossPoints, encountersNum];
+  List<Object?> get props => [id, ownerId, name, teamsIds, winPoints, drawPoints, lossPoints, encountersNum];
 
   @override
   String toString() {
-    return 'TournamentEntity { id: $id, name: $name, teamsIds: $teamsIds, winPoints: $winPoints, drawPoints: $drawPoints, lossPoints: $lossPoints, encountersNum: $encountersNum }';
+    return 'TournamentEntity { id: $id, ownerId: $ownerId, name: $name, teamsIds: $teamsIds, winPoints: $winPoints, drawPoints: $drawPoints, lossPoints: $lossPoints, encountersNum: $encountersNum }';
   }
 }
