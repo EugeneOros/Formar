@@ -13,25 +13,25 @@ class FirebaseTournamentRepository implements TournamentRepository {
 
   @override
   Stream<List<Tournament>> tournaments() {
-    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("tournament");
+    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     return tournamentCollection.snapshots().asyncMap(_tournamentsFromSnapshot);
   }
 
   @override
   Future<void> updateTournament(Tournament tournament) {
-    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("tournament");
+    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     return tournamentCollection.doc(tournament.id).update(tournament.toEntity().toDocument());
   }
 
   @override
   Future<DocumentReference> addTournament(Tournament tournament) async {
-    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("tournament");
+    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     return tournamentCollection.add(tournament.toEntity().toDocument());
   }
 
   @override
   Future<void> deleteTournament(Tournament tournament) async {
-    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid).collection("tournament");
+    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     return tournamentCollection.doc(tournament.id).delete();
   }
 

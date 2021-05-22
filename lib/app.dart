@@ -273,7 +273,6 @@ class _FormarAppState extends State<FormarApp> {
                           value: players,
                           child: AddEditTeamScreen(
                             onSave: (name, players) {
-                              // print(Team(name: name!, players: players));
                               BlocProvider.of<TeamsBloc>(context).add(
                                 AddTeam(
                                   Team(name: name!, players: players),
@@ -295,18 +294,10 @@ class _FormarAppState extends State<FormarApp> {
                           value: teams,
                           child: AddEditTournamentPage(
                             onSave: ({String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum}) {
-                              // Tournament tournament = Tournament(
-                              //   name: name!,
-                              //   teams: teams,
-                              //   winPoints: winPoints,
-                              //   drawPoints: drawPoints,
-                              //   lossPoints: lossPoints,
-                              //   encountersNum: encountersNum,
-                              // );
-                              // print(tournament);
                               BlocProvider.of<TournamentsBloc>(context).add(
                                 AddTournament(
                                   Tournament(
+                                    ownerId: _userRepository.getUser()!.uid,
                                     name: name!,
                                     teams: teams,
                                     winPoints: winPoints,

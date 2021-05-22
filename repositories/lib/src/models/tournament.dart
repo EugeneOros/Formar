@@ -3,7 +3,7 @@ import 'package:repositories/src/models/models.dart';
 
 class Tournament {
   final String? id;
-  // todo final String? ownerId;
+  final String ownerId;
   final String name;
   final List<Team> teams;
   final int winPoints;
@@ -14,6 +14,7 @@ class Tournament {
 
   Tournament({
     String? id,
+    required this.ownerId,
     required this.name,
     winPoints = 2,
     drawPoints = 1,
@@ -31,6 +32,7 @@ class Tournament {
 
   Tournament copyWith({
     String? id,
+    String? ownerId,
     String? name,
     List<Team>? teams,
     List<Match>? matches,
@@ -41,6 +43,7 @@ class Tournament {
   }) {
     return Tournament(
         id: id ?? this.id,
+        ownerId: ownerId ?? this.ownerId,
         name: name ?? this.name,
         teams: teams,
         matches: matches,
@@ -51,7 +54,7 @@ class Tournament {
   }
 
   TournamentEntity toEntity() {
-    return TournamentEntity(id, name, getTeamsIds(), winPoints, drawPoints, lossPoints, encountersNum);
+    return TournamentEntity(id, ownerId, name, getTeamsIds(), winPoints, drawPoints, lossPoints, encountersNum);
   }
 
   List<String> getTeamsIds() {
@@ -65,6 +68,7 @@ class Tournament {
   static Tournament fromEntity(TournamentEntity tournamentEntity, List<Team> teams) {
     return Tournament(
       id: tournamentEntity.id,
+      ownerId: tournamentEntity.ownerId,
       name: tournamentEntity.name,
       teams: teams,
       winPoints: tournamentEntity.winPoints,
@@ -80,6 +84,7 @@ class Tournament {
       other is Tournament &&
           runtimeType == other.runtimeType &&
           id == other.id &&
+          ownerId == other.ownerId &&
           name == other.name &&
           teams == other.teams &&
           matches == other.matches &&
@@ -91,6 +96,7 @@ class Tournament {
   @override
   int get hashCode =>
       id.hashCode ^
+      ownerId.hashCode ^
       name.hashCode ^
       teams.hashCode ^
       matches.hashCode ^
@@ -101,6 +107,6 @@ class Tournament {
 
   @override
   String toString() {
-    return 'Tournament { id: $id, name: $name, teams: $teams, matches: $matches win points: $winPoints, drawPoints: $drawPoints, lossPoints: $lossPoints, encountersNum: $encountersNum }';
+    return 'Tournament { id: $id, ownerId: $ownerId, name: $name, teams: $teams, matches: $matches win points: $winPoints, drawPoints: $drawPoints, lossPoints: $lossPoints, encountersNum: $encountersNum }';
   }
 }
