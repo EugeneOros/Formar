@@ -14,7 +14,7 @@ class ItemTournamentInfo extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(maxHeight: 50),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      decoration: drawDivider ? BoxDecoration(border: Border(top: borderSideDivider)) : null,
+      decoration: drawDivider ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
       child: Row(
         children: [
           Expanded(

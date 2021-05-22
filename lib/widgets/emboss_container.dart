@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/dependency.dart';
 
 class EmbossContainer extends StatelessWidget {
   final Widget? child;
@@ -29,13 +31,7 @@ class EmbossContainer extends StatelessWidget {
               : SizedBox(),
           Container(
               child: Neumorphic(
-                style: NeumorphicStyle(
-                    depth: -1.5,
-                    intensity: 1,
-                    shape: NeumorphicShape.concave,
-                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                    lightSource: LightSource.topLeft,
-                    color: color ?? Colors.white),
+                style: getInnerNeumorphicStyle(context: context),
                 child: child,
               )),
         ],

@@ -60,7 +60,7 @@ class _LogoSearchState extends State<LogoSearch> with TickerProviderStateMixin {
     );
 
     final Widget _logo = Container(
-      decoration: roundedShadowDecoration,
+      // decoration: roundedShadowDecoration,
       child: SvgPicture.asset('assets/logo_rounded_black.svg', height: 35),
     );
 

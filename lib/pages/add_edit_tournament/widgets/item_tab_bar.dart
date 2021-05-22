@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:form_it/config/dependency.dart';
 
 class ItemAppBar extends StatelessWidget {
   final IconData icon;
@@ -9,6 +10,7 @@ class ItemAppBar extends StatelessWidget {
   const ItemAppBar({Key? key, required this.icon, required this.text, this.drawDivider = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Color color = Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black;
     return Container(
       width: double.infinity,
       // decoration: drawDivider ? BoxDecoration(border: Border(right: borderSideDivider)) : null,
@@ -17,9 +19,9 @@ class ItemAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          FaIcon(icon, size: 13),
+          FaIcon(icon, size: 13, color: color,),
           SizedBox(height: 5,),
-          Text(text, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300))
+          Text(text, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300, color: color))
         ],
       ),
     );

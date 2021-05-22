@@ -12,7 +12,8 @@ import 'package:repositories/repositories.dart';
 
 import 'matches.dart';
 
-typedef OnSaveCallback = Function({String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum});
+typedef OnSaveCallback = Function(
+    {String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum});
 
 class AddEditTournamentPage extends StatefulWidget {
   final bool isEditing;
@@ -39,7 +40,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
 
   @override
   void initState() {
-    _tabController = new TabController(vsync: this, length: 4);
+    _tabController = new TabController(vsync: this, length: 4, initialIndex: widget.isEditing ? 2 : 0);
     _tabController.addListener(() {
       setState(() {});
     });
@@ -62,11 +63,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
       appBar: AppBar(
         elevation: 0.0,
         toolbarHeight: 50,
         shadowColor: Colors.transparent,
-        backgroundColor: Theme.of(context).primaryColorLight,
+        backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
         leading: IconButtonAppBar(
           icon: Icons.arrow_back_ios_rounded,
           onPressed: () => Navigator.pop(context, false),
@@ -84,7 +86,6 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                   lossPoints: _keyTournamentInfo.currentState!.lossPoints,
                   encountersNum: _keyTournamentInfo.currentState!.encountersNum,
                 );
-                // todo widget.onSave(_name, _players);
                 // Navigator.pop(context);
               }
             },
@@ -101,18 +102,22 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       ),
       body: Stack(
         children: [
-          TabBarView(controller: _tabController, children: [
-            TournamentInfo(
-              key: _keyTournamentInfo,
-              formKey: _formKeyInfo,
-            ),
-            TournamentTeams(
-              teams: this.teams,
-              onAddTeamsCallback: onAddTeams,
-            ),
-            Matches(),
-            TournamentStatistic(),
-          ]),
+          TabBarView(
+            physics: BouncingScrollPhysics(),
+            controller: _tabController,
+            children: [
+              TournamentInfo(
+                key: _keyTournamentInfo,
+                formKey: _formKeyInfo,
+              ),
+              TournamentTeams(
+                teams: this.teams,
+                onAddTeamsCallback: onAddTeams,
+              ),
+              Matches(),
+              TournamentStatistic(),
+            ],
+          ),
           FadeEndLIstView(
             height: 50,
             width: MediaQuery.of(context).size.width,
@@ -133,10 +138,3 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     );
   }
 }
-
-// class TabBar extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }

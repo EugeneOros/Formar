@@ -48,6 +48,7 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,
+        surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.25,
         color: Theme.of(context).primaryColorLight,
         boxShape: NeumorphicBoxShape.rect(),
         shape: NeumorphicShape.convex,

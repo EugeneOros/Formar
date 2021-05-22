@@ -94,7 +94,7 @@ class _AppTopBarState extends State<AppTopBar> {
                     // child: IconButtonAppBar(onPressed: (){}, icon: Icons.filter_list_rounded),
                     icon: Icon(
                       Icons.filter_list_rounded,
-                      color: currentFilter == VisibilityFilter.all ? Colors.black : Theme.of(context).primaryColorDark,
+                      color: currentFilter == VisibilityFilter.all ? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black) : (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink :Theme.of(context).primaryColorDark),
                     ),
                     shape: _ShapedWidgetBorder(padding: 10, borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     padding: EdgeInsets.all(0),
@@ -301,7 +301,7 @@ class _AppTopBarState extends State<AppTopBar> {
           return BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
+                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ?  DarkColorShadowDark.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
                 spreadRadius: 5,
                 blurRadius: 7,
               )
@@ -310,8 +310,8 @@ class _AppTopBarState extends State<AppTopBar> {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
                 // Theme.of(context).primaryColor,
               ],
             ),

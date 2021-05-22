@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/dependency.dart';
 
 class RoundIconButton extends StatelessWidget {
   final Function()? onPressed;
@@ -15,15 +16,19 @@ class RoundIconButton extends StatelessWidget {
       onPressed: onPressed,
       style: NeumorphicStyle(
         depth: 1,
-        surfaceIntensity: 0.4,
-        color: color ?? Theme.of(context).primaryColorLight,
+        surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.4,
+        shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+        shadowLightColor:
+            Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+        color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight),
         shape: NeumorphicShape.concave,
         boxShape: NeumorphicBoxShape.circle(),
       ),
-      padding: EdgeInsets.all(size/4),
+      padding: EdgeInsets.all(size / 4),
       child: Icon(
         icon,
-        size: size/2,
+        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+        size: size / 2,
       ),
     );
   }

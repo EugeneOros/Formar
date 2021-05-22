@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/dependency.dart';
 
 typedef void AppCheckboxListener<T>(T value);
 
@@ -156,6 +157,10 @@ class AppCheckbox extends StatelessWidget {
         lightSource: this.style.lightSource ?? theme.lightSource,
         disableDepth: this.style.disableDepth,
         intensity: isSelected ? selectedIntensity : unselectedIntensity,
+        // shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+        // shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+        // shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.grey.withOpacity(0.9) : Colors.grey.withOpacity(0.7),
+        // shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.grey.withOpacity(0.9) : Colors.white.withOpacity(0.7),
         shape: NeumorphicShape.concave,
       ),
     );

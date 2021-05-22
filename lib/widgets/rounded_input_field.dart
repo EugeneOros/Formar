@@ -1,4 +1,6 @@
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +34,8 @@ class RoundedInputField extends StatelessWidget {
     this.lengthLimit = 40,
     this.height,
     this.width,
-    this.radius = 15, this.name,
+    this.radius = 15,
+    this.name,
   }) : super(key: key);
 
   @override
@@ -47,53 +50,50 @@ class RoundedInputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          name != null ? Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 10),
-            child: Text(
-              name!,
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ) : SizedBox(height: 0, width: 0,),
+          name != null
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 5, left: 10),
+                  child: Text(
+                    name!,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                )
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
           Neumorphic(
-            style: NeumorphicStyle(
-              depth: -1.5,
-              intensity: 1,
-              shape: NeumorphicShape.concave,
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(radius)),
-              lightSource: LightSource.topLeft,
-              color: Theme.of(context).primaryColorLight.withOpacity(0.4),
-            ),
+            style: getInnerNeumorphicStyle(context: context),
             child: Container(
               // decoration: roundedShadowDecoration,
               height: height,
               // width: width ?? MediaQuery.of(context).size.width * 0.8,
               child: TextFormField(
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(lengthLimit),
-                ],
-                onSaved: onSaved,
-                onChanged: onChange,
-                textAlignVertical: TextAlignVertical.center,
-                autofocus: autofocus,
-                initialValue: initialValue,
-                style: Theme.of(context).textTheme.bodyText2,
-                controller: controller,
-                cursorColor: Colors.black,
-                validator: validator,
-                decoration: InputDecoration(
-                        filled: true,
-                        fillColor: TextFieldFillColor,
-                        hintText: hintText,
-                        contentPadding: icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                        // prefixIcon: Icon(icon, color: Colors.black),
-                        prefixIcon: icon != null ?  Icon(icon, color: Colors.black) : null,
-                        border: borderRoundedTransparent,
-                        focusedBorder: borderRoundedTransparent,
-                        enabledBorder: borderRoundedTransparent,
-                        errorStyle: TextStyle(height: 0),
-                        hintStyle: Theme.of(context).textTheme.subtitle1,
-                      )
-              ),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(lengthLimit),
+                  ],
+                  onSaved: onSaved,
+                  onChanged: onChange,
+                  textAlignVertical: TextAlignVertical.center,
+                  autofocus: autofocus,
+                  initialValue: initialValue,
+                  style: Theme.of(context).textTheme.bodyText2,
+                  controller: controller,
+                  cursorColor: Colors.black,
+                  validator: validator,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor:  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? TextFieldFillColor : Colors.white,
+                    hintText: hintText,
+                    contentPadding: icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    // prefixIcon: Icon(icon, color: Colors.black),
+                    prefixIcon: icon != null ? Icon(icon, color: Colors.black) : null,
+                    border: borderRoundedTransparent,
+                    focusedBorder: borderRoundedTransparent,
+                    enabledBorder: borderRoundedTransparent,
+                    errorStyle: TextStyle(height: 0),
+                    hintStyle: Theme.of(context).textTheme.subtitle1,
+                  )),
             ),
           ),
         ],

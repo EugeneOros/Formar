@@ -16,7 +16,7 @@ class ItemTournamentStatistic extends StatelessWidget {
       // width: 300,
       // constraints: BoxConstraints(maxHeight: 50),
       // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      decoration: drawDivider ? BoxDecoration(border: Border(top: borderSideDivider)) : null,
+      decoration: drawDivider ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
       child: Row(
         children: [
           IntrinsicHeight(
@@ -25,17 +25,45 @@ class ItemTournamentStatistic extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
-                  StatisticBox(value: 2, ),
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
-                  StatisticBox(value: 3,),
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
-                  StatisticBox(value: 2, ),
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
-                  StatisticBox(value: 3,),
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
-                  StatisticBox(value: 2, ),
-                  StatisticBox(value: 1, color: Theme.of(context).primaryColorLight,),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  StatisticBox(
+                    value: 2,
+                  ),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  StatisticBox(
+                    value: 3,
+                  ),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  StatisticBox(
+                    value: 2,
+                  ),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  StatisticBox(
+                    value: 3,
+                  ),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  StatisticBox(
+                    value: 2,
+                  ),
+                  StatisticBox(
+                    value: 1,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                   // StatisticBox(value: 3,),
                 ],
               ),
@@ -50,18 +78,23 @@ class ItemTournamentStatistic extends StatelessWidget {
 
 class StatisticBox extends StatelessWidget {
   final int value;
-  final Color color;
+  final Color? color;
 
-  const StatisticBox({Key? key, required this.value, this.color = Colors.white}) : super(key: key);
+  const StatisticBox({Key? key, required this.value, this.color}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    Color color = this.color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white);
     return Container(
       padding: EdgeInsets.all(10),
       height: 35,
       width: 40,
       color: color,
-      child: Text(value.toString(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText2,),
+      child: Text(
+        value.toString(),
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.bodyText2,
+      ),
     );
   }
 }
-

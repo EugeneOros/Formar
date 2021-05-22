@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
+import 'package:form_it/logic/models/AppStateNotifier.dart';
 import 'package:form_it/widgets/widgets.dart';
 
 import 'package:form_it/pages/settings/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -117,6 +121,18 @@ class _SettingsPageState extends State<SettingsPage> {
                           );
                         });
                   },
+                ),
+                ItemSettings(
+                  icon: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? FontAwesomeIcons.moon : FontAwesomeIcons.sun,
+                  text: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? "Dark mode" : "Light mode",
+                  onTap: () {},
+                  secondaryWidget: CupertinoSwitch(
+                    activeColor: Colors.black,
+                    value: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode,
+                    onChanged: (boolVal) {
+                      Provider.of<AppStateNotifier>(context, listen: false).updateTheme(boolVal);
+                    },
+                  ),
                 ),
                 Text(
                   AppLocalizations.of(context)!.version + " 1.0",

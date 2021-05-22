@@ -32,7 +32,7 @@ class TabSelector extends StatelessWidget {
             color: _getBackgroundColor(activeTab),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
+                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
                 spreadRadius: 5,
                 blurRadius: 7,
               )
@@ -41,8 +41,8 @@ class TabSelector extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
               ],
             ),
           );
@@ -75,8 +75,8 @@ class TabSelector extends StatelessWidget {
         elevation: 0.0,
         iconSize: 20,
         backgroundColor: Colors.transparent,
-        selectedItemColor: BottomNavigationBarItemColor,
-        unselectedItemColor: BottomNavigationBarItemColor,
+        selectedItemColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? BottomNavBarDarkColor : BottomNavBarLightColor,
+        unselectedItemColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? BottomNavBarDarkColor : BottomNavBarLightColor,
         type: BottomNavigationBarType.fixed,
         onTap: (index) => onTabSelected(AppTab.values[index]),
         selectedLabelStyle: Theme.of(context).textTheme.subtitle2,
@@ -84,7 +84,11 @@ class TabSelector extends StatelessWidget {
         currentIndex: AppTab.values.indexOf(activeTab),
         items: AppTab.values.map((tab) {
           return BottomNavigationBarItem(
-            icon: Container(width: 22, height: 22, child: tab.getIcon(tab == activeTab)),
+            icon: Container(
+              width: 22,
+              height: 22,
+              child: tab.getIcon(tab == activeTab, context),
+            ),
             tooltip: '',
             label: tab.getName(context),
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_it/config/dependency.dart';
 
 class Power extends StatelessWidget {
   final int power;
@@ -14,7 +15,10 @@ class Power extends StatelessWidget {
         Container(
           width: 20,
           height: 20,
-          child: SvgPicture.asset("assets/power.svg"),
+          child: SvgPicture.asset(
+            "assets/power.svg",
+            color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black,
+          ),
         ),
         Text(
           power.toString(),

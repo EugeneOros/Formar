@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
     final _pageOptions = [PlayersPage(), TeamsPage(), TournamentPage(), SettingsPage()];
     return BlocBuilder<TabBloc, AppTab>(builder: (context, activeTab) {
       return Scaffold(
+        backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
         key: homeKey,
         appBar: AppTopBar(activeTab: activeTab),
         body: _pageOptions[AppTab.values.indexOf(activeTab)],

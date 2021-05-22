@@ -6,7 +6,6 @@ import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statis
 import 'package:form_it/widgets/emboss_container.dart';
 
 class TournamentStatistic extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     List<String> teams = [
@@ -30,6 +29,7 @@ class TournamentStatistic extends StatelessWidget {
     return Neumorphic(
         style: NeumorphicStyle(
           depth: 0,
+          surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.25,
           color: Theme.of(context).primaryColorLight,
           boxShape: NeumorphicBoxShape.rect(),
           shape: NeumorphicShape.convex,
@@ -64,21 +64,27 @@ class TournamentStatistic extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(children: [
-                            Container(
-                              height: 35,
-                              // width: 35,
-                              padding: EdgeInsets.only(left: 10),
-                              child: Center(child: Text("Name", style: Theme.of(context).textTheme.subtitle2,)),
-                            )
-                          ],),
+                          Row(
+                            children: [
+                              Container(
+                                height: 35,
+                                // width: 35,
+                                padding: EdgeInsets.only(left: 10),
+                                child: Center(
+                                    child: Text(
+                                  "Name",
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                )),
+                              )
+                            ],
+                          ),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: teams.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                    decoration: index != -1 ? BoxDecoration(border: Border(top: borderSideDivider)) : null,
+                                    decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
                                     // c
                                     child: Row(
                                       children: [
@@ -88,8 +94,12 @@ class TournamentStatistic extends StatelessWidget {
                                         Neumorphic(
                                           style: NeumorphicStyle(
                                             depth: -2,
-                                            surfaceIntensity: 0.4,
-                                            color: Theme.of(context).primaryColorLight,
+                                            surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.4,
+                                            color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                                ? DarkColor
+                                                : Theme.of(context).primaryColorLight,
+                                            shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                                            shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
                                             shape: NeumorphicShape.flat,
                                             boxShape: NeumorphicBoxShape.circle(),
                                           ),
@@ -125,17 +135,39 @@ class TournamentStatistic extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              StatisticHeaderElement( value: 'P',),
-                              StatisticHeaderElement( value: 'W',),
-                              StatisticHeaderElement( value: 'D',),
-                              StatisticHeaderElement( value: 'L',),
-                              StatisticHeaderElement( value: 'MP',),
-                              StatisticHeaderElement( value: 'PD',),
-                              StatisticHeaderElement( value: 'SD',),
-                              StatisticHeaderElement( value: 'E',),
-                              StatisticHeaderElement( value: 'P',),
-                              StatisticHeaderElement( value: 'P',),
-                              StatisticHeaderElement( value: 'P',),
+                              StatisticHeaderElement(
+                                value: 'P',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'W',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'D',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'L',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'MP',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'PD',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'SD',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'E',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'P',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'P',
+                              ),
+                              StatisticHeaderElement(
+                                value: 'P',
+                              ),
                             ],
                           ),
                           Column(
@@ -162,14 +194,18 @@ class StatisticHeaderElement extends StatelessWidget {
   final String value;
 
   const StatisticHeaderElement({Key? key, required this.value}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 35,
       width: 40,
       padding: EdgeInsets.all(10),
-      child: Center(child: Text(value, style: Theme.of(context).textTheme.subtitle2,)),
+      child: Center(
+          child: Text(
+        value,
+        style: Theme.of(context).textTheme.subtitle2,
+      )),
     );
   }
 }
-

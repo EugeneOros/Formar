@@ -6,6 +6,7 @@ import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
+import 'package:form_it/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/config/constants.dart';
@@ -25,7 +26,7 @@ class TournamentTeams extends StatefulWidget {
 class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     final teamsAll = Provider.of<List<Team>>(context);
     _onAddTeams() {
       showDialog(
@@ -63,10 +64,23 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
         },
       );
     }
-
+    // return Container(
+    //   width: 200,
+    //   height: 50,
+    //   padding: const EdgeInsets.symmetric(vertical: 200, horizontal: 100),
+    //   child:
+    //   RoundedButton(
+    //     text: AppLocalizations.of(context)!.addPlayers,
+    //     textColor: Colors.black,
+    //     color: Theme.of(context).accentColor,
+    //     sizeRatio: 0.9,
+    //     onPressed: _onAddTeams,
+    //   ),
+    // );
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,
+        surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.25,
         color: Theme.of(context).primaryColorLight,
         boxShape: NeumorphicBoxShape.rect(),
         shape: NeumorphicShape.convex,
@@ -107,7 +121,18 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
             ),
           ),
           SingleChildScrollView(
-            child: Stack(
+            child: widget.teams.isEmpty ? Container(
+              padding: const EdgeInsets.only(top: 110),
+              alignment: Alignment.center,
+              child:
+              RoundedButton(
+                text: AppLocalizations.of(context)!.addPlayers,
+                textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                sizeRatio: 0.9,
+                onPressed: _onAddTeams,
+              ),
+            ) : Stack(
               children: [
                 EmbossContainer(
                   padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),

@@ -46,7 +46,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
             scale: scaleAnimation,
             child: Container(
               margin: EdgeInsets.all(30),
-              decoration: ShapeDecoration(color: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+              decoration: ShapeDecoration(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
               child: IntrinsicWidth(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -74,7 +74,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                               padding: EdgeInsets.zero,
                               height: 37,
                               decoration: BoxDecoration(
-                                border: Border(top: borderSideDivider),
+                                border: Border(top: getBorderDivider(context)),
                               ),
                               child: e,
                             );
@@ -86,7 +86,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                         width: double.infinity,
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border(top: borderSideDivider),
+                            border: Border(top: getBorderDivider(context)),
                           ),
                           child: Row(
                             children: widget.actionsHorizontal!.map((e) {
@@ -95,7 +95,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                                   height: 35,
                                   decoration: BoxDecoration(
                                     border: e != widget.actionsHorizontal!.last
-                                        ? Border(right: borderSideDivider)
+                                        ? Border(right: getBorderDivider(context))
                                         : Border(),
                                   ),
                                   child: e,

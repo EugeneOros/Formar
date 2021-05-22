@@ -6,10 +6,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/palette.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
+import 'package:form_it/logic/models/AppStateNotifier.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
 import 'package:form_it/widgets/app_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
 
 class PlayerItem extends StatelessWidget {
@@ -47,21 +50,19 @@ class PlayerItem extends StatelessWidget {
   }
 
   void _onEdit() {
-    Navigator.of(homeKey.currentContext!).push(
-        getPageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
-            onSave: (nickname, level, sex) {
-              BlocProvider.of<PeopleBloc>(context).add(
-                UpdatePerson(
-                  player.copyWith(nickname: nickname, level: level, sex: sex),
-                ),
-              );
-            },
-            isEditing: true,
-            player: player,
-          ),
-        )
-    );
+    Navigator.of(homeKey.currentContext!).push(getPageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+        onSave: (nickname, level, sex) {
+          BlocProvider.of<PeopleBloc>(context).add(
+            UpdatePerson(
+              player.copyWith(nickname: nickname, level: level, sex: sex),
+            ),
+          );
+        },
+        isEditing: true,
+        player: player,
+      ),
+    ));
   }
 
   void _onShowTeams() {
@@ -122,7 +123,10 @@ class PlayerItem extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           // margin: EdgeInsets.symmetric(horizontal: 20.0),
-          decoration: BoxDecoration(border: drawDivider ? Border(top: borderSideDivider) : null, color: Colors.white),
+          decoration: BoxDecoration(
+            border: drawDivider ? Border(top: getBorderDivider(context)) : null,
+            color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -152,23 +156,13 @@ class PlayerItem extends StatelessWidget {
               ),
               Transform.scale(
                 scale: 0.8,
-                child:
-                    // NeumorphicSwitch(
-                    //   value: player.available,
-                    //   onChanged: onSwitchChanged,
-                    //   style: NeumorphicSwitchStyle(
-                    //     activeTrackColor: Colors.black,
-                    //     inactiveTrackColor: Colors.grey[200],
-                    //     activeThumbColor: Colors.grey[200],
-                    //     inactiveThumbColor: Colors.grey[200],
-                    //   ),
-                    // )
-                    CupertinoSwitch(
-                  activeColor: Colors.black,
+                child: CupertinoSwitch(
+                  trackColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.grey[200],
+                  activeColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
                   value: player.available,
                   onChanged: onSwitchChanged,
                 ),
-              )
+              ),
             ],
           ),
         ),

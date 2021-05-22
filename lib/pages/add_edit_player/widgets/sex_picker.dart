@@ -57,6 +57,11 @@ class _SexPickerState extends State<SexPicker> {
                               unselectedDepth: 3,
                               shape: NeumorphicShape.concave,
                               intensity: 0.8,
+                              // shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                              // shadowLightColor:
+                              // Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                              // color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight),
+
                               selectedColor: Theme.of(context).primaryColorLight,
                               unselectedColor: Theme.of(context).primaryColorLight,
                               boxShape: NeumorphicBoxShape.circle(),

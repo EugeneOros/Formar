@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/widgets/app_check_box.dart';
 import 'package:repositories/repositories.dart';
 
@@ -62,9 +64,10 @@ class _DialogAddTeamsState extends State<DialogAddTeams> {
   @override
   Widget build(BuildContext context) {
     var borderSearch = UnderlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+      borderSide: getBorderDivider(context)
     );
     return Container(
+      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
       constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width * 0.8,
@@ -116,9 +119,9 @@ class _DialogAddTeamsState extends State<DialogAddTeams> {
                         padding: EdgeInsets.all(3),
                         style: AppCheckboxStyle(
                           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
-                          selectedColor: Theme.of(context).primaryColor,
+                          selectedColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).primaryColor,
                           disabledColor: Theme.of(context).primaryColor,
-                          unselectedColor: Theme.of(context).primaryColorLight,
+                          unselectedColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColorLight,
                         ),
                       )
                     ],

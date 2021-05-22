@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_it/config/dependency.dart';
 
 class IconButtonAppBar extends StatelessWidget {
   final Function onPressed;
@@ -16,7 +17,7 @@ class IconButtonAppBar extends StatelessWidget {
         padding: EdgeInsets.all(0),
         splashRadius: 23,
         tooltip: tooltip,
-        icon: Icon(icon, color: Colors.black, size: 23,),
+        icon: Icon(icon, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black, size: 23,),
         iconSize: 10,
         onPressed: () => onPressed(),
       ),

@@ -26,6 +26,8 @@ import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
 
 import 'config/constants.dart';
+import 'config/dependency.dart';
+import 'logic/models/AppStateNotifier.dart';
 
 class FormarApp extends StatefulWidget {
   @override
@@ -62,19 +64,19 @@ class _FormarAppState extends State<FormarApp> {
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
         }),
-        brightness: isDark ? Brightness.dark : Brightness.light ,
-        primaryColor: isDark ? Color(0xff2a2945) : Color(0xffd1dbf1),
-        accentColor: isDark ? Color(0xff803942) : Color(0xffffdcf7),
-        primaryColorLight: isDark ? Color(0xff927787) : Color(0xfff4f9fa),
+        brightness: isDark ? Brightness.dark : Brightness.light,
+        primaryColor: isDark ? DarkColor : Color(0xffd1dbf1),
+        accentColor: isDark ? DarkColor : Color(0xffffdcf7),
+        primaryColorLight: isDark ? DarkColor : Color(0xfff4f9fa),
         primaryColorDark: isDark ? Color(0xff261c2c) : Color(0xff7aa1f5),
-        dividerColor: isDark ? Color(0xff555555) : Colors.grey[400],
+        dividerColor: isDark ? DarkColor : Colors.grey[400],
         textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),
-          headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black),
-          bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+          headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: isDark ? LightBlue : Colors.black),
+          headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: isDark ? LightBlue : Colors.black),
+          bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: isDark ? LightBlue : Colors.black),
           bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-          subtitle1: TextStyle(fontSize: 12, color: Colors.grey),
-          subtitle2: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: Colors.black),
+          subtitle1: TextStyle(fontSize: 12, color: isDark ? LightBlue : Colors.grey),
+          subtitle2: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: isDark ? LightBlue : Colors.black),
           button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4)),
           caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black),
         ),
@@ -216,121 +218,129 @@ class _FormarAppState extends State<FormarApp> {
       ];
     }
 
-    return MultiBlocProvider(
-      providers: _getBlocProviders(),
-      child: MaterialApp(
-        title: "Formar",
-        color: Colors.white,
-        localizationsDelegates: LOCALIZATION_DELEGATES,
-        // localeListResolutionCallback: LOCALIZATION_RESOLUTION,
-        supportedLocales: SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
-        debugShowCheckedModeBanner: false,
-        theme: _getTheme(),
-        darkTheme: _getTheme(isDark: true),
-        themeMode: ThemeMode.light,
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: AppScrollBehavior(),
-            child: child!,
-          );
-        },
-        initialRoute: '/',
-        // routes: _getRoutes(),
-        onGenerateRoute: (RouteSettings settings) {
-          switch (settings.name) {
-            case '/':
-              return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                        builder: (BuildContext context, AuthenticationState state) {
-                          if (state is AuthenticationStateUnauthenticated) {
-                            return BlocProvider<LoginBloc>(
-                              create: (context) => LoginBloc(userRepository: _userRepository),
-                              child: LoginScreen(),
-                            );
-                          } else if (state is AuthenticationStateAuthenticated) {
-                            BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
-                            return HomeScreen(email: state.user!.email ?? "");
+    return Consumer<AppStateNotifier>(builder: (context, appState, child) {
+      return MultiBlocProvider(
+        providers: _getBlocProviders(),
+        child: MaterialApp(
+          title: "Formar",
+          color: appState.isDarkMode ? DarkColor : Colors.white,
+          localizationsDelegates: LOCALIZATION_DELEGATES,
+          // localeListResolutionCallback: LOCALIZATION_RESOLUTION,
+          supportedLocales: SUPPORTED_LOCALES.map((languageCode) => Locale(languageCode)),
+          debugShowCheckedModeBanner: false,
+          theme: _getTheme(),
+          darkTheme: _getTheme(isDark: true),
+          themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          builder: (context, child) {
+            return ScrollConfiguration(
+              behavior: AppScrollBehavior(),
+              child: child!,
+            );
+          },
+          initialRoute: '/',
+          // routes: _getRoutes(),
+          onGenerateRoute: (RouteSettings settings) {
+            switch (settings.name) {
+              case '/':
+                return getPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                          builder: (BuildContext context, AuthenticationState state) {
+                            if (state is AuthenticationStateUnauthenticated) {
+                              return BlocProvider<LoginBloc>(
+                                create: (context) => LoginBloc(userRepository: _userRepository),
+                                child: LoginScreen(),
+                              );
+                            } else if (state is AuthenticationStateAuthenticated) {
+                              BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
+                              return HomeScreen(email: state.user!.email ?? "");
+                            }
+                            return SplashScreen();
+                          },
+                        ));
+              case '/edit':
+                return getPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+                          onSave: (nickname, level, sex) {
+                            BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+                          },
+                          isEditing: true,
+                        ));
+              case '/add_team':
+                return getPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+                          List<Player> players = [];
+                          if (state is PeopleLoaded) {
+                            players = state.people;
                           }
-                          return SplashScreen();
-                        },
-                      ));
-            case '/edit':
-              return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
-                        onSave: (nickname, level, sex) {
-                          BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
-                        },
-                        isEditing: true,
-                      ));
-            case '/add_team':
-              return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
-                        List<Player> players = [];
-                        if (state is PeopleLoaded) {
-                          players = state.people;
-                        }
-                        return Provider<List<Player>>.value(
-                          value: players,
-                          child: AddEditTeamScreen(
-                            onSave: (name, players) {
-                              BlocProvider.of<TeamsBloc>(context).add(
-                                AddTeam(
-                                  Team(name: name!, players: players),
-                                ),
-                              );
-                            },
-                            isEditing: false,
-                          ),
-                        );
-                      }));
-            case '/add_tournament':
-              return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
-                        List<Team> teams = [];
-                        if (state is TeamsLoaded) {
-                          teams = state.teams;
-                        }
-                        return Provider<List<Team>>.value(
-                          value: teams,
-                          child: AddEditTournamentPage(
-                            onSave: ({String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum}) {
-                              BlocProvider.of<TournamentsBloc>(context).add(
-                                AddTournament(
-                                  Tournament(
-                                    ownerId: _userRepository.getUser()!.uid,
-                                    name: name!,
-                                    teams: teams,
-                                    winPoints: winPoints,
-                                    drawPoints: drawPoints,
-                                    lossPoints: lossPoints,
-                                    encountersNum: encountersNum,
+                          return Provider<List<Player>>.value(
+                            value: players,
+                            child: AddEditTeamScreen(
+                              onSave: (name, players) {
+                                BlocProvider.of<TeamsBloc>(context).add(
+                                  AddTeam(
+                                    Team(name: name!, players: players),
                                   ),
-                                ),
-                              );
-                            },
-                            isEditing: false,
-                          ),
-                        );
-                      }));
-            case '/add':
-              return getPageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
-                  onSave: (nickname, level, sex) {
-                    BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
-                  },
-                  isEditing: false,
-                ),
-              );
-            case '/signUp':
-              return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen()));
-            default:
-              throw Exception('Invalid route: ${settings.name}');
-          }
-        },
-      ),
-    );
+                                );
+                              },
+                              isEditing: false,
+                            ),
+                          );
+                        }));
+              case '/add_tournament':
+                return getPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<TeamsBloc, TeamsState>(builder: (context, state) {
+                          List<Team> teams = [];
+                          if (state is TeamsLoaded) {
+                            teams = state.teams;
+                          }
+                          return Provider<List<Team>>.value(
+                            value: teams,
+                            child: AddEditTournamentPage(
+                              onSave: (
+                                  {String? name,
+                                  List<Team>? teams,
+                                  required int winPoints,
+                                  required int drawPoints,
+                                  required int lossPoints,
+                                  required int encountersNum}) {
+                                BlocProvider.of<TournamentsBloc>(context).add(
+                                  AddTournament(
+                                    Tournament(
+                                      ownerId: _userRepository.getUser()!.uid,
+                                      name: name!,
+                                      teams: teams,
+                                      winPoints: winPoints,
+                                      drawPoints: drawPoints,
+                                      lossPoints: lossPoints,
+                                      encountersNum: encountersNum,
+                                    ),
+                                  ),
+                                );
+                              },
+                              isEditing: false,
+                            ),
+                          );
+                        }));
+              case '/add':
+                return getPageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+                    onSave: (nickname, level, sex) {
+                      BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+                    },
+                    isEditing: false,
+                  ),
+                );
+              case '/signUp':
+                return getPageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(userRepository: _userRepository), child: SignUpScreen()));
+              default:
+                throw Exception('Invalid route: ${settings.name}');
+            }
+          },
+        ),
+      );
+    });
   }
 }
 

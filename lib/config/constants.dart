@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+
+import 'dependency.dart';
 
 final GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
 
@@ -18,10 +21,14 @@ const borderRoundedTransparent = OutlineInputBorder(
 
 const borderSideDivider = BorderSide(color: Color(0xFFBDBDBD), width: 0.5);
 
+BorderSide getBorderDivider(BuildContext context){
+  return BorderSide(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ?  DividerDarkColor : Color(0xFFBDBDBD), width: 0.5);
+}
+
 BoxDecoration roundedShadowDecoration = BoxDecoration(
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.2),
+      color: Colors.white, //Colors.grey.withOpacity(0.2),
       spreadRadius: 5,
       blurRadius: 7,
       offset: Offset(2, 2),
@@ -54,4 +61,16 @@ PageRouteBuilder getPageRouteBuilder({required Widget Function(BuildContext cont
       );
     },
   );
+}
+
+NeumorphicStyle getInnerNeumorphicStyle({required BuildContext context, Color? color}){
+  return NeumorphicStyle(
+      depth: -1.5,
+      intensity: 1,
+      shape: NeumorphicShape.concave,
+      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+      lightSource: LightSource.topLeft,
+      shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+      shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+      color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white));
 }

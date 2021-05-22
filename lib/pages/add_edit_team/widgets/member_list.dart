@@ -82,12 +82,10 @@ class _MemberListState extends State<MemberList> {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: RoundedButton(
                 text: AppLocalizations.of(context)!.addPlayers,
-                textColor: Colors.black,
-                color: Theme.of(context).accentColor,
+                textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
                 sizeRatio: 0.9,
-                onPressed: () {
-                  _onAddPlayer();
-                },
+                onPressed: _onAddPlayer,
               ),
             )
           : Stack(

@@ -22,13 +22,17 @@ class TabBarTournament extends StatelessWidget {
           child: Neumorphic(
             style: NeumorphicStyle(
               depth: 1,
-              surfaceIntensity: 0.3,
-              color: Theme.of(context).accentColor,
+              surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.3,
+              shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+              shadowLightColor:
+              Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+              color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
               intensity: 0.8,
               shape: NeumorphicShape.convex,
               boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
             ),
             child: TabBar(
+              physics: BouncingScrollPhysics(),
               indicatorPadding: EdgeInsets.all(4),
               unselectedLabelColor: Colors.black,
               labelColor: Colors.black,
@@ -40,13 +44,14 @@ class TabBarTournament extends StatelessWidget {
                 style: NeumorphicStyle(
                   depth: 1,
                   intensity: 1,
-                  surfaceIntensity: 0.2,
-                  color: Colors.white,
+                  surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.2,
+                  color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
                   shape: NeumorphicShape.concave,
+                  shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey[400],
+                  shadowLightColor:
+                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).accentColor,
                   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   lightSource: LightSource.topLeft,
-                  shadowLightColor: Theme.of(context).accentColor,
-                  shadowDarkColor: Colors.grey[400],
                 ),
               ),
               labelPadding: EdgeInsets.all(0),
