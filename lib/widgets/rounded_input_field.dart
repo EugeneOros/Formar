@@ -79,11 +79,11 @@ class RoundedInputField extends StatelessWidget {
                   initialValue: initialValue,
                   style: Theme.of(context).textTheme.bodyText2,
                   controller: controller,
-                  cursorColor: Colors.black,
+                  // cursorColor: Colors.black,
                   validator: validator,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor:  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? TextFieldFillColor : Colors.white,
+                    fillColor:  Theme.of(context).canvasColor,
                     hintText: hintText,
                     contentPadding: icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     // prefixIcon: Icon(icon, color: Colors.black),

@@ -40,19 +40,19 @@ class AppCheckboxStyle {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AppCheckboxStyle &&
-              runtimeType == other.runtimeType &&
-              selectedDepth == other.selectedDepth &&
-              border == other.border &&
-              unselectedDepth == other.unselectedDepth &&
-              disableDepth == other.disableDepth &&
-              selectedIntensity == other.selectedIntensity &&
-              lightSource == other.lightSource &&
-              unselectedIntensity == other.unselectedIntensity &&
-              boxShape == other.boxShape &&
-              selectedColor == other.selectedColor &&
-              unselectedColor == other.unselectedColor &&
-              disabledColor == other.disabledColor;
+      other is AppCheckboxStyle &&
+          runtimeType == other.runtimeType &&
+          selectedDepth == other.selectedDepth &&
+          border == other.border &&
+          unselectedDepth == other.unselectedDepth &&
+          disableDepth == other.disableDepth &&
+          selectedIntensity == other.selectedIntensity &&
+          lightSource == other.lightSource &&
+          unselectedIntensity == other.unselectedIntensity &&
+          boxShape == other.boxShape &&
+          selectedColor == other.selectedColor &&
+          unselectedColor == other.unselectedColor &&
+          disabledColor == other.disabledColor;
 
   @override
   int get hashCode =>
@@ -103,18 +103,11 @@ class AppCheckbox extends StatelessWidget {
     final selectedColor = this.style.selectedColor ?? theme.accentColor;
     final unselectedColor = this.style.unselectedColor ?? theme.baseColor;
 
-    final double selectedDepth =
-        -1 * (this.style.selectedDepth ?? theme.depth).abs();
-    final double unselectedDepth =
-    (this.style.unselectedDepth ?? theme.depth).abs();
+    final double selectedDepth = -1 * (this.style.selectedDepth ?? theme.depth).abs();
+    final double unselectedDepth = (this.style.unselectedDepth ?? theme.depth).abs();
     final double selectedIntensity =
-    (this.style.selectedIntensity ?? theme.intensity)
-        .abs()
-        .clamp(Neumorphic.MIN_INTENSITY, Neumorphic.MAX_INTENSITY);
-    final double unselectedIntensity = this
-        .style
-        .unselectedIntensity
-        .clamp(Neumorphic.MIN_INTENSITY, Neumorphic.MAX_INTENSITY);
+        (this.style.selectedIntensity ?? theme.intensity).abs().clamp(Neumorphic.MIN_INTENSITY, Neumorphic.MAX_INTENSITY);
+    final double unselectedIntensity = this.style.unselectedIntensity.clamp(Neumorphic.MIN_INTENSITY, Neumorphic.MAX_INTENSITY);
 
     double depth = isSelected ? selectedDepth : unselectedDepth;
     if (!this.isEnabled) {
@@ -157,10 +150,13 @@ class AppCheckbox extends StatelessWidget {
         lightSource: this.style.lightSource ?? theme.lightSource,
         disableDepth: this.style.disableDepth,
         intensity: isSelected ? selectedIntensity : unselectedIntensity,
-        // shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-        // shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-        // shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.grey.withOpacity(0.9) : Colors.grey.withOpacity(0.7),
-        // shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.grey.withOpacity(0.9) : Colors.white.withOpacity(0.7),
+        shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+        shadowLightColor:
+            Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark.withOpacity(0.5) : Colors.white.withOpacity(0.7),
+        shadowDarkColorEmboss:
+            Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.black.withOpacity(0.8) : Colors.grey.withOpacity(0.7),
+        shadowLightColorEmboss:
+            Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? Colors.grey.withOpacity(0.7) : Colors.white.withOpacity(0.7),
         shape: NeumorphicShape.concave,
       ),
     );

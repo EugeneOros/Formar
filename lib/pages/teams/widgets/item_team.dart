@@ -35,7 +35,7 @@ class ItemTeam extends StatelessWidget {
                     lightSource: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightSource.topRight : LightSource.topRight,
                     shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
                     shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-                    color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white),
+                    color: Theme.of(context).canvasColor),
                 child: Column(
                   children: [
                     Stack(

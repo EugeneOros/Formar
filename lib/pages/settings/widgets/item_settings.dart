@@ -22,7 +22,7 @@ class ItemSettings extends StatelessWidget {
       onTap: onTap as void Function()?,
       child: Container(
         decoration: drawDivider ? BoxDecoration(
-          border: Border(bottom: borderSideDivider),
+          border: Border(bottom: getBorderDivider(context)),
         ) : null,
         margin: EdgeInsets.symmetric(horizontal: 20.0),
         width: MediaQuery.of(context).size.width,

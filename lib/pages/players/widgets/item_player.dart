@@ -75,7 +75,7 @@ class PlayerItem extends StatelessWidget {
               ? Container(
                   constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
                   decoration: BoxDecoration(
-                    border: Border(top: borderSideDivider),
+                    border: Border(top: getBorderDivider(context)),
                   ),
                   width: MediaQuery.of(context).size.width / 1.7,
                   height: MediaQuery.of(context).size.height / 6,

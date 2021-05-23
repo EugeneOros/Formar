@@ -67,12 +67,12 @@ class _LevelPickerState extends State<LevelPicker> {
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 activeTrackColor: _getLevelColor(widget.level),
-                inactiveTrackColor: Colors.white,
+                inactiveTrackColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.white,
                 valueIndicatorTextStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
                 valueIndicatorShape: RectangularSliderValueIndicatorShape(),
                 trackHeight: 3.0,
-                valueIndicatorColor: Colors.black,
-                thumbColor: Colors.white,
+                valueIndicatorColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.black,
+                thumbColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.white,
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
                 inactiveTickMarkColor: Colors.transparent,
                 activeTickMarkColor: Colors.transparent,

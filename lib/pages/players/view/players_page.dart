@@ -104,7 +104,7 @@ class PlayersPage extends StatelessWidget {
                 alignment: Alignment.center,
                 color: Theme.of(context).accentColor,
                 child: Container(
-                  color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ?  DarkColor : Theme.of(context).primaryColorLight,
+                  color: Theme.of(context).primaryColorLight,
                   constraints: BoxConstraints(minWidth: 50, maxWidth: 700),
                   child: Column(
                     children: [

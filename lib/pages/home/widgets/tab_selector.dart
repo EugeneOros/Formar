@@ -32,7 +32,7 @@ class TabSelector extends StatelessWidget {
             color: _getBackgroundColor(activeTab),
             boxShadow: [
               BoxShadow(
-                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
+                color: Theme.of(context).shadowColor,
                 spreadRadius: 5,
                 blurRadius: 7,
               )
@@ -55,7 +55,7 @@ class TabSelector extends StatelessWidget {
             color: _getBackgroundColor(activeTab),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
+                color: Theme.of(context).shadowColor,
                 spreadRadius: 5,
                 blurRadius: 7,
               )

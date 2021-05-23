@@ -67,7 +67,7 @@ class _DialogAddTeamsState extends State<DialogAddTeams> {
       borderSide: getBorderDivider(context)
     );
     return Container(
-      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
+      color: Colors.transparent,
       constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width * 0.8,
@@ -85,8 +85,9 @@ class _DialogAddTeamsState extends State<DialogAddTeams> {
               contentPadding: EdgeInsets.only(top: 15),
               filled: true,
               fillColor: Colors.transparent,
+              hintStyle: TextStyle(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).dividerColor),
               hintText: MaterialLocalizations.of(context).searchFieldLabel,
-              prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
+              prefixIcon: Icon(Icons.search, size: 20, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).dividerColor),
               border: borderSearch,
               focusedBorder: borderSearch,
               enabledBorder: borderSearch,

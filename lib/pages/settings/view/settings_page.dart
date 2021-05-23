@@ -126,12 +126,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? FontAwesomeIcons.moon : FontAwesomeIcons.sun,
                   text: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? "Dark mode" : "Light mode",
                   onTap: () {},
-                  secondaryWidget: CupertinoSwitch(
-                    activeColor: Colors.black,
-                    value: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode,
-                    onChanged: (boolVal) {
-                      Provider.of<AppStateNotifier>(context, listen: false).updateTheme(boolVal);
-                    },
+                  secondaryWidget: Transform.scale(
+                    scale: 0.8,
+                    child: CupertinoSwitch(
+                      trackColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.grey[200],
+                      activeColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                      value: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode,
+                      onChanged: (boolVal) {
+                        Provider.of<AppStateNotifier>(context, listen: false).updateTheme(boolVal);
+                      },
+                    ),
                   ),
                 ),
                 Text(

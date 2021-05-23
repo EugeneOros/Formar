@@ -46,7 +46,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
             scale: scaleAnimation,
             child: Container(
               margin: EdgeInsets.all(30),
-              decoration: ShapeDecoration(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+              decoration: ShapeDecoration(color: Theme.of(context).canvasColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
               child: IntrinsicWidth(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:form_it/config/dependency.dart';
 import 'package:form_it/widgets/app_check_box.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
 import 'package:repositories/repositories.dart';
@@ -74,7 +75,6 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
           TextField(
             style: Theme.of(context).textTheme.bodyText2,
             scrollPadding: EdgeInsets.all(0.0),
-            cursorColor: Colors.black,
             onChanged: (value) {
               filterSearchResults(value);
             },
@@ -84,7 +84,10 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
               filled: true,
               fillColor: Colors.transparent,
               hintText: MaterialLocalizations.of(context).searchFieldLabel,
-              prefixIcon: Icon(Icons.search, size: 20, color: Theme.of(context).dividerColor),
+              hintStyle:
+                  TextStyle(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).dividerColor),
+              prefixIcon: Icon(Icons.search,
+                  size: 20, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).dividerColor),
               border: borderSearch,
               focusedBorder: borderSearch,
               enabledBorder: borderSearch,
@@ -112,11 +115,6 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // Icon(
-                      //   NeumorphicIcons.check,
-                      //   color: iconColor,
-                      //   size: 20.0,
-                      // ),
                       AppCheckbox(
                         value: items[index].isCheck,
                         onChanged: (val) {
@@ -125,9 +123,9 @@ class _DialogAddPlayersState extends State<DialogAddPlayers> {
                         padding: EdgeInsets.all(3),
                         style: AppCheckboxStyle(
                           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
-                          selectedColor: Theme.of(context).primaryColor,
+                          selectedColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Theme.of(context).primaryColor,
                           disabledColor: Theme.of(context).primaryColor,
-                          unselectedColor: Theme.of(context).primaryColorLight,
+                          unselectedColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColorLight,
                         ),
                       )
                     ],

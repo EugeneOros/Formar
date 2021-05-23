@@ -21,8 +21,8 @@ const borderRoundedTransparent = OutlineInputBorder(
 
 const borderSideDivider = BorderSide(color: Color(0xFFBDBDBD), width: 0.5);
 
-BorderSide getBorderDivider(BuildContext context){
-  return BorderSide(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ?  DividerDarkColor : Color(0xFFBDBDBD), width: 0.5);
+BorderSide getBorderDivider(BuildContext context) {
+  return BorderSide(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DividerDarkColor : Color(0xFFBDBDBD), width: 0.5);
 }
 
 BoxDecoration roundedShadowDecoration = BoxDecoration(
@@ -49,7 +49,8 @@ extension StringExtension on String {
   }
 }
 
-PageRouteBuilder getPageRouteBuilder({required Widget Function(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) pageBuilder}) {
+PageRouteBuilder getPageRouteBuilder(
+    {required Widget Function(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) pageBuilder}) {
   return PageRouteBuilder(
     pageBuilder: pageBuilder,
     transitionDuration: Duration(milliseconds: 500),
@@ -63,7 +64,7 @@ PageRouteBuilder getPageRouteBuilder({required Widget Function(BuildContext cont
   );
 }
 
-NeumorphicStyle getInnerNeumorphicStyle({required BuildContext context, Color? color}){
+NeumorphicStyle getInnerNeumorphicStyle({required BuildContext context, Color? color}) {
   return NeumorphicStyle(
       depth: -1.5,
       intensity: 1,
@@ -72,5 +73,5 @@ NeumorphicStyle getInnerNeumorphicStyle({required BuildContext context, Color? c
       lightSource: LightSource.topLeft,
       shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
       shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-      color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white));
+      color: color ?? Theme.of(context).canvasColor);
 }

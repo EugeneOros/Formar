@@ -301,7 +301,7 @@ class _AppTopBarState extends State<AppTopBar> {
           return BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ?  DarkColorShadowDark.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
+                color: Theme.of(context).shadowColor,
                 spreadRadius: 5,
                 blurRadius: 7,
               )
@@ -324,10 +324,6 @@ class _AppTopBarState extends State<AppTopBar> {
           return BoxDecoration(
             color: Theme.of(context).primaryColorLight,
           );
-        // case AppTab.settings:
-        //   return BoxDecoration(
-        //     color: Theme.of(context).primaryColor,
-        //   );
       }
     }
 
