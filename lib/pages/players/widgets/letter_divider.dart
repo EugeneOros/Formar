@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/palette.dart';
-import 'package:form_it/logic/models/AppStateNotifier.dart';
+import 'package:form_it/logic/models/app_state_notifier.dart';
 import 'package:provider/provider.dart';
 
 class LetterDivider extends StatelessWidget {

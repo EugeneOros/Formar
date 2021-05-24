@@ -27,31 +27,12 @@ import 'package:repositories/repositories.dart';
 
 import 'config/constants.dart';
 import 'config/dependency.dart';
-import 'logic/models/AppStateNotifier.dart';
+import 'logic/models/app_state_notifier.dart';
 
 class FormarApp extends StatefulWidget {
   @override
   _FormarAppState createState() => _FormarAppState();
 }
-
-// class PTransitionsBuilder extends PageTransitionsBuilder {
-//   @override
-//   Widget buildTransitions<T>(
-//       PageRoute<T> route, BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-//     return PageRouteBuilder(
-//       pageBuilder: pageBuilder,
-//       transitionDuration: Duration(milliseconds: 500),
-//       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//         animation = CurvedAnimation(curve: Curves.easeOutExpo, parent: animation);
-//         return FadeTransition(
-//           opacity: animation,
-//           child: child,
-//         );
-//       },
-//     );
-//     // TODO: implement buildTransitions
-//   }
-// }
 
 class _FormarAppState extends State<FormarApp> {
   final UserRepository _userRepository = UserRepository();

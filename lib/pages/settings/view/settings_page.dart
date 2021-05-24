@@ -5,7 +5,7 @@ import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
-import 'package:form_it/logic/models/AppStateNotifier.dart';
+import 'package:form_it/logic/models/app_state_notifier.dart';
 import 'package:form_it/widgets/widgets.dart';
 
 import 'package:form_it/pages/settings/widgets/widgets.dart';
@@ -16,7 +16,7 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClientMixin{
   int? _currentPlayerCountValue = 1;
 
   void handleNumChange(int value) {
@@ -152,4 +152,7 @@ class _SettingsPageState extends State<SettingsPage> {
       }
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

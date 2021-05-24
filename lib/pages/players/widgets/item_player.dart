@@ -8,7 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/palette.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
-import 'package:form_it/logic/models/AppStateNotifier.dart';
+import 'package:form_it/logic/models/app_state_notifier.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
 import 'package:form_it/widgets/app_dialog.dart';
@@ -122,7 +122,6 @@ class PlayerItem extends StatelessWidget {
         onTap: _onEdit,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          // margin: EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
             border: drawDivider ? Border(top: getBorderDivider(context)) : null,
             color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
