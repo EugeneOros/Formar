@@ -115,5 +115,17 @@
   "numbersOfEncounters": "Кількість зустрічей",
   "enterNameOfTournament": "Введіть назву турніру",
   "bonusPenaltyPoints": "Бонусні/штрафні очки",
-  "matches": "Матчі"
+  "matches": "Матчі",
+  "addTeams": "Додати команди",
+  "choseTeams": "Вибери команди",
+  "round": "Раунд {value}",
+  "@round": {
+    "description": "",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compactLong"
+      }
+    }
+  }
 }

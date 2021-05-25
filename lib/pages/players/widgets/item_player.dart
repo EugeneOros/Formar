@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -51,7 +50,7 @@ class PlayerItem extends StatelessWidget {
 
   void _onEdit() {
     Navigator.of(homeKey.currentContext!).push(getPageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+      pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
         onSave: (nickname, level, sex) {
           BlocProvider.of<PeopleBloc>(context).add(
             UpdatePerson(

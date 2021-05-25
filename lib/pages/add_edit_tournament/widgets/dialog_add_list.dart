@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
-import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/constants.dart';
 import 'package:form_it/widgets/app_check_box.dart';
 import 'package:repositories/repositories.dart';
 
@@ -152,9 +150,12 @@ class CheckBoxListTileModel {
   static List<CheckBoxListTileModel> getFromTeams(List<Team> teamsAll, List<Team>? teamsChecked) {
     List<CheckBoxListTileModel> result = [];
     for (Team team in teamsAll) {
-      teamsChecked == null
-          ? result.add(CheckBoxListTileModel(team: team, isCheck: false))
-          : result.add(CheckBoxListTileModel(team: team, isCheck: teamsChecked.contains(team) ? true : false));
+      if(teamsChecked == null){
+          result.add(CheckBoxListTileModel(team: team, isCheck: false));
+      }else{
+
+          result.add(CheckBoxListTileModel(team: team, isCheck: teamsChecked.contains(team)));
+      }
     }
     return result;
   }

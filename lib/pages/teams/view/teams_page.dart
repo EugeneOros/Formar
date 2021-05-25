@@ -1,3 +1,4 @@
+import 'package:empty_widget/empty_widget.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +74,25 @@ class TeamsPage extends StatelessWidget {
                 Theme.of(context).primaryColor,
               ],
             )),
-            child: CarouselSlider.builder(
+            child: teams.isEmpty ? Container(
+              padding: EdgeInsets.all(50),
+              alignment: Alignment.center,
+              child: EmptyWidget(
+                // image: "cup_fill.svg",
+                packageImage: PackageImage.Image_2,
+                title: 'No Teams',
+                subTitle: 'To add teams click plus in a top right corner',
+                titleTextStyle: TextStyle(
+                  fontSize: 22,
+                  color: Color(0xff9da9c7),
+                  fontWeight: FontWeight.w500,
+                ),
+                subtitleTextStyle: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xffabb8d6),
+                ),
+              ),
+            ) : CarouselSlider.builder(
               itemCount: teams.length,
               itemBuilder: (context, index, i) {
                 final team = teams[index];

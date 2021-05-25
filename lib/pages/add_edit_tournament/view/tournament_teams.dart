@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/dialog_add_list.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
@@ -26,7 +24,7 @@ class TournamentTeams extends StatefulWidget {
 class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
+    super.build(context);
     final teamsAll = Provider.of<List<Team>>(context);
     _onAddTeams() {
       showDialog(
@@ -37,7 +35,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
             teamsAdded: widget.teams,
           );
           return AppDialog(
-            title: AppLocalizations.of(context)!.chosePlayers,
+            title: AppLocalizations.of(context)!.choseTeams,
             content: _dialogAddPlayers,
             actionsHorizontal: [
               TextButton(
@@ -64,19 +62,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
         },
       );
     }
-    // return Container(
-    //   width: 200,
-    //   height: 50,
-    //   padding: const EdgeInsets.symmetric(vertical: 200, horizontal: 100),
-    //   child:
-    //   RoundedButton(
-    //     text: AppLocalizations.of(context)!.addPlayers,
-    //     textColor: Colors.black,
-    //     color: Theme.of(context).accentColor,
-    //     sizeRatio: 0.9,
-    //     onPressed: _onAddTeams,
-    //   ),
-    // );
+
     return Neumorphic(
       style: NeumorphicStyle(
         depth: 0,
@@ -126,7 +112,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
               alignment: Alignment.center,
               child:
               RoundedButton(
-                text: AppLocalizations.of(context)!.addPlayers,
+                text: AppLocalizations.of(context)!.addTeams,
                 textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
                 color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
                 sizeRatio: 0.9,

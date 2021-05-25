@@ -238,14 +238,16 @@ class _FormarAppState extends State<FormarApp> {
                               );
                             } else if (state is AuthenticationStateAuthenticated) {
                               BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
-                              return HomeScreen(email: state.user!.email ?? "");
+                              return Provider<UserRepository>.value(
+                                  value: _userRepository,
+                                  child: HomeScreen(email: state.user!.email ?? ""));
                             }
                             return SplashScreen();
                           },
                         ));
               case '/edit':
                 return getPageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+                    pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
                           onSave: (nickname, level, sex) {
                             BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
                           },
@@ -309,7 +311,7 @@ class _FormarAppState extends State<FormarApp> {
                         }));
               case '/add':
                 return getPageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerScreen(
+                  pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
                     onSave: (nickname, level, sex) {
                       BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
                     },

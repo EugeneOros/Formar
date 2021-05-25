@@ -10,12 +10,12 @@ import 'package:form_it/pages/add_edit_player/widgets/widgets.dart';
 
 typedef OnSaveCallback = Function(String? nickname, Level? level, Sex? sex);
 
-class AddEditPlayerScreen extends StatefulWidget {
+class AddEditPlayerPage extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Player? player;
 
-  AddEditPlayerScreen({
+  AddEditPlayerPage({
     Key? key,
     required this.onSave,
     required this.isEditing,
@@ -23,10 +23,10 @@ class AddEditPlayerScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AddEditPlayerScreenState createState() => _AddEditPlayerScreenState();
+  _AddEditPlayerPageState createState() => _AddEditPlayerPageState();
 }
 
-class _AddEditPlayerScreenState extends State<AddEditPlayerScreen> {
+class _AddEditPlayerPageState extends State<AddEditPlayerPage> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _nickname;

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/counter_element.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
@@ -35,6 +33,7 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
       lossPoints = 0;
       encountersNum = 1;
     } else {
+      name = widget.tournament!.name;
       winPoints = widget.tournament!.winPoints;
       drawPoints = widget.tournament!.drawPoints;
       lossPoints = widget.tournament!.lossPoints;
@@ -78,6 +77,7 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
                 name: AppLocalizations.of(context)!.name,
                 hintText: AppLocalizations.of(context)!.enterNameOfTournament,
                 radius: 15,
+                initialValue: name,
                 onSaved: (value) => name = value,
                 validator: (val) {
                   return val!.trim().isEmpty ? AppLocalizations.of(context)!.enterSomeText : null;

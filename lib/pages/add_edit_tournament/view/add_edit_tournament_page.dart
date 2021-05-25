@@ -7,7 +7,6 @@ import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
-import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:repositories/repositories.dart';
 
 import 'matches.dart';
@@ -36,7 +35,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
   late List<Team> teams;
 
   GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
-  static final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
+   GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -44,7 +43,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     _tabController.addListener(() {
       setState(() {});
     });
-    this.teams = widget.isEditing ? widget.tournament!.teams : [];
+    this.teams =  widget.tournament == null ? [] : widget.tournament!.teams;
     super.initState();
   }
 
@@ -62,6 +61,13 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
 
   @override
   Widget build(BuildContext context) {
+    TournamentInfo tournamentInfo = TournamentInfo(
+      key: _keyTournamentInfo,
+      formKey: _formKeyInfo,
+      tournament: widget.tournament,
+    );
+    tournamentInfo.createElement();
+    tournamentInfo.createState();
     return Scaffold(
       backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
       appBar: AppBar(
@@ -76,8 +82,9 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
         actions: [
           GestureDetector(
             onTap: () {
-              if (_formKeyInfo.currentState!.validate()) {
+              if (_formKeyInfo.currentState != null && _formKeyInfo.currentState!.validate()) {
                 _formKeyInfo.currentState!.save();
+                print(_keyTournamentInfo.currentState!.name);
                 widget.onSave(
                   name: _keyTournamentInfo.currentState!.name,
                   teams: teams,
@@ -87,6 +94,16 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                   encountersNum: _keyTournamentInfo.currentState!.encountersNum,
                 );
                 // Navigator.pop(context);
+              }else{
+                print(widget.tournament != null ? widget.tournament!.name : "Tournament");
+                widget.onSave(
+                  name: widget.tournament != null ? widget.tournament!.name : "Tournament",
+                  teams: teams,
+                  winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
+                  drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
+                  lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
+                  encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
+                );
               }
             },
             child: Container(
@@ -103,13 +120,11 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       body: Stack(
         children: [
           TabBarView(
+
             physics: BouncingScrollPhysics(),
             controller: _tabController,
             children: [
-              TournamentInfo(
-                key: _keyTournamentInfo,
-                formKey: _formKeyInfo,
-              ),
+              tournamentInfo,
               TournamentTeams(
                 teams: this.teams,
                 onAddTeamsCallback: onAddTeams,

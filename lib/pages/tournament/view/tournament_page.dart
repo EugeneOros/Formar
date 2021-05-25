@@ -13,6 +13,7 @@ class TournamentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     SlidableController _slidableController = SlidableController();
     final size = MediaQuery.of(context).size;
+    final UserRepository userRepository = Provider.of<UserRepository>(context, listen: false);
     // return  ItemTournament( tournament: Tournament(name: 'Tournament 1', ownerId: '123'),);
     return BlocBuilder<TournamentsBloc, TournamentsState>(builder: (context, state) {
       if (state is TournamentsLoading) {
@@ -25,16 +26,15 @@ class TournamentPage extends StatelessWidget {
           child: Container(
             color: Theme.of(context).primaryColorLight,
             constraints: BoxConstraints(minWidth: 50, maxWidth: 700),
-            child: Expanded(
-              child: ListView.builder(
-                itemCount: tournaments.length,
-                itemBuilder: (context, index) {
-                  return ItemTournament(
-                    slidableController: _slidableController,
-                    tournament: tournaments[index],
-                  );
-                },
-              ),
+            child: ListView.builder(
+              itemCount: tournaments.length,
+              itemBuilder: (context, index) {
+                return ItemTournament(
+                  slidableController: _slidableController,
+                  tournament: tournaments[index],
+                  userRepository: userRepository,
+                );
+              },
             ),
           ),
         );

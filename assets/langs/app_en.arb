@@ -360,5 +360,23 @@
   "matches": "Matches",
   "@matches": {
     "description": ""
+  },
+  "addTeams": "Add teams",
+  "@addTeams": {
+    "description": ""
+  },
+  "choseTeams": "Chose teams",
+  "@choseTeams": {
+    "description": ""
+  },
+  "round": "Round {value}",
+  "@round": {
+    "description": "",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compactLong"
+      }
+    }
   }
 }
