@@ -25,6 +25,7 @@ class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClie
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<SettingsBloc, SettingsState>(builder: (context, state) {
       if (state is SettingsLoaded) {
         _currentPlayerCountValue = state.settings!.counterTeamMembers;

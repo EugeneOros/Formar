@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:repositories/repositories.dart';
+
 
 class ItemTournamentMatches extends StatelessWidget {
-  final String team1;
-  final String team2;
+  // final String team1;
+  // final String team2;
   final bool drawDivider;
   final Color? color;
+  final Match match;
 
-  const ItemTournamentMatches({Key? key, required this.team1, required this.team2, this.drawDivider = false, this.color}) : super(key: key);
+  const ItemTournamentMatches({Key? key, this.drawDivider = false, this.color, required this.match}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ItemTournamentMatches extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              team1,
+              match.firstTeam ?? "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -50,7 +52,7 @@ class ItemTournamentMatches extends StatelessWidget {
           // Spacer(),
           Expanded(
             child: Text(
-              team2,
+              match.secondTeam ?? "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,

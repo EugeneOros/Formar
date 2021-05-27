@@ -5,15 +5,17 @@ class MatchEntity extends Equatable {
   final String? id;
   final String? firstTeam;
   final String? secondTeam;
+  final int? round;
   final List<String>? sets;
 
-  MatchEntity(this.id, this.firstTeam, this.secondTeam, this.sets);
+  MatchEntity(this.id, this.firstTeam, this.secondTeam, this.round, this.sets);
 
   Map<String, Object?> toJson() {
     return {
       'id': id,
       'firstTeam': firstTeam,
       'secondTeam' : secondTeam,
+      'round' : round,
       'sets': sets
     };
   }
@@ -23,6 +25,7 @@ class MatchEntity extends Equatable {
       json['id'] as String?,
       json['firstTeam'] as String,
       json['secondTeam'] as String,
+      json['round'] as int,
       json['sets'] as List<String>?,
     );
   }
@@ -32,6 +35,7 @@ class MatchEntity extends Equatable {
       snap.id,
       snap['firstTeam'],
       snap['secondTeam'],
+      snap['round'],
       (snap['sets'] as List?)?.map((item) => item as String).toList(),
     );
   }
@@ -40,16 +44,17 @@ class MatchEntity extends Equatable {
     return {
       'firstTeam': firstTeam,
       'secondTeam': secondTeam,
+      'round': round,
       'sets': sets,
     };
   }
 
   @override
-  List<Object?> get props => [id, firstTeam, secondTeam, sets];
+  List<Object?> get props => [id, firstTeam, secondTeam, round, sets];
 
   @override
   String toString() {
-    return 'TeamEntity { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam,  sets: $sets }';
+    return 'TeamEntity { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam, round: $round, sets: $sets }';
   }
 
 }

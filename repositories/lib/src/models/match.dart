@@ -4,32 +4,34 @@ class Match {
   final String? id;
   final String? firstTeam;
   final String? secondTeam;
+  final int? round;
   List<Score> sets;
 
-  Match({String? id, this.firstTeam, this.secondTeam, List<Score>? sets})
+  Match({String? id, this.firstTeam, this.secondTeam, this.round, List<Score>? sets})
       : this.id = id,
         this.sets = sets ?? [];
 
-  Match copyWith({String? id, String? firstTeam, String? secondTeam, List<Score>? sets}) {
+  Match copyWith({String? id, String? firstTeam, String? secondTeam, int? round, List<Score>? sets}) {
     return Match(
       id: id ?? this.id,
       firstTeam: firstTeam ?? this.firstTeam,
       secondTeam: secondTeam ?? this.secondTeam,
+      round: round,
       sets: sets ?? this.sets,
     );
   }
 
   MatchEntity toEntity() {
-    return MatchEntity(id, firstTeam, secondTeam, getMatches());
+    return MatchEntity(id, firstTeam, secondTeam, round, getSetsStr());
   }
 
-  List<String> getMatches() {
-    List<String> playersIds = [];
+  List<String> getSetsStr() {
+    List<String> setsStr = [];
     for (Score set in sets) {
       String setStr = set.firstTeamPoints.toString() + ":" + set.secondTeamPoints.toString();
-      playersIds.add(setStr);
+      setsStr.add(setStr);
     }
-    return playersIds;
+    return setsStr;
   }
 
   static Match fromEntity(MatchEntity entity) {
@@ -42,6 +44,7 @@ class Match {
       id: entity.id,
       firstTeam: entity.firstTeam,
       secondTeam: entity.secondTeam,
+      round: entity.round,
       sets: sets,
     );
   }
@@ -51,17 +54,18 @@ class Match {
       identical(this, other) ||
       other is Match &&
           runtimeType == other.runtimeType &&
-          firstTeam == other.firstTeam &&
           id == other.id &&
+          firstTeam == other.firstTeam &&
           secondTeam == other.secondTeam &&
+          round == other.round &&
           sets == other.sets;
 
   @override
-  int get hashCode => firstTeam.hashCode ^ id.hashCode ^ secondTeam.hashCode ^ sets.hashCode;
+  int get hashCode => id.hashCode ^ firstTeam.hashCode  ^ secondTeam.hashCode ^ round.hashCode ^ sets.hashCode;
 
   @override
   String toString() {
-    return 'Match { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam, sets: $sets}';
+    return 'Match { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam, round: $round, sets: $sets}';
   }
 }
 

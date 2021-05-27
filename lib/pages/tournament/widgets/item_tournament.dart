@@ -34,6 +34,7 @@ class ItemTournament extends StatelessWidget {
                         required int drawPoints,
                         required int lossPoints,
                         required int encountersNum}) {
+                      // tournament.matches.add(Match(firstTeam: "eugeneTeam", secondTeam: "ju"));
                       BlocProvider.of<TournamentsBloc>(context).add(
                         UpdateTournament(tournament.copyWith(
                           ownerId: userRepository.getUser()!.uid,
@@ -43,6 +44,7 @@ class ItemTournament extends StatelessWidget {
                           drawPoints: drawPoints,
                           lossPoints: lossPoints,
                           encountersNum: encountersNum,
+                          // matches: tournament.matches
                         )),
                       );
                     },

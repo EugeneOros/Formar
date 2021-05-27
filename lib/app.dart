@@ -299,6 +299,7 @@ class _FormarAppState extends State<FormarApp> {
                                   required int drawPoints,
                                   required int lossPoints,
                                   required int encountersNum}) {
+                                // List<Match> matches = [Match(firstTeam: "JK", secondTeam: "HJ")];
                                 BlocProvider.of<TournamentsBloc>(context).add(
                                   AddTournament(
                                     Tournament(
@@ -309,6 +310,7 @@ class _FormarAppState extends State<FormarApp> {
                                       drawPoints: drawPoints,
                                       lossPoints: lossPoints,
                                       encountersNum: encountersNum,
+                                      // matches: matches,
                                     ),
                                   ),
                                 );

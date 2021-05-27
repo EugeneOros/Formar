@@ -9,7 +9,7 @@ import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:repositories/repositories.dart';
 
-import 'matches.dart';
+import 'tournament_matches.dart';
 
 typedef OnSaveCallback = Function(
     {String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum});
@@ -84,7 +84,6 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             onTap: () {
               if (_formKeyInfo.currentState != null && _formKeyInfo.currentState!.validate()) {
                 _formKeyInfo.currentState!.save();
-                print(_keyTournamentInfo.currentState!.name);
                 widget.onSave(
                   name: _keyTournamentInfo.currentState!.name,
                   teams: teams,
@@ -95,7 +94,6 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 );
                 // Navigator.pop(context);
               }else{
-                print(widget.tournament != null ? widget.tournament!.name : "Tournament");
                 widget.onSave(
                   name: widget.tournament != null ? widget.tournament!.name : "Tournament",
                   teams: teams,
@@ -129,7 +127,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 teams: this.teams,
                 onAddTeamsCallback: onAddTeams,
               ),
-              Matches(),
+              TournamentMatches(tournament:  widget.tournament,),
               TournamentStatistic(),
             ],
           ),
