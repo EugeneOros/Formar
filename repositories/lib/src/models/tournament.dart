@@ -65,7 +65,7 @@ class Tournament {
     return teamsIds;
   }
 
-  static Tournament fromEntity(TournamentEntity tournamentEntity, List<Team> teams) {
+  static Tournament fromEntity(TournamentEntity tournamentEntity, List<Team> teams, List<Match> matches) {
     return Tournament(
       id: tournamentEntity.id,
       ownerId: tournamentEntity.ownerId,
@@ -75,6 +75,7 @@ class Tournament {
       drawPoints: tournamentEntity.drawPoints,
       lossPoints: tournamentEntity.lossPoints,
       encountersNum: tournamentEntity.encountersNum,
+      matches: matches,
     );
   }
 

@@ -9,11 +9,12 @@ import 'package:form_it/pages/add_edit_tournament/view/add_edit_tournament_page.
 import 'package:repositories/repositories.dart';
 
 class ItemTournament extends StatelessWidget {
+  final Function onDelete;
   final Tournament tournament;
   final SlidableController? slidableController;
   final UserRepository userRepository;
 
-  const ItemTournament({Key? key, required this.tournament, this.slidableController, required this.userRepository}) : super(key: key);
+  const ItemTournament({Key? key, required this.tournament, this.slidableController, required this.userRepository, required this.onDelete}) : super(key: key);
 
   void _onEdit() {
     Navigator.of(homeKey.currentContext!).push(getPageRouteBuilder(
@@ -82,6 +83,16 @@ class ItemTournament extends StatelessWidget {
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
                       color: Theme.of(context).primaryColor),
                   child: Container(
+                    decoration:  BoxDecoration(
+                        gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                        ],
+                      ),
+                    ),
                     padding: EdgeInsets.only(left: 140),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -106,9 +117,15 @@ class ItemTournament extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(left: 30),
-                  child: SvgPicture.asset(
-                    'assets/league_icon.svg',
-                    width: 100,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/league_icon.svg',
+                        width: 60,
+                      ),
+                      Text("Round Robin", style: Theme.of(context).textTheme.bodyText2,)
+                    ],
                   ),
                 ),
               ),
@@ -118,33 +135,30 @@ class ItemTournament extends StatelessWidget {
       ),
       secondaryActions: <Widget>[
         Container(
-          margin: EdgeInsets.all(17),
-          child: Neumorphic(
-            style: NeumorphicStyle(
-                depth: 2,
-                intensity: 1,
-                shape: NeumorphicShape.concave,
-                boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                lightSource: LightSource.topLeft,
-                shadowDarkColorEmboss:
-                    Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-                shadowLightColorEmboss:
-                    Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-                color: Theme.of(context).primaryColor),
-            child: Container(
-              // height: 30,
-              // width:  30,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.delete, color: Colors.black, size: 20),
-                ],
+          margin: EdgeInsets.only(right: 15),
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () => onDelete(),
+            child: Neumorphic(
+              style: NeumorphicStyle(
+                  depth: 2,
+                  intensity: 1,
+                  shape: NeumorphicShape.concave,
+                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+                  lightSource: LightSource.topLeft,
+                  shadowDarkColorEmboss:
+                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                  shadowLightColorEmboss:
+                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                  color: Theme.of(context).primaryColor),
+              child: Container(
+                child: Icon(Icons.delete, color: Colors.black, size: 20),
+                width: 50,
+                height: 50,
               ),
             ),
           ),
-        ),
+        )
       ],
     );
   }

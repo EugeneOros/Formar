@@ -26,6 +26,7 @@ class TabSelector extends StatelessWidget {
       switch (activeTab) {
         case (AppTab.settings):
           return null;
+        case AppTab.tournament:
         case AppTab.players:
           return BoxDecoration(
             color: _getBackgroundColor(activeTab),
@@ -49,17 +50,17 @@ class TabSelector extends StatelessWidget {
           return BoxDecoration(
             color: _getBackgroundColor(activeTab),
           );
-        case AppTab.tournament:
-          return BoxDecoration(
-            color: _getBackgroundColor(activeTab),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor,
-                spreadRadius: 5,
-                blurRadius: 7,
-              )
-            ],
-          );
+        // case AppTab.tournament:
+        //   return BoxDecoration(
+        //     color: _getBackgroundColor(activeTab),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Theme.of(context).shadowColor,
+        //         spreadRadius: 5,
+        //         blurRadius: 7,
+        //       )
+        //     ],
+        //   );
         case AppTab.settings:
           return BoxDecoration(
             color: _getBackgroundColor(activeTab),

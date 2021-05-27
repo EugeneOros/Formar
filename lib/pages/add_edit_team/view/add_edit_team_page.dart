@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/widgets/widgets.dart';
@@ -39,8 +40,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    _onAddPlayer(List<Player> newPlayers){
+    _onAddPlayer(List<Player> newPlayers) {
       setState(() {
         _players = newPlayers;
       });
@@ -102,10 +102,16 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                     Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.only(bottom: 30, top: 30),
-                      child: Text(
-                        isEditing ? AppLocalizations.of(context)!.editTeam : AppLocalizations.of(context)!.addTeam,
-                        style: Theme.of(context).textTheme.headline1,
-                        textAlign: TextAlign.center,
+                      child: DefaultTextStyle(
+                        style: Theme.of(context).textTheme.headline1!,
+                        child: AnimatedTextKit(
+                          animatedTexts: [
+                            TyperAnimatedText(isEditing ? AppLocalizations.of(context)!.editTeam : AppLocalizations.of(context)!.addPlayer,
+                                speed: Duration(milliseconds: 100))
+                          ],
+                          repeatForever: false,
+                          isRepeatingAnimation: false,
+                        ),
                       ),
                     ),
                     Padding(
@@ -124,7 +130,8 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25),
-                      child: MemberList(members: _players, onAddPlayersCallback: _onAddPlayer, heroTag:  "TeamItem" + (widget.team != null ? widget.team!.id! : "")),
+                      child: MemberList(
+                          members: _players, onAddPlayersCallback: _onAddPlayer, heroTag: "TeamItem" + (widget.team != null ? widget.team!.id! : "")),
                     )
                   ],
                 ),

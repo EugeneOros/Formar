@@ -22,7 +22,8 @@ dependencies:
   numberpicker: ^2.0.1
   empty_widget: ^0.0.3
 
-#  google_fonts: ^2.0.0
+  animated_text_kit: ^4.2.1
+  google_fonts: ^2.1.0
 
   repositories:
     path: repositories

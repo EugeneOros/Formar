@@ -10,8 +10,10 @@ class TournamentEntity extends Equatable {
   final int lossPoints;
   final int encountersNum;
   final List<String>? teamsIds;
+  // final List<Match> matches;
 
-  TournamentEntity(this.id, this.ownerId, this.name, this.teamsIds, this.winPoints, this.drawPoints, this.lossPoints, this.encountersNum);
+  TournamentEntity(
+      this.id, this.ownerId, this.name, this.teamsIds, this.winPoints, this.drawPoints, this.lossPoints, this.encountersNum);
 
   Map<String, Object?> toJson() {
     return {
@@ -23,6 +25,7 @@ class TournamentEntity extends Equatable {
       'drawPoints': drawPoints,
       'lossPoints': lossPoints,
       'encountersNum': encountersNum,
+      // 'matches': matches,
     };
   }
 
@@ -36,10 +39,14 @@ class TournamentEntity extends Equatable {
       json['drawPoints'] as int,
       json['lossPoints'] as int,
       json['encountersNum'] as int,
+      // json['matches'] as List<Match>,
     );
   }
 
   static TournamentEntity fromSnapshot(DocumentSnapshot snap) {
+    print("yeey");
+
+    print(snap);
     return TournamentEntity(
       snap.id,
       snap['ownerId'],
@@ -49,6 +56,7 @@ class TournamentEntity extends Equatable {
       snap['drawPoints'],
       snap['lossPoints'],
       snap['encountersNum'],
+      // (snap['matches'] as List?)!.map((item) => item as Match).toList(),
     );
   }
 
@@ -61,6 +69,7 @@ class TournamentEntity extends Equatable {
       'drawPoints': drawPoints,
       'lossPoints': lossPoints,
       'encountersNum': encountersNum,
+      // 'matches': matches,
     };
   }
 

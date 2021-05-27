@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
-import 'package:form_it/config/constants.dart';
 import 'package:form_it/widgets/rounded_input_field.dart';
 
 class LogoSearch extends StatefulWidget {

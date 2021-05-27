@@ -21,6 +21,7 @@ import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/widgets/app_scroll_behavior.dart';
 import 'package:form_it/logic/localizations/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:repositories/repositories.dart';
@@ -57,14 +58,21 @@ class _FormarAppState extends State<FormarApp> {
           cursorColor: isDark ? LightBlue : Colors.black,
         ),
         textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: isDark ? LightBlue : Colors.black),
-          headline2: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: isDark ? LightBlue : Colors.black),
-          bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: isDark ? LightBlue : Colors.black),
-          bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-          subtitle1: TextStyle(fontSize: 12, color: isDark ? LightBlue : Colors.grey),
-          subtitle2: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: isDark ? Colors.white : Colors.black),
-          button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4)),
-          caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black),
+          headline1: GoogleFonts.tenorSans(fontSize: 21, fontWeight: FontWeight.bold, color: isDark ? LightBlue : Colors.black),
+          // headline1: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: isDark ? LightBlue : Colors.black),
+          headline2: GoogleFonts.tenorSans(fontSize: 17, fontWeight: FontWeight.w500, color: isDark ? LightBlue : Colors.black),
+          // bodyText1: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: isDark ? LightBlue : Colors.black),
+          bodyText1: GoogleFonts.tenorSans(fontSize: 17, fontWeight: FontWeight.w300, color: isDark ? LightBlue : Colors.black),
+          // bodyText2: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+          bodyText2: GoogleFonts.tenorSans(fontSize: 14, fontWeight: FontWeight.w200),
+          // subtitle1: TextStyle(fontSize: 12, color: isDark ? LightBlue : Colors.grey),
+          subtitle1: GoogleFonts.tenorSans(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? LightBlue : Colors.grey),
+          // subtitle2: TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: isDark ? Colors.white : Colors.black),
+          subtitle2: GoogleFonts.tenorSans(fontSize: 11, fontWeight: FontWeight.w500, color: isDark ? Colors.white : Colors.black),
+          // button: TextStyle(fontSize: 15, fontWeight: FontWeight.w300, color: Color(0xffdda9c4)),
+          button: GoogleFonts.tenorSans(fontSize: 15, fontWeight: FontWeight.w500, color: Color(0xffdda9c4)),
+          // caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black),
+          caption: GoogleFonts.tenorSans(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
         ),
       );
     }

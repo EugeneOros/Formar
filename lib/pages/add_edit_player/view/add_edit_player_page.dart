@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
@@ -115,14 +116,35 @@ class _AddEditPlayerPageState extends State<AddEditPlayerPage> {
               key: _formKey,
               child: ListView(
                 children: [
+                  // DefaultTextStyle(
+                  //   style: Theme.of(context).textTheme.headline1!,
+                  //   child: AnimatedTextKit(
+                  //     animatedTexts: [
+                  //       TyperAnimatedText(isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,),
+                  //     ],
+                  //     repeatForever: false,
+                  //     isRepeatingAnimation: false,
+                  //   ),
+                  // ),
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(vertical: 30),
-                    child: Text(
-                      isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
-                      style: Theme.of(context).textTheme.headline1,
-                      textAlign: TextAlign.center,
+                    child:
+                    DefaultTextStyle(
+                      style: Theme.of(context).textTheme.headline1!,
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          TyperAnimatedText(isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer, speed: Duration(milliseconds: 100))
+                        ],
+                        repeatForever: false,
+                        isRepeatingAnimation: false,
+                      ),
                     ),
+                    // Text(
+                    //   isEditing ? AppLocalizations.of(context)!.editPlayer : AppLocalizations.of(context)!.addPlayer,
+                    //   style: Theme.of(context).textTheme.headline1,
+                    //   textAlign: TextAlign.center,
+                    // ),
                   ),
                   RoundedInputField(
                     name: AppLocalizations.of(context)!.nickname,
