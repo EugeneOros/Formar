@@ -127,5 +127,7 @@
         "format": "compactLong"
       }
     }
-  }
+  },
+  "createSchedule": "Створити розклад",
+  "deleteSchedule": "Видалити розклад"
 }

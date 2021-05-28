@@ -246,9 +246,7 @@ class _FormarAppState extends State<FormarApp> {
                               );
                             } else if (state is AuthenticationStateAuthenticated) {
                               BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
-                              return Provider<UserRepository>.value(
-                                  value: _userRepository,
-                                  child: HomeScreen(email: state.user!.email ?? ""));
+                              return Provider<UserRepository>.value(value: _userRepository, child: HomeScreen(email: state.user!.email ?? ""));
                             }
                             return SplashScreen();
                           },
@@ -295,6 +293,7 @@ class _FormarAppState extends State<FormarApp> {
                               onSave: (
                                   {String? name,
                                   List<Team>? teams,
+                                  List<Match>? matches,
                                   required int winPoints,
                                   required int drawPoints,
                                   required int lossPoints,

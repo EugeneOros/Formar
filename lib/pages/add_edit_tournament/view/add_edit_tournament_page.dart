@@ -12,7 +12,13 @@ import 'package:repositories/repositories.dart';
 import 'tournament_matches.dart';
 
 typedef OnSaveCallback = Function(
-    {String? name, List<Team>? teams, required int winPoints, required int drawPoints, required int lossPoints, required int encountersNum});
+    {String? name,
+    List<Team>? teams,
+    List<Match>? matches,
+    required int winPoints,
+    required int drawPoints,
+    required int lossPoints,
+    required int encountersNum});
 
 class AddEditTournamentPage extends StatefulWidget {
   final bool isEditing;
@@ -33,9 +39,12 @@ class AddEditTournamentPage extends StatefulWidget {
 class _AddEditTournamentPageState extends State<AddEditTournamentPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late List<Team> teams;
+  late List<Match> matches;
 
   GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
-   GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
+
+  // GlobalKey<TournamentInfoState> _keyTournamentTeams = GlobalKey();
+  GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -43,7 +52,8 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     _tabController.addListener(() {
       setState(() {});
     });
-    this.teams =  widget.tournament == null ? [] : widget.tournament!.teams;
+    this.teams = widget.tournament != null ? widget.tournament!.teams : [];
+    this.matches = widget.tournament != null ? widget.tournament!.matches : [];
     super.initState();
   }
 
@@ -56,6 +66,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
   void onAddTeams(List<Team> teams) {
     setState(() {
       this.teams = teams;
+    });
+  }
+
+  void onAddMatches(List<Match> matches) {
+    setState(() {
+      this.matches = matches;
     });
   }
 
@@ -87,16 +103,18 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 widget.onSave(
                   name: _keyTournamentInfo.currentState!.name,
                   teams: teams,
+                  matches: matches,
                   winPoints: _keyTournamentInfo.currentState!.winPoints,
                   drawPoints: _keyTournamentInfo.currentState!.drawPoints,
                   lossPoints: _keyTournamentInfo.currentState!.lossPoints,
                   encountersNum: _keyTournamentInfo.currentState!.encountersNum,
                 );
                 // Navigator.pop(context);
-              }else{
+              } else {
                 widget.onSave(
                   name: widget.tournament != null ? widget.tournament!.name : "Tournament",
                   teams: teams,
+                  matches: matches,
                   winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
                   drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
                   lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
@@ -118,7 +136,6 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       body: Stack(
         children: [
           TabBarView(
-
             physics: BouncingScrollPhysics(),
             controller: _tabController,
             children: [
@@ -126,8 +143,15 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
               TournamentTeams(
                 teams: this.teams,
                 onAddTeamsCallback: onAddTeams,
+                matches: this.matches,
               ),
-              TournamentMatches(tournament:  widget.tournament,),
+              TournamentMatches(
+                tournament: widget.tournament,
+                teams: this.teams,
+                matches: this.matches,
+                formKeyInfo: _keyTournamentInfo,
+                onAddMatchesCallback: onAddMatches,
+              ),
               TournamentStatistic(),
             ],
           ),

@@ -14,7 +14,8 @@ class ItemTournament extends StatelessWidget {
   final SlidableController? slidableController;
   final UserRepository userRepository;
 
-  const ItemTournament({Key? key, required this.tournament, this.slidableController, required this.userRepository, required this.onDelete}) : super(key: key);
+  const ItemTournament({Key? key, required this.tournament, this.slidableController, required this.userRepository, required this.onDelete})
+      : super(key: key);
 
   void _onEdit() {
     Navigator.of(homeKey.currentContext!).push(getPageRouteBuilder(
@@ -30,22 +31,22 @@ class ItemTournament extends StatelessWidget {
                     onSave: (
                         {String? name,
                         List<Team>? teams,
+                        List<Match>? matches,
                         required int winPoints,
                         required int drawPoints,
                         required int lossPoints,
                         required int encountersNum}) {
-                      // tournament.matches.add(Match(firstTeam: "eugeneTeam", secondTeam: "ju"));
+                      print(matches);
                       BlocProvider.of<TournamentsBloc>(context).add(
                         UpdateTournament(tournament.copyWith(
-                          ownerId: userRepository.getUser()!.uid,
-                          name: name!,
-                          teams: teams,
-                          winPoints: winPoints,
-                          drawPoints: drawPoints,
-                          lossPoints: lossPoints,
-                          encountersNum: encountersNum,
-                          // matches: tournament.matches
-                        )),
+                            ownerId: userRepository.getUser()!.uid,
+                            name: name!,
+                            teams: teams,
+                            winPoints: winPoints,
+                            drawPoints: drawPoints,
+                            lossPoints: lossPoints,
+                            encountersNum: encountersNum,
+                            matches: matches)),
                       );
                     },
                     isEditing: true,
@@ -85,8 +86,8 @@ class ItemTournament extends StatelessWidget {
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
                       color: Theme.of(context).primaryColor),
                   child: Container(
-                    decoration:  BoxDecoration(
-                        gradient: LinearGradient(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [
@@ -126,7 +127,10 @@ class ItemTournament extends StatelessWidget {
                         'assets/league_icon.svg',
                         width: 60,
                       ),
-                      Text("Round Robin", style: Theme.of(context).textTheme.bodyText2,)
+                      Text(
+                        "Round Robin",
+                        style: Theme.of(context).textTheme.bodyText2,
+                      )
                     ],
                   ),
                 ),

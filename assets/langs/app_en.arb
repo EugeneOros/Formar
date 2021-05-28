@@ -378,5 +378,13 @@
         "format": "compactLong"
       }
     }
+  },
+  "createSchedule": "Create schedule",
+  "@createSchedule": {
+    "description": ""
+  },
+  "deleteSchedule": "Delete schedule",
+  "@deleteSchedule": {
+    "description": ""
   }
 }

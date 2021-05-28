@@ -19,14 +19,32 @@ class FirebaseTournamentRepository implements TournamentRepository {
   Future<void> updateTournament(Tournament tournament) async {
     CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     CollectionReference matchesCollection = tournamentCollection.doc(tournament.id).collection("matches");
-    for (Match match in tournament.matches) {
-      final snapShot = await matchesCollection.doc(match.id).get();
-      if (snapShot.exists) {
-        matchesCollection.doc(match.id).update(match.toEntity().toDocument());
-      } else {
+    // print(tournament.matches);
+
+    // await matchesCollection.snapshots().forEach((element) {
+    //   for (QueryDocumentSnapshot snapshot in element.docs) {
+    //     snapshot.reference.delete();
+    //   }
+    // });
+
+    matchesCollection.get().then((value){
+        value.docs.forEach((element) {
+          matchesCollection.doc(element.id).delete().then((value){
+            print("Success!");
+          });
+        });
+    }).then((value){
+      for (Match match in tournament.matches) {
+        // final snapShot = await matchesCollection.doc(match.id).get();
+        // if (snapShot.exists) {
+        //   matchesCollection.doc(match.id).update(match.toEntity().toDocument());
+        // } else {
         matchesCollection.add(match.toEntity().toDocument());
+        // }
       }
-    }
+    });
+
+
     return tournamentCollection.doc(tournament.id).update(tournament.toEntity().toDocument());
   }
 

@@ -14,14 +14,51 @@ typedef void OnAddTeamsCallback(List<Team> newTeams);
 class TournamentTeams extends StatefulWidget {
   final List<Team> teams;
   final OnAddTeamsCallback onAddTeamsCallback;
+  final List<Match> matches;
 
-  const TournamentTeams({Key? key, required this.teams, required this.onAddTeamsCallback}) : super(key: key);
+
+  const TournamentTeams({Key? key, required this.teams, required this.onAddTeamsCallback, required this.matches}) : super(key: key);
 
   @override
   _TournamentTeamsState createState() => _TournamentTeamsState();
 }
 
 class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
+
+  // onMatchIsNotEmpty(){
+  //   if (widget.matches.isNotEmpty) {
+  //     Future<bool?> result = showDialog<bool>(
+  //         context: homeKey.currentContext!,
+  //         builder: (context) {
+  //           return AppDialog(
+  //             title: AppLocalizations.of(context)!.playerDeletedFromTeams,
+  //             actionsHorizontal: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   widget.matches = [];
+  //                   Navigator.of(context).pop(true);
+  //                 },
+  //                 child: Text(
+  //                   MaterialLocalizations.of(context).okButtonLabel,
+  //                   style: Theme.of(context).textTheme.button,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => Navigator.of(context).pop(false),
+  //                 child: Text(
+  //                   MaterialLocalizations.of(context).backButtonTooltip,
+  //                   style: Theme.of(context).textTheme.button,
+  //                 ),
+  //               )
+  //             ],
+  //           );
+  //         });
+  //     return await result ?? false;
+  //   } else {
+  //     _deleteFormPlayers(player);
+  //     return true;
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     super.build(context);
