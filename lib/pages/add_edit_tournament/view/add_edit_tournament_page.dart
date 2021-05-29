@@ -5,6 +5,7 @@ import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_statistic.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
+import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:repositories/repositories.dart';
@@ -69,10 +70,44 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     });
   }
 
-  void onAddMatches(List<Match> matches) {
+  void onChangeMatches(List<Match> matches) {
     setState(() {
       this.matches = matches;
     });
+  }
+
+  void onMatchEmptyCheck(Function onOk) {
+    if (matches.isEmpty) {
+      onOk();
+    } else {
+      showDialog<bool>(
+          context: homeKey.currentContext!,
+          builder: (context) {
+            return AppDialog(
+              title: AppLocalizations.of(context)!.matchesIsNotEmpty,
+              actionsHorizontal: [
+                TextButton(
+                  onPressed: () {
+                    onChangeMatches([]);
+                    Navigator.of(context).pop(true);
+                    onOk();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.yes,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(
+                    AppLocalizations.of(context)!.no,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+              ],
+            );
+          });
+    }
   }
 
   @override
@@ -81,6 +116,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
       key: _keyTournamentInfo,
       formKey: _formKeyInfo,
       tournament: widget.tournament,
+      onMatchEmptyCheckCallback: onMatchEmptyCheck,
     );
     tournamentInfo.createElement();
     tournamentInfo.createState();
@@ -143,14 +179,14 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
               TournamentTeams(
                 teams: this.teams,
                 onAddTeamsCallback: onAddTeams,
-                matches: this.matches,
+                onMatchEmptyCheckCallback: onMatchEmptyCheck,
               ),
               TournamentMatches(
                 tournament: widget.tournament,
                 teams: this.teams,
                 matches: this.matches,
                 formKeyInfo: _keyTournamentInfo,
-                onAddMatchesCallback: onAddMatches,
+                onChangeMatchesCallback: onChangeMatches,
               ),
               TournamentStatistic(),
             ],

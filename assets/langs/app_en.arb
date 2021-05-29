@@ -386,5 +386,13 @@
   "deleteSchedule": "Delete schedule",
   "@deleteSchedule": {
     "description": ""
+  },
+  "matchesIsNotEmpty": "The match schedule is not empty. Do you want to delete it?",
+  "@matchesIsNotEmpty": {
+    "description": ""
+  },
+  "firstlyAddMoreTeams": "Firstly add more than one team to this tournament",
+  "@firstlyAddMoreTeams": {
+    "description": ""
   }
 }

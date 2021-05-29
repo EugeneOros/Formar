@@ -10,58 +10,27 @@ import 'package:repositories/repositories.dart';
 import 'package:form_it/config/constants.dart';
 
 typedef void OnAddTeamsCallback(List<Team> newTeams);
+typedef void OnMatchEmptyCheckCallback(Function newMatchesSchedule);
 
 class TournamentTeams extends StatefulWidget {
   final List<Team> teams;
   final OnAddTeamsCallback onAddTeamsCallback;
-  final List<Match> matches;
+  final OnMatchEmptyCheckCallback onMatchEmptyCheckCallback;
 
-
-  const TournamentTeams({Key? key, required this.teams, required this.onAddTeamsCallback, required this.matches}) : super(key: key);
+  const TournamentTeams(
+      {Key? key, required this.teams, required this.onAddTeamsCallback, required this.onMatchEmptyCheckCallback})
+      : super(key: key);
 
   @override
   _TournamentTeamsState createState() => _TournamentTeamsState();
 }
 
-class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin  {
-
-  // onMatchIsNotEmpty(){
-  //   if (widget.matches.isNotEmpty) {
-  //     Future<bool?> result = showDialog<bool>(
-  //         context: homeKey.currentContext!,
-  //         builder: (context) {
-  //           return AppDialog(
-  //             title: AppLocalizations.of(context)!.playerDeletedFromTeams,
-  //             actionsHorizontal: [
-  //               TextButton(
-  //                 onPressed: () {
-  //                   widget.matches = [];
-  //                   Navigator.of(context).pop(true);
-  //                 },
-  //                 child: Text(
-  //                   MaterialLocalizations.of(context).okButtonLabel,
-  //                   style: Theme.of(context).textTheme.button,
-  //                 ),
-  //               ),
-  //               TextButton(
-  //                 onPressed: () => Navigator.of(context).pop(false),
-  //                 child: Text(
-  //                   MaterialLocalizations.of(context).backButtonTooltip,
-  //                   style: Theme.of(context).textTheme.button,
-  //                 ),
-  //               )
-  //             ],
-  //           );
-  //         });
-  //     return await result ?? false;
-  //   } else {
-  //     _deleteFormPlayers(player);
-  //     return true;
-  //   }
-  // }
+class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    widget.teams.sort((a, b) => a.name.compareTo(b.name));
+
     final teamsAll = Provider.of<List<Team>>(context);
     _onAddTeams() {
       showDialog(
@@ -144,64 +113,62 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
             ),
           ),
           SingleChildScrollView(
-            child: widget.teams.isEmpty ? Container(
-              padding: const EdgeInsets.only(top: 110),
-              alignment: Alignment.center,
-              child:
-              RoundedButton(
-                text: AppLocalizations.of(context)!.addTeams,
-                textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
-                sizeRatio: 0.9,
-                onPressed: _onAddTeams,
-              ),
-            ) : Stack(
-              children: [
-                EmbossContainer(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),
-                  child: Column(
+            child: widget.teams.isEmpty
+                ? Container(
+                    padding: const EdgeInsets.only(top: 110),
+                    alignment: Alignment.center,
+                    child: RoundedButton(
+                      text: AppLocalizations.of(context)!.addTeams,
+                      textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                      sizeRatio: 0.9,
+                      onPressed: _onAddTeams,
+                    ),
+                  )
+                : Stack(
                     children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        padding: EdgeInsets.only(left: 10, top: 10),
-                      ),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.teams.length,
-                        itemBuilder: (context, index) {
-                          return ItemTournamentTeams(
-                            text: widget.teams[index].name,
-                            // drawDivider: index == 0 ? false : true,
-                            secondaryWidget: RoundIconButton(
-                              icon: Icons.remove,
-                              onPressed: () {
-                                setState(() {
-                                  widget.teams.removeAt(index);
-                                });
+                      EmbossContainer(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.topLeft,
+                              padding: EdgeInsets.only(left: 10, top: 10),
+                            ),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: widget.teams.length,
+                              itemBuilder: (context, index) {
+                                return ItemTournamentTeams(
+                                  text: widget.teams[index].name,
+                                  // drawDivider: index == 0 ? false : true,
+                                  secondaryWidget: RoundIconButton(
+                                    icon: Icons.remove,
+                                    onPressed: () => widget.onMatchEmptyCheckCallback(() => setState(() {
+                                          widget.teams.removeAt(index);
+                                        })),
+                                  ),
+                                );
+                                // teams.removeAt(index);
                               },
                             ),
-                          );
-                          // teams.removeAt(index);
-                        },
+                          ],
+                        ),
+                      ),
+                      Positioned.fill(
+                        bottom: 30,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: RoundIconButton(
+                              icon: Icons.add,
+                              size: 60,
+                              color: Theme.of(context).accentColor,
+                              onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams)),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Positioned.fill(
-                  bottom: 30,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: RoundIconButton(
-                      icon: Icons.add,
-                      size: 60,
-                      color: Theme.of(context).accentColor,
-                      onPressed: _onAddTeams,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

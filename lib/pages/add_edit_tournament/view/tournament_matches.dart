@@ -1,19 +1,21 @@
+import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_matches.dart';
+import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_button.dart';
 import 'package:repositories/repositories.dart';
 
-typedef void OnAddMatchesCallback(List<Match> newMatchesSchedule);
+typedef void OnChangeMatchesCallback(List<Match> newMatchesSchedule);
 
 class TournamentMatches extends StatefulWidget {
   final Tournament? tournament;
   final List<Team> teams;
   final List<Match> matches;
   final GlobalKey<TournamentInfoState> formKeyInfo;
-  final OnAddMatchesCallback onAddMatchesCallback;
+  final OnChangeMatchesCallback onChangeMatchesCallback;
 
   const TournamentMatches({
     Key? key,
@@ -21,7 +23,7 @@ class TournamentMatches extends StatefulWidget {
     required this.teams,
     required this.matches,
     required this.formKeyInfo,
-    required this.onAddMatchesCallback,
+    required this.onChangeMatchesCallback,
   }) : super(key: key);
 
   @override
@@ -29,16 +31,9 @@ class TournamentMatches extends StatefulWidget {
 }
 
 class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKeepAliveClientMixin {
-  // late List<Match> matches;
-
   @override
   void initState() {
     super.initState();
-    // if (widget.tournament == null) {
-    //   matches = [];
-    // } else {
-    //   matches = widget.tournament!.matches;
-    // }
   }
 
   List<List<Match>> _getRounds() {
@@ -71,10 +66,23 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
     } else if (widget.tournament != null) {
       encountersNum = widget.tournament!.encountersNum;
     }
-    // print(encountersNum);
     if (widget.teams.length < 2) {
-      //todo
-      print("can not, less then tow teams");
+      showDialog(
+        context: homeKey.currentContext!,
+        builder: (BuildContext context) {
+          return AppDialog(
+            title: AppLocalizations.of(context)!.firstlyAddMoreTeams,
+            actionsVertical: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    MaterialLocalizations.of(context).okButtonLabel,
+                    style: Theme.of(context).textTheme.button,
+                  ))
+            ],
+          );
+        },
+      );
     } else {
       List<Match> matches = [];
       widget.teams.shuffle();
@@ -82,26 +90,24 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
       if (widget.teams.length % 2 != 0) {
         teamsRoundRobin.insert(0, null);
       }
-      for (int i = 1; i < teamsRoundRobin.length; i++) {
-        // print(teamsRoundRobin.map((e) => e != null ? e.name : null));
+      for (int i = 1; i <= (teamsRoundRobin.length - 1) * encountersNum; i++) {
         for (int j = 0; j < (teamsRoundRobin.length / 2); j++) {
           if (teamsRoundRobin[j] != null && teamsRoundRobin[teamsRoundRobin.length - 1 - j] != null) {
-            matches.add(Match(
-                firstTeam: teamsRoundRobin[j]!.name,
-                secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j]!.name,
-                round: i));
+            matches.add(Match(firstTeam: teamsRoundRobin[j]!.name, secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j]!.name, round: i));
           }
         }
         rotateRoundRobin(teamsRoundRobin);
       }
-
-      this.widget.onAddMatchesCallback(matches);
+      // matches.sort((a, b) => a.round!.compareTo(b.round!));
+      this.widget.onChangeMatchesCallback(matches);
       // print(matches.map((e) => "Round " + (e.round.toString()) + " " + (e.firstTeam ?? "null") + " vs " + (e.secondTeam ?? "null")));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.matches.sort((a, b) => a.round!.compareTo(b.round!));
+
     super.build(context);
     List<List<Match>> rounds = _getRounds();
     return Neumorphic(
@@ -148,7 +154,8 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
           child: widget.matches.isEmpty
               ? Container(
                   padding: const EdgeInsets.only(top: 110),
-                  alignment: Alignment.center,
+                  height: double.infinity,
+                  alignment: Alignment.bottomCenter,
                   child: RoundedButton(
                     text: AppLocalizations.of(context)!.createSchedule,
                     textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
@@ -186,23 +193,39 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                   },
                 ),
         ),
-        if (widget.matches.isNotEmpty)
-          Positioned.fill(
-            bottom: 40,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 110),
-                  alignment: Alignment.bottomCenter,
-                  child: RoundedButton(
-                    text: AppLocalizations.of(context)!.deleteSchedule,
-                    textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : LightPink,
-                    color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : DarkColorAccent,
-                    sizeRatio: 0.9,
-                    onPressed: () => widget.onAddMatchesCallback([]),
-                  ),
-                )),
-          ),
+        widget.matches.isNotEmpty
+            ? Positioned.fill(
+                bottom: 40,
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 110),
+                      alignment: Alignment.bottomCenter,
+                      child: RoundedButton(
+                        text: AppLocalizations.of(context)!.deleteSchedule,
+                        textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.white,
+                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.black,
+                        sizeRatio: 0.6,
+                        onPressed: () => widget.onChangeMatchesCallback([]),
+                      ),
+                    )),
+              )
+            : Positioned.fill(
+                bottom: 40,
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 110),
+                      alignment: Alignment.bottomCenter,
+                      child: RoundedButton(
+                        text: AppLocalizations.of(context)!.createSchedule,
+                        textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                        sizeRatio: 0.6,
+                        onPressed: createSchedule,
+                      ),
+                    )),
+              ),
       ]),
     );
   }

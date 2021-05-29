@@ -6,18 +6,20 @@ import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
+typedef void OnMatchEmptyCheckCallback(Function newMatchesSchedule);
+
 class TournamentInfo extends StatefulWidget {
   final Tournament? tournament;
   final GlobalKey<FormState> formKey;
+  final OnMatchEmptyCheckCallback onMatchEmptyCheckCallback;
 
-  const TournamentInfo({Key? key, this.tournament, required this.formKey}) : super(key: key);
+  const TournamentInfo({Key? key, this.tournament, required this.formKey, required this.onMatchEmptyCheckCallback}) : super(key: key);
 
   @override
   TournamentInfoState createState() => TournamentInfoState();
 }
 
-class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveClientMixin  {
-
+class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveClientMixin {
   String? name;
   late int winPoints;
   late int drawPoints;
@@ -136,11 +138,11 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
                       secondaryWidget: CounterElement(
                         counter: encountersNum,
                         isPositive: true,
-                        onChange: (value) {
-                          setState(() {
+                        onChange: (value) => widget.onMatchEmptyCheckCallback(
+                          () => setState(() {
                             encountersNum = value;
-                          });
-                        },
+                          }),
+                        ),
                       ),
                     ),
                     ItemTournamentInfo(
