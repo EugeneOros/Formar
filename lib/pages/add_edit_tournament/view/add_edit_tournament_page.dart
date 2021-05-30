@@ -189,7 +189,9 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 formKeyInfo: _keyTournamentInfo,
                 onChangeMatchesCallback: onChangeMatches,
               ),
-              TournamentStatistic(),
+              TournamentStatistic(
+                tournament: widget.tournament,
+              ),
             ],
           ),
           FadeEndLIstView(

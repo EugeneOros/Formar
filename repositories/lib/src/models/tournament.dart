@@ -57,6 +57,15 @@ class Tournament {
     return TournamentEntity(id, ownerId, name, getTeamsIds(), winPoints, drawPoints, lossPoints, encountersNum);
   }
 
+  List<TeamStat> getLeaderList() {
+    List<TeamStat> teamsStats = [];
+    for(Team team in teams){
+      teamsStats.add(TeamStat(team: team));
+    }
+    // teams.
+    return teamsStats;
+  }
+
   List<String> getTeamsIds() {
     List<String> teamsIds = [];
     for (Team team in teams) {
@@ -110,4 +119,25 @@ class Tournament {
   String toString() {
     return 'Tournament { id: $id, ownerId: $ownerId, name: $name, teams: $teams, matches: $matches win points: $winPoints, drawPoints: $drawPoints, lossPoints: $lossPoints, encountersNum: $encountersNum }';
   }
+}
+
+class TeamStat {
+  final Team team;
+  int wins;
+  int draws;
+  int losses;
+  int matchPlayed;
+  int setDifference;
+  int pointsDifference;
+  int extraPoints;
+
+  TeamStat(
+      {required this.team,
+      this.wins = 0,
+      this.draws = 0,
+      this.losses = 0,
+      this.matchPlayed = 0,
+      this.setDifference = 0,
+      this.pointsDifference = 0,
+      this.extraPoints = 0});
 }

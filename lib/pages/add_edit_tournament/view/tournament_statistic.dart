@@ -2,28 +2,16 @@ import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
 import 'package:form_it/widgets/emboss_container.dart';
+import 'package:repositories/repositories.dart';
 
 class TournamentStatistic extends StatelessWidget {
+  final Tournament? tournament;
+
+  const TournamentStatistic({Key? key, this.tournament}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    List<String> teams = [
-      "Team 1",
-      "Team2",
-      "Team3",
-      "Team4",
-      "Team 1",
-      "Team2",
-      "Team3",
-      "Team4",
-      "Team 1",
-      "Team2",
-      "Team3",
-      "Team4",
-      "Team 1",
-      "Team2",
-      "Team3",
-      "Team4"
-    ];
+    List<TeamStat> teamsStats = tournament == null ? [] : this.tournament!.getLeaderList();
     return Neumorphic(
         style: NeumorphicStyle(
           depth: 0,
@@ -79,11 +67,10 @@ class TournamentStatistic extends StatelessWidget {
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: teams.length,
+                              itemCount: teamsStats.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                     decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
-                                    // c
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -96,8 +83,12 @@ class TournamentStatistic extends StatelessWidget {
                                             color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
                                                 ? DarkColor
                                                 : Theme.of(context).primaryColorLight,
-                                            shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-                                            shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                                            shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                                ? DarkColorShadowDark
+                                                : Colors.grey.withOpacity(0.7),
+                                            shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                                ? DarkColorShadowLight
+                                                : Colors.white.withOpacity(0.7),
                                             shape: NeumorphicShape.flat,
                                             boxShape: NeumorphicBoxShape.circle(),
                                           ),
@@ -113,7 +104,7 @@ class TournamentStatistic extends StatelessWidget {
                                           // width: 35,
                                           padding: const EdgeInsets.all(10.0),
                                           child: Text(
-                                            teams[index],
+                                            teamsStats[index].team.name,
                                             style: Theme.of(context).textTheme.bodyText2,
                                           ),
                                         ),
@@ -155,24 +146,15 @@ class TournamentStatistic extends StatelessWidget {
                                 value: 'SD',
                               ),
                               StatisticHeaderElement(
-                                value: 'E',
-                              ),
-                              StatisticHeaderElement(
-                                value: 'P',
-                              ),
-                              StatisticHeaderElement(
-                                value: 'P',
-                              ),
-                              StatisticHeaderElement(
-                                value: 'P',
+                                value: 'EP',
                               ),
                             ],
                           ),
                           Column(
-                            children: teams.map((e) {
+                            children: teamsStats.map((e) {
                               return ItemTournamentStatistic(
-                                text: 'jjd',
                                 drawDivider: true,
+                                teamStat: e,
                               );
                             }).toList(),
                           ),

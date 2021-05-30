@@ -1,12 +1,13 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:repositories/repositories.dart';
 
 class ItemTournamentStatistic extends StatelessWidget {
-  final String text;
   final bool drawDivider;
   final Widget? secondaryWidget;
+  final TeamStat teamStat;
 
-  const ItemTournamentStatistic({Key? key, required this.text, this.drawDivider = false, this.secondaryWidget}) : super(key: key);
+  const ItemTournamentStatistic({Key? key, this.drawDivider = false, this.secondaryWidget, required this.teamStat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,43 +25,32 @@ class ItemTournamentStatistic extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   StatisticBox(
-                    value: 1,
+                    value: 0,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   StatisticBox(
-                    value: 2,
+                    value: teamStat.wins,
                   ),
                   StatisticBox(
-                    value: 1,
+                    value: teamStat.draws,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   StatisticBox(
-                    value: 3,
+                    value: teamStat.losses,
                   ),
                   StatisticBox(
-                    value: 1,
+                    value: teamStat.matchPlayed,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   StatisticBox(
-                    value: 2,
+                    value: teamStat.pointsDifference,
                   ),
                   StatisticBox(
-                    value: 1,
+                    value: teamStat.setDifference,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   StatisticBox(
-                    value: 3,
-                  ),
-                  StatisticBox(
-                    value: 1,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  StatisticBox(
-                    value: 2,
-                  ),
-                  StatisticBox(
-                    value: 1,
-                    color: Theme.of(context).primaryColorLight,
+                    value: teamStat.extraPoints,
                   ),
                   // StatisticBox(value: 3,),
                 ],

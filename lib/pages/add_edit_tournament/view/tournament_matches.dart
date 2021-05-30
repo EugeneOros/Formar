@@ -4,7 +4,6 @@ import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_matches.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
-import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_button.dart';
 import 'package:repositories/repositories.dart';
 

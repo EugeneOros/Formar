@@ -6,11 +6,12 @@ class ItemAppBar extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool drawDivider;
+  final bool isSelected;
 
-  const ItemAppBar({Key? key, required this.icon, required this.text, this.drawDivider = false}) : super(key: key);
+  const ItemAppBar({Key? key, required this.icon, required this.text, this.drawDivider = false, this.isSelected = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Color color = Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black;
+    Color color = Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? (isSelected ? LightPink : LightBlue) : Colors.black;
     return Container(
       width: double.infinity,
       // decoration: drawDivider ? BoxDecoration(border: Border(right: borderSideDivider)) : null,
