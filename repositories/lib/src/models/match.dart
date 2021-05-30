@@ -38,7 +38,7 @@ class Match {
     List<Score> sets = [];
     for (String setStr in entity.sets!) {
       List<String> setsStr = setStr.split(":");
-      sets.add(Score(firstTeamPoints: int.parse(setsStr[0]), secondTeamPoints: int.parse(setsStr[1])));
+      sets.add(Score(firstTeamPoints: setsStr[0] == "null" ? null : int.parse(setsStr[0]), secondTeamPoints:  setsStr[1] == "null" ? null : int.parse(setsStr[1])));
     }
     return Match(
       id: entity.id,
@@ -70,10 +70,10 @@ class Match {
 }
 
 class Score {
-  final int firstTeamPoints;
-  final int secondTeamPoints;
+  int? firstTeamPoints;
+  int? secondTeamPoints;
 
-  Score({required this.firstTeamPoints, required this.secondTeamPoints});
+  Score({ this.firstTeamPoints,  this.secondTeamPoints});
 
   @override
   bool operator ==(Object other) =>

@@ -5,14 +5,14 @@ import 'package:form_it/config/constants.dart';
 
 class AppDialog extends StatefulWidget {
   final Widget? content;
-  final String title;
+  final String? title;
   final List<Widget>? actionsHorizontal;
   final List<Widget>? actionsVertical;
 
   const AppDialog({
     Key? key,
     this.content,
-    required this.title,
+    this.title,
     this.actionsHorizontal,
     this.actionsVertical,
   }) : super(key: key);
@@ -46,21 +46,23 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
             scale: scaleAnimation,
             child: Container(
               margin: EdgeInsets.all(30),
-              decoration: ShapeDecoration(color: Theme.of(context).canvasColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+              decoration: ShapeDecoration(
+                  color: Theme.of(context).canvasColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
               child: IntrinsicWidth(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        widget.title,
-                        style: Theme.of(context).textTheme.headline2,
-                        textAlign: TextAlign.center,
+                    if (widget.title != null)
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          widget.title!,
+                          style: Theme.of(context).textTheme.headline2,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
                     if (widget.content != null) widget.content!,
                     if (widget.actionsVertical != null)
                       SizedBox(
@@ -94,9 +96,7 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
                                 child: Container(
                                   height: 35,
                                   decoration: BoxDecoration(
-                                    border: e != widget.actionsHorizontal!.last
-                                        ? Border(right: getBorderDivider(context))
-                                        : Border(),
+                                    border: e != widget.actionsHorizontal!.last ? Border(right: getBorderDivider(context)) : Border(),
                                   ),
                                   child: e,
                                 ),

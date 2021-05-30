@@ -122,7 +122,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
                       textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
                       color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
                       sizeRatio: 0.9,
-                      onPressed: _onAddTeams,
+                      onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams),
                     ),
                   )
                 : Stack(

@@ -26,33 +26,51 @@ class FirebaseTournamentRepository implements TournamentRepository {
     //     snapshot.reference.delete();
     //   }
     // });
+    List<Match> matchesUpdated = [];
 
-    matchesCollection.get().then((value){
-        value.docs.forEach((element) {
-          matchesCollection.doc(element.id).delete().then((value){
+    matchesCollection.get().then((value) {
+      Match? matchUpdated;
+      value.docs.forEach((element) {
+        matchUpdated = null;
+        for (Match match in tournament.matches) {
+          if (match.id == element.id) {
+            matchUpdated = match;
+            matchesCollection.doc(element.id).update(match.toEntity().toDocument());
+          }
+        }
+        if (matchUpdated == null) {
+          matchesCollection.doc(element.id).delete().then((value) {
             print("Success!");
           });
-        });
-    }).then((value){
+        }else{
+          matchesUpdated.add(matchUpdated!);
+        }
+      });
+    }).then((value) {
+      print("updated M");
+      print(matchesUpdated);
       for (Match match in tournament.matches) {
+        if(!matchesUpdated.contains(match)){
+          matchesCollection.add(match.toEntity().toDocument());
+        }
         // final snapShot = await matchesCollection.doc(match.id).get();
         // if (snapShot.exists) {
         //   matchesCollection.doc(match.id).update(match.toEntity().toDocument());
         // } else {
-        matchesCollection.add(match.toEntity().toDocument());
+        // matchesCollection.add(match.toEntity().toDocument());
         // }
       }
     });
-
 
     return tournamentCollection.doc(tournament.id).update(tournament.toEntity().toDocument());
   }
 
   @override
   Future<DocumentReference> addTournament(Tournament tournament) async {
+    print(tournament.matches);
     CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     Future<DocumentReference> result = tournamentCollection.add(tournament.toEntity().toDocument());
-    DocumentReference tournamentReference  = await result;
+    DocumentReference tournamentReference = await result;
     DocumentSnapshot tournamentRSnapshot = await tournamentReference.get();
     var tournamentId = tournamentRSnapshot.reference.id;
     CollectionReference matchesCollection = tournamentCollection.doc(tournamentId).collection("matches");

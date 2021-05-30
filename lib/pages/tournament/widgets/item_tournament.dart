@@ -78,13 +78,18 @@ class ItemTournament extends StatelessWidget {
                       depth: 2,
                       intensity: 1,
                       shape: NeumorphicShape.concave,
+                      surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.3,
                       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                      lightSource: LightSource.topLeft,
+                      lightSource: LightSource.topRight,
                       shadowDarkColorEmboss:
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
                       shadowLightColorEmboss:
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-                      color: Theme.of(context).primaryColor),
+                      shadowDarkColor:
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                      shadowLightColor:
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                      color: Theme.of(context).canvasColor),
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(

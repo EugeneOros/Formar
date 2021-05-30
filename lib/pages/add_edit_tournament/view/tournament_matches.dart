@@ -93,7 +93,10 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
       for (int i = 1; i <= (teamsRoundRobin.length - 1) * encountersNum; i++) {
         for (int j = 0; j < (teamsRoundRobin.length / 2); j++) {
           if (teamsRoundRobin[j] != null && teamsRoundRobin[teamsRoundRobin.length - 1 - j] != null) {
-            matches.add(Match(firstTeam: teamsRoundRobin[j]!.name, secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j]!.name, round: i));
+            matches.add(
+              Match(
+                  firstTeam: teamsRoundRobin[j]!.name, secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j]!.name, sets: [Score()], round: i),
+            );
           }
         }
         rotateRoundRobin(teamsRoundRobin);
@@ -151,47 +154,38 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
           ),
         ),
         SingleChildScrollView(
-          child: widget.matches.isEmpty
-              ? Container(
-                  padding: const EdgeInsets.only(top: 110),
-                  height: double.infinity,
-                  alignment: Alignment.bottomCenter,
-                  child: RoundedButton(
-                    text: AppLocalizations.of(context)!.createSchedule,
-                    textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                    color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
-                    sizeRatio: 0.9,
-                    onPressed: createSchedule,
-                  ),
-                )
-              : ListView.builder(
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: rounds.length,
+            itemBuilder: (context, indexRound) {
+              return EmbossContainer(
+                color: Colors.transparent,
+                name: AppLocalizations.of(context)!.round(rounds[indexRound][0].round ?? 0),
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: indexRound == 0 ? 90 : 25, bottom: indexRound == rounds.length - 1 ? 60 : 0),
+                child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: rounds.length,
-                  itemBuilder: (context, indexRound) {
-                    return EmbossContainer(
-                      color: Colors.transparent,
-                      name: AppLocalizations.of(context)!.round(rounds[indexRound][0].round ?? 0),
-                      padding:
-                          EdgeInsets.only(left: 20.0, right: 20.0, top: indexRound == 0 ? 90 : 25, bottom: indexRound == rounds.length - 1 ? 60 : 0),
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: rounds[indexRound].length,
-                        itemBuilder: (context, index) {
-                          return ItemTournamentMatches(
-                            color: index == 2
-                                ? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight)
-                                : (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white),
-                            drawDivider: index == 0 ? false : true,
-                            match: rounds[indexRound][index],
-                          );
-                          // teams.removeAt(index);
-                        },
-                      ),
+                  itemCount: rounds[indexRound].length,
+                  itemBuilder: (context, index) {
+                    return ItemTournamentMatches(
+                      color: index == 2
+                          ? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight)
+                          : (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white),
+                      onOkSetCallback: (Match match){
+                        setState(() {
+                          rounds[indexRound][index] = match;
+                        });
+                      },
+                      drawDivider: index == 0 ? false : true,
+                      match: rounds[indexRound][index],
                     );
+                    // teams.removeAt(index);
                   },
                 ),
+              );
+            },
+          ),
         ),
         widget.matches.isNotEmpty
             ? Positioned.fill(
@@ -202,12 +196,37 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                       padding: const EdgeInsets.only(top: 110),
                       alignment: Alignment.bottomCenter,
                       child: RoundedButton(
-                        text: AppLocalizations.of(context)!.deleteSchedule,
-                        textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.white,
-                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.black,
-                        sizeRatio: 0.6,
-                        onPressed: () => widget.onChangeMatchesCallback([]),
-                      ),
+                          text: AppLocalizations.of(context)!.deleteSchedule,
+                          textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.white,
+                          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.black,
+                          sizeRatio: 0.6,
+                          onPressed: () => showDialog<bool>(
+                              context: homeKey.currentContext!,
+                              builder: (context) {
+                                return AppDialog(
+                                  title: AppLocalizations.of(context)!.areYouSureDeleteMatches,
+                                  actionsHorizontal: [
+                                    TextButton(
+                                      onPressed: () {
+                                        widget.onChangeMatchesCallback([]);
+                                        Navigator.of(context).pop(true);
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!.yes,
+                                        style: Theme.of(context).textTheme.button,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.of(context).pop(false),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.no,
+                                        style: Theme.of(context).textTheme.button,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }) // widget.onChangeMatchesCallback([]),
+                          ),
                     )),
               )
             : Positioned.fill(

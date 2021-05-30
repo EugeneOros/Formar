@@ -30,9 +30,11 @@ class ItemTeam extends StatelessWidget {
                     surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.3,
                     shape: NeumorphicShape.convex,
                     boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                    lightSource: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightSource.topRight : LightSource.topRight,
-                    shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-                    shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                    lightSource: LightSource.topRight,
+                    shadowDarkColor:
+                        Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                    shadowLightColor:
+                        Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
                     color: Theme.of(context).canvasColor),
                 child: Column(
                   children: [

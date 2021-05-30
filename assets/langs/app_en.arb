@@ -147,6 +147,10 @@
   "@areYouSureLogOut": {
     "description": ""
   },
+  "areYouSureDeleteMatches": "Are you sure you want to delete match schedule?",
+  "@areYouSureDeleteMatches": {
+    "description": ""
+  },
   "ok": "OK",
   "@ok": {
     "description": ""
