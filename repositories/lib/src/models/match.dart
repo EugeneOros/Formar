@@ -58,8 +58,6 @@ class Match {
       if(team.id == entity.secondTeam)
         secondTeam = team;
     }
-    print(firstTeam);
-    print(entity.firstTeam);
     return Match(
       id: entity.id,
       firstTeam: firstTeam,

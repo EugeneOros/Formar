@@ -111,6 +111,7 @@ class Tournament {
             teamStat.setDifference += firstTeamSetsCount - secondTeamSetsCount;
             teamStat.pointsDifference += firstTeamScoreCount - secondTeamScoreCount;
           } else if (teamStat.team.id == match.secondTeam!.id) {
+            teamStat.matchPlayed++;
             teamStat.wins += firstTeamSetsCount < secondTeamSetsCount ? 1 : 0;
             teamStat.draws += firstTeamSetsCount == secondTeamSetsCount ? 1 : 0;
             teamStat.losses += firstTeamSetsCount > secondTeamSetsCount ? 1 : 0;
@@ -125,6 +126,7 @@ class Tournament {
           (teamStat.wins * pointsForWins).toInt() + (teamStat.draws * pointsForDraw).toInt() + (teamStat.losses * pointsForLoss).toInt();
     }
     // teams.
+    teamsStats.sort((a, b) => b.points.compareTo(a.points));
     return teamsStats;
   }
 

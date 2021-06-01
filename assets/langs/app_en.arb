@@ -398,5 +398,81 @@
   "firstlyAddMoreTeams": "Firstly add more than one team to this tournament",
   "@firstlyAddMoreTeams": {
     "description": ""
+  },
+  "leader": "Leader",
+  "@leader": {
+    "description": ""
+  },
+  "unknown": "Unknown",
+  "@unknown": {
+    "description": ""
+  },
+  "leaderboard": "Leaderboard",
+  "@leaderboard": {
+    "description": ""
+  },
+  "p": "P",
+  "@p": {
+    "description": ""
+  },
+  "w": "W",
+  "@w": {
+    "description": ""
+  },
+  "wins": "Wins",
+  "@wins": {
+    "description": ""
+  },
+  "d": "D",
+  "@d": {
+    "description": ""
+  },
+  "draws": "Draws",
+  "@draws": {
+    "description": ""
+  },
+  "l": "L",
+  "@l": {
+    "description": ""
+  },
+  "losses": "Losses",
+  "@losses": {
+    "description": ""
+  },
+  "mp": "MP",
+  "@mp": {
+    "description": ""
+  },
+  "matchesPlayed": "Matches Played",
+  "@matchesPlayed": {
+    "description": ""
+  },
+  "pd": "PD",
+  "@pd": {
+    "description": ""
+  },
+  "pointsDifference": "Points Difference",
+  "@pointsDifference": {
+    "description": ""
+  },
+  "sd": "SD",
+  "@sd": {
+    "description": ""
+  },
+  "setsDifference": "Sets Difference",
+  "@setsDifference": {
+    "description": ""
+  },
+  "ep": "EP",
+  "@ep": {
+    "description": ""
+  },
+  "extraPoints": "Extra Points",
+  "@extraPoints": {
+    "description": ""
+  },
+  "roundRobin": "Round-robin",
+  "@roundRobin": {
+    "description": ""
   }
 }

@@ -86,8 +86,8 @@ class FirebaseTournamentRepository implements TournamentRepository {
     List<Future<Tournament>> futures = snapshot.docs.map((doc) async {
       TournamentEntity tournamentEntity = TournamentEntity.fromSnapshot(doc);
       List<Team> tournamentTeams = await _getTeamsByIds(tournamentEntity.teamsIds!);
-      HashMap<String, Team> teamsMap = HashMap.fromIterable(tournamentTeams, key: (e) => e.id, value: (e) => e);
-      print(teamsMap);
+      // HashMap<String, Team> teamsMap = HashMap.fromIterable(tournamentTeams, key: (e) => e.id, value: (e) => e);
+      // print(teamsMap);
       return Tournament.fromEntity(
           tournamentEntity, tournamentTeams, await currentMatchesList(tournamentEntity.id!, tournamentTeams));
     }).toList();

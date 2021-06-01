@@ -18,12 +18,12 @@ class TournamentStatistic extends StatelessWidget {
     List<TeamStat> teamsStats;
     if (formKeyInfo.currentState != null) {
       teamsStats = Tournament.getLeaderList(
-              matches: matches,
-              teams: teams,
-              pointsForWins: formKeyInfo.currentState!.winPoints,
-              pointsForDraw: formKeyInfo.currentState!.drawPoints,
-              pointsForLoss: formKeyInfo.currentState!.lossPoints,
-            );
+        matches: matches,
+        teams: teams,
+        pointsForWins: formKeyInfo.currentState!.winPoints,
+        pointsForDraw: formKeyInfo.currentState!.drawPoints,
+        pointsForLoss: formKeyInfo.currentState!.lossPoints,
+      );
     } else {
       teamsStats = tournament == null
           ? []
@@ -35,7 +35,6 @@ class TournamentStatistic extends StatelessWidget {
               pointsForLoss: this.tournament!.lossPoints,
             );
     }
-    teamsStats.sort((a, b) => b.points.compareTo(a.points));
     return Neumorphic(
         style: NeumorphicStyle(
           depth: 0,
@@ -61,7 +60,7 @@ class TournamentStatistic extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: EmbossContainer(
-              name: "Standings",
+              name: AppLocalizations.of(context)!.leaderboard,
               padding: EdgeInsets.only(top: 90, bottom: 60),
               child: Row(
                 children: [
@@ -81,10 +80,11 @@ class TournamentStatistic extends StatelessWidget {
                                 // width: 35,
                                 padding: EdgeInsets.only(left: 10),
                                 child: Center(
-                                    child: Text(
-                                  "Name",
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                )),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.name,
+                                    style: Theme.of(context).textTheme.subtitle2,
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -149,28 +149,28 @@ class TournamentStatistic extends StatelessWidget {
                           Row(
                             children: [
                               StatisticHeaderElement(
-                                value: 'P',
+                                value: AppLocalizations.of(context)!.p,
                               ),
                               StatisticHeaderElement(
-                                value: 'W',
+                                value: AppLocalizations.of(context)!.w,
                               ),
                               StatisticHeaderElement(
-                                value: 'D',
+                                value: AppLocalizations.of(context)!.d,
                               ),
                               StatisticHeaderElement(
-                                value: 'L',
+                                value: AppLocalizations.of(context)!.l,
                               ),
                               StatisticHeaderElement(
-                                value: 'MP',
+                                value: AppLocalizations.of(context)!.mp,
                               ),
                               StatisticHeaderElement(
-                                value: 'PD',
+                                value: AppLocalizations.of(context)!.pd,
                               ),
                               StatisticHeaderElement(
-                                value: 'SD',
+                                value: AppLocalizations.of(context)!.sd,
                               ),
                               StatisticHeaderElement(
-                                value: 'EP',
+                                value: AppLocalizations.of(context)!.ep,
                               ),
                             ],
                           ),

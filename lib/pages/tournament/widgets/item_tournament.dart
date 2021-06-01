@@ -106,7 +106,18 @@ class ItemTournament extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         Text(
-                          "Leader: " + (tournament.teams.isEmpty ? "Unknown" : tournament.teams[0].name),
+                          AppLocalizations.of(context)!.leader +
+                              ": " +
+                              (tournament.teams.isEmpty
+                                  ? AppLocalizations.of(context)!.unknown
+                                  : Tournament.getLeaderList(
+                                          matches: tournament.matches,
+                                          teams: tournament.teams,
+                                          pointsForWins: tournament.winPoints,
+                                          pointsForDraw: tournament.drawPoints,
+                                          pointsForLoss: tournament.lossPoints)[0]
+                                      .team
+                                      .name),
                           style: Theme.of(context).textTheme.bodyText2,
                         )
                       ],
@@ -128,8 +139,8 @@ class ItemTournament extends StatelessWidget {
                         width: 60,
                       ),
                       Text(
-                        "Round Robin",
-                        style: Theme.of(context).textTheme.bodyText2,
+                        AppLocalizations.of(context)!.roundRobin,
+                        style: Theme.of(context).textTheme.subtitle2,
                       )
                     ],
                   ),
