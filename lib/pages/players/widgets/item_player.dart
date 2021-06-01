@@ -174,9 +174,12 @@ class PlayerItem extends StatelessWidget {
           child: Text(
             AppLocalizations.of(context)!.showTeams,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context)
+                .textTheme
+                .caption!
+                .copyWith(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black),
           ),
-          color: Theme.of(context).accentColor,
+          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).accentColor,
           onTap: _onShowTeams,
         ),
         SlideAction(
@@ -192,7 +195,7 @@ class PlayerItem extends StatelessWidget {
               ),
             ],
           ),
-          color: Colors.black,
+          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorEvaluation : Colors.black,
           onTap: () => onDelete(),
         ),
       ],

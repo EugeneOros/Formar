@@ -151,5 +151,8 @@
   "setsDifference": "Різниця сітів",
   "ep": "ДО",
   "extraPoints": "Додаткові очки",
-  "roundRobin": "Кожний з кожним"
+  "roundRobin": "Кожний з кожним",
+  "set": "Сет",
+  "lightMode": "Світлий режим",
+  "darkMode": "Темний режим"
 }

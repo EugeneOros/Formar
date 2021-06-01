@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:repositories/repositories.dart';
 import 'package:repositories/src/tournament_repository.dart';

@@ -1,8 +1,11 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
+import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
+import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:repositories/repositories.dart';
 
 class TournamentStatistic extends StatelessWidget {
@@ -61,6 +64,51 @@ class TournamentStatistic extends StatelessWidget {
           child: SingleChildScrollView(
             child: EmbossContainer(
               name: AppLocalizations.of(context)!.leaderboard,
+              titleChild: Padding(
+                padding: const EdgeInsets.only(bottom: 5, right: 10, left: 10),
+                child: RoundIconButton(
+                  icon: FontAwesomeIcons.info,
+                  color: Theme.of(context).primaryColorLight,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AppDialog(
+                          title: AppLocalizations.of(context)!.info,
+                          content: Container(
+                            padding: EdgeInsets.only(top: 0, left: 15, right: 15, bottom: 15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(AppLocalizations.of(context)!.p + " - " + AppLocalizations.of(context)!.points, style: Theme.of(context).textTheme.bodyText2,),
+                                Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
+                                Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
+                                Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),
+                                Text(AppLocalizations.of(context)!.mp + " - " + AppLocalizations.of(context)!.matchesPlayed),
+                                Text(AppLocalizations.of(context)!.pd + " - " + AppLocalizations.of(context)!.pointsDifference),
+                                Text(AppLocalizations.of(context)!.sd + " - " + AppLocalizations.of(context)!.setsDifference),
+                                Text(AppLocalizations.of(context)!.ep + " - " + AppLocalizations.of(context)!.extraPoints),
+                              ],
+                            ),
+                          ),
+                          actionsHorizontal: [
+                            TextButton(
+                              child: Text(
+                                MaterialLocalizations.of(context).okButtonLabel,
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
               padding: EdgeInsets.only(top: 90, bottom: 60),
               child: Row(
                 children: [

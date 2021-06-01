@@ -5,7 +5,9 @@ import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
+import 'package:form_it/logic/blocs/tab/bloc.dart';
 import 'package:form_it/logic/models/app_state_notifier.dart';
+import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/widgets/widgets.dart';
 
 import 'package:form_it/pages/settings/widgets/widgets.dart';
@@ -125,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClie
                 ),
                 ItemSettings(
                   icon: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? FontAwesomeIcons.moon : FontAwesomeIcons.sun,
-                  text: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? "Dark mode" : "Light mode",
+                  text: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? AppLocalizations.of(context)!.darkMode : AppLocalizations.of(context)!.lightMode,
                   onTap: () {},
                   secondaryWidget: Transform.scale(
                     scale: 0.8,
@@ -135,12 +137,13 @@ class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClie
                       value: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode,
                       onChanged: (boolVal) {
                         Provider.of<AppStateNotifier>(context, listen: false).updateTheme(boolVal);
+                        // BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.settings));
                       },
                     ),
                   ),
                 ),
                 Text(
-                  AppLocalizations.of(context)!.version + " 1.0",
+                  AppLocalizations.of(context)!.version + " 0.1.2",
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),

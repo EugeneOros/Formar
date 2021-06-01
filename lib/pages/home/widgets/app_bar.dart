@@ -98,7 +98,7 @@ class _AppTopBarState extends State<AppTopBar> {
                     ),
                     shape: _ShapedWidgetBorder(padding: 10, borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     padding: EdgeInsets.all(0),
-                    color: Colors.black,
+                    color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.black,
                     onSelected: (VisibilityFilter filter) {
                       switch (filter) {
                         case VisibilityFilter.all:

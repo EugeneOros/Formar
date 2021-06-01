@@ -474,5 +474,17 @@
   "roundRobin": "Round-robin",
   "@roundRobin": {
     "description": ""
+  },
+  "set": "Set",
+  "@set": {
+    "description": ""
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": ""
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": ""
   }
 }

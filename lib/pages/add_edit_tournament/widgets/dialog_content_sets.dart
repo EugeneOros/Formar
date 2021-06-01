@@ -97,7 +97,7 @@ class _DialogContentSetsState extends State<DialogContentSets> {
                   width: 20,
                 ),
                 Text(
-                  "Set " + currentSet.toString(),
+                   AppLocalizations.of(context)!.set + " " + currentSet.toString(),
                   style: Theme.of(context).textTheme.headline2,
                   textAlign: TextAlign.center,
                 ),
@@ -199,7 +199,7 @@ class _DialogContentSetsState extends State<DialogContentSets> {
                                 try {
                                   widget.match.sets[currentSet - 1].firstTeamPoints = int.parse(value);
                                   // firstTeamTxtController.text = widget.match.sets[currentSet-1].firstTeamPoints.toString();
-                                } catch (Exception) {
+                                } catch (exception) {
                                   widget.match.sets[currentSet - 1].firstTeamPoints = 0;
                                 }
                                 // });
@@ -271,7 +271,7 @@ class _DialogContentSetsState extends State<DialogContentSets> {
                                 // setState(() {
                                 try {
                                   widget.match.sets[currentSet - 1].secondTeamPoints = int.parse(value);
-                                } catch (Exception) {
+                                } catch (exception) {
                                   widget.match.sets[currentSet - 1].secondTeamPoints = 0;
                                 }
                                 // });

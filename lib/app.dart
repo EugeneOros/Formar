@@ -46,6 +46,21 @@ class _FormarAppState extends State<FormarApp> {
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
         }),
+        colorScheme: ColorScheme(
+          onError: Colors.red,
+          onSecondary: isDark ? DarkColor : Color(0xffffdcf7),
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          onBackground: isDark ? DarkColorAccent : Colors.white,
+          secondaryVariant: isDark ? DarkColor : Color(0xffffdcf7),
+          error: Colors.redAccent,
+          primaryVariant: isDark ? DarkColor : Color(0xffd1dbf1),
+          background: isDark ? DarkColorAccent : Colors.white,
+          surface: isDark ? DarkColorAccent : Colors.white,
+          primary: isDark ? DarkColor : Color(0xffd1dbf1),
+          secondary: isDark ? DarkColor : Color(0xffffdcf7),
+          onSurface: isDark ? DarkColor : Color(0xfff4f9fa),
+          onPrimary: isDark ? Color(0xff261c2c) : Color(0xff7aa1f5),
+        ),
         brightness: isDark ? Brightness.dark : Brightness.light,
         primaryColor: isDark ? DarkColor : Color(0xffd1dbf1),
         accentColor: isDark ? DarkColor : Color(0xffffdcf7),
@@ -245,7 +260,7 @@ class _FormarAppState extends State<FormarApp> {
                                 child: LoginScreen(),
                               );
                             } else if (state is AuthenticationStateAuthenticated) {
-                              BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
+                              // BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
                               return Provider<UserRepository>.value(value: _userRepository, child: HomeScreen(email: state.user!.email ?? ""));
                             }
                             return SplashScreen();
