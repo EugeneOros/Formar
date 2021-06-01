@@ -25,7 +25,7 @@ class ItemTournamentStatistic extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   StatisticBox(
-                    value: 0,
+                    value: teamStat.points,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   StatisticBox(

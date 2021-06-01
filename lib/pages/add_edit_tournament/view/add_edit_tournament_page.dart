@@ -134,18 +134,22 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
         actions: [
           GestureDetector(
             onTap: () {
-              if (_formKeyInfo.currentState != null && _formKeyInfo.currentState!.validate()) {
-                _formKeyInfo.currentState!.save();
-                widget.onSave(
-                  name: _keyTournamentInfo.currentState!.name,
-                  teams: teams,
-                  matches: matches,
-                  winPoints: _keyTournamentInfo.currentState!.winPoints,
-                  drawPoints: _keyTournamentInfo.currentState!.drawPoints,
-                  lossPoints: _keyTournamentInfo.currentState!.lossPoints,
-                  encountersNum: _keyTournamentInfo.currentState!.encountersNum,
-                );
-                // Navigator.pop(context);
+              if (_formKeyInfo.currentState != null) {
+                if (_formKeyInfo.currentState!.validate()) {
+                  _formKeyInfo.currentState!.save();
+                  widget.onSave(
+                    name: _keyTournamentInfo.currentState!.name,
+                    teams: teams,
+                    matches: matches,
+                    winPoints: _keyTournamentInfo.currentState!.winPoints,
+                    drawPoints: _keyTournamentInfo.currentState!.drawPoints,
+                    lossPoints: _keyTournamentInfo.currentState!.lossPoints,
+                    encountersNum: _keyTournamentInfo.currentState!.encountersNum,
+                  );
+                  Navigator.pop(context);
+                } else {
+                  _tabController.index = 0;
+                }
               } else {
                 widget.onSave(
                   name: widget.tournament != null ? widget.tournament!.name : "Tournament",
@@ -156,6 +160,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                   lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
                   encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
                 );
+                Navigator.pop(context);
               }
             },
             child: Container(
@@ -189,6 +194,9 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 onChangeMatchesCallback: onChangeMatches,
               ),
               TournamentStatistic(
+                matches: matches,
+                teams: this.teams,
+                formKeyInfo: _keyTournamentInfo,
                 tournament: widget.tournament,
               ),
             ],

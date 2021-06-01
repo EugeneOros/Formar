@@ -2,15 +2,15 @@ import 'package:repositories/src/entities/entities.dart';
 import 'package:repositories/src/models/models.dart';
 
 class Tournament {
-  final String? id;
-  final String ownerId;
-  final String name;
-  final List<Team> teams;
-  final int winPoints;
-  final int drawPoints;
-  final int lossPoints;
-  final int encountersNum;
-  final List<Match> matches;
+  String? id;
+  String ownerId;
+  String name;
+  List<Team> teams;
+  int winPoints;
+  int drawPoints;
+  int lossPoints;
+  int encountersNum;
+  List<Match> matches;
 
   Tournament({
     String? id,
@@ -57,10 +57,72 @@ class Tournament {
     return TournamentEntity(id, ownerId, name, getTeamsIds(), winPoints, drawPoints, lossPoints, encountersNum);
   }
 
-  List<TeamStat> getLeaderList() {
+  // void _setStat(TeamStat teamStat){
+  //   teamStat.matchPlayed ++;
+  //   int firstTeamSetsCount = 0;
+  //   int secondTeamSetsCount = 0;
+  //   int firstTeamScoreCount = 0;
+  //   int secondTeamScoreCount = 0;
+  //   for (Score set in sets) {
+  //     if (set.firstTeamPoints == null || set.secondTeamPoints == null) {
+  //       return null;
+  //     } else if (set.firstTeamPoints! > set.secondTeamPoints!) {
+  //       firstTeamSetsCount++;
+  //     } else if (set.firstTeamPoints! < set.secondTeamPoints!) {
+  //       secondTeamSetsCount++;
+  //     } else {
+  //       firstTeamSetsCount++;
+  //       secondTeamSetsCount++;
+  //     }
+  //   }
+  // }
+
+  static List<TeamStat> getLeaderList(
+      {List<Match> matches = const [], List<Team> teams = const [], int pointsForWins = 2, pointsForDraw = 1, pointsForLoss = 0}) {
     List<TeamStat> teamsStats = [];
-    for(Team team in teams){
+    for (Team team in teams) {
       teamsStats.add(TeamStat(team: team));
+    }
+    for (Match match in matches) {
+      if (!match.isCompleteSets()) continue;
+      int firstTeamSetsCount = 0;
+      int secondTeamSetsCount = 0;
+      int firstTeamScoreCount = 0;
+      int secondTeamScoreCount = 0;
+      for (Score set in match.sets) {
+        firstTeamScoreCount += set.firstTeamPoints!;
+        secondTeamScoreCount += set.secondTeamPoints!;
+        if (set.firstTeamPoints! > set.secondTeamPoints!) {
+          firstTeamSetsCount++;
+        } else if (set.firstTeamPoints! < set.secondTeamPoints!) {
+          secondTeamSetsCount++;
+        } else {
+          firstTeamSetsCount++;
+          secondTeamSetsCount++;
+        }
+      }
+      if (match.firstTeam != null && match.secondTeam != null) {
+        for (TeamStat teamStat in teamsStats) {
+          if (teamStat.team.id == match.firstTeam!.id) {
+            teamStat.matchPlayed++;
+            teamStat.wins += firstTeamSetsCount > secondTeamSetsCount ? 1 : 0;
+            teamStat.draws += firstTeamSetsCount == secondTeamSetsCount ? 1 : 0;
+            teamStat.losses += firstTeamSetsCount < secondTeamSetsCount ? 1 : 0;
+            teamStat.setDifference += firstTeamSetsCount - secondTeamSetsCount;
+            teamStat.pointsDifference += firstTeamScoreCount - secondTeamScoreCount;
+          } else if (teamStat.team.id == match.secondTeam!.id) {
+            teamStat.wins += firstTeamSetsCount < secondTeamSetsCount ? 1 : 0;
+            teamStat.draws += firstTeamSetsCount == secondTeamSetsCount ? 1 : 0;
+            teamStat.losses += firstTeamSetsCount > secondTeamSetsCount ? 1 : 0;
+            teamStat.setDifference += secondTeamSetsCount - firstTeamSetsCount;
+            teamStat.pointsDifference += secondTeamScoreCount - firstTeamScoreCount;
+          }
+        }
+      }
+    }
+    for (TeamStat teamStat in teamsStats) {
+      teamStat.points =
+          (teamStat.wins * pointsForWins).toInt() + (teamStat.draws * pointsForDraw).toInt() + (teamStat.losses * pointsForLoss).toInt();
     }
     // teams.
     return teamsStats;
@@ -122,6 +184,7 @@ class Tournament {
 }
 
 class TeamStat {
+  int points;
   final Team team;
   int wins;
   int draws;
@@ -133,6 +196,7 @@ class TeamStat {
 
   TeamStat(
       {required this.team,
+      this.points = 0,
       this.wins = 0,
       this.draws = 0,
       this.losses = 0,

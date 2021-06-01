@@ -1,17 +1,41 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:repositories/repositories.dart';
 
 class TournamentStatistic extends StatelessWidget {
   final Tournament? tournament;
+  final List<Match> matches;
+  final List<Team> teams;
+  final GlobalKey<TournamentInfoState> formKeyInfo;
 
-  const TournamentStatistic({Key? key, this.tournament}) : super(key: key);
+  const TournamentStatistic({Key? key, this.tournament, required this.matches, required this.formKeyInfo, required this.teams}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<TeamStat> teamsStats = tournament == null ? [] : this.tournament!.getLeaderList();
+    List<TeamStat> teamsStats;
+    if (formKeyInfo.currentState != null) {
+      teamsStats = Tournament.getLeaderList(
+              matches: matches,
+              teams: teams,
+              pointsForWins: formKeyInfo.currentState!.winPoints,
+              pointsForDraw: formKeyInfo.currentState!.drawPoints,
+              pointsForLoss: formKeyInfo.currentState!.lossPoints,
+            );
+    } else {
+      teamsStats = tournament == null
+          ? []
+          : Tournament.getLeaderList(
+              matches: matches,
+              teams: tournament!.teams,
+              pointsForWins: this.tournament!.winPoints,
+              pointsForDraw: this.tournament!.drawPoints,
+              pointsForLoss: this.tournament!.lossPoints,
+            );
+    }
+    teamsStats.sort((a, b) => b.points.compareTo(a.points));
     return Neumorphic(
         style: NeumorphicStyle(
           depth: 0,
@@ -96,7 +120,7 @@ class TournamentStatistic extends StatelessWidget {
                                           child: SizedBox(
                                             height: 25,
                                             width: 25,
-                                            child: Center(child: Text(index.toString())),
+                                            child: Center(child: Text((index + 1).toString())),
                                           ),
                                         ),
                                         Container(

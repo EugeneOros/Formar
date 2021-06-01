@@ -46,7 +46,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
             errorStyle: TextStyle(height: 0),
             contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
             filled: true,
-            fillColor: TextFieldFillColor,
+            fillColor:  Theme.of(context).canvasColor,
             hintText: AppLocalizations.of(context)!.password,
             prefixIcon: Icon(Icons.lock_rounded, color: Colors.black),
             suffixIcon: InkWell(

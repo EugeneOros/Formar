@@ -22,6 +22,14 @@ class Match {
     );
   }
 
+  bool isCompleteSets(){
+    for(Score score in sets){
+      if(score.firstTeamPoints == null || score.secondTeamPoints == null)
+        return false ;
+    }
+    return true;
+  }
+
   MatchEntity toEntity() {
     return MatchEntity(id, firstTeam != null ? firstTeam!.id : "null", secondTeam != null ? secondTeam!.id : "null", round, getSetsStr());
   }
@@ -37,18 +45,21 @@ class Match {
 
   static Match fromEntity(MatchEntity entity, List<Team> tournamentTeams) {
     List<Score> sets = [];
-    late Team firstTeam;
-    late Team secondTeam;
+    Team? firstTeam;
+    Team? secondTeam;
     for (String setStr in entity.sets!) {
       List<String> setsStr = setStr.split(":");
       sets.add(Score(firstTeamPoints: setsStr[0] == "null" ? null : int.parse(setsStr[0]), secondTeamPoints:  setsStr[1] == "null" ? null : int.parse(setsStr[1])));
     }
     for(Team team in tournamentTeams){
+
       if(team.id == entity.firstTeam)
         firstTeam = team;
       if(team.id == entity.secondTeam)
         secondTeam = team;
     }
+    print(firstTeam);
+    print(entity.firstTeam);
     return Match(
       id: entity.id,
       firstTeam: firstTeam,
