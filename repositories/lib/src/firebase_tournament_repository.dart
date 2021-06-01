@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:repositories/repositories.dart';
 import 'package:repositories/src/tournament_repository.dart';
@@ -19,7 +21,6 @@ class FirebaseTournamentRepository implements TournamentRepository {
   Future<void> updateTournament(Tournament tournament) async {
     CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     CollectionReference matchesCollection = tournamentCollection.doc(tournament.id).collection("matches");
-    // print(tournament.matches);
 
     // await matchesCollection.snapshots().forEach((element) {
     //   for (QueryDocumentSnapshot snapshot in element.docs) {
@@ -39,16 +40,12 @@ class FirebaseTournamentRepository implements TournamentRepository {
           }
         }
         if (matchUpdated == null) {
-          matchesCollection.doc(element.id).delete().then((value) {
-            print("Success!");
-          });
+          matchesCollection.doc(element.id).delete();
         }else{
           matchesUpdated.add(matchUpdated!);
         }
       });
     }).then((value) {
-      print("updated M");
-      print(matchesUpdated);
       for (Match match in tournament.matches) {
         if(!matchesUpdated.contains(match)){
           matchesCollection.add(match.toEntity().toDocument());
@@ -67,7 +64,6 @@ class FirebaseTournamentRepository implements TournamentRepository {
 
   @override
   Future<DocumentReference> addTournament(Tournament tournament) async {
-    print(tournament.matches);
     CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
     Future<DocumentReference> result = tournamentCollection.add(tournament.toEntity().toDocument());
     DocumentReference tournamentReference = await result;
@@ -89,8 +85,11 @@ class FirebaseTournamentRepository implements TournamentRepository {
   Future<List<Tournament>> _tournamentsFromSnapshot(QuerySnapshot snapshot) async {
     List<Future<Tournament>> futures = snapshot.docs.map((doc) async {
       TournamentEntity tournamentEntity = TournamentEntity.fromSnapshot(doc);
+      List<Team> tournamentTeams = await _getTeamsByIds(tournamentEntity.teamsIds!);
+      HashMap<String, Team> teamsMap = HashMap.fromIterable(tournamentTeams, key: (e) => e.id, value: (e) => e);
+      print(teamsMap);
       return Tournament.fromEntity(
-          tournamentEntity, await _getTeamsByIds(tournamentEntity.teamsIds!), await currentMatchesList(tournamentEntity.id!));
+          tournamentEntity, tournamentTeams, await currentMatchesList(tournamentEntity.id!, tournamentTeams));
     }).toList();
     return await Future.wait(futures);
   }
@@ -103,13 +102,13 @@ class FirebaseTournamentRepository implements TournamentRepository {
     return teams;
   }
 
-  Future<List<Match>> currentMatchesList(String tournamentId) async {
+  Future<List<Match>> currentMatchesList(String tournamentId, List<Team> tournamentTeams) async {
     CollectionReference matchesCollection = FirebaseFirestore.instance.collection("tournaments").doc(tournamentId).collection("matches");
     List<Future<Match>> matches;
     QuerySnapshot querySnapshot = await matchesCollection.get();
     matches = querySnapshot.docs.map((doc) async {
       MatchEntity matchEntity = MatchEntity.fromSnapshot(doc);
-      return Match.fromEntity(matchEntity);
+      return Match.fromEntity(matchEntity, tournamentTeams);
     }).toList();
 
     return Future.wait(matches);

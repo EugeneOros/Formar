@@ -66,7 +66,7 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
         children: [
           Expanded(
             child: Text(
-              widget.match.firstTeam ?? "Unknown",
+              widget.match.firstTeam != null ? widget.match.firstTeam!.name : "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -135,7 +135,7 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
           // Spacer(),
           Expanded(
             child: Text(
-              widget.match.secondTeam ?? "Unknown",
+              widget.match.secondTeam != null ? widget.match.secondTeam!.name : "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,

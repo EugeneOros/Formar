@@ -1,9 +1,10 @@
+import 'package:repositories/repositories.dart';
 import 'package:repositories/src/entities/entities.dart';
 
 class Match {
   final String? id;
-  final String? firstTeam;
-  final String? secondTeam;
+  final Team? firstTeam;
+  final Team? secondTeam;
   final int? round;
   List<Score> sets;
 
@@ -11,7 +12,7 @@ class Match {
       : this.id = id,
         this.sets = sets ?? [];
 
-  Match copyWith({String? id, String? firstTeam, String? secondTeam, int? round, List<Score>? sets}) {
+  Match copyWith({String? id, Team? firstTeam, Team? secondTeam, int? round, List<Score>? sets}) {
     return Match(
       id: id ?? this.id,
       firstTeam: firstTeam ?? this.firstTeam,
@@ -22,7 +23,7 @@ class Match {
   }
 
   MatchEntity toEntity() {
-    return MatchEntity(id, firstTeam, secondTeam, round, getSetsStr());
+    return MatchEntity(id, firstTeam != null ? firstTeam!.id : "null", secondTeam != null ? secondTeam!.id : "null", round, getSetsStr());
   }
 
   List<String> getSetsStr() {
@@ -34,16 +35,24 @@ class Match {
     return setsStr;
   }
 
-  static Match fromEntity(MatchEntity entity) {
+  static Match fromEntity(MatchEntity entity, List<Team> tournamentTeams) {
     List<Score> sets = [];
+    late Team firstTeam;
+    late Team secondTeam;
     for (String setStr in entity.sets!) {
       List<String> setsStr = setStr.split(":");
       sets.add(Score(firstTeamPoints: setsStr[0] == "null" ? null : int.parse(setsStr[0]), secondTeamPoints:  setsStr[1] == "null" ? null : int.parse(setsStr[1])));
     }
+    for(Team team in tournamentTeams){
+      if(team.id == entity.firstTeam)
+        firstTeam = team;
+      if(team.id == entity.secondTeam)
+        secondTeam = team;
+    }
     return Match(
       id: entity.id,
-      firstTeam: entity.firstTeam,
-      secondTeam: entity.secondTeam,
+      firstTeam: firstTeam,
+      secondTeam: secondTeam,
       round: entity.round,
       sets: sets,
     );

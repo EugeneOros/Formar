@@ -161,7 +161,7 @@ class _DialogContentSetsState extends State<DialogContentSets> {
                         child: Container(
                             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                             child: Text(
-                              widget.match.firstTeam!,
+                              widget.match.firstTeam!.name,
                               style: Theme.of(context).textTheme.bodyText1,
                             ))),
                     Container(
@@ -238,7 +238,7 @@ class _DialogContentSetsState extends State<DialogContentSets> {
                         child: Container(
                             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                             child: Text(
-                              widget.match.secondTeam!,
+                              widget.match.secondTeam!.name,
                               style: Theme.of(context).textTheme.bodyText1,
                             ))),
                     Container(

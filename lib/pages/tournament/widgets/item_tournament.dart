@@ -36,7 +36,6 @@ class ItemTournament extends StatelessWidget {
                         required int drawPoints,
                         required int lossPoints,
                         required int encountersNum}) {
-                      print(matches);
                       BlocProvider.of<TournamentsBloc>(context).add(
                         UpdateTournament(tournament.copyWith(
                             ownerId: userRepository.getUser()!.uid,

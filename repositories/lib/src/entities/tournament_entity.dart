@@ -44,9 +44,6 @@ class TournamentEntity extends Equatable {
   }
 
   static TournamentEntity fromSnapshot(DocumentSnapshot snap) {
-    print("yeey");
-
-    print(snap);
     return TournamentEntity(
       snap.id,
       snap['ownerId'],

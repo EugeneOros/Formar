@@ -94,7 +94,7 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
           if (teamsRoundRobin[j] != null && teamsRoundRobin[teamsRoundRobin.length - 1 - j] != null) {
             matches.add(
               Match(
-                  firstTeam: teamsRoundRobin[j]!.name, secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j]!.name, sets: [Score()], round: i),
+                  firstTeam: teamsRoundRobin[j], secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j], sets: [Score()], round: i),
             );
           }
         }
