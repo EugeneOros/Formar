@@ -3,13 +3,13 @@ import 'package:form_it/config/helpers.dart';
 import 'package:form_it/widgets/app_check_box.dart';
 import 'package:repositories/repositories.dart';
 
-class DialogAddTeams extends StatefulWidget {
+class DialogContentAddTeams extends StatefulWidget {
   final List<Team> teams;
   final List<Team>? teamsAdded;
 
   late final List<CheckBoxListTileModel> checkBoxListTileModel;
 
-  DialogAddTeams({Key? key, required this.teams, this.teamsAdded}) : super(key: key) {
+  DialogContentAddTeams({Key? key, required this.teams, this.teamsAdded}) : super(key: key) {
     checkBoxListTileModel = CheckBoxListTileModel.getFromTeams(teams, teamsAdded);
   }
 
@@ -22,10 +22,10 @@ class DialogAddTeams extends StatefulWidget {
   }
 
   @override
-  _DialogAddTeamsState createState() => _DialogAddTeamsState();
+  _DialogContentAddTeamsState createState() => _DialogContentAddTeamsState();
 }
 
-class _DialogAddTeamsState extends State<DialogAddTeams> {
+class _DialogContentAddTeamsState extends State<DialogContentAddTeams> {
   TextEditingController editingController = TextEditingController();
 
   List<CheckBoxListTileModel> items = [];

@@ -106,6 +106,7 @@ class ItemTournament extends StatelessWidget {
                           tournament.name,
                           style: Theme.of(context).textTheme.headline2,
                         ),
+                        SizedBox(height: 7,),
                         Text(
                           AppLocalizations.of(context)!.leader +
                               ": " +
@@ -119,7 +120,7 @@ class ItemTournament extends StatelessWidget {
                                           pointsForLoss: tournament.lossPoints)[0]
                                       .team
                                       .name),
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.subtitle2,
                         )
                       ],
                     ),

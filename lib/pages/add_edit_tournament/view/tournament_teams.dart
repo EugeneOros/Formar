@@ -1,5 +1,5 @@
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/dialog_add_list.dart';
+import 'package:form_it/pages/add_edit_tournament/widgets/dialog_content_add_teams.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
@@ -36,7 +36,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          DialogAddTeams _dialogAddPlayers = DialogAddTeams(
+          DialogContentAddTeams _dialogAddPlayers = DialogContentAddTeams(
             teams: teamsAll,
             teamsAdded: widget.teams,
           );

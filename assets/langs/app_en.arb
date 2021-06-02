@@ -486,5 +486,13 @@
   "darkMode": "Dark Mode",
   "@darkMode": {
     "description": ""
+  },
+  "aboutScheduling": "About scheduling",
+  "@aboutScheduling": {
+    "description": ""
+  },
+  "whatIsRoundRobin": "Is a competition in which each contestant meets all other contestants in turn.",
+  "@whatIsRoundRobin": {
+    "description": ""
   }
 }

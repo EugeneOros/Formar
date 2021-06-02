@@ -23,17 +23,22 @@ class TabBarTournament extends StatelessWidget {
               surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.3,
               shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
               shadowLightColor:
-              Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
               color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
               intensity: 0.8,
               shape: NeumorphicShape.convex,
               boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
             ),
             child: TabBar(
-              physics: BouncingScrollPhysics(),
+              controller: controller,
+              physics: ClampingScrollPhysics(),
+              padding: EdgeInsets.all(0),
               indicatorPadding: EdgeInsets.all(4),
-              unselectedLabelColor: Colors.black,
-              labelColor: Colors.black,
+              unselectedLabelColor: LightBlue,
+              labelColor: LightPink,
+              labelPadding: EdgeInsets.all(0),
+              labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 10, fontWeight: FontWeight.w300),
+              unselectedLabelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 10, fontWeight: FontWeight.w300),
               indicator: NeumorphicDecoration(
                 shape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
                 isForeground: false,
@@ -46,39 +51,30 @@ class TabBarTournament extends StatelessWidget {
                   color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Colors.white,
                   shape: NeumorphicShape.concave,
                   shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey[400],
-                  shadowLightColor:
-                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).colorScheme.secondary,
+                  shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                      ? DarkColorShadowLight
+                      : Theme.of(context).colorScheme.secondary,
                   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   lightSource: LightSource.topLeft,
                 ),
               ),
-              labelPadding: EdgeInsets.all(0),
-              controller: controller,
               tabs: [
                 ItemAppBar(
                   icon: FontAwesomeIcons.info,
                   text: AppLocalizations.of(context)!.info,
-                  drawDivider: true,
-                  isSelected: controller.index == 0,
                 ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.users,
-                  text: AppLocalizations.of(context)!.teams,
-                  drawDivider: true,
-                  isSelected: controller.index == 1,
-                ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.compressAlt,
-                  text: AppLocalizations.of(context)!.matches,
-                  drawDivider: true,
-                  isSelected: controller.index == 2,
-                ),
-                ItemAppBar(
-                  icon: FontAwesomeIcons.chartBar,
-                  text: AppLocalizations.of(context)!.statistic,
-                  drawDivider: false,
-                  isSelected: controller.index == 3,
-                ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.users,
+                    text: AppLocalizations.of(context)!.teams,
+                  ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.compressAlt,
+                    text: AppLocalizations.of(context)!.matches,
+                  ),
+                  ItemAppBar(
+                    icon: FontAwesomeIcons.chartBar,
+                    text: AppLocalizations.of(context)!.statistic,
+                  ),
               ],
             ),
           ),
