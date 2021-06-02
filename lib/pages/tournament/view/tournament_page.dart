@@ -20,7 +20,7 @@ class TournamentPage extends StatelessWidget {
         onAction: () {
           BlocProvider.of<TournamentsBloc>(homeKey.currentContext!).add(AddTournament(tournament));
         },
-        actionColor: Theme.of(homeKey.currentContext!).accentColor,
+        actionColor: Theme.of(homeKey.currentContext!).colorScheme.secondary,
       ),
     );
   }
@@ -36,7 +36,7 @@ class TournamentPage extends StatelessWidget {
         final tournaments = state.tournaments;
         return Container(
           alignment: Alignment.center,
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: Container(
             color: Theme.of(context).primaryColorLight,
             constraints: BoxConstraints(minWidth: 50, maxWidth: 700),

@@ -4,9 +4,10 @@ class RoundIconButton extends StatelessWidget {
   final Function()? onPressed;
   final IconData icon;
   final Color? color;
+  final Color? iconColor;
   final double size;
 
-  const RoundIconButton({Key? key, this.onPressed, required this.icon, this.color, this.size = 24}) : super(key: key);
+  const RoundIconButton({Key? key, this.onPressed, required this.icon, this.color, this.size = 24, this.iconColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class RoundIconButton extends StatelessWidget {
       padding: EdgeInsets.all(size / 4),
       child: Icon(
         icon,
-        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+        color: iconColor ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black),
         size: size / 2,
       ),
     );

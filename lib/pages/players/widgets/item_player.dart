@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/palette.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/models/app_state_notifier.dart';
@@ -179,7 +179,7 @@ class PlayerItem extends StatelessWidget {
                 .caption!
                 .copyWith(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black),
           ),
-          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).accentColor,
+          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).colorScheme.secondary,
           onTap: _onShowTeams,
         ),
         SlideAction(

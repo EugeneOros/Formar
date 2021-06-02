@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUpScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
+              Theme.of(context).colorScheme.secondary,
             ],
           ),
         ),
@@ -70,7 +70,7 @@ class _SignUpState extends State<SignUpScreen> {
                         colors: [
                           Theme.of(context).primaryColor,
                           Theme.of(context).primaryColor,
-                          Theme.of(context).accentColor,
+                          Theme.of(context).colorScheme.secondary,
                         ],
                       ),
                     ),

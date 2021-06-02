@@ -65,7 +65,7 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
               Theme.of(context).primaryColorLight,
               Theme.of(context).primaryColor,
               Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
+              Theme.of(context).colorScheme.secondary,
             ],
           ),
         ),

@@ -132,7 +132,7 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                 Theme.of(context).primaryColorLight,
                 Theme.of(context).primaryColor,
                 Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
+                Theme.of(context).colorScheme.secondary,
               ],
             ),
           ),
@@ -238,7 +238,7 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                       child: RoundedButton(
                         text: AppLocalizations.of(context)!.createSchedule,
                         textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
                         sizeRatio: 0.6,
                         onPressed: createSchedule,
                       ),

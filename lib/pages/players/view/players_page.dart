@@ -32,7 +32,7 @@ class PlayersPage extends StatelessWidget {
         onAction: () {
           BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(AddPerson(player));
         },
-        actionColor: Theme.of(homeKey.currentContext!).accentColor,
+        actionColor: Theme.of(homeKey.currentContext!).colorScheme.secondary,
       ),
     );
   }
@@ -102,7 +102,7 @@ class PlayersPage extends StatelessWidget {
             if (stateTeam is TeamsLoaded) {
               return Container(
                 alignment: Alignment.center,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 child: Container(
                   color: Theme.of(context).primaryColorLight,
                   constraints: BoxConstraints(minWidth: 50, maxWidth: 700),

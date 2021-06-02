@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:form_it/widgets/widgets.dart';
 import 'package:repositories/repositories.dart';
 

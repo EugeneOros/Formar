@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:form_it/logic/models/validators.dart';
 import 'package:repositories/repositories.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -16,28 +17,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         super(LoginState.empty());
 
   @override
-  Stream<Transition<LoginEvent, LoginState>> transformEvents(
-      Stream<LoginEvent> loginEvents,
-      transitionFunction) {
-    final debounceStream = loginEvents.where((loginEvent){
+  Stream<Transition<LoginEvent, LoginState>> transformEvents(Stream<LoginEvent> loginEvents, transitionFunction) {
+    final debounceStream = loginEvents.where((loginEvent) {
       return (loginEvent is LoginEventEmailChanged || loginEvent is LoginEventPasswordChanged);
     }).debounceTime(Duration(milliseconds: 300));
     final nonDebounceStream = loginEvents.where((loginEvent) {
       return (loginEvent is! LoginEventEmailChanged && loginEvent is! LoginEventPasswordChanged);
     });
-    return super.transformEvents(
-        nonDebounceStream.mergeWith([debounceStream]), transitionFunction);
+    return super.transformEvents(nonDebounceStream.mergeWith([debounceStream]), transitionFunction);
   }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     final LoginState currentState = state;
     if (event is LoginEventEmailChanged) {
-      yield currentState.update(
-          isEmailValid: Validators.isValidEmail(event.email));
+      yield currentState.update(isEmailValid: Validators.isValidEmail(event.email));
     } else if (event is LoginEventPasswordChanged) {
-      yield currentState.update(
-          isPasswordValid: Validators.isValidPassword(event.password));
+      yield currentState.update(isPasswordValid: Validators.isValidPassword(event.password));
     } else if (event is LoginEventWithGooglePressed) {
       yield* _mapLoginWithGooglePressedToState();
     } else if (event is LoginEventWithCredentialsPressed) {
@@ -45,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
         password: event.password,
       );
-    }else if (event is ShowHidePassword) {
+    } else if (event is LoginEventShowHidePassword) {
       isHiddenPassword = !isHiddenPassword;
     }
   }
@@ -70,22 +66,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } catch (_) {
       yield LoginState.failure();
     }
-  }
-}
-
-class Validators {
-  // static final RegExp _emailRegExp = RegExp(
-  //   r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
-  // );
-  // static final RegExp _passwordRegExp = RegExp(
-  //   r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
-  // );
-
-  static isValidEmail(String email) {
-    return email.length > 0; //_emailRegExp.hasMatch(email);
-  }
-
-  static isValidPassword(String password) {
-    return password.length >= 6;
   }
 }

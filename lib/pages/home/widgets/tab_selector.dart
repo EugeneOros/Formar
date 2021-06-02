@@ -42,7 +42,7 @@ class TabSelector extends StatelessWidget {
               end: Alignment.centerRight,
               colors: [
                 Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
-                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
               ],
             ),
           );

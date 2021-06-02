@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 
 class ItemTournamentInfo extends StatelessWidget {
   final String text;

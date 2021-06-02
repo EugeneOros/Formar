@@ -75,7 +75,7 @@ class _LevelPickerState extends State<LevelPicker> {
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
                 inactiveTickMarkColor: Colors.transparent,
                 activeTickMarkColor: Colors.transparent,
-                overlayColor: Theme.of(context).accentColor.withAlpha(50),
+                overlayColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
                 trackShape: CustomTrackShape(),
               ),
               child:

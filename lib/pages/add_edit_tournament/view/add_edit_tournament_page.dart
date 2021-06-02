@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_statistic.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
@@ -210,7 +210,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
           FadeEndLIstView(
             height: 30,
             width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             isTop: false,
           ),
           TabBarTournament(

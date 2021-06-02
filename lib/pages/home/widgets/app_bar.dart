@@ -3,7 +3,7 @@ import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_event.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
@@ -311,14 +311,14 @@ class _AppTopBarState extends State<AppTopBar> {
               end: Alignment.centerRight,
               colors: [
                 Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
-                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
                 // Theme.of(context).primaryColor,
               ],
             ),
           );
         case AppTab.teams:
           return BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           );
         case AppTab.tournament:
           return BoxDecoration(

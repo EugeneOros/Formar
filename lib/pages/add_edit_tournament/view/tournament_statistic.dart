@@ -1,6 +1,6 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
 import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
 import 'package:form_it/widgets/app_dialog.dart';
@@ -57,7 +57,7 @@ class TournamentStatistic extends StatelessWidget {
                 Theme.of(context).primaryColorLight,
                 Theme.of(context).primaryColor,
                 Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
+                Theme.of(context).colorScheme.secondary,
               ],
             ),
           ),
@@ -67,6 +67,7 @@ class TournamentStatistic extends StatelessWidget {
               titleChild: Padding(
                 padding: const EdgeInsets.only(bottom: 5, right: 10, left: 10),
                 child: RoundIconButton(
+                  iconColor: (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.grey),
                   icon: FontAwesomeIcons.info,
                   color: Theme.of(context).primaryColorLight,
                   onPressed: () {
@@ -81,7 +82,10 @@ class TournamentStatistic extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(AppLocalizations.of(context)!.p + " - " + AppLocalizations.of(context)!.points, style: Theme.of(context).textTheme.bodyText2,),
+                                Text(
+                                  AppLocalizations.of(context)!.p + " - " + AppLocalizations.of(context)!.points,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                                 Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
                                 Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
                                 Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),

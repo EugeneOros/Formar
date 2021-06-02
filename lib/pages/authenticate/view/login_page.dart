@@ -70,7 +70,7 @@ class _LoginState extends State<LoginScreen> {
                         colors: [
                           Theme.of(context).primaryColor,
                           Theme.of(context).primaryColor,
-                          Theme.of(context).accentColor,
+                          Theme.of(context).colorScheme.secondary,
                         ],
                       ),
                     ),

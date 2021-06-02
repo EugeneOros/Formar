@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/register/register_event.dart';
 import 'package:form_it/logic/blocs/register/register_state.dart';
+import 'package:form_it/logic/models/validators.dart';
 import 'package:repositories/repositories.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,18 +15,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         super(RegisterState.empty());
 
   @override
-  Stream<Transition<RegisterEvent, RegisterState>> transformEvents(
-      Stream<RegisterEvent> regEvents, transitionFunction) {
+  Stream<Transition<RegisterEvent, RegisterState>> transformEvents(Stream<RegisterEvent> regEvents, transitionFunction) {
     final debounceStream = regEvents.where((event) {
-      return (event is RegisterEventEmailChanged ||
-          event is RegisterEventPasswordChanged);
+      return (event is RegisterEventEmailChanged || event is RegisterEventPasswordChanged);
     }).debounceTime(Duration(milliseconds: 300));
     final nonDebounceStream = regEvents.where((loginEvent) {
-      return (loginEvent is! RegisterEventEmailChanged &&
-          loginEvent is! RegisterEventPasswordChanged);
+      return (loginEvent is! RegisterEventEmailChanged && loginEvent is! RegisterEventPasswordChanged);
     });
-    return super.transformEvents(
-        nonDebounceStream.mergeWith([debounceStream]), transitionFunction);
+    return super.transformEvents(nonDebounceStream.mergeWith([debounceStream]), transitionFunction);
   }
 
   @override
@@ -39,7 +36,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         email: event.email,
         password: event.password,
       );
-    } else if (event is ShowHidePassword) {
+    } else if (event is RegisterEventShowHidePassword) {
       isHiddenPassword = !isHiddenPassword;
     }
   }
@@ -55,22 +52,5 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } catch (_) {
       yield RegisterState.failure();
     }
-  }
-}
-
-class Validators {
-  // static final RegExp _emailRegExp = RegExp(
-  //   r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
-  // );
-  // static final RegExp _passwordRegExp = RegExp(
-  //   r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
-  // );
-
-  static isValidEmail(String email) {
-    return email.length > 0;//return _emailRegExp.hasMatch(email);
-  }
-
-  static isValidPassword(String password) {
-    return password.length >= 6;// return _passwordRegExp.hasMatch(password);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:form_it/pages/add_edit_team/widgets/item_member.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
@@ -82,7 +82,7 @@ class _MemberListState extends State<MemberList> {
               child: RoundedButton(
                 text: AppLocalizations.of(context)!.addPlayers,
                 textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
                 sizeRatio: 0.9,
                 onPressed: _onAddPlayer,
               ),
@@ -130,7 +130,7 @@ class _MemberListState extends State<MemberList> {
                     child: RoundIconButton(
                       icon: Icons.add,
                       size: 60,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                       onPressed: _onAddPlayer,
                     ),
                   ),

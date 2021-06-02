@@ -1,6 +1,7 @@
-import 'package:empty_widget/empty_widget.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
@@ -53,7 +54,7 @@ class TeamsPage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).accentColor,
+              Theme.of(context).colorScheme.secondary,
               Theme.of(context).primaryColor,
               Theme.of(context).primaryColor,
             ],
@@ -69,7 +70,7 @@ class TeamsPage extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Theme.of(context).accentColor,
+                Theme.of(context).colorScheme.secondary,
                 Theme.of(context).primaryColor,
                 Theme.of(context).primaryColor,
               ],
@@ -106,7 +107,7 @@ class TeamsPage extends StatelessWidget {
                         actionName: AppLocalizations.of(homeKey.currentContext!)!.undo,
                         onAction: () => BlocProvider.of<TeamsBloc>(homeKey.currentContext!)
                             .add(AddTeam(team)),
-                        actionColor: Theme.of(homeKey.currentContext!).accentColor,
+                        actionColor: Theme.of(homeKey.currentContext!).colorScheme.secondary,
                       ),
                     );
                   },

@@ -54,4 +54,4 @@ class LoginEventWithCredentialsPressed extends LoginEvent {
   }
 }
 
-class ShowHidePassword extends LoginEvent {}
+class LoginEventShowHidePassword extends LoginEvent {}

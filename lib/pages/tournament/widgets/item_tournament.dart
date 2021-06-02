@@ -1,8 +1,9 @@
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_it/config/constants.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/logic/blocs/tournament/bloc.dart';
 import 'package:form_it/pages/add_edit_tournament/view/add_edit_tournament_page.dart';
@@ -92,7 +93,7 @@ class ItemTournament extends StatelessWidget {
                         end: Alignment.centerRight,
                         colors: [
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
-                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
                         ],
                       ),
                     ),

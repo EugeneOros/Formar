@@ -7,7 +7,7 @@ import 'package:form_it/widgets/round_icon_button.dart';
 import 'package:form_it/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
-import 'package:form_it/config/constants.dart';
+import 'package:form_it/config/helpers.dart';
 
 typedef void OnAddTeamsCallback(List<Team> newTeams);
 typedef void OnMatchEmptyCheckCallback(Function newMatchesSchedule);
@@ -90,7 +90,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
                   Theme.of(context).primaryColorLight,
                   Theme.of(context).primaryColor,
                   Theme.of(context).primaryColor,
-                  Theme.of(context).accentColor,
+                  Theme.of(context).colorScheme.secondary,
                 ],
               ),
             ),
@@ -106,7 +106,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
                   Theme.of(context).primaryColor.withOpacity(0.7),
                   Theme.of(context).primaryColor.withOpacity(0.3),
                   Theme.of(context).primaryColor.withOpacity(0.2),
-                  Theme.of(context).accentColor.withOpacity(0),
+                  Theme.of(context).colorScheme.secondary.withOpacity(0),
                   // Colors.transparent
                 ],
               ),
@@ -120,7 +120,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
                     child: RoundedButton(
                       text: AppLocalizations.of(context)!.addTeams,
                       textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+                      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
                       sizeRatio: 0.9,
                       onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams),
                     ),
@@ -163,7 +163,7 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
                           child: RoundIconButton(
                               icon: Icons.add,
                               size: 60,
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                               onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams)),
                         ),
                       ),

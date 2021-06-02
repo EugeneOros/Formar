@@ -24,7 +24,7 @@ class TabBarTournament extends StatelessWidget {
               shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
               shadowLightColor:
               Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-              color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).accentColor,
+              color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
               intensity: 0.8,
               shape: NeumorphicShape.convex,
               boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
@@ -47,7 +47,7 @@ class TabBarTournament extends StatelessWidget {
                   shape: NeumorphicShape.concave,
                   shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey[400],
                   shadowLightColor:
-                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).accentColor,
+                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).colorScheme.secondary,
                   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   lightSource: LightSource.topLeft,
                 ),
