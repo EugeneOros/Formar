@@ -38,12 +38,12 @@ class _FormarAppState extends State<FormarApp> {
           brightness: isDark ? Brightness.dark : Brightness.light,  //done
           primary: isDark ? DarkColor : Color(0xffd1dbf1),  //done
           primaryVariant: isDark ? Color(0xff261c2c) : Color(0xff7aa1f5),  //done
-          onPrimary: isDark ? LightBlue : Colors.black,  //done
+          onPrimary: isDark ? LightPink : Colors.black,  //done
           secondary: isDark ? DarkColor : Color(0xffffdcf7),  //done
           secondaryVariant: isDark ? DarkColorShadowDark : LightPink,
-          onSecondary: isDark ? DarkColor : Color(0xffffdcf7),
+          onSecondary: isDark ? LightBlue : Colors.black.withOpacity(0.7), //done
           background:  isDark ? DarkColor : Color(0xfff4f9fa),  //done
-          onBackground: isDark ? DarkColorAccent : Colors.white,
+          onBackground: isDark ? Colors.white : Colors.black, //done
           surface: isDark ? DarkColorAccent : Colors.white, //done
           onSurface: isDark ? DarkColor : Color(0xfff4f9fa),
           error: Colors.redAccent,
@@ -58,6 +58,8 @@ class _FormarAppState extends State<FormarApp> {
         dividerColor: isDark ? Color(0xff17181c) : Colors.grey[400],
         shadowColor: isDark ? DarkColorShadowDark.withOpacity(0.6) : Colors.grey.withOpacity(0.3),
         textSelectionTheme: TextSelectionThemeData(
+          selectionColor: LightPink.withOpacity(0.5),
+          selectionHandleColor: LightBlue,
           cursorColor: isDark ? LightBlue : Colors.black,
         ),
         textTheme: TextTheme(

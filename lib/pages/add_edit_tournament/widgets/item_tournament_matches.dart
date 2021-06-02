@@ -1,10 +1,13 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/helpers.dart';
 import 'package:form_it/widgets/app_dialog.dart';
+import 'package:form_it/widgets/rounded_input_field.dart';
 import 'package:repositories/repositories.dart';
 
 import 'dialog_content_sets.dart';
+
 typedef void OnOkSetCallback(Match match);
+
 class ItemTournamentMatches extends StatefulWidget {
   // final String team1;
   // final String team2;
@@ -51,6 +54,7 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
 
   @override
   Widget build(BuildContext context) {
+    final DialogTheme dialogTheme = DialogTheme.of(context);
     return Container(
       constraints: BoxConstraints(maxHeight: 50),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -80,6 +84,52 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
                   DialogContentSets dialogContentSets = DialogContentSets(
                     match: widget.match,
                   );
+                  // return AppDialog(
+                  //   content: SizedBox(
+                  //     width: 200,
+                  //     height: 60,
+                  //     child: Column(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: <Widget>[TextField()],
+                  // ),
+                  //   ),
+                  // );
+                  // return AnimatedPadding(
+                  //   padding: MediaQuery.of(context).viewInsets +  EdgeInsets.zero,
+                  //   duration: Duration(milliseconds: 100),
+                  //   child: MediaQuery.removeViewInsets(
+                  //     removeLeft: true,
+                  //     removeTop: true,
+                  //     removeRight: true,
+                  //     removeBottom: true,
+                  //     context: context,
+                  //     child: Center(
+                  //       child: ConstrainedBox(
+                  //         constraints: const BoxConstraints(minWidth: 280.0),
+                  //         child: Material(
+                  //           // color: backgroundColor ?? dialogTheme.backgroundColor ?? Theme.of(context).dialogBackgroundColor,
+                  //           elevation: dialogTheme.elevation ?? 24.0,
+                  //           // shape: shape ?? dialogTheme.shape ?? _defaultDialogShape,
+                  //           type: MaterialType.card,
+                  //           // clipBehavior: clipBehavior,
+                  //           child: Column(
+                  //             mainAxisSize: MainAxisSize.min,
+                  //             children: <Widget>[TextField()],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // );
+                  // return Material(
+                  //   child: Container(
+                  //     margin: EdgeInsets.all(50),
+                  //     child: RoundedInputField(
+                  //       width: 200,
+                  //       height: 30,
+                  //     ),
+                  //   ),
+                  // );
                   return AppDialog(
                     // title: AppLocalizations.of(context)!.chosePlayers,
                     content: dialogContentSets,
