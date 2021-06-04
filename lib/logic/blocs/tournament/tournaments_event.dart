@@ -66,3 +66,5 @@ class DeleteTournament extends TournamentsEvent {
   @override
   String toString() => 'DeleteTournament { tournament: $tournament }';
 }
+
+class TournamentsDeleteAll extends TournamentsEvent {}

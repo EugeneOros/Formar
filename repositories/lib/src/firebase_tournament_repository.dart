@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:repositories/repositories.dart';
+import 'dart:async';
 import 'package:repositories/src/tournament_repository.dart';
 
 import 'entities/entities.dart';
 
 class FirebaseTournamentRepository implements TournamentRepository {
   final TeamRepository teamRepository;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseTournamentRepository({required this.teamRepository});
 
@@ -39,13 +42,13 @@ class FirebaseTournamentRepository implements TournamentRepository {
         }
         if (matchUpdated == null) {
           matchesCollection.doc(element.id).delete();
-        }else{
+        } else {
           matchesUpdated.add(matchUpdated!);
         }
       });
     }).then((value) {
       for (Match match in tournament.matches) {
-        if(!matchesUpdated.contains(match)){
+        if (!matchesUpdated.contains(match)) {
           matchesCollection.add(match.toEntity().toDocument());
         }
         // final snapShot = await matchesCollection.doc(match.id).get();
@@ -81,13 +84,21 @@ class FirebaseTournamentRepository implements TournamentRepository {
   }
 
   Future<List<Tournament>> _tournamentsFromSnapshot(QuerySnapshot snapshot) async {
-    List<Future<Tournament>> futures = snapshot.docs.map((doc) async {
+    List<DocumentSnapshot> snapDocs = [];
+    for (DocumentSnapshot documentSnapshot in snapshot.docs) {
+      if (documentSnapshot['ownerId'] == _auth.currentUser!.uid) {
+        snapDocs.add(documentSnapshot);
+      }
+    }
+
+    List<Future<Tournament>> futures = snapDocs.map((doc) async {
       TournamentEntity tournamentEntity = TournamentEntity.fromSnapshot(doc);
       List<Team> tournamentTeams = await _getTeamsByIds(tournamentEntity.teamsIds!);
       // HashMap<String, Team> teamsMap = HashMap.fromIterable(tournamentTeams, key: (e) => e.id, value: (e) => e);
       // print(teamsMap);
-      return Tournament.fromEntity(
-          tournamentEntity, tournamentTeams, await currentMatchesList(tournamentEntity.id!, tournamentTeams));
+      Tournament tournament =
+          Tournament.fromEntity(tournamentEntity, tournamentTeams, await currentMatchesList(tournamentEntity.id!, tournamentTeams));
+      return tournament;
     }).toList();
     return await Future.wait(futures);
   }
@@ -110,5 +121,25 @@ class FirebaseTournamentRepository implements TournamentRepository {
     }).toList();
 
     return Future.wait(matches);
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    CollectionReference tournamentCollection = FirebaseFirestore.instance.collection("tournaments");
+    List<String> tournamentsIds = [];
+    await tournamentCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        if (ds['ownerId'] == _auth.currentUser!.uid) tournamentsIds.add(ds.id);
+      }
+    });
+    for (String tournamentId in tournamentsIds) {
+      CollectionReference matchesCollection = tournamentCollection.doc(tournamentId).collection("matches");
+      matchesCollection.get().then((value) {
+        value.docs.forEach((element) {
+          matchesCollection.doc(element.id).delete();
+        });
+      });
+      tournamentCollection.doc(tournamentId).delete();
+    }
   }
 }

@@ -14,7 +14,12 @@ class TournamentInfo extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final OnMatchEmptyCheckCallback onMatchEmptyCheckCallback;
 
-  const TournamentInfo({Key? key, this.tournament, required this.formKey, required this.onMatchEmptyCheckCallback}) : super(key: key);
+  const TournamentInfo({
+    Key? key,
+    this.tournament,
+    required this.formKey,
+    required this.onMatchEmptyCheckCallback,
+  }) : super(key: key);
 
   @override
   TournamentInfoState createState() => TournamentInfoState();
@@ -221,13 +226,13 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
                                             AppLocalizations.of(context)!.whatIsRoundRobin,
                                             style: Theme.of(context).textTheme.bodyText2,
                                           ),
-                                        //   Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
-                                        //   Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
-                                        //   Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),
-                                        //   Text(AppLocalizations.of(context)!.mp + " - " + AppLocalizations.of(context)!.matchesPlayed),
-                                        //   Text(AppLocalizations.of(context)!.pd + " - " + AppLocalizations.of(context)!.pointsDifference),
-                                        //   Text(AppLocalizations.of(context)!.sd + " - " + AppLocalizations.of(context)!.setsDifference),
-                                        //   Text(AppLocalizations.of(context)!.ep + " - " + AppLocalizations.of(context)!.extraPoints),
+                                          //   Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
+                                          //   Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
+                                          //   Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),
+                                          //   Text(AppLocalizations.of(context)!.mp + " - " + AppLocalizations.of(context)!.matchesPlayed),
+                                          //   Text(AppLocalizations.of(context)!.pd + " - " + AppLocalizations.of(context)!.pointsDifference),
+                                          //   Text(AppLocalizations.of(context)!.sd + " - " + AppLocalizations.of(context)!.setsDifference),
+                                          //   Text(AppLocalizations.of(context)!.ep + " - " + AppLocalizations.of(context)!.extraPoints),
                                         ],
                                       ),
                                     ),

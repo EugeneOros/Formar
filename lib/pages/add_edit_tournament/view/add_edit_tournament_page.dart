@@ -12,6 +12,11 @@ import 'package:repositories/repositories.dart';
 
 import 'tournament_matches.dart';
 
+
+final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
+GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
+
+
 typedef OnSaveCallback = Function(
     {String? name,
     List<Team>? teams,
@@ -42,16 +47,16 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
   late List<Team> teams;
   late List<Match> matches;
 
-  GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
-
   // GlobalKey<TournamentInfoState> _keyTournamentTeams = GlobalKey();
-  GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 
   @override
   void initState() {
     _tabController = new TabController(vsync: this, length: 4, initialIndex: widget.isEditing ? 2 : 0);
     _tabController.addListener(() {
-      setState(() {});
+      setState(() {
+        FocusScope.of(context).requestFocus(new FocusNode()); //remove focus
+        // WidgetsBinding.instance!.addPostFrameCallback((_) => nameController.clear());
+      });
     });
     this.teams = widget.tournament != null ? widget.tournament!.teams : [];
     this.matches = widget.tournament != null ? widget.tournament!.matches : [];
@@ -112,6 +117,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.tournament!.matches ?? "nul");
     TournamentInfo tournamentInfo = TournamentInfo(
       key: _keyTournamentInfo,
       formKey: _formKeyInfo,

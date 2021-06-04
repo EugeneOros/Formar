@@ -399,6 +399,10 @@
   "@firstlyAddMoreTeams": {
     "description": ""
   },
+  "firstlyDeleteTournaments": "Firstly delete all tournaments",
+  "@firstlyDeleteTournaments": {
+    "description": ""
+  },
   "leader": "Leader",
   "@leader": {
     "description": ""
@@ -493,6 +497,18 @@
   },
   "whatIsRoundRobin": "Is a competition in which each contestant meets all other contestants in turn.",
   "@whatIsRoundRobin": {
+    "description": ""
+  },
+  "selectAll": "Select All",
+  "@selectAll": {
+    "description": ""
+  },
+  "noTeams": "No Teams",
+  "@noTeams": {
+    "description": ""
+  },
+  "toAddTeamsClick": "To add teams click plus in a top right corner",
+  "@toAddTeamsClick": {
     "description": ""
   }
 }

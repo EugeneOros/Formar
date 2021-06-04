@@ -1,4 +1,5 @@
 import 'package:form_it/config/dependency.dart';
+import 'package:form_it/logic/blocs/blocs.dart';
 import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_event.dart';
@@ -162,6 +163,7 @@ class _AppTopBarState extends State<AppTopBar> {
                         TextButton(
                           onPressed: () {
                             BlocProvider.of<TeamsBloc>(context).add(DeleteAll());
+                            BlocProvider.of<TournamentsBloc>(context).add(TournamentsDeleteAll());
                             Navigator.pop(context);
                           },
                           child: Text(

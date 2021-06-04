@@ -2,7 +2,7 @@ import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/helpers.dart';
 import 'package:flutter/services.dart';
 
-class RoundedInputField extends StatelessWidget {
+class RoundedInputField extends StatefulWidget {
   final String? hintText;
   final IconData? icon;
   final FormFieldValidator<String>? validator;
@@ -36,9 +36,14 @@ class RoundedInputField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<RoundedInputField> createState() => _RoundedInputFieldState();
+}
+
+class _RoundedInputFieldState extends State<RoundedInputField> {
+  @override
   Widget build(BuildContext context) {
     OutlineInputBorder borderRoundedTransparent = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
       borderSide: BorderSide(
         color: Colors.transparent,
       ),
@@ -47,11 +52,11 @@ class RoundedInputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          name != null
+          widget.name != null
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 5, left: 10),
                   child: Text(
-                    name!,
+                    widget.name!,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 )
@@ -63,28 +68,28 @@ class RoundedInputField extends StatelessWidget {
             style: getInnerNeumorphicStyle(context: context),
             child: Container(
               // decoration: roundedShadowDecoration,
-              height: height,
+              height: widget.height,
               // width: width ?? MediaQuery.of(context).size.width * 0.8,
               child: TextFormField(
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(lengthLimit),
+                    LengthLimitingTextInputFormatter(widget.lengthLimit),
                   ],
-                  onSaved: onSaved,
-                  onChanged: onChange,
+                  onSaved: widget.onSaved,
+                  onChanged: widget.onChange,
                   textAlignVertical: TextAlignVertical.center,
-                  autofocus: autofocus,
-                  initialValue: initialValue,
+                  autofocus: widget.autofocus,
+                  initialValue: widget.initialValue,
                   style: Theme.of(context).textTheme.bodyText2,
-                  controller: controller,
+                  controller: widget.controller,
                   // cursorColor: Colors.black,
-                  validator: validator,
+                  validator: widget.validator,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor:  Theme.of(context).canvasColor,
-                    hintText: hintText,
-                    contentPadding: icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    hintText: widget.hintText,
+                    contentPadding: widget.icon != null ? EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0) : EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     // prefixIcon: Icon(icon, color: Colors.black),
-                    prefixIcon: icon != null ? Icon(icon, color: Colors.black) : null,
+                    prefixIcon: widget.icon != null ? Icon(widget.icon, color: Colors.black) : null,
                     border: borderRoundedTransparent,
                     focusedBorder: borderRoundedTransparent,
                     enabledBorder: borderRoundedTransparent,

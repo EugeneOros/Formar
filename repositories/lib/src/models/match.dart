@@ -6,18 +6,20 @@ class Match {
   final Team? firstTeam;
   final Team? secondTeam;
   final int? round;
+  final int? game;
   List<Score> sets;
 
-  Match({String? id, this.firstTeam, this.secondTeam, this.round, List<Score>? sets})
+  Match( {String? id, this.firstTeam, this.secondTeam, this.round, this.game, List<Score>? sets})
       : this.id = id,
         this.sets = sets ?? [];
 
-  Match copyWith({String? id, Team? firstTeam, Team? secondTeam, int? round, List<Score>? sets}) {
+  Match copyWith({String? id, Team? firstTeam, Team? secondTeam, int? round, int? game, List<Score>? sets}) {
     return Match(
       id: id ?? this.id,
       firstTeam: firstTeam ?? this.firstTeam,
       secondTeam: secondTeam ?? this.secondTeam,
       round: round,
+      game: game,
       sets: sets ?? this.sets,
     );
   }
@@ -31,7 +33,7 @@ class Match {
   }
 
   MatchEntity toEntity() {
-    return MatchEntity(id, firstTeam != null ? firstTeam!.id : "null", secondTeam != null ? secondTeam!.id : "null", round, getSetsStr());
+    return MatchEntity(id, firstTeam != null ? firstTeam!.id : "null", secondTeam != null ? secondTeam!.id : "null", round, game, getSetsStr());
   }
 
   List<String> getSetsStr() {
@@ -63,6 +65,7 @@ class Match {
       firstTeam: firstTeam,
       secondTeam: secondTeam,
       round: entity.round,
+      game: entity.game,
       sets: sets,
     );
   }
@@ -76,14 +79,15 @@ class Match {
           firstTeam == other.firstTeam &&
           secondTeam == other.secondTeam &&
           round == other.round &&
+          game == other.game &&
           sets == other.sets;
 
   @override
-  int get hashCode => id.hashCode ^ firstTeam.hashCode  ^ secondTeam.hashCode ^ round.hashCode ^ sets.hashCode;
+  int get hashCode => id.hashCode ^ firstTeam.hashCode  ^ secondTeam.hashCode ^ round.hashCode ^ game.hashCode ^  sets.hashCode;
 
   @override
   String toString() {
-    return 'Match { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam, round: $round, sets: $sets}';
+    return 'Match { id: $id, firstTeam: $firstTeam, secondTeam: $secondTeam, round: $round,  round: $game, sets: $sets}';
   }
 }
 

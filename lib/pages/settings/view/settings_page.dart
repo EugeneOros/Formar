@@ -4,8 +4,10 @@ import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_it/logic/blocs/authentication/bloc.dart';
+import 'package:form_it/logic/blocs/blocs.dart';
 import 'package:form_it/logic/blocs/settings/bloc.dart';
 import 'package:form_it/logic/models/app_state_notifier.dart';
+import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/widgets/widgets.dart';
 
 import 'package:form_it/pages/settings/widgets/widgets.dart';
@@ -105,6 +107,7 @@ class _SettingsPageState extends State<SettingsPage> with AutomaticKeepAliveClie
                                   style: Theme.of(context).textTheme.button,
                                 ),
                                 onPressed: () {
+                                  BlocProvider.of<TabBloc>(context).add(UpdateTab(AppTab.players));
                                   Navigator.of(context).pop();
                                   BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                                 },

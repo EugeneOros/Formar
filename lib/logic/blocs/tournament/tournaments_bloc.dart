@@ -38,7 +38,14 @@ class TournamentsBloc extends Bloc<TournamentsEvent, TournamentsState> {
       yield* _mapUpdateTournamentToState(event);
     }else if (event is DeleteTournament) {
       yield* _mapDeleteTournamentToState(event);
+    }else if (event is TournamentsDeleteAll){
+      yield* _mapDeleteAllToState();
     }
+  }
+
+
+  Stream<TournamentsState> _mapDeleteAllToState() async* {
+    _tournamentsRepository.deleteAll();
   }
 
   Stream<TournamentsState> _mapLoadTeamsToState() async* {

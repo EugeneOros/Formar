@@ -27,8 +27,9 @@ class AddEditPlayerPage extends StatefulWidget {
   _AddEditPlayerPageState createState() => _AddEditPlayerPageState();
 }
 
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 class _AddEditPlayerPageState extends State<AddEditPlayerPage> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _nickname;
   Level _level = Level.beginner;

@@ -39,84 +39,93 @@ class AppDialogState extends State<AppDialog> with SingleTickerProviderStateMixi
   Widget build(BuildContext context) {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-      child: Center(
-        child: Material(
-          color: Colors.transparent,
-          child: ScaleTransition(
-            scale: scaleAnimation,
-            child: AnimatedPadding(
-              padding: MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-                  ? MediaQuery.of(context).viewInsets + EdgeInsets.zero
-                  : EdgeInsets.zero,
-              duration: Duration(milliseconds: 100),
-              child: Container(
-                margin: EdgeInsets.all(30),
-                decoration:
-                    ShapeDecoration(color: Theme.of(context).canvasColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
-                child: IntrinsicWidth(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (widget.title != null)
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            widget.title!,
-                            style: Theme.of(context).textTheme.headline2,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      if (widget.content != null) widget.content!,
-                      if (widget.actionsVertical != null)
-                        SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: widget.actionsVertical!.map((e) {
-                              return Container(
-                                margin: EdgeInsets.zero,
-                                padding: EdgeInsets.zero,
-                                height: 37,
+      child: Column(
+        mainAxisAlignment: MediaQuery.of(context).viewInsets == EdgeInsets.zero ? MainAxisAlignment.center : MainAxisAlignment.start,
+        children: [
+          Center(
+            child: Material(
+              color: Colors.transparent,
+              child: ScaleTransition(
+                scale: scaleAnimation,
+                child: AnimatedPadding(
+                  padding: EdgeInsets.zero, //MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
+                  // ? MediaQuery.of(context).viewInsets + EdgeInsets.zero
+                  // : EdgeInsets.zero,
+                  duration: Duration(milliseconds: 100),
+                  child: Container(
+                    margin: EdgeInsets.all(30),
+                    decoration: ShapeDecoration(
+                        color: Theme.of(context).canvasColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (widget.title != null)
+                            Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(15),
+                              child: Text(
+                                widget.title!,
+                                style: Theme.of(context).textTheme.headline2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          if (widget.content != null) widget.content!,
+                          if (widget.actionsVertical != null)
+                            SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: widget.actionsVertical!.map((e) {
+                                  return Container(
+                                    margin: EdgeInsets.zero,
+                                    padding: EdgeInsets.zero,
+                                    height: 37,
+                                    decoration: BoxDecoration(
+                                      border: Border(top: getBorderDivider(context)),
+                                    ),
+                                    child: e,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          if (widget.actionsHorizontal != null)
+                            SizedBox(
+                              width: double.infinity,
+                              child: Container(
                                 decoration: BoxDecoration(
                                   border: Border(top: getBorderDivider(context)),
                                 ),
-                                child: e,
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      if (widget.actionsHorizontal != null)
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(top: getBorderDivider(context)),
-                            ),
-                            child: Row(
-                              children: widget.actionsHorizontal!.map((e) {
-                                return Expanded(
-                                  child: Container(
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      border: e != widget.actionsHorizontal!.last ? Border(right: getBorderDivider(context)) : Border(),
-                                    ),
-                                    child: e,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        )
-                    ],
+                                child: Row(
+                                  children: widget.actionsHorizontal!.map((e) {
+                                    return Expanded(
+                                      child: Container(
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          border: e != widget.actionsHorizontal!.last ? Border(right: getBorderDivider(context)) : Border(),
+                                        ),
+                                        child: e,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
+          if (MediaQuery.of(context).viewInsets != EdgeInsets.zero)
+            Expanded(
+              child: SizedBox(),
+            )
+        ],
       ),
     );
   }

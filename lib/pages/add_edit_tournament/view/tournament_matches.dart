@@ -50,6 +50,9 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
       }
       isAddedMatch = false;
     }
+    for (List<Match> round in rounds) {
+      round.sort((a, b) => (a.game ?? 0).compareTo((b.game ?? 0)));
+    }
     return rounds;
   }
 
@@ -94,7 +97,7 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
           if (teamsRoundRobin[j] != null && teamsRoundRobin[teamsRoundRobin.length - 1 - j] != null) {
             matches.add(
               Match(
-                  firstTeam: teamsRoundRobin[j], secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j], sets: [Score()], round: i),
+                  firstTeam: teamsRoundRobin[j], secondTeam: teamsRoundRobin[teamsRoundRobin.length - 1 - j], sets: [Score()], round: i, game: j + 1),
             );
           }
         }
@@ -171,7 +174,7 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                       color: index == 2
                           ? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight)
                           : (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white),
-                      onOkSetCallback: (Match match){
+                      onOkSetCallback: (Match match) {
                         setState(() {
                           rounds[indexRound][index] = match;
                         });
@@ -238,7 +241,9 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                       child: RoundedButton(
                         text: AppLocalizations.of(context)!.createSchedule,
                         textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
+                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                            ? DarkColorAccent
+                            : Theme.of(context).colorScheme.secondary,
                         sizeRatio: 0.6,
                         onPressed: createSchedule,
                       ),

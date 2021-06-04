@@ -9,4 +9,6 @@ abstract class TournamentRepository{
   Future<void> addTournament(Tournament tournament);
 
   Future<void> deleteTournament(Tournament tournament);
+
+  Future<void> deleteAll();
 }

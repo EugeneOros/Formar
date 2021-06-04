@@ -44,6 +44,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             errorStyle: TextStyle(height: 0),
+            hintStyle: Theme.of(context).textTheme.subtitle1,
             contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
             filled: true,
             fillColor:  Theme.of(context).canvasColor,
