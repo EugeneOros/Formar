@@ -76,7 +76,7 @@ class StatisticBox extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       height: 35,
-      width: 40,
+      width: 50,
       color: color,
       child: Text(
         value.toString(),

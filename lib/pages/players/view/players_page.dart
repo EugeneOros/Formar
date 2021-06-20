@@ -24,13 +24,13 @@ class PlayersPage extends StatelessWidget {
   }
 
   void _deleteFormPlayers(Player player) {
-    BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(DeletePerson(player));
+    BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(DeletePlayer(player));
     ScaffoldMessenger.of(homeKey.currentContext!).showSnackBar(
       AppSnackBar(
         text: AppLocalizations.of(homeKey.currentContext!)!.deleted + " " + player.nickname,
         actionName: AppLocalizations.of(homeKey.currentContext!)!.undo,
         onAction: () {
-          BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(AddPerson(player));
+          BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(AddPlayer(player));
         },
         actionColor: Theme.of(homeKey.currentContext!).colorScheme.secondary,
       ),
@@ -132,7 +132,7 @@ class PlayersPage extends StatelessWidget {
                                   onDelete: () => _onDelete(player, stateTeam.teams),
                                   onSwitchChanged: (_) {
                                     BlocProvider.of<PeopleBloc>(context).add(
-                                      UpdatePerson(player.copyWith(available: !player.available)),
+                                      UpdatePlayer(player.copyWith(available: !player.available)),
                                     );
                                   },
                                 ),

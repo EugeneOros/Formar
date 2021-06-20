@@ -1,12 +1,11 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/helpers.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:form_it/logic/blocs/blocs.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
-import 'package:form_it/logic/blocs/people/people_state.dart';
+import 'package:form_it/logic/blocs/people/players_state.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
 import 'package:form_it/widgets/widgets.dart';

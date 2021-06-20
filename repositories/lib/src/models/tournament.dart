@@ -77,8 +77,13 @@ class Tournament {
   //   }
   // }
 
-  static List<TeamStat> getLeaderList(
-      {List<Match> matches = const [], List<Team> teams = const [], int pointsForWins = 2, pointsForDraw = 1, pointsForLoss = 0}) {
+  static List<TeamStat> getLeaderList({
+    List<Match> matches = const [],
+    List<Team> teams = const [],
+    int pointsForWins = 2,
+    pointsForDraw = 1,
+    pointsForLoss = 0,
+  }) {
     List<TeamStat> teamsStats = [];
     for (Team team in teams) {
       teamsStats.add(TeamStat(team: team));
@@ -126,7 +131,7 @@ class Tournament {
           (teamStat.wins * pointsForWins).toInt() + (teamStat.draws * pointsForDraw).toInt() + (teamStat.losses * pointsForLoss).toInt();
     }
     // teams.
-    teamsStats.sort((a, b) => b.points.compareTo(a.points));
+    teamsStats.sort((a, b) => b.compareTo(a));
     return teamsStats;
   }
 
@@ -185,7 +190,7 @@ class Tournament {
   }
 }
 
-class TeamStat {
+class TeamStat extends Comparable {
   int points;
   final Team team;
   int wins;
@@ -206,4 +211,16 @@ class TeamStat {
       this.setDifference = 0,
       this.pointsDifference = 0,
       this.extraPoints = 0});
+
+  @override
+  int compareTo(other) {
+    if(other is TeamStat){
+      if (this.points.compareTo(other.points) == 0) {
+        return this.pointsDifference.compareTo(other.pointsDifference);
+      }else{
+        return this.points.compareTo(other.points);
+      }
+    }
+    return -1;
+  }
 }

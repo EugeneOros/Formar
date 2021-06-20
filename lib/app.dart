@@ -12,7 +12,6 @@ import 'package:form_it/pages/add_edit_team/view/add_edit_team_page.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/widgets/app_scroll_behavior.dart';
 import 'package:form_it/logic/localizations/constants.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:repositories/repositories.dart';
@@ -98,7 +97,7 @@ class _FormarAppState extends State<FormarApp> {
             return PeopleBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
               peopleRepository: _peopleRepository,
-            )..add(LoadPeople());
+            )..add(LoadPlayers());
           },
         ),
         BlocProvider<FilteredPeopleBloc>(
@@ -159,7 +158,7 @@ class _FormarAppState extends State<FormarApp> {
           return getPageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
                     onSave: (nickname, level, sex) {
-                      BlocProvider.of<PeopleBloc>(context).add(UpdatePerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+                      BlocProvider.of<PeopleBloc>(context).add(UpdatePlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
                     },
                     isEditing: true,
                   ));
@@ -227,7 +226,7 @@ class _FormarAppState extends State<FormarApp> {
           return getPageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
               onSave: (nickname, level, sex) {
-                BlocProvider.of<PeopleBloc>(context).add(AddPerson(Player(nickname: nickname!, level: level!, sex: sex!)));
+                BlocProvider.of<PeopleBloc>(context).add(AddPlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
               },
               isEditing: false,
             ),

@@ -34,10 +34,11 @@ class EmbossContainer extends StatelessWidget {
             ],
           ),
           Container(
-              child: Neumorphic(
-            style: getInnerNeumorphicStyle(context: context),
-            child: child,
-          )),
+            child: Neumorphic(
+              style: getInnerNeumorphicStyle(context: context, color: color),
+              child: child,
+            ),
+          ),
         ],
       ),
     );

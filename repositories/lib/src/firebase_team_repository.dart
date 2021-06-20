@@ -27,6 +27,17 @@ class FirebaseTeamRepository implements TeamRepository {
     List<Player> people = _sortShuffleList(await peopleRepository.currentPlayersList());
     if (people.length < 2) return;
 
+    if(numMembers==1){
+      teams = [];
+      for (int i = 0; i < people.length; i++) {
+        teams.add(Team(name: people[i].nickname, players: [people[i]]));
+      }
+      teams.forEach((team) {
+        teamsCollection.add(team.toEntity().toDocument());
+      });
+      return;
+    }
+
     if (!isBalanced && people.length / numMembers >= 2) {
       teams = _createTeams((people.length / numMembers).floor(), (await teamsCollection.get()).docs.length, defaultTeamName: defaultTeamName);
       teams = _sortPeopleToTeams(people.sublist(0, people.length - (people.length % numMembers)), teams);

@@ -53,7 +53,7 @@ class PlayerItem extends StatelessWidget {
       pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
         onSave: (nickname, level, sex) {
           BlocProvider.of<PeopleBloc>(context).add(
-            UpdatePerson(
+            UpdatePlayer(
               player.copyWith(nickname: nickname, level: level, sex: sex),
             ),
           );

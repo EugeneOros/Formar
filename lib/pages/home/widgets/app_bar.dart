@@ -137,7 +137,7 @@ class _AppTopBarState extends State<AppTopBar> {
               icon: Icons.toggle_off_outlined,
               tooltip: AppLocalizations.of(context)!.allPlayersInactive,
               onPressed: () {
-                BlocProvider.of<PeopleBloc>(context).add(TurnOffPeople());
+                BlocProvider.of<PeopleBloc>(context).add(TurnOffPlayers());
               },
             ),
             IconButtonAppBar(

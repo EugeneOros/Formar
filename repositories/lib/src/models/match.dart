@@ -9,7 +9,7 @@ class Match {
   final int? game;
   List<Score> sets;
 
-  Match( {String? id, this.firstTeam, this.secondTeam, this.round, this.game, List<Score>? sets})
+  Match({String? id, this.firstTeam, this.secondTeam, this.round, this.game, List<Score>? sets})
       : this.id = id,
         this.sets = sets ?? [];
 
@@ -24,10 +24,9 @@ class Match {
     );
   }
 
-  bool isCompleteSets(){
-    for(Score score in sets){
-      if(score.firstTeamPoints == null || score.secondTeamPoints == null)
-        return false ;
+  bool isCompleteSets() {
+    for (Score score in sets) {
+      if (score.firstTeamPoints == null || score.secondTeamPoints == null) return false;
     }
     return true;
   }
@@ -51,14 +50,13 @@ class Match {
     Team? secondTeam;
     for (String setStr in entity.sets!) {
       List<String> setsStr = setStr.split(":");
-      sets.add(Score(firstTeamPoints: setsStr[0] == "null" ? null : int.parse(setsStr[0]), secondTeamPoints:  setsStr[1] == "null" ? null : int.parse(setsStr[1])));
+      sets.add(Score(
+          firstTeamPoints: setsStr[0] == "null" ? null : int.parse(setsStr[0]),
+          secondTeamPoints: setsStr[1] == "null" ? null : int.parse(setsStr[1])));
     }
-    for(Team team in tournamentTeams){
-
-      if(team.id == entity.firstTeam)
-        firstTeam = team;
-      if(team.id == entity.secondTeam)
-        secondTeam = team;
+    for (Team team in tournamentTeams) {
+      if (team.id == entity.firstTeam) firstTeam = team;
+      if (team.id == entity.secondTeam) secondTeam = team;
     }
     return Match(
       id: entity.id,
@@ -83,7 +81,7 @@ class Match {
           sets == other.sets;
 
   @override
-  int get hashCode => id.hashCode ^ firstTeam.hashCode  ^ secondTeam.hashCode ^ round.hashCode ^ game.hashCode ^  sets.hashCode;
+  int get hashCode => id.hashCode ^ firstTeam.hashCode ^ secondTeam.hashCode ^ round.hashCode ^ game.hashCode ^ sets.hashCode;
 
   @override
   String toString() {
@@ -95,7 +93,7 @@ class Score {
   int? firstTeamPoints;
   int? secondTeamPoints;
 
-  Score({ this.firstTeamPoints,  this.secondTeamPoints});
+  Score({this.firstTeamPoints, this.secondTeamPoints});
 
   @override
   bool operator ==(Object other) =>

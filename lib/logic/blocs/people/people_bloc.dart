@@ -5,7 +5,7 @@ import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:repositories/repositories.dart';
 
-class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
+class PeopleBloc extends Bloc<PlayersEvent, PeopleState> {
   final PlayersRepository peopleRepository;
   StreamSubscription? _peopleSubscription;
   StreamSubscription? _authenticationSubscription;
@@ -16,29 +16,29 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
         super(PeopleLoading()) {
     _authenticationSubscription = authenticationBloc.stream.listen((state) {
       if (state is AuthenticationStateAuthenticated) {
-        add(LoadPeople());
+        add(LoadPlayers());
       }
     });
   }
 
 
   @override
-  Stream<PeopleState> mapEventToState(PeopleEvent event) async* {
-    if (event is LoadPeople) {
+  Stream<PeopleState> mapEventToState(PlayersEvent event) async* {
+    if (event is LoadPlayers) {
       yield* _mapLoadPeopleToState();
-    } else if (event is AddPerson) {
+    } else if (event is AddPlayer) {
       yield* _mapAddPersonToState(event);
-    } else if (event is UpdatePerson) {
+    } else if (event is UpdatePlayer) {
       yield* _mapUpdatePersonToState(event);
-    } else if (event is DeletePerson) {
+    } else if (event is DeletePlayer) {
       yield* _mapDeletePersonToState(event);
     } else if (event is ToggleAll) {
       yield* _mapToggleAllToState();
     } else if (event is ClearCompleted) {
       yield* _mapClearCompletedToState();
-    } else if (event is PeopleUpdated) {
+    } else if (event is PlayersUpdated) {
       yield* _mapPeopleUpdateToState(event);
-    } else if (event is TurnOffPeople){
+    } else if (event is TurnOffPlayers){
       yield* _mapTurnOffPeopleToState();
     }
   }
@@ -46,7 +46,7 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
   Stream<PeopleState> _mapLoadPeopleToState() async* {
     _peopleSubscription?.cancel();
     _peopleSubscription = peopleRepository.players().listen(
-          (people) => add(PeopleUpdated(people)),
+          (people) => add(PlayersUpdated(people)),
     );
   }
 
@@ -61,16 +61,16 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
     }
   }
 
-  Stream<PeopleState> _mapAddPersonToState(AddPerson event) async* {
-    peopleRepository.addNewPlayer(event.person);
+  Stream<PeopleState> _mapAddPersonToState(AddPlayer event) async* {
+    peopleRepository.addNewPlayer(event.player);
   }
 
-  Stream<PeopleState> _mapUpdatePersonToState(UpdatePerson event) async* {
-    peopleRepository.updatePlayer(event.updatedPerson);
+  Stream<PeopleState> _mapUpdatePersonToState(UpdatePlayer event) async* {
+    peopleRepository.updatePlayer(event.updatedPlayer);
   }
 
-  Stream<PeopleState> _mapDeletePersonToState(DeletePerson event) async* {
-    peopleRepository.deletePlayer(event.person);
+  Stream<PeopleState> _mapDeletePersonToState(DeletePlayer event) async* {
+    peopleRepository.deletePlayer(event.player);
   }
 
   Stream<PeopleState> _mapToggleAllToState() async* {
@@ -97,8 +97,8 @@ class PeopleBloc extends Bloc<PeopleEvent, PeopleState> {
     }
   }
 
-  Stream<PeopleState> _mapPeopleUpdateToState(PeopleUpdated event) async* {
-    yield PeopleLoaded(event.people);
+  Stream<PeopleState> _mapPeopleUpdateToState(PlayersUpdated event) async* {
+    yield PeopleLoaded(event.players);
   }
 
   @override

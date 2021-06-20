@@ -31,17 +31,17 @@ class RoundedButton extends StatelessWidget {
       child: NeumorphicButton(
         onPressed: onPressed,
         style: //getInnerNeumorphicStyle(context: context),
-        NeumorphicStyle(
+            NeumorphicStyle(
           depth: 1,
           intensity: 1,
           surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.3,
           color: color,
           shape: NeumorphicShape.convex,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(radius ?? 15.0)),
-            shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-            shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-            // color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white)
-      ),
+          shadowDarkColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+          shadowLightColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+          // color: color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white)
+        ),
         padding: EdgeInsets.symmetric(vertical: 17, horizontal: 40),
         child: Text(
           text!, // "unknown",

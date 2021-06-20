@@ -171,9 +171,6 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
                   itemCount: rounds[indexRound].length,
                   itemBuilder: (context, index) {
                     return ItemTournamentMatches(
-                      color: index == 2
-                          ? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight)
-                          : (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white),
                       onOkSetCallback: (Match match) {
                         setState(() {
                           rounds[indexRound][index] = match;

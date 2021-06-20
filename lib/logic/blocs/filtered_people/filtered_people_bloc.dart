@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:form_it/logic/blocs/people/people_bloc.dart';
-import 'package:form_it/logic/blocs/people/people_state.dart';
+import 'package:form_it/logic/blocs/people/players_state.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:repositories/repositories.dart';
 

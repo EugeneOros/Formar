@@ -118,77 +118,69 @@ class TournamentStatistic extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 50,
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      // width: 100,
-                      // padding: EdgeInsets.only(left: 10, top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 35,
-                                // width: 35,
-                                padding: EdgeInsets.only(left: 10),
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.name,
-                                    style: Theme.of(context).textTheme.subtitle2,
-                                  ),
-                                ),
-                              )
-                            ],
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 35,
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text(
+                            AppLocalizations.of(context)!.name,
+                            style: Theme.of(context).textTheme.subtitle2,
                           ),
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: teamsStats.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: teamsStats.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  // constraints: BoxConstraints.expand(),
+                                  decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Neumorphic(
+                                        style: NeumorphicStyle(
+                                          depth: -2,
+                                          surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.4,
+                                          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                              ? DarkColor
+                                              : Theme.of(context).primaryColorLight,
+                                          shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                              ? DarkColorShadowDark
+                                              : Colors.grey.withOpacity(0.7),
+                                          shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                                              ? DarkColorShadowLight
+                                              : Colors.white.withOpacity(0.7),
+                                          shape: NeumorphicShape.flat,
+                                          boxShape: NeumorphicBoxShape.circle(),
                                         ),
-                                        Neumorphic(
-                                          style: NeumorphicStyle(
-                                            depth: -2,
-                                            surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.4,
-                                            color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
-                                                ? DarkColor
-                                                : Theme.of(context).primaryColorLight,
-                                            shadowDarkColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
-                                                ? DarkColorShadowDark
-                                                : Colors.grey.withOpacity(0.7),
-                                            shadowLightColorEmboss: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
-                                                ? DarkColorShadowLight
-                                                : Colors.white.withOpacity(0.7),
-                                            shape: NeumorphicShape.flat,
-                                            boxShape: NeumorphicBoxShape.circle(),
-                                          ),
-                                          // padding: EdgeInsets.all(8),
-                                          child: SizedBox(
-                                            height: 25,
-                                            width: 25,
-                                            child: Center(child: Text((index + 1).toString())),
-                                          ),
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Center(child: Text((index + 1).toString())),
                                         ),
-                                        Container(
-                                          height: 35,
-                                          // width: 35,
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text(
-                                            teamsStats[index].team.name,
-                                            style: Theme.of(context).textTheme.bodyText2,
-                                          ),
+                                      ),
+                                      Container(
+                                        height: 35,
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          teamsStats[index].team.name,
+                                          style: Theme.of(context).textTheme.bodyText2,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                      ],
-                                    ));
-                              }),
-                        ],
-                      ),
+                                      ),
+                                    ],
+                                  ));
+                            }),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -255,13 +247,14 @@ class StatisticHeaderElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 35,
-      width: 40,
+      width: 50,
       padding: EdgeInsets.all(10),
       child: Center(
-          child: Text(
-        value,
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
+        child: Text(
+          value,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
     );
   }
 }

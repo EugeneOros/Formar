@@ -70,7 +70,6 @@ class _DialogContentAddTeamsState extends State<DialogContentAddTeams> {
 
   @override
   Widget build(BuildContext context) {
-    var borderSearch = UnderlineInputBorder(borderSide: getBorderDivider(context));
     return Container(
       color: Colors.transparent,
       constraints: BoxConstraints(minWidth: 50, maxWidth: 350),
