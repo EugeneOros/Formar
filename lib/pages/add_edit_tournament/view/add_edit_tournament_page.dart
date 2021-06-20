@@ -126,103 +126,109 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     );
     tournamentInfo.createElement();
     tournamentInfo.createState();
-    return Scaffold(
-      backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
-      appBar: AppBar(
-        elevation: 0.0,
-        toolbarHeight: 50,
-        shadowColor: Colors.transparent,
+    return WillPopScope(
+      onWillPop: () async {
+        print("hoooh");
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
-        leading: IconButtonAppBar(
-          icon: Icons.arrow_back_ios_rounded,
-          onPressed: () => Navigator.pop(context, false),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              if (_formKeyInfo.currentState != null) {
-                if (_formKeyInfo.currentState!.validate()) {
-                  _formKeyInfo.currentState!.save();
+        appBar: AppBar(
+          elevation: 0.0,
+          toolbarHeight: 50,
+          shadowColor: Colors.transparent,
+          backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
+          leading: IconButtonAppBar(
+            icon: Icons.arrow_back_ios_rounded,
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                if (_formKeyInfo.currentState != null) {
+                  if (_formKeyInfo.currentState!.validate()) {
+                    _formKeyInfo.currentState!.save();
+                    widget.onSave(
+                      name: _keyTournamentInfo.currentState!.name,
+                      teams: teams,
+                      matches: matches,
+                      winPoints: _keyTournamentInfo.currentState!.winPoints,
+                      drawPoints: _keyTournamentInfo.currentState!.drawPoints,
+                      lossPoints: _keyTournamentInfo.currentState!.lossPoints,
+                      encountersNum: _keyTournamentInfo.currentState!.encountersNum,
+                    );
+                    Navigator.pop(context);
+                  } else {
+                    _tabController.index = 0;
+                  }
+                } else {
                   widget.onSave(
-                    name: _keyTournamentInfo.currentState!.name,
+                    name: widget.tournament != null ? widget.tournament!.name : "Tournament",
                     teams: teams,
                     matches: matches,
-                    winPoints: _keyTournamentInfo.currentState!.winPoints,
-                    drawPoints: _keyTournamentInfo.currentState!.drawPoints,
-                    lossPoints: _keyTournamentInfo.currentState!.lossPoints,
-                    encountersNum: _keyTournamentInfo.currentState!.encountersNum,
+                    winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
+                    drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
+                    lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
+                    encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
                   );
-                  Navigator.pop(context);
-                } else {
-                  _tabController.index = 0;
+                  Navigator.of(context).pop(context);
                 }
-              } else {
-                widget.onSave(
-                  name: widget.tournament != null ? widget.tournament!.name : "Tournament",
-                  teams: teams,
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                alignment: Alignment.center,
+                child: Text(
+                  MaterialLocalizations.of(context).saveButtonLabel.toLowerCase().capitalize(),
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ),
+            )
+          ],
+        ),
+        body: Stack(
+          children: [
+            TabBarView(
+              physics: BouncingScrollPhysics(),
+              controller: _tabController,
+              children: [
+                tournamentInfo,
+                TournamentTeams(
+                  teams: this.teams,
+                  onAddTeamsCallback: onAddTeams,
+                  onMatchEmptyCheckCallback: onMatchEmptyCheck,
+                ),
+                TournamentMatches(
+                  tournament: widget.tournament,
+                  teams: this.teams,
+                  matches: this.matches,
+                  formKeyInfo: _keyTournamentInfo,
+                  onChangeMatchesCallback: onChangeMatches,
+                ),
+                TournamentStatistic(
                   matches: matches,
-                  winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
-                  drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
-                  lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
-                  encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
-                );
-                Navigator.pop(context);
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              alignment: Alignment.center,
-              child: Text(
-                MaterialLocalizations.of(context).saveButtonLabel.toLowerCase().capitalize(),
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+                  teams: this.teams,
+                  formKeyInfo: _keyTournamentInfo,
+                  tournament: widget.tournament,
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-      body: Stack(
-        children: [
-          TabBarView(
-            physics: BouncingScrollPhysics(),
-            controller: _tabController,
-            children: [
-              tournamentInfo,
-              TournamentTeams(
-                teams: this.teams,
-                onAddTeamsCallback: onAddTeams,
-                onMatchEmptyCheckCallback: onMatchEmptyCheck,
-              ),
-              TournamentMatches(
-                tournament: widget.tournament,
-                teams: this.teams,
-                matches: this.matches,
-                formKeyInfo: _keyTournamentInfo,
-                onChangeMatchesCallback: onChangeMatches,
-              ),
-              TournamentStatistic(
-                matches: matches,
-                teams: this.teams,
-                formKeyInfo: _keyTournamentInfo,
-                tournament: widget.tournament,
-              ),
-            ],
-          ),
-          FadeEndLIstView(
-            height: 50,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).primaryColorLight,
-            isTop: true,
-          ),
-          FadeEndLIstView(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).colorScheme.secondary,
-            isTop: false,
-          ),
-          TabBarTournament(
-            controller: _tabController,
-          )
-        ],
+            FadeEndLIstView(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColorLight,
+              isTop: true,
+            ),
+            FadeEndLIstView(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).colorScheme.secondary,
+              isTop: false,
+            ),
+            TabBarTournament(
+              controller: _tabController,
+            )
+          ],
+        ),
       ),
     );
   }
