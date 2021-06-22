@@ -12,10 +12,8 @@ import 'package:repositories/repositories.dart';
 
 import 'tournament_matches.dart';
 
-
 final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
-
 
 typedef OnSaveCallback = Function(
     {String? name,
@@ -115,7 +113,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     }
   }
 
-  Future<bool> onWillPop()async{
+  Future<bool> onWillPop() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -144,7 +142,8 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-            ),TextButton(
+            ),
+            TextButton(
               child: Text(
                 MaterialLocalizations.of(context).backButtonTooltip,
                 style: Theme.of(context).textTheme.button,
@@ -227,49 +226,63 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             )
           ],
         ),
-        body: Stack(
-          children: [
-            TabBarView(
-              physics: BouncingScrollPhysics(),
-              controller: _tabController,
-              children: [
-                tournamentInfo,
-                TournamentTeams(
-                  teams: this.teams,
-                  onAddTeamsCallback: onAddTeams,
-                  onMatchEmptyCheckCallback: onMatchEmptyCheck,
-                ),
-                TournamentMatches(
-                  tournament: widget.tournament,
-                  teams: this.teams,
-                  matches: this.matches,
-                  formKeyInfo: _keyTournamentInfo,
-                  onChangeMatchesCallback: onChangeMatches,
-                ),
-                TournamentStatistic(
-                  matches: matches,
-                  teams: this.teams,
-                  formKeyInfo: _keyTournamentInfo,
-                  tournament: widget.tournament,
-                ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [
+                Theme.of(context).primaryColorLight,
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor,
+                Theme.of(context).colorScheme.secondary,
               ],
             ),
-            FadeEndLIstView(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).primaryColorLight,
-              isTop: true,
-            ),
-            FadeEndLIstView(
-              height: 30,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).colorScheme.secondary,
-              isTop: false,
-            ),
-            TabBarTournament(
-              controller: _tabController,
-            )
-          ],
+          ),
+          child: Stack(
+            children: [
+              TabBarView(
+                physics: BouncingScrollPhysics(),
+                controller: _tabController,
+                children: [
+                  tournamentInfo,
+                  TournamentTeams(
+                    teams: this.teams,
+                    onAddTeamsCallback: onAddTeams,
+                    onMatchEmptyCheckCallback: onMatchEmptyCheck,
+                  ),
+                  TournamentMatches(
+                    tournament: widget.tournament,
+                    teams: this.teams,
+                    matches: this.matches,
+                    formKeyInfo: _keyTournamentInfo,
+                    onChangeMatchesCallback: onChangeMatches,
+                  ),
+                  TournamentStatistic(
+                    matches: matches,
+                    teams: this.teams,
+                    formKeyInfo: _keyTournamentInfo,
+                    tournament: widget.tournament,
+                  ),
+                ],
+              ),
+              FadeEndLIstView(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).primaryColorLight,
+                isTop: true,
+              ),
+              FadeEndLIstView(
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).colorScheme.secondary,
+                isTop: false,
+              ),
+              TabBarTournament(
+                controller: _tabController,
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -115,139 +115,129 @@ class _TournamentMatchesState extends State<TournamentMatches> with AutomaticKee
 
     super.build(context);
     List<List<Match>> rounds = _getRounds();
-    return Neumorphic(
-      style: NeumorphicStyle(
-        depth: 0,
-        surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.25,
-        color: Theme.of(context).primaryColorLight,
-        boxShape: NeumorphicBoxShape.rect(),
-        shape: NeumorphicShape.convex,
-        lightSource: LightSource.topLeft,
+    return Stack(children: [
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).primaryColorLight,
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor,
+              Theme.of(context).colorScheme.secondary,
+            ],
+          ),
+        ),
       ),
-      child: Stack(children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).primaryColorLight,
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor,
-                Theme.of(context).colorScheme.secondary,
-              ],
-            ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor.withOpacity(0.7),
+              Theme.of(context).primaryColor.withOpacity(0.3),
+              Theme.of(context).primaryColor.withOpacity(0),
+            ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withOpacity(0.7),
-                Theme.of(context).primaryColor.withOpacity(0.3),
-                Theme.of(context).primaryColor.withOpacity(0),
-              ],
-            ),
-          ),
-        ),
-        SingleChildScrollView(
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: rounds.length,
-            itemBuilder: (context, indexRound) {
-              return EmbossContainer(
-                color: Colors.transparent,
-                name: AppLocalizations.of(context)!.round(rounds[indexRound][0].round ?? 0),
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: indexRound == 0 ? 90 : 25, bottom: indexRound == rounds.length - 1 ? 60 : 0),
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: rounds[indexRound].length,
-                  itemBuilder: (context, index) {
-                    return ItemTournamentMatches(
-                      onOkSetCallback: (Match match) {
-                        setState(() {
-                          rounds[indexRound][index] = match;
-                        });
-                      },
-                      drawDivider: index == 0 ? false : true,
-                      match: rounds[indexRound][index],
-                    );
-                    // teams.removeAt(index);
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-        widget.matches.isNotEmpty
-            ? Positioned.fill(
-                bottom: 40,
-                child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 110),
-                      alignment: Alignment.bottomCenter,
-                      child: RoundedButton(
-                          text: AppLocalizations.of(context)!.deleteSchedule,
-                          textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.white,
-                          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.black,
-                          sizeRatio: 0.6,
-                          onPressed: () => showDialog<bool>(
-                              context: homeKey.currentContext!,
-                              builder: (context) {
-                                return AppDialog(
-                                  title: AppLocalizations.of(context)!.areYouSureDeleteMatches,
-                                  actionsHorizontal: [
-                                    TextButton(
-                                      onPressed: () {
-                                        widget.onChangeMatchesCallback([]);
-                                        Navigator.of(context).pop(true);
-                                      },
-                                      child: Text(
-                                        AppLocalizations.of(context)!.yes,
-                                        style: Theme.of(context).textTheme.button,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.of(context).pop(false),
-                                      child: Text(
-                                        AppLocalizations.of(context)!.no,
-                                        style: Theme.of(context).textTheme.button,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }) // widget.onChangeMatchesCallback([]),
-                          ),
-                    )),
-              )
-            : Positioned.fill(
-                bottom: 40,
-                child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 110),
-                      alignment: Alignment.bottomCenter,
-                      child: RoundedButton(
-                        text: AppLocalizations.of(context)!.createSchedule,
-                        textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
-                            ? DarkColorAccent
-                            : Theme.of(context).colorScheme.secondary,
-                        sizeRatio: 0.6,
-                        onPressed: createSchedule,
-                      ),
-                    )),
+      ),
+      SingleChildScrollView(
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: rounds.length,
+          itemBuilder: (context, indexRound) {
+            return EmbossContainer(
+              color: Colors.transparent,
+              name: AppLocalizations.of(context)!.round(rounds[indexRound][0].round ?? 0),
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: indexRound == 0 ? 90 : 25, bottom: indexRound == rounds.length - 1 ? 60 : 0),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: rounds[indexRound].length,
+                itemBuilder: (context, index) {
+                  return ItemTournamentMatches(
+                    onOkSetCallback: (Match match) {
+                      setState(() {
+                        rounds[indexRound][index] = match;
+                      });
+                    },
+                    drawDivider: index == 0 ? false : true,
+                    match: rounds[indexRound][index],
+                  );
+                  // teams.removeAt(index);
+                },
               ),
-      ]),
-    );
+            );
+          },
+        ),
+      ),
+      widget.matches.isNotEmpty
+          ? Positioned.fill(
+              bottom: 40,
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 110),
+                    alignment: Alignment.bottomCenter,
+                    child: RoundedButton(
+                        text: AppLocalizations.of(context)!.deleteSchedule,
+                        textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.white,
+                        color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.black,
+                        sizeRatio: 0.6,
+                        onPressed: () => showDialog<bool>(
+                            context: homeKey.currentContext!,
+                            builder: (context) {
+                              return AppDialog(
+                                title: AppLocalizations.of(context)!.areYouSureDeleteMatches,
+                                actionsHorizontal: [
+                                  TextButton(
+                                    onPressed: () {
+                                      widget.onChangeMatchesCallback([]);
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Text(
+                                      AppLocalizations.of(context)!.yes,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).pop(false),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.no,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }) // widget.onChangeMatchesCallback([]),
+                        ),
+                  )),
+            )
+          : Positioned.fill(
+              bottom: 40,
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 110),
+                    alignment: Alignment.bottomCenter,
+                    child: RoundedButton(
+                      text: AppLocalizations.of(context)!.createSchedule,
+                      textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                          ? DarkColorAccent
+                          : Theme.of(context).colorScheme.secondary,
+                      sizeRatio: 0.6,
+                      onPressed: createSchedule,
+                    ),
+                  )),
+            ),
+    ]);
   }
 
   @override

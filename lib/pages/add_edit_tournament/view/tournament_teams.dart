@@ -69,109 +69,99 @@ class _TournamentTeamsState extends State<TournamentTeams> with AutomaticKeepAli
       );
     }
 
-    return Neumorphic(
-      style: NeumorphicStyle(
-        depth: 0,
-        surfaceIntensity: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? 0 : 0.25,
-        color: Theme.of(context).primaryColorLight,
-        boxShape: NeumorphicBoxShape.rect(),
-        shape: NeumorphicShape.convex,
-        lightSource: LightSource.topRight,
-      ),
-      child: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Theme.of(context).primaryColorLight,
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).colorScheme.secondary,
-                ],
-              ),
+    return Stack(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [
+                Theme.of(context).primaryColorLight,
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor,
+                Theme.of(context).colorScheme.secondary,
+              ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.centerLeft,
-                colors: [
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).primaryColor.withOpacity(0.7),
-                  Theme.of(context).primaryColor.withOpacity(0.3),
-                  Theme.of(context).primaryColor.withOpacity(0.2),
-                  Theme.of(context).colorScheme.secondary.withOpacity(0),
-                  // Colors.transparent
-                ],
-              ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor.withOpacity(0.7),
+                Theme.of(context).primaryColor.withOpacity(0.3),
+                Theme.of(context).primaryColor.withOpacity(0.2),
+                Theme.of(context).colorScheme.secondary.withOpacity(0),
+                // Colors.transparent
+              ],
             ),
           ),
-          SingleChildScrollView(
-            child: widget.teams.isEmpty
-                ? Container(
-                    padding: const EdgeInsets.only(top: 110),
-                    alignment: Alignment.center,
-                    child: RoundedButton(
-                      text: AppLocalizations.of(context)!.addTeams,
-                      textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
-                      color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
-                      sizeRatio: 0.9,
-                      onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams),
-                    ),
-                  )
-                : Stack(
-                    children: [
-                      EmbossContainer(
-                        padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: EdgeInsets.only(left: 10, top: 10),
-                            ),
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: widget.teams.length,
-                              itemBuilder: (context, index) {
-                                return ItemTournamentTeams(
-                                  text: widget.teams[index].name,
-                                  // drawDivider: index == 0 ? false : true,
-                                  secondaryWidget: RoundIconButton(
-                                    icon: Icons.remove,
-                                    onPressed: () => widget.onMatchEmptyCheckCallback(() => setState(() {
-                                          widget.teams.removeAt(index);
-                                        })),
-                                  ),
-                                );
-                                // teams.removeAt(index);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned.fill(
-                        bottom: 30,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: RoundIconButton(
-                              icon: Icons.add,
-                              size: 60,
-                              color: Theme.of(context).colorScheme.secondary,
-                              onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams)),
-                        ),
-                      ),
-                    ],
+        ),
+        SingleChildScrollView(
+          child: widget.teams.isEmpty
+              ? Container(
+                  padding: const EdgeInsets.only(top: 110),
+                  alignment: Alignment.center,
+                  child: RoundedButton(
+                    text: AppLocalizations.of(context)!.addTeams,
+                    textColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                    color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
+                    sizeRatio: 0.9,
+                    onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams),
                   ),
-          ),
-        ],
-      ),
+                )
+              : Stack(
+                  children: [
+                    EmbossContainer(
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 110, bottom: 60),
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(left: 10, top: 10),
+                          ),
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: widget.teams.length,
+                            itemBuilder: (context, index) {
+                              return ItemTournamentTeams(
+                                text: widget.teams[index].name,
+                                // drawDivider: index == 0 ? false : true,
+                                secondaryWidget: RoundIconButton(
+                                  icon: Icons.remove,
+                                  onPressed: () => widget.onMatchEmptyCheckCallback(() => setState(() {
+                                        widget.teams.removeAt(index);
+                                      })),
+                                ),
+                              );
+                              // teams.removeAt(index);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned.fill(
+                      bottom: 30,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: RoundIconButton(
+                            icon: Icons.add,
+                            size: 60,
+                            color: Theme.of(context).colorScheme.secondary,
+                            onPressed: () => widget.onMatchEmptyCheckCallback(_onAddTeams)),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ],
     );
   }
 
