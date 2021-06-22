@@ -151,6 +151,10 @@
   "@areYouSureDeleteMatches": {
     "description": ""
   },
+  "doYouWantToLeave": "Do you want to leave?",
+  "@doYouWantToLeave": {
+    "description": ""
+  },
   "ok": "OK",
   "@ok": {
     "description": ""
@@ -509,6 +513,10 @@
   },
   "toAddTeamsClick": "To add teams click plus in a top right corner",
   "@toAddTeamsClick": {
+    "description": ""
+  },
+  "changesYouMade": "Changes you made may not be saved",
+  "@changesYouMade": {
     "description": ""
   }
 }

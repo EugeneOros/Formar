@@ -115,6 +115,51 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     }
   }
 
+  Future<bool> onWillPop()async{
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AppDialog(
+          title: AppLocalizations.of(context)!.doYouWantToLeave,
+          content: Container(
+            padding: EdgeInsets.only(top: 0, left: 15, right: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.changesYouMade,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ),
+          actionsHorizontal: [
+            TextButton(
+              child: Text(
+                MaterialLocalizations.of(context).okButtonLabel,
+                style: Theme.of(context).textTheme.button,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),TextButton(
+              child: Text(
+                MaterialLocalizations.of(context).backButtonTooltip,
+                style: Theme.of(context).textTheme.button,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(widget.tournament!.matches ?? "nul");
@@ -127,10 +172,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     tournamentInfo.createElement();
     tournamentInfo.createState();
     return WillPopScope(
-      onWillPop: () async {
-        print("hoooh");
-        return true;
-      },
+      onWillPop: () => onWillPop(),
       child: Scaffold(
         backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
         appBar: AppBar(
@@ -140,7 +182,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
           backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColor : Theme.of(context).primaryColorLight,
           leading: IconButtonAppBar(
             icon: Icons.arrow_back_ios_rounded,
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => onWillPop(),
           ),
           actions: [
             GestureDetector(
