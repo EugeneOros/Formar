@@ -181,11 +181,12 @@ class TournamentInfoState extends State<TournamentInfo> with AutomaticKeepAliveC
                       },
                     ),
                   ),
-                  if (drawPoints != null)
+                  // if (drawPoints != null)
                     ItemTournamentInfo(
+                      isVisible: drawPoints != null,
                       text: AppLocalizations.of(context)!.pointsForDraw,
                       secondaryWidget: CounterElement(
-                        counter: drawPoints!,
+                        counter: drawPoints != null ? drawPoints! : 1,
                         onChange: (value) {
                           setState(() {
                             drawPoints = value;

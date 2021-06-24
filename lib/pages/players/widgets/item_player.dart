@@ -156,7 +156,7 @@ class PlayerItem extends StatelessWidget {
                 scale: 0.8,
                 child: CupertinoSwitch(
                   trackColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.grey[200],
-                  activeColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black,
+                  activeColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : LightBlue,
                   value: player.available,
                   onChanged: onSwitchChanged,
                 ),
