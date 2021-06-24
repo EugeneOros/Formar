@@ -65,12 +65,11 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
         children: [
           Expanded(
             child: Text(
-              widget.match.firstTeam != null ? widget.match.firstTeam!.name : "Unknown",
+              widget.match.firstTeam != null ? widget.match.firstTeam!.name.replaceAll(' ', '\u00A0') : "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          // Spacer(),
           NeumorphicButton(
             onPressed: () {
               showDialog(
@@ -117,6 +116,7 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
               boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
             ),
             padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 13),
+            margin: const EdgeInsets.symmetric(horizontal: 13),
             child: Text(
               getScoreStr(), // "unknown",
               style: Theme.of(context)
@@ -128,7 +128,7 @@ class _ItemTournamentMatchesState extends State<ItemTournamentMatches> {
           ),
           Expanded(
             child: Text(
-              widget.match.secondTeam != null ? widget.match.secondTeam!.name : "Unknown",
+              widget.match.secondTeam != null ? widget.match.secondTeam!.name.replaceAll(' ', '\u00A0') : "Unknown",
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,

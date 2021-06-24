@@ -84,7 +84,7 @@ class ItemTeam extends StatelessWidget {
                                     SizedBox(width: 5),
                                     Expanded(
                                       child: Text(
-                                        player.nickname,
+                                        player.nickname.replaceAll(' ', '\u00A0'),
                                         style: Theme.of(context).textTheme.bodyText2,
                                         overflow: TextOverflow.ellipsis,
                                       ),

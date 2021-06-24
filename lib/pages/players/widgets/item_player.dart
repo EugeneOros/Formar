@@ -132,7 +132,7 @@ class PlayerItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      player.nickname,
+                      player.nickname.replaceAll(' ', '\u00A0'),
                       style: Theme.of(context).textTheme.bodyText1,
                       overflow: TextOverflow.ellipsis,
                     ),

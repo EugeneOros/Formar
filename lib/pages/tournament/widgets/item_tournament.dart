@@ -93,11 +93,13 @@ class ItemTournament extends StatelessWidget {
                         end: Alignment.centerRight,
                         colors: [
                           Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).primaryColor,
-                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Theme.of(context).colorScheme.secondary,
+                          Provider.of<AppStateNotifier>(context, listen: false).isDarkMode
+                              ? DarkColorAccent
+                              : Theme.of(context).colorScheme.secondary,
                         ],
                       ),
                     ),
-                    padding: EdgeInsets.only(left: 140),
+                    padding: EdgeInsets.only(left: 140, right: 25),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,20 +108,24 @@ class ItemTournament extends StatelessWidget {
                           tournament.name,
                           style: Theme.of(context).textTheme.headline2,
                         ),
-                        SizedBox(height: 7,),
+                        SizedBox(
+                          height: 7,
+                        ),
                         Text(
-                          AppLocalizations.of(context)!.leader +
-                              ": " +
-                              (tournament.teams.isEmpty
-                                  ? AppLocalizations.of(context)!.unknown
-                                  : Tournament.getLeaderList(
-                                          matches: tournament.matches,
-                                          teams: tournament.teams,
-                                          pointsForWins: tournament.winPoints,
-                                          pointsForDraw: tournament.drawPoints,
-                                          pointsForLoss: tournament.lossPoints)[0]
-                                      .team
-                                      .name),
+                          (AppLocalizations.of(context)!.leader +
+                                  ": " +
+                                  (tournament.teams.isEmpty
+                                      ? AppLocalizations.of(context)!.unknown
+                                      : Tournament.getLeaderList(
+                                              matches: tournament.matches,
+                                              teams: tournament.teams,
+                                              pointsForWins: tournament.winPoints,
+                                              pointsForDraw: tournament.drawPoints,
+                                              pointsForLoss: tournament.lossPoints)[0]
+                                          .team
+                                          .name))
+                              .replaceAll(' ', '\u00A0'),
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.subtitle2,
                         )
                       ],
@@ -166,12 +172,13 @@ class ItemTournament extends StatelessWidget {
                   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
                   lightSource: LightSource.topLeft,
                   shadowDarkColor:
-                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
                   shadowLightColor:
-                  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
                   color: Theme.of(context).primaryColor),
               child: Container(
-                child: Icon(Icons.delete, color:  Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black, size: 20),
+                child:
+                    Icon(Icons.delete, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black, size: 20),
                 width: 50,
                 height: 50,
               ),

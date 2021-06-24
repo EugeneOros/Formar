@@ -20,12 +20,12 @@ class ItemMember extends StatelessWidget {
           SizedBox(width: 5),
           Expanded(
             child: Text(
-              member.nickname,
+              member.nickname.replaceAll(' ', '\u00A0'),
               style: Theme.of(context).textTheme.bodyText2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          // Spacer(),
+          const SizedBox(width: 13),
           RoundIconButton(icon: Icons.remove, onPressed: () => onDelete(),),
         ],
       ),
