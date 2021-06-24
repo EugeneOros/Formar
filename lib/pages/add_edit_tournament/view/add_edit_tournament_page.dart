@@ -11,7 +11,6 @@ import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:repositories/repositories.dart';
 
-
 final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();
 
@@ -77,6 +76,37 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
     setState(() {
       this.matches = matches;
     });
+  }
+
+  void saveAndExit() {
+    if (_formKeyInfo.currentState != null) {
+      if (_formKeyInfo.currentState!.validate()) {
+        _formKeyInfo.currentState!.save();
+        widget.onSave(
+          name: _keyTournamentInfo.currentState!.name,
+          teams: teams,
+          matches: matches,
+          winPoints: _keyTournamentInfo.currentState!.winPoints,
+          drawPoints: _keyTournamentInfo.currentState!.drawPoints,
+          lossPoints: _keyTournamentInfo.currentState!.lossPoints,
+          encountersNum: _keyTournamentInfo.currentState!.encountersNum,
+        );
+        Navigator.pop(context);
+      } else {
+        _tabController.index = 0;
+      }
+    } else {
+      widget.onSave(
+        name: widget.tournament != null ? widget.tournament!.name : "Tournament",
+        teams: teams,
+        matches: matches,
+        winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
+        drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
+        lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
+        encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
+      );
+      Navigator.of(context).pop(context);
+    }
   }
 
   void onMatchEmptyCheck(Function onOk) {
@@ -145,11 +175,12 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
             ),
             TextButton(
               child: Text(
-                MaterialLocalizations.of(context).backButtonTooltip,
+                MaterialLocalizations.of(context).saveButtonLabel.toLowerCase().capitalize(),
                 style: Theme.of(context).textTheme.button,
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                saveAndExit();
               },
             ),
           ],
@@ -161,7 +192,6 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.tournament!.matches ?? "nul");
     TournamentInfo tournamentInfo = TournamentInfo(
       key: _keyTournamentInfo,
       formKey: _formKeyInfo,
@@ -185,36 +215,7 @@ class _AddEditTournamentPageState extends State<AddEditTournamentPage> with Sing
           ),
           actions: [
             GestureDetector(
-              onTap: () {
-                if (_formKeyInfo.currentState != null) {
-                  if (_formKeyInfo.currentState!.validate()) {
-                    _formKeyInfo.currentState!.save();
-                    widget.onSave(
-                      name: _keyTournamentInfo.currentState!.name,
-                      teams: teams,
-                      matches: matches,
-                      winPoints: _keyTournamentInfo.currentState!.winPoints,
-                      drawPoints: _keyTournamentInfo.currentState!.drawPoints,
-                      lossPoints: _keyTournamentInfo.currentState!.lossPoints,
-                      encountersNum: _keyTournamentInfo.currentState!.encountersNum,
-                    );
-                    Navigator.pop(context);
-                  } else {
-                    _tabController.index = 0;
-                  }
-                } else {
-                  widget.onSave(
-                    name: widget.tournament != null ? widget.tournament!.name : "Tournament",
-                    teams: teams,
-                    matches: matches,
-                    winPoints: widget.tournament != null ? widget.tournament!.winPoints : 2,
-                    drawPoints: widget.tournament != null ? widget.tournament!.drawPoints : 1,
-                    lossPoints: widget.tournament != null ? widget.tournament!.lossPoints : 0,
-                    encountersNum: widget.tournament != null ? widget.tournament!.encountersNum : 1,
-                  );
-                  Navigator.of(context).pop(context);
-                }
-              },
+              onTap: saveAndExit,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 alignment: Alignment.center,
