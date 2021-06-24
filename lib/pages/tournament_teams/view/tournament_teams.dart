@@ -1,6 +1,4 @@
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/dialog_content_add_teams.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_teams.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
@@ -8,6 +6,7 @@ import 'package:form_it/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
 import 'package:repositories/repositories.dart';
 import 'package:form_it/config/helpers.dart';
+import 'package:form_it/pages/tournament_teams/widgets/widgets.dart';
 
 typedef void OnAddTeamsCallback(List<Team> newTeams);
 typedef void OnMatchEmptyCheckCallback(Function newMatchesSchedule);

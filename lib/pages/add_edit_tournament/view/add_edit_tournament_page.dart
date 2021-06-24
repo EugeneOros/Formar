@@ -1,16 +1,16 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/helpers.dart';
-import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
-import 'package:form_it/pages/add_edit_tournament/view/tournament_statistic.dart';
-import 'package:form_it/pages/add_edit_tournament/view/tournament_teams.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/tab_bar.dart';
+import 'package:form_it/pages/tournament_info/view/tournament_info.dart';
+import 'package:form_it/pages/tournament_statistic/view/tournament_statistic.dart';
+import 'package:form_it/pages/tournament_teams/view/tournament_teams.dart';
+import 'package:form_it/pages/tournament_matches/view/tournament_matches.dart';
+import 'package:form_it/pages/add_edit_tournament/widgets/widgets.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/fade_end_listview.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
 import 'package:repositories/repositories.dart';
 
-import 'tournament_matches.dart';
 
 final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
 GlobalKey<TournamentInfoState> _keyTournamentInfo = GlobalKey();

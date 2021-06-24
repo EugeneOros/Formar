@@ -7,8 +7,9 @@ class ItemTournamentStatistic extends StatelessWidget {
   final Widget? secondaryWidget;
   final TeamStat teamStat;
   final bool hasDraws;
+  final double height;
 
-  const ItemTournamentStatistic({Key? key, this.drawDivider = false, this.secondaryWidget, required this.teamStat, this.hasDraws = true})
+  const ItemTournamentStatistic({Key? key, this.drawDivider = false, this.secondaryWidget, required this.teamStat, this.hasDraws = true, this.height=35})
       : super(key: key);
 
   @override
@@ -24,25 +25,28 @@ class ItemTournamentStatistic extends StatelessWidget {
       teamStat.extraPoints
     ];
     return Container(
+      height: height,
       decoration: drawDivider ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
-      child: Row(
-        children: [
-          IntrinsicHeight(
-            child: IntrinsicWidth(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: statParams.asMap().map((index, value) {
-                  return MapEntry(index, StatisticBox(
-                    value: value,
-                    color: index % 2 == 0 ? Theme.of(context).primaryColorLight : null,
-                  ));
-                }).values.toList(),
-              ),
-            ),
+      child: IntrinsicHeight(
+        child: IntrinsicWidth(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: statParams
+                .asMap()
+                .map((index, value) {
+                  return MapEntry(
+                      index,
+                      StatisticBox(
+                        height: height,
+                        value: value,
+                        color: index % 2 == 0 ? Theme.of(context).primaryColorLight : null,
+                      ));
+                })
+                .values
+                .toList(),
           ),
-          if (secondaryWidget != null) secondaryWidget!,
-        ],
+        ),
       ),
     );
   }
@@ -51,15 +55,16 @@ class ItemTournamentStatistic extends StatelessWidget {
 class StatisticBox extends StatelessWidget {
   final int value;
   final Color? color;
+  final double height;
 
-  const StatisticBox({Key? key, required this.value, this.color}) : super(key: key);
+  const StatisticBox({Key? key, required this.value, this.color, this.height=35}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? (Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorAccent : Colors.white);
     return Container(
       padding: EdgeInsets.all(10),
-      height: 35,
+      height: height,
       width: 50,
       color: color,
       child: Text(

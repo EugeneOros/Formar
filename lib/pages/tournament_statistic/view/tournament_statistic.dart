@@ -1,8 +1,8 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/helpers.dart';
-import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_statistic.dart';
+import 'package:form_it/pages/tournament_info/view/tournament_info.dart';
+import 'package:form_it/pages/tournament_statistic/widgets/widgets.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
@@ -18,6 +18,7 @@ class TournamentStatistic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double itemHeight = 35;
     bool hasDraws = formKeyInfo.currentState != null
         ? (formKeyInfo.currentState!.drawPoints != null)
         : (tournament != null ? (tournament!.drawPoints != null) : true);
@@ -81,8 +82,7 @@ class TournamentStatistic extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
-                            if (hasDraws)
-                              Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
+                            if (hasDraws) Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
                             Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),
                             Text(AppLocalizations.of(context)!.mp + " - " + AppLocalizations.of(context)!.matchesPlayed),
                             Text(AppLocalizations.of(context)!.pd + " - " + AppLocalizations.of(context)!.pointsDifference),
@@ -109,89 +109,103 @@ class TournamentStatistic extends StatelessWidget {
             ),
           ),
           padding: EdgeInsets.only(top: 90, bottom: 60),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 50,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
+          child: Stack(children: [
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: teamsStats.length + 1,
+                itemBuilder: (context, index) {
+                  return Container(
+                      padding: EdgeInsets.all(10),
                       height: 35,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 15),
-                      child: Text(
-                        AppLocalizations.of(context)!.name,
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: teamsStats.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
-                          child: Row(
-                            children: [
-                              LeaderboardNumber(number: index + 1),
-                              Flexible(
-                                child: Container(
-                                  height: 35,
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    teamsStats[index].team.name,
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 50,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                      decoration: index != 0 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null);
+                }),
+            Row(
+              children: [
+                Expanded(
+                  flex: 50,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.p),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.w),
-                          if (hasDraws) StatisticHeaderElement(value: AppLocalizations.of(context)!.d),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.l),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.mp),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.pd),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.sd),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.ep),
-                        ],
+                      Container(
+                        height: 35,
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text(
+                          AppLocalizations.of(context)!.name,
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
                       ),
-                      Column(
-                        children: teamsStats.map(
-                          (e) {
-                            return ItemTournamentStatistic(
-                              drawDivider: true,
-                              hasDraws: hasDraws,
-                              teamStat: e,
-                            );
-                          },
-                        ).toList(),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: teamsStats.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            // decoration: index != -1 ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
+                            child: Row(
+                              children: [
+                                LeaderboardNumber(number: index + 1),
+                                Flexible(
+                                  child: Container(
+                                    height: 35,
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      teamsStats[index].team.name,
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+                Expanded(
+                  flex: 50,
+                  child: Container(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.p),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.w),
+                              if (hasDraws) StatisticHeaderElement(value: AppLocalizations.of(context)!.d),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.l),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.mp),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.pd),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.sd),
+                              StatisticHeaderElement(height: itemHeight, value: AppLocalizations.of(context)!.ep),
+                            ],
+                          ),
+                          Column(
+                            children: teamsStats.map(
+                              (e) {
+                                return ItemTournamentStatistic(
+                                  height: itemHeight,
+                                  drawDivider: true,
+                                  hasDraws: hasDraws,
+                                  teamStat: e,
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ]),
         ),
       ),
     );
@@ -200,13 +214,14 @@ class TournamentStatistic extends StatelessWidget {
 
 class StatisticHeaderElement extends StatelessWidget {
   final String value;
+  final double height;
 
-  const StatisticHeaderElement({Key? key, required this.value}) : super(key: key);
+  const StatisticHeaderElement({Key? key, required this.value, this.height = 35}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      height: height,
       width: 50,
       padding: EdgeInsets.all(10),
       child: Center(

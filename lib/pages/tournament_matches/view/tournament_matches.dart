@@ -1,7 +1,7 @@
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/pages/add_edit_tournament/view/tournament_info.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_matches.dart';
+import 'package:form_it/pages/tournament_info/view/tournament_info.dart';
+import 'package:form_it/pages/tournament_matches/widgets/widgets.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/rounded_button.dart';

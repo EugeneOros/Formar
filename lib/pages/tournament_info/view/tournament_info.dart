@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/counter_element.dart';
-import 'package:form_it/pages/add_edit_tournament/widgets/item_tournament_info.dart';
+import 'package:form_it/pages/tournament_info/widgets/widgets.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/emboss_container.dart';
 import 'package:form_it/widgets/round_icon_button.dart';
