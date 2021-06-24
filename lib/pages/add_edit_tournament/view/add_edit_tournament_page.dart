@@ -20,7 +20,7 @@ typedef OnSaveCallback = Function(
     List<Team>? teams,
     List<Match>? matches,
     required int winPoints,
-    required int drawPoints,
+    int? drawPoints,
     required int lossPoints,
     required int encountersNum});
 

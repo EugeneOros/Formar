@@ -6,7 +6,7 @@ class TournamentEntity extends Equatable {
   final String ownerId;
   final String name;
   final int winPoints;
-  final int drawPoints;
+  final int? drawPoints;
   final int lossPoints;
   final int encountersNum;
   final List<String>? teamsIds;
@@ -36,7 +36,7 @@ class TournamentEntity extends Equatable {
       json['name'] as String,
       json['teamsIds'] as List<String>?,
       json['winPoints'] as int,
-      json['drawPoints'] as int,
+      json['drawPoints'] as int?,
       json['lossPoints'] as int,
       json['encountersNum'] as int,
       // json['matches'] as List<Match>,

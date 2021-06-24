@@ -34,7 +34,7 @@ class ItemTournament extends StatelessWidget {
                         List<Team>? teams,
                         List<Match>? matches,
                         required int winPoints,
-                        required int drawPoints,
+                        int? drawPoints,
                         required int lossPoints,
                         required int encountersNum}) {
                       BlocProvider.of<TournamentsBloc>(context).add(

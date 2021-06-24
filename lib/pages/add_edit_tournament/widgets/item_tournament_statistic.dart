@@ -6,15 +6,24 @@ class ItemTournamentStatistic extends StatelessWidget {
   final bool drawDivider;
   final Widget? secondaryWidget;
   final TeamStat teamStat;
+  final bool hasDraws;
 
-  const ItemTournamentStatistic({Key? key, this.drawDivider = false, this.secondaryWidget, required this.teamStat}) : super(key: key);
+  const ItemTournamentStatistic({Key? key, this.drawDivider = false, this.secondaryWidget, required this.teamStat, this.hasDraws = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<int> statParams = [
+      teamStat.points,
+      teamStat.wins,
+      if (hasDraws) teamStat.draws,
+      teamStat.losses,
+      teamStat.matchPlayed,
+      teamStat.pointsDifference,
+      teamStat.setDifference,
+      teamStat.extraPoints
+    ];
     return Container(
-      // width: 300,
-      // constraints: BoxConstraints(maxHeight: 50),
-      // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       decoration: drawDivider ? BoxDecoration(border: Border(top: getBorderDivider(context))) : null,
       child: Row(
         children: [
@@ -23,37 +32,12 @@ class ItemTournamentStatistic extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  StatisticBox(
-                    value: teamStat.points,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  StatisticBox(
-                    value: teamStat.wins,
-                  ),
-                  StatisticBox(
-                    value: teamStat.draws,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  StatisticBox(
-                    value: teamStat.losses,
-                  ),
-                  StatisticBox(
-                    value: teamStat.matchPlayed,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  StatisticBox(
-                    value: teamStat.pointsDifference,
-                  ),
-                  StatisticBox(
-                    value: teamStat.setDifference,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  StatisticBox(
-                    value: teamStat.extraPoints,
-                  ),
-                  // StatisticBox(value: 3,),
-                ],
+                children: statParams.asMap().map((index, value) {
+                  return MapEntry(index, StatisticBox(
+                    value: value,
+                    color: index % 2 == 0 ? Theme.of(context).primaryColorLight : null,
+                  ));
+                }).values.toList(),
               ),
             ),
           ),

@@ -518,5 +518,9 @@
   "changesYouMade": "Changes you made may not be saved",
   "@changesYouMade": {
     "description": ""
+  },
+  "general": "General",
+  "@General": {
+    "description": ""
   }
 }

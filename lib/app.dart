@@ -198,7 +198,7 @@ class _FormarAppState extends State<FormarApp> {
                             List<Team>? teams,
                             List<Match>? matches,
                             required int winPoints,
-                            required int drawPoints,
+                            int? drawPoints,
                             required int lossPoints,
                             required int encountersNum}) {
                           // List<Match> matches = [Match(firstTeam: "JK", secondTeam: "HJ")];

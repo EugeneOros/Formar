@@ -7,7 +7,7 @@ class Tournament {
   String name;
   List<Team> teams;
   int winPoints;
-  int drawPoints;
+  int? drawPoints;
   int lossPoints;
   int encountersNum;
   List<Match> matches;
@@ -17,7 +17,7 @@ class Tournament {
     required this.ownerId,
     required this.name,
     winPoints = 2,
-    drawPoints = 1,
+    drawPoints,
     lossPoints = 0,
     encountersNum = 1,
     List<Team>? teams,
@@ -81,8 +81,8 @@ class Tournament {
     List<Match> matches = const [],
     List<Team> teams = const [],
     int pointsForWins = 2,
-    pointsForDraw = 1,
-    pointsForLoss = 0,
+    int? pointsForDraw = 1,
+    int pointsForLoss = 0,
   }) {
     List<TeamStat> teamsStats = [];
     for (Team team in teams) {
@@ -128,7 +128,7 @@ class Tournament {
     }
     for (TeamStat teamStat in teamsStats) {
       teamStat.points =
-          (teamStat.wins * pointsForWins).toInt() + (teamStat.draws * pointsForDraw).toInt() + (teamStat.losses * pointsForLoss).toInt();
+          (teamStat.wins * pointsForWins).toInt() + (teamStat.draws * (pointsForDraw ?? 0)).toInt() + (teamStat.losses * pointsForLoss).toInt();
     }
     // teams.
     teamsStats.sort((a, b) => b.compareTo(a));

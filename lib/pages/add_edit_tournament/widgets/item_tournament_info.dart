@@ -29,7 +29,12 @@ class ItemTournamentInfo extends StatelessWidget {
               ],
             ),
           ),
-          if (secondaryWidget != null) secondaryWidget!,
+          if (secondaryWidget != null)
+            Container(
+              width: 90,
+              alignment: Alignment.center,
+              child: secondaryWidget!,
+            ),
         ],
       ),
     );

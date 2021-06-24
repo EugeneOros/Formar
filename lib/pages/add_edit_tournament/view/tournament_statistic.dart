@@ -18,6 +18,9 @@ class TournamentStatistic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasDraws = formKeyInfo.currentState != null
+        ? (formKeyInfo.currentState!.drawPoints != null)
+        : (tournament != null ? (tournament!.drawPoints != null) : true);
     List<TeamStat> teamsStats;
     if (formKeyInfo.currentState != null) {
       teamsStats = Tournament.getLeaderList(
@@ -78,7 +81,8 @@ class TournamentStatistic extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             Text(AppLocalizations.of(context)!.w + " - " + AppLocalizations.of(context)!.wins),
-                            Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
+                            if (hasDraws)
+                              Text(AppLocalizations.of(context)!.d + " - " + AppLocalizations.of(context)!.draws),
                             Text(AppLocalizations.of(context)!.l + " - " + AppLocalizations.of(context)!.losses),
                             Text(AppLocalizations.of(context)!.mp + " - " + AppLocalizations.of(context)!.matchesPlayed),
                             Text(AppLocalizations.of(context)!.pd + " - " + AppLocalizations.of(context)!.pointsDifference),
@@ -163,7 +167,7 @@ class TournamentStatistic extends StatelessWidget {
                         children: [
                           StatisticHeaderElement(value: AppLocalizations.of(context)!.p),
                           StatisticHeaderElement(value: AppLocalizations.of(context)!.w),
-                          StatisticHeaderElement(value: AppLocalizations.of(context)!.d),
+                          if (hasDraws) StatisticHeaderElement(value: AppLocalizations.of(context)!.d),
                           StatisticHeaderElement(value: AppLocalizations.of(context)!.l),
                           StatisticHeaderElement(value: AppLocalizations.of(context)!.mp),
                           StatisticHeaderElement(value: AppLocalizations.of(context)!.pd),
@@ -176,6 +180,7 @@ class TournamentStatistic extends StatelessWidget {
                           (e) {
                             return ItemTournamentStatistic(
                               drawDivider: true,
+                              hasDraws: hasDraws,
                               teamStat: e,
                             );
                           },
@@ -191,7 +196,6 @@ class TournamentStatistic extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class StatisticHeaderElement extends StatelessWidget {
