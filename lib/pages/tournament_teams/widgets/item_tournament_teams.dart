@@ -22,7 +22,7 @@ class ItemTournamentTeams extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  text,
+                  text.replaceAll(' ', '\u00A0'),
                   style: Theme.of(context).textTheme.bodyText2,
                   overflow: TextOverflow.ellipsis,
                 ),
