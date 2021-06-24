@@ -522,5 +522,9 @@
   "general": "General",
   "@General": {
     "description": ""
+  },
+  "standings": "Standings",
+  "@standings": {
+    "description": ""
   }
 }

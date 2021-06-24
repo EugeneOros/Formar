@@ -58,7 +58,7 @@ class TournamentStatistic extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: EmbossContainer(
-          name: AppLocalizations.of(context)!.leaderboard,
+          name: AppLocalizations.of(context)!.standings,
           titleChild: Padding(
             padding: const EdgeInsets.only(bottom: 5, right: 10, left: 10),
             child: RoundIconButton(
@@ -132,7 +132,7 @@ class TournamentStatistic extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(left: 15),
                         child: Text(
-                          AppLocalizations.of(context)!.name,
+                          AppLocalizations.of(context)!.team,
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ),
