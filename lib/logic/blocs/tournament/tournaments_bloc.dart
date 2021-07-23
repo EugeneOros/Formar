@@ -27,7 +27,7 @@ class TournamentsBloc extends Bloc<TournamentsEvent, TournamentsState> {
   @override
   Stream<TournamentsState> mapEventToState(TournamentsEvent event) async* {
     if (event is LoadTournaments) {
-      yield* _mapLoadTeamsToState();
+      yield* _mapLoadTournamentsToState();
     }  else if (event is TournamentsUpdated) {
       yield* _mapTournamentsUpdateToState(event);
     }else if (event is FormMatches) {
@@ -48,12 +48,12 @@ class TournamentsBloc extends Bloc<TournamentsEvent, TournamentsState> {
     _tournamentsRepository.deleteAll();
   }
 
-  Stream<TournamentsState> _mapLoadTeamsToState() async* {
+  Stream<TournamentsState> _mapLoadTournamentsToState() async* {
     _tournamentsSubscription?.cancel();
     _tournamentsSubscription = _tournamentsRepository.tournaments().listen(
-            (teams) {
-          teams.sort((a, b) => a.name.compareTo(b.name));
-          return add(TournamentsUpdated(teams));
+            (tournaments) {
+          tournaments.sort((a, b) => a.name.compareTo(b.name));
+          return add(TournamentsUpdated(tournaments));
         });
   }
 
@@ -66,15 +66,27 @@ class TournamentsBloc extends Bloc<TournamentsEvent, TournamentsState> {
   }
 
   Stream<TournamentsState> _mapAddTournamentToState(AddTournament event) async* {
-    _tournamentsRepository.addTournament(event.tournament);
+    yield TournamentsLoading();
+    print("Adding tournament: " + event.tournament.name);
+    await _tournamentsRepository.addTournament(event.tournament);
+    print("Tournament was successfully added: " + event.tournament.name);
+    this.add(LoadTournaments());
   }
 
   Stream<TournamentsState> _mapUpdateTournamentToState(UpdateTournament event) async* {
-    _tournamentsRepository.updateTournament(event.updatedTournament);
+    yield TournamentsLoading();
+    print("Updating tournament: " + event.updatedTournament.name);
+    await _tournamentsRepository.updateTournament(event.updatedTournament);
+    print("Tournament was successfully updated: " + event.updatedTournament.name);
+    this.add(LoadTournaments());
   }
 
   Stream<TournamentsState> _mapDeleteTournamentToState(DeleteTournament event) async* {
-    _tournamentsRepository.deleteTournament(event.tournament);
+    yield TournamentsLoading();
+    print("Deleting tournament: " + event.tournament.name);
+    await _tournamentsRepository.deleteTournament(event.tournament);
+    print("Tournament was successfully deleted: " + event.tournament.name);
+    this.add(LoadTournaments());
   }
 
   @override

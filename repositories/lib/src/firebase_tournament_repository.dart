@@ -72,7 +72,7 @@ class FirebaseTournamentRepository implements TournamentRepository {
     var tournamentId = tournamentRSnapshot.reference.id;
     CollectionReference matchesCollection = tournamentCollection.doc(tournamentId).collection("matches");
     for (Match match in tournament.matches) {
-      matchesCollection.add(match.toEntity().toDocument());
+      await matchesCollection.add(match.toEntity().toDocument());
     }
     return result;
   }
