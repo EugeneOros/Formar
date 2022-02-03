@@ -15,6 +15,7 @@ import 'package:form_it/logic/localizations/constants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:repositories/repositories.dart';
+import 'logic/blocs/authentication/authentication_bloc.dart';
 import 'logic/models/app_state_notifier.dart';
 
 class FormarApp extends StatefulWidget {
@@ -91,10 +92,10 @@ class _FormarAppState extends State<FormarApp> {
             return authBloc;
           },
         ),
-        BlocProvider<PeopleBloc>(
+        BlocProvider<PlayersBloc>(
           lazy: false,
           create: (context) {
-            return PeopleBloc(
+            return PlayersBloc(
               authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
               peopleRepository: _peopleRepository,
             )..add(LoadPlayers());
@@ -102,7 +103,7 @@ class _FormarAppState extends State<FormarApp> {
         ),
         BlocProvider<FilteredPeopleBloc>(
           create: (context) => FilteredPeopleBloc(
-            peopleBloc: BlocProvider.of<PeopleBloc>(context),
+            peopleBloc: BlocProvider.of<PlayersBloc>(context),
           ),
         ),
         BlocProvider<TeamsBloc>(
@@ -158,13 +159,13 @@ class _FormarAppState extends State<FormarApp> {
           return getPageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
                     onSave: (nickname, level, sex) {
-                      BlocProvider.of<PeopleBloc>(context).add(UpdatePlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
+                      BlocProvider.of<PlayersBloc>(context).add(UpdatePlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
                     },
                     isEditing: true,
                   ));
         case '/add_team':
           return getPageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+              pageBuilder: (context, animation, secondaryAnimation) => BlocBuilder<PlayersBloc, PlayersState>(builder: (context, state) {
                     List<Player> players = [];
                     if (state is PeopleLoaded) {
                       players = state.people;
@@ -226,7 +227,7 @@ class _FormarAppState extends State<FormarApp> {
           return getPageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
               onSave: (nickname, level, sex) {
-                BlocProvider.of<PeopleBloc>(context).add(AddPlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
+                BlocProvider.of<PlayersBloc>(context).add(AddPlayer(Player(nickname: nickname!, level: level!, sex: sex!)));
               },
               isEditing: false,
             ),

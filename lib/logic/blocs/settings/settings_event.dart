@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:repositories/repositories.dart';
+part of 'settings_bloc.dart';
 
 abstract class SettingsEvent extends Equatable {
   const SettingsEvent();
@@ -9,7 +8,6 @@ abstract class SettingsEvent extends Equatable {
 }
 
 class LoadSettings extends SettingsEvent {}
-
 
 class UpdateSettings extends SettingsEvent {
   final UserSettings updatedSettings;

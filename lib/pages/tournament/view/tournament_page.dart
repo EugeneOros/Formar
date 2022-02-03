@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:form_it/config/dependency.dart';
-import 'package:form_it/logic/blocs/tournament/bloc.dart';
+import 'package:form_it/logic/blocs/tournament/tournaments_bloc.dart';
 import 'package:form_it/pages/tournament/widgets/item_tournament.dart';
 import 'package:form_it/widgets/widgets.dart';
 import 'package:repositories/repositories.dart';

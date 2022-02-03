@@ -1,23 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:form_it/logic/blocs/people/people_bloc.dart';
-import 'package:form_it/logic/blocs/people/players_state.dart';
+import 'package:form_it/logic/blocs/people/players_bloc.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:repositories/repositories.dart';
 
 part 'filtered_people_event.dart';
 part 'filtered_people_state.dart';
 
-// import 'filtered_people_event.dart';
-// import 'filtered_people_state.dart';
-
 class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> {
-  final PeopleBloc _peopleBloc;
+  final PlayersBloc _peopleBloc;
   StreamSubscription? _peopleSubscription;
   VisibilityFilter filter = VisibilityFilter.all;
 
-  FilteredPeopleBloc({required PeopleBloc peopleBloc})
+  FilteredPeopleBloc({required PlayersBloc peopleBloc})
       : _peopleBloc = peopleBloc,
         super(peopleBloc.state is PeopleLoaded
             ? FilteredPeopleLoaded(
@@ -46,7 +42,7 @@ class FilteredPeopleBloc extends Bloc<FilteredPeopleEvent, FilteredPeopleState> 
   ) async* {
     final VisibilityFilter visibilityFilter = event.filter ?? (state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).activeFilter : VisibilityFilter.all);
     final searchQuery = event.searchQuery ?? (state is FilteredPeopleLoaded ? (state as FilteredPeopleLoaded).searchQuery : "");
-    final PeopleState currentState = _peopleBloc.state;
+    final PlayersState currentState = _peopleBloc.state;
     if (currentState is PeopleLoaded) {
       yield FilteredPeopleLoaded(
         _mapPeopleToFilteredPeople(currentState.people, visibilityFilter, searchQuery),

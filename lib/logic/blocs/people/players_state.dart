@@ -1,16 +1,15 @@
-import 'package:equatable/equatable.dart';
-import 'package:repositories/repositories.dart';
+part of 'players_bloc.dart';
 
-abstract class PeopleState extends Equatable {
-  const PeopleState();
+abstract class PlayersState extends Equatable {
+  const PlayersState();
 
   @override
   List<Object> get props => [];
 }
 
-class PeopleLoading extends PeopleState {}
+class PeopleLoading extends PlayersState {}
 
-class PeopleLoaded extends PeopleState {
+class PeopleLoaded extends PlayersState {
   final List<Player> people;
 
   const PeopleLoaded([this.people = const []]);
@@ -22,4 +21,4 @@ class PeopleLoaded extends PeopleState {
   String toString() => 'PeopleLoaded { people: $people }';
 }
 
-class PeopleNotLoaded extends PeopleState {}
+class PeopleNotLoaded extends PlayersState {}

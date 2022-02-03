@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:form_it/logic/blocs/tab/tab_event.dart';
+import 'package:equatable/equatable.dart';
 import 'package:form_it/logic/models/app_tab.dart';
+
+part 'tab_event.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
   TabBloc() : super(AppTab.players);

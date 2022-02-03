@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:repositories/repositories.dart';
+part of 'teams_bloc.dart';
 
 abstract class TeamsEvent extends Equatable {
   const TeamsEvent();
@@ -20,7 +19,6 @@ class FormTeams extends TeamsEvent {
 
   @override
   List<Object?> get props => [isBalanced, counterTeamMember];
-
 }
 
 class TeamsUpdated extends TeamsEvent {

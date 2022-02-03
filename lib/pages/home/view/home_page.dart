@@ -1,7 +1,7 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_it/logic/blocs/tab/bloc.dart';
+import 'package:form_it/logic/blocs/tab/tab_bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 
 import 'package:form_it/pages/players/view/players_page.dart';

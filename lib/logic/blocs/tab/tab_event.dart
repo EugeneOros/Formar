@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:form_it/logic/models/app_tab.dart';
+part of 'tab_bloc.dart';
 
 abstract class TabEvent extends Equatable {
   const TabEvent();

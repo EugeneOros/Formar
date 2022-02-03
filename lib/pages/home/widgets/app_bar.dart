@@ -4,9 +4,9 @@ import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/config/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_it/logic/blocs/people/bloc.dart';
-import 'package:form_it/logic/blocs/settings/bloc.dart';
-import 'package:form_it/logic/blocs/teams/bloc.dart';
+import 'package:form_it/logic/blocs/people/players_bloc.dart';
+import 'package:form_it/logic/blocs/settings/settings_bloc.dart';
+import 'package:form_it/logic/blocs/teams/teams_bloc.dart';
 import 'package:form_it/logic/models/app_tab.dart';
 import 'package:form_it/widgets/app_dialog.dart';
 import 'package:form_it/widgets/icon_button_app_bar.dart';
@@ -135,7 +135,7 @@ class _AppTopBarState extends State<AppTopBar> {
               icon: Icons.toggle_off_outlined,
               tooltip: AppLocalizations.of(context)!.allPlayersInactive,
               onPressed: () {
-                BlocProvider.of<PeopleBloc>(context).add(TurnOffPlayers());
+                BlocProvider.of<PlayersBloc>(context).add(TurnOffPlayers());
               },
             ),
             IconButtonAppBar(
@@ -184,7 +184,7 @@ class _AppTopBarState extends State<AppTopBar> {
                 );
               },
             ),
-            BlocBuilder<PeopleBloc, PeopleState>(builder: (context, state) {
+            BlocBuilder<PlayersBloc, PlayersState>(builder: (context, state) {
               if (state is PeopleLoaded) {
                 return BlocBuilder<SettingsBloc, SettingsState>(builder: (settingsContext, settingsState) {
                   if (settingsState is SettingsLoaded) {

@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+part of 'register_bloc.dart';
 
 @immutable
 abstract class RegisterEvent extends Equatable {

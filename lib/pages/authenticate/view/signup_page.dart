@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_it/pages/authenticate/widgets/have_account_check.dart';
 import 'package:form_it/widgets/widgets.dart';
-import 'package:form_it/logic/blocs/register/bloc.dart';
+import 'package:form_it/logic/blocs/register/register_bloc.dart';
 
 
 class SignUpScreen extends StatefulWidget {

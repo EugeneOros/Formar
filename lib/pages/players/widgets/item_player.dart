@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/config/palette.dart';
-import 'package:form_it/logic/blocs/people/bloc.dart';
+import 'package:form_it/logic/blocs/people/players_bloc.dart';
 import 'package:form_it/logic/models/app_state_notifier.dart';
 import 'package:form_it/pages/add_edit_player/view/add_edit_player_page.dart';
 import 'package:form_it/pages/players/widgets/player_indicator.dart';
@@ -52,7 +52,7 @@ class PlayerItem extends StatelessWidget {
     Navigator.of(homeKey.currentContext!).push(getPageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => AddEditPlayerPage(
         onSave: (nickname, level, sex) {
-          BlocProvider.of<PeopleBloc>(context).add(
+          BlocProvider.of<PlayersBloc>(context).add(
             UpdatePlayer(
               player.copyWith(nickname: nickname, level: level, sex: sex),
             ),

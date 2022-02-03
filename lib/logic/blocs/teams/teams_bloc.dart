@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
-import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:repositories/repositories.dart';
 
-import 'bloc.dart';
+part 'teams_event.dart';
+part 'teams_state.dart';
 
 class TeamsBloc extends Bloc<TeamsEvent, TeamsState> {
   final TeamRepository _teamsRepository;

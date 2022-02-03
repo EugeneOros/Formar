@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:repositories/repositories.dart';
+part of 'tournaments_bloc.dart';
 
 abstract class TournamentsEvent extends Equatable {
   const TournamentsEvent();

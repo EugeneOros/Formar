@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
-import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:repositories/repositories.dart';
 
-import 'bloc.dart';
+part 'tournaments_event.dart';
+part 'tournaments_state.dart';
 
 class TournamentsBloc extends Bloc<TournamentsEvent, TournamentsState> {
   final TournamentRepository _tournamentsRepository;

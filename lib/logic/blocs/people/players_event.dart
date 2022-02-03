@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:repositories/repositories.dart';
+part of 'players_bloc.dart';
 
 abstract class PlayersEvent extends Equatable {
   const PlayersEvent();
@@ -35,8 +34,6 @@ class UpdatePlayer extends PlayersEvent {
   @override
   String toString() => 'UpdatePlayer { updatedPlayer: $updatedPlayer }';
 }
-
-
 
 class DeletePlayer extends PlayersEvent {
   final Player player;

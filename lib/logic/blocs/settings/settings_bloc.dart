@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
-import 'package:form_it/logic/blocs/authentication/authentication_state.dart';
 import 'package:repositories/repositories.dart';
 
-import 'bloc.dart';
+part 'settings_event.dart';
+part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settingsRepository;
@@ -12,9 +13,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   StreamSubscription? _authenticationSubscription;
   int currentPlayerCount = 1;
 
-
-  SettingsBloc(
-      {required SettingsRepository settingsRepository, required AuthenticationBloc authenticationBloc})
+  SettingsBloc({required SettingsRepository settingsRepository, required AuthenticationBloc authenticationBloc})
       : _settingsRepository = settingsRepository,
         super(SettingsLoading()) {
     _authenticationSubscription = authenticationBloc.stream.listen((state) {
@@ -24,16 +23,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     });
   }
 
-
   @override
   Stream<SettingsState> mapEventToState(SettingsEvent event) async* {
     if (event is LoadSettings) {
       yield* _mapLoadSettingsToState();
-    }  else if (event is SettingsUpdated) {
+    } else if (event is SettingsUpdated) {
       yield* _mapSettingsUpdateToState(event);
     } else if (event is UpdateSettings) {
       yield* _mapUpdateSettingsToState(event);
-    } else if (event is SetCurrentPlayerCount){
+    } else if (event is SetCurrentPlayerCount) {
       currentPlayerCount = event.currentPlayerCount;
     }
   }
@@ -43,13 +41,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     _settingsRepository.createSettings();
     _settingsSubscription = _settingsRepository.settings().listen(
           (settings) => add(SettingsUpdated(settings)),
-    );
+        );
   }
 
   Stream<SettingsState> _mapSettingsUpdateToState(SettingsUpdated event) async* {
     yield SettingsLoaded(event.settings);
   }
-
 
   Stream<SettingsState> _mapUpdateSettingsToState(UpdateSettings event) async* {
     _settingsRepository.updateSettings(event.updatedSettings);

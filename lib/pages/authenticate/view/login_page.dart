@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_it/pages/authenticate/widgets/have_account_check.dart';
 import 'package:form_it/widgets/widgets.dart';
-import 'package:form_it/logic/blocs/authentication/bloc.dart';
-import 'package:form_it/logic/blocs/login/bloc.dart';
+import 'package:form_it/logic/blocs/authentication/authentication_bloc.dart';
+import 'package:form_it/logic/blocs/login/login_bloc.dart';
 
 
 

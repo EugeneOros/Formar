@@ -3,8 +3,8 @@ import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
-import 'package:form_it/logic/blocs/people/bloc.dart';
-import 'package:form_it/logic/blocs/teams/bloc.dart';
+import 'package:form_it/logic/blocs/people/players_bloc.dart';
+import 'package:form_it/logic/blocs/teams/teams_bloc.dart';
 import 'package:form_it/widgets/widgets.dart';
 import 'package:repositories/repositories.dart';
 
@@ -24,13 +24,13 @@ class PlayersPage extends StatelessWidget {
   }
 
   void _deleteFormPlayers(Player player) {
-    BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(DeletePlayer(player));
+    BlocProvider.of<PlayersBloc>(homeKey.currentContext!).add(DeletePlayer(player));
     ScaffoldMessenger.of(homeKey.currentContext!).showSnackBar(
       AppSnackBar(
         text: AppLocalizations.of(homeKey.currentContext!)!.deleted + " " + player.nickname,
         actionName: AppLocalizations.of(homeKey.currentContext!)!.undo,
         onAction: () {
-          BlocProvider.of<PeopleBloc>(homeKey.currentContext!).add(AddPlayer(player));
+          BlocProvider.of<PlayersBloc>(homeKey.currentContext!).add(AddPlayer(player));
         },
         actionColor: Theme.of(homeKey.currentContext!).colorScheme.secondary,
       ),
@@ -131,7 +131,7 @@ class PlayersPage extends StatelessWidget {
                                   teams: _teamsThatContains(player, stateTeam.teams),
                                   onDelete: () => _onDelete(player, stateTeam.teams),
                                   onSwitchChanged: (_) {
-                                    BlocProvider.of<PeopleBloc>(context).add(
+                                    BlocProvider.of<PlayersBloc>(context).add(
                                       UpdatePlayer(player.copyWith(available: !player.available)),
                                     );
                                   },
