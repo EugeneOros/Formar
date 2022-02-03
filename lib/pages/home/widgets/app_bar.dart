@@ -1,8 +1,6 @@
 import 'package:form_it/config/dependency.dart';
 import 'package:form_it/logic/blocs/blocs.dart';
-import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
 import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
-import 'package:form_it/logic/blocs/filtered_people/filtered_people_event.dart';
 import 'package:form_it/logic/models/visibility_filter.dart';
 import 'package:form_it/config/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

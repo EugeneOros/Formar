@@ -26,7 +26,7 @@ class TournamentPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    SlidableController _slidableController = SlidableController();
+    // SlidableController _slidableController = SlidableController();
     final UserRepository userRepository = Provider.of<UserRepository>(context, listen: false);
     // return  ItemTournament( tournament: Tournament(name: 'Tournament 1', ownerId: '123'),);
     return BlocBuilder<TournamentsBloc, TournamentsState>(builder: (context, state) {
@@ -45,7 +45,7 @@ class TournamentPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ItemTournament(
                   onDelete: () => _onDelete(tournaments[index]),
-                  slidableController: _slidableController,
+                  // slidableController: _slidableController,
                   tournament: tournaments[index],
                   userRepository: userRepository,
                 );

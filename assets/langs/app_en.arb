@@ -255,21 +255,19 @@
       }
     }
   },
-  "teamCount": "Form {count,plural, =0{no team} =1{{count} team} other{{count} teams}}",
+  "teamCount": "{count,plural, =0{no team} =1{{count} team} other{{count} teams}}",
   "@teamCount": {
     "description": "A plural message",
     "placeholders": {
       "count": {
-
       }
     }
   },
-  "playersCount": "Form {count,plural, =0{no player} =1{{count} player} other{{count} players}}",
+  "playersCount": "{count,plural, =0{no player} =1{{count} player} other{{count} players}}",
   "@playersCount": {
     "description": "A plural message",
     "placeholders": {
       "count": {
-
       }
     }
   },
@@ -305,7 +303,7 @@
   "@allPlayersInactive": {
     "description": ""
   },
- "team": "Team",
+  "team": "Team",
   "@team": {
     "description": ""
   },

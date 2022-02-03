@@ -101,23 +101,20 @@ class _MemberListState extends State<MemberList> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(27).copyWith(top: 0),
-                        child:  Hero(
-                          tag: widget.heroTag ?? "TeamItem",
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: widget.members.length,
-                            itemBuilder: (context, index) {
-                              return ItemMember(
-                                member: widget.members[index],
-                                onDelete: () {
-                                  setState(() {
-                                    widget.members.removeAt(index);
-                                  });
-                                },
-                              );
-                            },
-                          ),
+                        child:  ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: widget.members.length,
+                          itemBuilder: (context, index) {
+                            return ItemMember(
+                              member: widget.members[index],
+                              onDelete: () {
+                                setState(() {
+                                  widget.members.removeAt(index);
+                                });
+                              },
+                            );
+                          },
                         ),
                       ),
                     ],

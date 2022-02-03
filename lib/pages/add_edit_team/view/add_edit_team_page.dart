@@ -77,7 +77,7 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
           )
         ],
       ),
-      body: Container(
+      body:  Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -93,6 +93,12 @@ class _AddEditTeamScreenState extends State<AddEditTeamScreen> {
         ),
         child: Stack(
           children: [
+            Hero(
+              tag: "TeamItem" + (widget.team != null ? widget.team!.id! : ""),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
             Container(
               constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
               child: Form(

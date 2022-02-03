@@ -114,8 +114,6 @@ class PlayerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      controller: slidableController,
-      actionPane: SlidableDrawerActionPane(),
       key: Key(player.id!),
       child: GestureDetector(
         onTap: _onEdit,
@@ -165,40 +163,29 @@ class PlayerItem extends StatelessWidget {
           ),
         ),
       ),
-      dismissal: SlidableDismissal(
-        child: SlidableDrawerDismissal(),
-        onWillDismiss: (actionType) => onDelete(),
+      // dismissal: SlidableDismissal(
+      //   child: SlidableDrawerDismissal(),
+      //   onWillDismiss: (actionType) => onDelete(),
+      // ),
+      endActionPane: ActionPane(
+        // A motion is a widget used to control how the pane animates.
+        motion: ScrollMotion(),
+        children: [
+          SlidableAction(
+            label: AppLocalizations.of(context)!.showTeams,
+            backgroundColor:
+                Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).colorScheme.secondary,
+            onPressed: (buildContext) => _onShowTeams,
+          ),
+          SlidableAction(
+            icon: Icons.delete,
+            label: MaterialLocalizations.of(context).deleteButtonTooltip,
+            backgroundColor: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorEvaluation : Colors.black,
+            onPressed: (buildContext) => onDelete(),
+          ),
+        ],
       ),
-      secondaryActions: <Widget>[
-        SlideAction(
-          child: Text(
-            AppLocalizations.of(context)!.showTeams,
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .caption!
-                .copyWith(color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightBlue : Colors.black),
-          ),
-          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Theme.of(context).colorScheme.secondary,
-          onTap: _onShowTeams,
-        ),
-        SlideAction(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.delete, color: Colors.white),
-              Text(
-                MaterialLocalizations.of(context).deleteButtonTooltip,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.white),
-              ),
-            ],
-          ),
-          color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorEvaluation : Colors.black,
-          onTap: () => onDelete(),
-        ),
-      ],
+
     );
   }
 }

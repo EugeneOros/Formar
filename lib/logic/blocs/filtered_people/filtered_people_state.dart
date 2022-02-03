@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:form_it/logic/models/visibility_filter.dart';
-import 'package:repositories/repositories.dart';
+part of 'filtered_people_bloc.dart';
 
 abstract class FilteredPeopleState extends Equatable {
   const FilteredPeopleState();

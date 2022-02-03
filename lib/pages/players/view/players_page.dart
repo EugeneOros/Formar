@@ -2,7 +2,7 @@ import 'package:form_it/config/dependency.dart';
 import 'package:form_it/config/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:form_it/logic/blocs/filtered_people/bloc.dart';
+import 'package:form_it/logic/blocs/filtered_people/filtered_people_bloc.dart';
 import 'package:form_it/logic/blocs/people/bloc.dart';
 import 'package:form_it/logic/blocs/teams/bloc.dart';
 import 'package:form_it/widgets/widgets.dart';
@@ -90,7 +90,7 @@ class PlayersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SlidableController _slidableController = SlidableController();
+    // SlidableController _slidableController = SlidableController();
 
     return BlocBuilder<FilteredPeopleBloc, FilteredPeopleState>(
       builder: (context, state) {
@@ -126,7 +126,7 @@ class PlayersPage extends StatelessWidget {
                                   ),
                                 PlayerItem(
                                   drawDivider: !isLastInLetterGroup,
-                                  slidableController: _slidableController,
+                                  // slidableController: _slidableController,
                                   player: player,
                                   teams: _teamsThatContains(player, stateTeam.teams),
                                   onDelete: () => _onDelete(player, stateTeam.teams),

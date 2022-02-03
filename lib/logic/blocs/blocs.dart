@@ -1,6 +1,6 @@
 
 export 'authentication/bloc.dart';
-export 'filtered_people/bloc.dart';
+export 'filtered_people/filtered_people_bloc.dart';
 export 'login/bloc.dart';
 export 'people/bloc.dart';
 export 'register/bloc.dart';

@@ -60,8 +60,8 @@ class ItemTournament extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      controller: slidableController,
+      // actionPane: SlidableDrawerActionPane(),
+      // controller: slidableController,
       key: Key(tournament.id!),
       child: GestureDetector(
         onTap: _onEdit,
@@ -158,34 +158,34 @@ class ItemTournament extends StatelessWidget {
           ),
         ),
       ),
-      secondaryActions: <Widget>[
-        Container(
-          margin: EdgeInsets.only(right: 15),
-          alignment: Alignment.center,
-          child: GestureDetector(
-            onTap: () => onDelete(),
-            child: Neumorphic(
-              style: NeumorphicStyle(
-                  depth: 2,
-                  intensity: 1,
-                  shape: NeumorphicShape.concave,
-                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-                  lightSource: LightSource.topLeft,
-                  shadowDarkColor:
-                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
-                  shadowLightColor:
-                      Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
-                  color: Theme.of(context).primaryColor),
-              child: Container(
-                child:
-                    Icon(Icons.delete, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black, size: 20),
-                width: 50,
-                height: 50,
-              ),
-            ),
-          ),
-        )
-      ],
+      // secondaryActions: <Widget>[
+      //   Container(
+      //     margin: EdgeInsets.only(right: 15),
+      //     alignment: Alignment.center,
+      //     child: GestureDetector(
+      //       onTap: () => onDelete(),
+      //       child: Neumorphic(
+      //         style: NeumorphicStyle(
+      //             depth: 2,
+      //             intensity: 1,
+      //             shape: NeumorphicShape.concave,
+      //             boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+      //             lightSource: LightSource.topLeft,
+      //             shadowDarkColor:
+      //                 Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowDark : Colors.grey.withOpacity(0.7),
+      //             shadowLightColor:
+      //                 Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? DarkColorShadowLight : Colors.white.withOpacity(0.7),
+      //             color: Theme.of(context).primaryColor),
+      //         child: Container(
+      //           child:
+      //               Icon(Icons.delete, color: Provider.of<AppStateNotifier>(context, listen: false).isDarkMode ? LightPink : Colors.black, size: 20),
+      //           width: 50,
+      //           height: 50,
+      //         ),
+      //       ),
+      //     ),
+      //   )
+      // ],
     );
   }
 }
