@@ -61,82 +61,82 @@ class _LoginState extends State<LoginScreen> {
             return loginState.isSubmitting
                 ? Loading()
                 : Container(
-                    alignment: Alignment.center,
-                    height: size.height,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).colorScheme.secondary,
-                        ],
-                      ),
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'assets/login.svg',
-                                height: size.height * 0.17,
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                AppLocalizations.of(context)!.login.toUpperCase(),
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
-                              SizedBox(height: size.height * 0.03),
-                              Text(
-                                loginState.isFailure
-                                    ? AppLocalizations.of(context)!.errorLogin
-                                    : "",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              SizedBox(height: 12.0),
-                              RoundedInputField(
-                                icon: Icons.person,
-                                controller: _emailController,
-                                hintText: AppLocalizations.of(context)!.email,
-                                validator: (_) => loginState.isEmailValid
-                                    ? null
-                                    : AppLocalizations.of(context)!.errorEmail,
-                              ),
-                              SizedBox(height: 20.0),
-                              RoundedPasswordField(
-                                controller: _passwordController,
-                                validator: (_) => loginState.isPasswordValid
-                                    ? null
-                                    : AppLocalizations.of(context)!.errorPassword,
-                              ),
-                              SizedBox(height: size.height * 0.03),
-                              RoundedButton(
-                                sizeRatio: 0.9,
-                                text: AppLocalizations.of(context)!.login,
-                                onPressed: _onLoginEmailAndPassword,
-                              ),
-                              SizedBox(height: size.height * 0.03),
-                              HaveAccountCheck(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed("/signUp");
-                                },
-                              )
-                            ],
+              alignment: Alignment.center,
+              height: size.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).colorScheme.secondary,
+                  ],
+                ),
+              ),
+              child: Container(
+                constraints: BoxConstraints(minWidth: 50, maxWidth: 500),
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          'assets/login.svg',
+                          height: size.height * 0.17,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          AppLocalizations.of(context)!.login.toUpperCase(),
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Text(
+                          loginState.isFailure
+                              ? AppLocalizations.of(context)!.errorLogin
+                              : "",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 14.0,
                           ),
                         ),
-                      ),
+                        SizedBox(height: 12.0),
+                        RoundedInputField(
+                          icon: Icons.person,
+                          controller: _emailController,
+                          hintText: AppLocalizations.of(context)!.email,
+                          validator: (_) => loginState.isEmailValid
+                              ? null
+                              : AppLocalizations.of(context)!.errorEmail,
+                        ),
+                        SizedBox(height: 20.0),
+                        RoundedPasswordField(
+                          controller: _passwordController,
+                          validator: (_) => loginState.isPasswordValid
+                              ? null
+                              : AppLocalizations.of(context)!.errorPassword,
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        RoundedButton(
+                          sizeRatio: 0.9,
+                          text: AppLocalizations.of(context)!.login,
+                          onPressed: _onLoginEmailAndPassword,
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        HaveAccountCheck(
+                          onTap: () {
+                            Navigator.of(context).pushNamed("/signUp");
+                          },
+                        )
+                      ],
                     ),
-                  );
+                  ),
+                ),
+              ),
+            );
           },
         ),
       ),
